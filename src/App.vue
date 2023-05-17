@@ -9,7 +9,7 @@ import SisdaiCapa from '@/componentes/SisdaiCapa.vue'
       <SisdaiCapa />
     </SisdaiMapa>
 
-    <hr>
+    <hr />
 
     <SisdaiMapa>
       <SisdaiCapa />

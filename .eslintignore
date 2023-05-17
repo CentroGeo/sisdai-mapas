@@ -1,0 +1,12 @@
+# No ejecutar lint en node_modules
+node_modules
+
+# No ejecutar lint en carpetas de compilación (asegúrese de que esté configurada con el nombre correcto de la carpeta de compilación)
+dist
+docs/.vuepress/dist
+docs/.vitepress/dist
+
+# No ejecutar lint en la salida de nyc coverage
+coverage
+libs
+deprecated
