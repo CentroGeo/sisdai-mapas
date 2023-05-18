@@ -1,15 +1,10 @@
 <script setup>
 import { idAleatorio } from '@/utiles'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
+import usarRegistroMapas from '@/composables/usarRegistroMapas'
 import 'ol/ol.css'
-import VectorLayer from 'ol/layer/Vector'
-import VectorSource from 'ol/source/Vector'
-import TileLayer from 'ol/layer/Tile'
-import OSM from 'ol/source/OSM'
 
-defineProps({
+const props = defineProps({
   id: {
     type: String,
     default: () => idAleatorio(),
@@ -19,24 +14,11 @@ defineProps({
 const mapa = ref(null)
 
 onMounted(() => {
-  new Map({
-    target: mapa.value,
-    layers: [
-      new TileLayer({
-        source: new OSM(),
-      }),
-      new VectorLayer({
-        source: new VectorSource({
-          // features: new GeoJSON().readFeatures({ ...propsSetup.datos }),
-        }),
-      }),
-    ],
-    view: new View({
-      center: [-102, 24],
-      zoom: 4.5,
-      projection: 'EPSG:4326',
-    }),
-  })
+  usarRegistroMapas().registrarMapa(props.id, mapa.value)
+})
+
+onUnmounted(() => {
+  usarRegistroMapas().borrarMapa(props.id)
 })
 </script>
 
@@ -47,7 +29,6 @@ onMounted(() => {
     <div
       ref="mapa"
       class="mapa"
-      id="mapa"
     />
 
     <slot />
