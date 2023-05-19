@@ -1,7 +1,5 @@
 import RegistroObjetos from '@/clases/ResgistroObjetos'
 import { Map, View } from 'ol'
-// import TileLayer from 'ol/layer/Tile'
-// import OSM from 'ol/source/OSM'
 
 const registroMapas = new RegistroObjetos('mapa')
 
@@ -19,7 +17,7 @@ export default function (idMapa) {
   }
 
   function mapaPromesa(_idMapa) {
-    return registroMapas.objetoAsync(_idMapa || idMapa)
+    return registroMapas.objetoPromesa(_idMapa || idMapa)
   }
 
   function borrarMapa(_idMapa) {

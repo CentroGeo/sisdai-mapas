@@ -18,7 +18,7 @@ import SisdaiLeyenda from '@/componentes/SisdaiLeyenda.vue'
 
     <SisdaiMapa>
       <SisdaiCapa />
-      <SisdaiLeyenda para="capa-2" />
+      <!-- <SisdaiLeyenda para="capa-2" /> -->
     </SisdaiMapa>
   </div>
 </template>
