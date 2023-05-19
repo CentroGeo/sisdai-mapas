@@ -14,6 +14,7 @@ const props = defineProps({
 const mapa = ref(null)
 
 onMounted(() => {
+  console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(props.id, mapa.value)
 })
 

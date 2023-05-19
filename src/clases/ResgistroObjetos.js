@@ -42,9 +42,25 @@ export default class RegistroObjetos {
   objeto(id) {
     if (this.existe(id)) {
       return this.registros[id]
+    } else {
+      // eslint-disable-next-line
+      console.warn(`${this.tipoObjetos} ${id} no encontrado`)
     }
+  }
 
-    // eslint-disable-next-line
-    console.warn(`${this.tipoObjetos} ${id} no encontrado`)
+  objetoAsync(id) {
+    return new Promise(resolve => {
+      const _this = this
+
+      function revisar() {
+        if (_this.existe(id)) {
+          resolve(_this.registros[id])
+        } else {
+          setTimeout(revisar, 50)
+        }
+      }
+
+      revisar()
+    })
   }
 }

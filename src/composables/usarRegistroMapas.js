@@ -1,17 +1,11 @@
 import RegistroObjetos from '@/clases/ResgistroObjetos'
 import { Map, View } from 'ol'
-import TileLayer from 'ol/layer/Tile'
-import OSM from 'ol/source/OSM'
+// import TileLayer from 'ol/layer/Tile'
+// import OSM from 'ol/source/OSM'
 
 const registroMapas = new RegistroObjetos('mapa')
 
 export default function (idMapa) {
-  function mapa(_idMapa) {
-    const mapaParaConsultar = _idMapa || idMapa
-
-    return registroMapas.objeto(mapaParaConsultar)
-  }
-
   function registrarMapa(_idMapa, target) {
     registroMapas.registrar(_idMapa, crearMapa(target))
   }
@@ -20,16 +14,23 @@ export default function (idMapa) {
     registrarMapa(idMapa)
   }
 
-  function borrarMapa(_idMapa) {
-    const mapaParaBorrar = _idMapa || idMapa
+  function mapa(_idMapa) {
+    return registroMapas.objeto(_idMapa || idMapa)
+  }
 
-    registroMapas.borrar(mapaParaBorrar)
+  function mapaPromesa(_idMapa) {
+    return registroMapas.objetoAsync(_idMapa || idMapa)
+  }
+
+  function borrarMapa(_idMapa) {
+    registroMapas.borrar(_idMapa || idMapa)
   }
 
   return {
     registrarMapa,
-    borrarMapa,
     mapa,
+    mapaPromesa,
+    borrarMapa,
   }
 }
 
@@ -41,9 +42,9 @@ function crearMapa(target) {
   return new Map({
     target,
     layers: [
-      new TileLayer({
-        source: new OSM(),
-      }),
+      // new TileLayer({
+      //   source: new OSM(),
+      // }),
     ],
     view: new View({
       center: [-102, 24],
