@@ -1,7 +1,8 @@
 <script setup>
 import { buscarContenedorSisdaiMapa, idAleatorio } from '@/utiles'
-import { getCurrentInstance, onMounted, ref, watch } from 'vue'
+import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
+
 const props = defineProps({
   para: {
     type: String,
@@ -9,29 +10,52 @@ const props = defineProps({
   },
 })
 
+var idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
+
 const idCheck = `${props.para}-${idAleatorio()}`
+
 const visible = ref(false)
+const nombre = ref('')
+
+function vincularCapa(mapa) {
+  // console.log(mapa)
+
+  visible.value = mapa
+    .getAllLayers()
+    .find(_capa => _capa.get('id') === props.para)
+    .getVisible()
+  watch(visible, nv => {
+    mapa
+      .getAllLayers()
+      .find(_capa => _capa.get('id') === props.para)
+      .setVisible(nv)
+  })
+
+  nombre.value = mapa
+    .getAllLayers()
+    .find(_capa => _capa.get('id') === props.para)
+    .get('nombre')
+  watch(
+    () =>
+      mapa
+        .getAllLayers()
+        .find(_capa => _capa.get('id') === props.para)
+        .get('nombre'),
+    nv => {
+      console.log('SisdaiLeyenda, nombre cambiado', nv)
+      nombre.value = nv
+    }
+  )
+}
 
 onMounted(() => {
   console.log('SisdaiLeyenda')
+  // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
 
-  var idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
-  console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
-
-  usarRegistroMapas()
-    .mapaPromesa(idMapa)
-    .then(mapa => {
-      console.log(mapa.getAllLayers())
-
-      const capa = mapa
-        .getAllLayers()
-        .find(_capa => _capa.get('id') === props.para)
-
-      visible.value = capa.getVisible()
-
-      watch(visible, nv => capa.setVisible(nv))
-    })
+  usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
 })
+
+onUnmounted(() => {})
 </script>
 
 <template>
@@ -44,7 +68,7 @@ onMounted(() => {
         :id="idCheck"
         v-model="visible"
       />
-      <label :for="idCheck">Nombre de la capa</label>
+      <label :for="idCheck">{{ nombre }}</label>
     </form>
   </span>
 </template>

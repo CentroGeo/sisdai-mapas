@@ -1,11 +1,12 @@
 import RegistroObjetos from '@/clases/ResgistroObjetos'
+import { reactive } from 'vue'
 import { Map, View } from 'ol'
 
 const registroMapas = new RegistroObjetos('mapa')
 
 export default function (idMapa) {
   function registrarMapa(_idMapa, target) {
-    registroMapas.registrar(_idMapa, crearMapa(target))
+    registroMapas.registrar(_idMapa, reactive(crearMapa(target)))
   }
 
   if (idValido(idMapa)) {

@@ -1,8 +1,8 @@
 <script setup>
-import { buscarContenedorSisdaiMapa, idAleatorio } from '@/utiles'
+import { idAleatorio, buscarContenedorSisdaiMapa } from '@/utiles'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { getCurrentInstance, onMounted, onUnmounted } from 'vue'
+import { getCurrentInstance, onMounted, onUnmounted, toRefs, watch } from 'vue'
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
 
 const props = defineProps({
@@ -10,28 +10,53 @@ const props = defineProps({
     type: String,
     default: () => idAleatorio(),
   },
+  nombre: {
+    type: String,
+    default: 'Nombre no asignado',
+  },
 })
 
-const capa = new TileLayer({
-  source: new OSM(),
-})
-// capa.setVisible(false)
-capa.set('id', props.id)
+const idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
+
+const { nombre } = toRefs(props)
+
+function agregarCapa(mapa) {
+  // console.log(mapa)
+  mapa.addLayer(
+    new TileLayer({
+      source: new OSM(),
+      id: props.id,
+      nombre: nombre.value,
+    })
+  )
+
+  watch(nombre, x => {
+    console.log('SisdaiCapa, nombre cambiado', x)
+    mapa
+      .getAllLayers()
+      .find(_capa => _capa.get('id') === props.id)
+      .set('nombre', nombre.value)
+  })
+}
 
 onMounted(() => {
   console.log('SisdaiCapa')
-  var idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
   // console.log(`agregar ${capa.get('id')} en mapa ${idMapa}`)
 
+  usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
+})
+
+onUnmounted(() => {
   usarRegistroMapas()
     .mapaPromesa(idMapa)
     .then(mapa => {
-      // console.log(mapa)
-      mapa.addLayer(capa)
+      console.log('quitando capa', props.id)
+
+      mapa.removeLayer(
+        mapa.getAllLayers().find(_capa => _capa.get('id') === props.id)
+      )
     })
 })
-
-onUnmounted(() => {})
 </script>
 
 <template>
