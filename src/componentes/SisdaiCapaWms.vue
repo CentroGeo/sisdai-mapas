@@ -3,7 +3,7 @@ import usarRegistroMapas from '@/composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
 import ImageLayer from 'ol/layer/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onMounted, onUnmounted, shallowRef, toRefs } from 'vue'
+import { onBeforeUnmount, onMounted, shallowRef, toRefs } from 'vue'
 
 var idMapa
 
@@ -58,30 +58,27 @@ function agregarCapa(mapa) {
 }
 
 onMounted(() => {
-  console.log('SisdaiCapaWms')
-  // console.log(`agregar ${capa.get('id')} en mapa ${idMapa}`)
+  console.log('SisdaiCapaWms', props.id)
 
   idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiCapaWms.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
+  console.log('quitando capa', props.id)
+
   usarRegistroMapas()
     .mapaPromesa(idMapa)
     .then(mapa => {
-      console.log('quitando capa', props.id)
-
       mapa.eliminarCapa(props.id)
     })
 })
 </script>
 
 <template>
-  <div
+  <span
     ref="sisdaiCapaWms"
     :sisdai-capa="id"
-  >
-    <h2>Hola, soy una capa WMS 🤠 [{{ id }}]</h2>
-  </div>
+  />
 </template>

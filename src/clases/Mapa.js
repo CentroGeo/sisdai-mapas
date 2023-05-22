@@ -10,7 +10,7 @@ export default class Mapa extends olMap {
 
   /**
    *
-   * @param {*} idCapa
+   * @param {String} idCapa
    * @returns
    */
   buscarCapa(idCapa) {
@@ -20,9 +20,10 @@ export default class Mapa extends olMap {
 
   /**
    *
-   * @param {*} idCapa
+   * @param {String} idCapa
    */
   eliminarCapa(idCapa) {
     this.removeLayer(this.buscarCapa(idCapa))
+    // console.log(this.getAllLayers().map(c => c.get('id')))
   }
 }

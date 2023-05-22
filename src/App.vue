@@ -5,52 +5,60 @@ import SisdaiLeyenda from '@/componentes/SisdaiLeyenda.vue'
 import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import { ref } from 'vue'
 
-const capas = [
-  'pueblosindigenas:asentamientos_historicos',
-  'pueblosindigenas:casas_comedores',
-  'pueblosindigenas:centros_coordinadores',
-  'pueblosindigenas:estados_hist_resi',
-  'pueblosindigenas:indigenas_residentes',
-  'pueblosindigenas:municipios_hist_resi',
-  'pueblosindigenas:nucleos_agrarios',
-  'pueblosindigenas:oficinas_representacion',
-  'pueblosindigenas:radiodifusoras_inpi',
-  'pueblosindigenas:territorios_pueblos_indigenas',
-]
-
 const capasMapa = ref([])
 </script>
 
 <template>
   <div>
-    <span
-      v-for="(capa, idx) in capas"
-      :key="`check-${idx}`"
-    >
-      <input
-        type="checkbox"
-        :id="`check-${idx}`"
-        :value="capa"
-        v-model="capasMapa"
-      />
-      <label :for="`check-${idx}`">{{ capa }}</label>
-    </span>
+    <ol>
+      <li
+        v-for="(capa, idx) in [
+          'pueblosindigenas:asentamientos_historicos',
+          'pueblosindigenas:casas_comedores',
+          'pueblosindigenas:centros_coordinadores',
+          'pueblosindigenas:estados_hist_resi',
+          'pueblosindigenas:indigenas_residentes',
+          'pueblosindigenas:municipios_hist_resi',
+          'pueblosindigenas:nucleos_agrarios',
+          'pueblosindigenas:oficinas_representacion',
+          'pueblosindigenas:radiodifusoras_inpi',
+          'pueblosindigenas:territorios_pueblos_indigenas',
+        ]"
+        :key="`check-${idx}`"
+      >
+        <input
+          type="checkbox"
+          :id="`check-${idx}`"
+          :value="capa"
+          v-model="capasMapa"
+        />
+        <label :for="`check-${idx}`">{{ capa }}</label>
+      </li>
+    </ol>
 
     <hr />
 
     <SisdaiMapa>
       <SisdaiCapa
         id="capa-1"
-        :nombre="capasMapa"
+        nombre="capasMapa"
       />
+      <SisdaiLeyenda para="capa-1" />
+
       <SisdaiCapaWms
-        v-for="(capa, idx) in capasMapa"
-        :key="`capaMapa-${idx}`"
+        v-for="capa in capasMapa"
+        :key="`capa-${capa}`"
+        :id="capa"
+        :nombre="capa"
         :parametros="{
           LAYERS: capa,
         }"
       />
-      <SisdaiLeyenda para="capa-1" />
+      <SisdaiLeyenda
+        v-for="capa in capasMapa"
+        :key="`leyenda-${capa}`"
+        :para="capa"
+      />
     </SisdaiMapa>
 
     <hr />

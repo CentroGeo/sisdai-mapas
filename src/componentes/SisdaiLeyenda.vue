@@ -34,7 +34,7 @@ function vincularCapa(mapa) {
 
   capa.nombre = mapa.buscarCapa(props.para).get('nombre')
   watch(
-    () => mapa.buscarCapa(props.para).get('nombre'),
+    () => mapa.buscarCapa(props.para)?.get('nombre'),
     nv => (capa.nombre = nv)
   )
 }
