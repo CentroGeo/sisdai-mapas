@@ -1,9 +1,11 @@
 <script setup>
-import { idAleatorio, buscarContenedorSisdaiMapa } from '@/utiles'
+import usarRegistroMapas from '@/composables/usarRegistroMapas'
+import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
-import { getCurrentInstance, onMounted, onUnmounted, toRefs, watch } from 'vue'
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
+import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+
+var idMapa
 
 const props = defineProps({
   id: {
@@ -16,12 +18,12 @@ const props = defineProps({
   },
 })
 
-const idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
-
+const sisdaiCapa = shallowRef()
 const { nombre } = toRefs(props)
 
 function agregarCapa(mapa) {
   // console.log(mapa)
+
   mapa.addLayer(
     new TileLayer({
       source: new OSM(),
@@ -30,18 +32,14 @@ function agregarCapa(mapa) {
     })
   )
 
-  watch(nombre, x => {
-    console.log('SisdaiCapa, nombre cambiado', x)
-    mapa
-      .getAllLayers()
-      .find(_capa => _capa.get('id') === props.id)
-      .set('nombre', nombre.value)
-  })
+  watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
 }
 
 onMounted(() => {
   console.log('SisdaiCapa')
   // console.log(`agregar ${capa.get('id')} en mapa ${idMapa}`)
+
+  idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiCapa.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
 })
@@ -49,18 +47,19 @@ onMounted(() => {
 onUnmounted(() => {
   usarRegistroMapas()
     .mapaPromesa(idMapa)
-    .then(mapa => {
+    .then(() => {
       console.log('quitando capa', props.id)
 
-      mapa.removeLayer(
-        mapa.getAllLayers().find(_capa => _capa.get('id') === props.id)
-      )
+      // mapa.eliminarCapa(props.id)
     })
 })
 </script>
 
 <template>
-  <div class="sisddai-capa">
+  <div
+    ref="sisdaiCapa"
+    :sisdai-capa="id"
+  >
     <h2>Hola, soy una capa 😏 [{{ id }}]</h2>
   </div>
 </template>

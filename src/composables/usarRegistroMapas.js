@@ -1,6 +1,7 @@
+import Mapa from '@/clases/Mapa'
 import RegistroObjetos from '@/clases/ResgistroObjetos'
+import View from 'ol/View'
 import { reactive } from 'vue'
-import { Map, View } from 'ol'
 
 const registroMapas = new RegistroObjetos('mapa')
 
@@ -37,14 +38,15 @@ function idValido(id) {
   return id !== undefined && typeof id === typeof String()
 }
 
+/**
+ *
+ * @param {*} target
+ * @returns
+ */
 function crearMapa(target) {
-  return new Map({
+  return new Mapa({
     target,
-    layers: [
-      // new TileLayer({
-      //   source: new OSM(),
-      // }),
-    ],
+    layers: [],
     view: new View({
       center: [-102, 24],
       zoom: 4.5,

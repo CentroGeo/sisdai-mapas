@@ -1,7 +1,9 @@
 <script setup>
-import { buscarContenedorSisdaiMapa, idAleatorio } from '@/utiles'
-import { getCurrentInstance, onMounted, onUnmounted, ref, watch } from 'vue'
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
+import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
+import { onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
+
+var idMapa
 
 const props = defineProps({
   para: {
@@ -10,8 +12,7 @@ const props = defineProps({
   },
 })
 
-var idMapa = buscarContenedorSisdaiMapa(getCurrentInstance())
-
+const sisdaiLeyenda = shallowRef()
 const idCheck = `${props.para}-${idAleatorio()}`
 
 const visible = ref(false)
@@ -20,37 +21,21 @@ const nombre = ref('')
 function vincularCapa(mapa) {
   // console.log(mapa)
 
-  visible.value = mapa
-    .getAllLayers()
-    .find(_capa => _capa.get('id') === props.para)
-    .getVisible()
-  watch(visible, nv => {
-    mapa
-      .getAllLayers()
-      .find(_capa => _capa.get('id') === props.para)
-      .setVisible(nv)
-  })
+  visible.value = mapa.buscarCapa(props.para).getVisible()
+  watch(visible, nv => mapa.buscarCapa(props.para).setVisible(nv))
 
-  nombre.value = mapa
-    .getAllLayers()
-    .find(_capa => _capa.get('id') === props.para)
-    .get('nombre')
+  nombre.value = mapa.buscarCapa(props.para).get('nombre')
   watch(
-    () =>
-      mapa
-        .getAllLayers()
-        .find(_capa => _capa.get('id') === props.para)
-        .get('nombre'),
-    nv => {
-      console.log('SisdaiLeyenda, nombre cambiado', nv)
-      nombre.value = nv
-    }
+    () => mapa.buscarCapa(props.para).get('nombre'),
+    nv => (nombre.value = nv)
   )
 }
 
 onMounted(() => {
   console.log('SisdaiLeyenda')
   // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
+
+  idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiLeyenda.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
 })
@@ -59,7 +44,7 @@ onUnmounted(() => {})
 </script>
 
 <template>
-  <span>
+  <span ref="sisdaiLeyenda">
     <h2>Hola, soy una leyenda 😇 para: {{ para }}</h2>
 
     <form>

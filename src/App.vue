@@ -1,7 +1,7 @@
 <script setup>
-import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import SisdaiCapa from '@/componentes/SisdaiCapa.vue'
 import SisdaiLeyenda from '@/componentes/SisdaiLeyenda.vue'
+import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import { ref } from 'vue'
 
 const nombreCapa1 = ref('Capa 1')

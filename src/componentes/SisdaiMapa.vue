@@ -1,8 +1,8 @@
 <script setup>
-import { idAleatorio } from '@/utiles'
-import { onMounted, onUnmounted, ref } from 'vue'
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
+import { idAleatorio } from '@/utiles'
 import 'ol/ol.css'
+import { onMounted, onUnmounted, ref } from 'vue'
 
 const props = defineProps({
   id: {
@@ -24,7 +24,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="sisddai-mapa">
+  <div
+    :sisdai-mapa="id"
+    class="sisdai-mapa"
+  >
     <h1>Hola, soy un contenedor de mapa 😎 [{{ id }}]</h1>
 
     <div
@@ -37,12 +40,12 @@ onUnmounted(() => {
 </template>
 
 <style>
-.sisddai-mapa {
+.sisdai-mapa {
   width: 100%;
   border: solid 1px tomato;
 }
 
-.sisddai-mapa .mapa {
+.sisdai-mapa .mapa {
   width: 100%;
   height: 400px;
 }
