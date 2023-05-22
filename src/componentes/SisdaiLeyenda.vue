@@ -1,7 +1,7 @@
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
-import { onMounted, onUnmounted, ref, shallowRef, watch } from 'vue'
+import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue'
 
 var idMapa
 
@@ -15,19 +15,27 @@ const props = defineProps({
 const sisdaiLeyenda = shallowRef()
 const idCheck = `${props.para}-${idAleatorio()}`
 
-const visible = ref(false)
-const nombre = ref('')
+const capa = reactive({
+  visible: false,
+  nombre: 'Cargando...',
+})
+
+// const visible = ref(false)
+// const nombre = ref('')
 
 function vincularCapa(mapa) {
   // console.log(mapa)
 
-  visible.value = mapa.buscarCapa(props.para).getVisible()
-  watch(visible, nv => mapa.buscarCapa(props.para).setVisible(nv))
+  capa.visible = mapa.buscarCapa(props.para).getVisible()
+  watch(
+    () => capa.visible,
+    nv => mapa.buscarCapa(props.para).setVisible(nv)
+  )
 
-  nombre.value = mapa.buscarCapa(props.para).get('nombre')
+  capa.nombre = mapa.buscarCapa(props.para).get('nombre')
   watch(
     () => mapa.buscarCapa(props.para).get('nombre'),
-    nv => (nombre.value = nv)
+    nv => (capa.nombre = nv)
   )
 }
 
@@ -51,9 +59,9 @@ onUnmounted(() => {})
       <input
         type="checkbox"
         :id="idCheck"
-        v-model="visible"
+        v-model="capa.visible"
       />
-      <label :for="idCheck">{{ nombre }}</label>
+      <label :for="idCheck">{{ capa.nombre }}</label>
     </form>
   </span>
 </template>
