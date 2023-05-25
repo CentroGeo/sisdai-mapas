@@ -40,7 +40,7 @@ function vincularCapa(mapa) {
 }
 
 onMounted(() => {
-  console.log('SisdaiLeyenda')
+  console.log('SisdaiLeyenda', props.para)
   // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
 
   idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiLeyenda.value)

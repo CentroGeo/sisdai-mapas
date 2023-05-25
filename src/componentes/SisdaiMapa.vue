@@ -30,7 +30,7 @@ onUnmounted(() => {
   >
     <h1>Hola, soy un contenedor de mapa 😎 [{{ id }}]</h1>
 
-    <div
+    <figure
       ref="mapa"
       class="mapa"
     />
