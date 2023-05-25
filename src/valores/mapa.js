@@ -17,6 +17,6 @@ export const vista = {
    *
    */
   zoom: 1.5,
-
-  proyeccion: 'EPSG:4326',
 }
+
+export const proyeccion = 'EPSG:4326'

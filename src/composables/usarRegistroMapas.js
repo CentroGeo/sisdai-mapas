@@ -48,8 +48,6 @@ function crearMapa(target) {
     target,
     layers: [],
     view: new View({
-      // center: [-102, 24],
-      // zoom: 4.5,
       projection: 'EPSG:4326',
     }),
   })

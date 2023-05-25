@@ -17,34 +17,56 @@ const props = defineProps({
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator({ centro, zoom }) {
-      console.log('validador de vista1')
+    validator({ extension, centro, zoom }) {
+      if (extension !== undefined) {
+        // tipos admitidos para extension: [N,N,N,N], ['N','N','N','N'], o 'N,N,N,N'
+        const extensionComoArreglo =
+          typeof extension === typeof String()
+            ? extension.split(',')
+            : extension
 
-      // if (extension !== undefined) {
-      //   return true
-      // }
+        if (
+          !Array.isArray(extensionComoArreglo) ||
+          isNaN(Number(extensionComoArreglo[0])) ||
+          isNaN(Number(extensionComoArreglo[1])) ||
+          isNaN(Number(extensionComoArreglo[2])) ||
+          isNaN(Number(extensionComoArreglo[3]))
+        ) {
+          // eslint-disable-next-line
+          console.error(
+            'EL VALOR DE LA EXTENCIÓN DE LA VISTA DEL MAPA NO ES VALIDO, SE ESPERABA: [Number, Number, Number, Number]'
+          )
+          return false
+        }
+
+        return true
+      }
 
       if (!zoom || !centro) {
         // eslint-disable-next-line
-        console.error('EL ZOOM O EL CENTRO DE LA VISTA NO HAN SIDO DEFINIDOS')
+        console.error(
+          'EL ZOOM O EL CENTRO DE LA VISTA DEL MAPA NO HAN SIDO DEFINIDOS'
+        )
         return false
       }
 
       // tipos admitidos para zoom: N o "N"
       if (isNaN(Number(zoom)) || (Number(zoom) < 1 && Number(zoom) > 22)) {
         // eslint-disable-next-line
-        console.error('EL VALOR DEL ZOOM DEBE SER ENTRE 1 Y 22')
+        console.error(
+          'EL VALOR DEL ZOOM DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
+        )
         return false
       }
 
       // tipos admitidos para centro: [N, N], ['N', 'N'], o 'N,N'
-      const centroVector =
+      const centroComoArreglo =
         typeof centro === typeof String() ? centro.split(',') : centro
 
       if (
-        !Array.isArray(centroVector) ||
-        isNaN(Number(centroVector[0])) ||
-        isNaN(Number(centroVector[1]))
+        !Array.isArray(centroComoArreglo) ||
+        isNaN(Number(centroComoArreglo[0])) ||
+        isNaN(Number(centroComoArreglo[1]))
       ) {
         // eslint-disable-next-line
         console.error(
@@ -63,7 +85,9 @@ const mapa = ref(null)
 const { vista } = toRefs(props)
 
 function asignarValoresVista() {
-  usarRegistroMapas().mapa(props.id).asignarVista(vista.value)
+  usarRegistroMapas()
+    .mapa(props.id)
+    .asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
 }
 watch(vista, asignarValoresVista)
 

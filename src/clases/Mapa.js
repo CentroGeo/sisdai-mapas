@@ -1,3 +1,4 @@
+import { numerosTextoComoArreglo } from '@/utiles'
 import olMap from 'ol/Map'
 
 /**
@@ -10,10 +11,15 @@ export default class Mapa extends olMap {
     super(opcionesOlMap)
   }
 
-  asignarVista({ centro, zoom }) {
-    // console.log('actualizar vista')
-    this.getView().setCenter(centro)
-    this.getView().setZoom(zoom)
+  /**
+   *
+   * @param {Object} param0
+   */
+  asignarVista({ extension, centro, zoom, proyeccion }) {
+    console.log(this.getView())
+    console.log('actualizar vista', extension, proyeccion)
+    this.getView().setCenter(numerosTextoComoArreglo(centro))
+    this.getView().setZoom(Number(zoom))
   }
 
   /**
