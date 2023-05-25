@@ -10,6 +10,12 @@ export default class Mapa extends olMap {
     super(opcionesOlMap)
   }
 
+  asignarVista({ centro, zoom }) {
+    // console.log('actualizar vista')
+    this.getView().setCenter(centro)
+    this.getView().setZoom(zoom)
+  }
+
   /**
    * Busca dentro de la instancia del mapa la capa que contenga un determinado `id`.
    * @param {String} idCapa id de la capa a buscar.

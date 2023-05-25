@@ -9,7 +9,7 @@ window.location.hash = '#map=10/19.6060/-98.7635'
 const vistaMapa = reactive({
   extension: [-118.3651, 14.5321, -86.7104, 32.7187],
   margenExtension: 30 || [30, 30, 30, 30],
-  centro: [],
+  centro: [undefined, undefined],
   zoom: undefined,
 })
 
@@ -20,12 +20,11 @@ function procesarParametrosHash({ hash }) {
   vistaMapa.zoom = obtenerParametroHash(0)
   vistaMapa.centro[0] = obtenerParametroHash(2)
   vistaMapa.centro[1] = obtenerParametroHash(1)
-  console.log('vista', JSON.stringify(vistaMapa))
+  // console.log('vista', JSON.stringify(vistaMapa))
 }
+procesarParametrosHash(window.location)
 
-onMounted(() => {
-  procesarParametrosHash(window.location)
-})
+onMounted(() => {})
 
 function alMoverVista({ getView }) {
   let zoom = getView().getZoom()
