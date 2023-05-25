@@ -27,11 +27,17 @@ function procesarParametrosHash({ hash }) {
 }
 procesarParametrosHash(window.location)
 
-function alMoverVista({ getView }) {
-  let zoom = getView().getZoom()
-  let centro = getView().getCenter()
+function alMoverVista({ map }) {
+  let zoom = map.getView().getZoom()
+  let centro = map.getView().getCenter()
 
-  console.log(centro, zoom)
+  let hash = `#map=${zoom.toFixed(0)}/${centro[1].toFixed(
+    4
+  )}/${centro[0].toFixed(4)}`
+
+  if (hash !== window.location.hash) {
+    window.location.hash = hash
+  }
 }
 </script>
 

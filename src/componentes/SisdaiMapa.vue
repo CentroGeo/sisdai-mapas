@@ -1,3 +1,9 @@
+<script>
+const eventos = {
+  alMoverVista: 'alMoverVista',
+}
+</script>
+
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
 import { idAleatorio } from '@/utiles'
@@ -80,6 +86,8 @@ const props = defineProps({
   },
 })
 
+const emits = defineEmits(Object.values(eventos))
+
 const mapa = ref(null)
 
 const { vista } = toRefs(props)
@@ -95,6 +103,12 @@ onMounted(() => {
   console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(props.id, mapa.value)
   asignarValoresVista()
+
+  usarRegistroMapas()
+    .mapa(props.id)
+    .on('moveend', e => {
+      emits(eventos.alMoverVista, e)
+    })
   // watch(vista, asignarValoresVista)
 })
 

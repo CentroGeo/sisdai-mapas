@@ -15,9 +15,9 @@ export default class Mapa extends olMap {
    *
    * @param {Object} param0
    */
-  asignarVista({ extension, centro, zoom, proyeccion }) {
-    console.log(this.getView())
-    console.log('actualizar vista', extension, proyeccion)
+  asignarVista({ extension, centro, zoom }) {
+    // console.log(this.getView())
+    console.log('actualizar vista', extension)
     this.getView().setCenter(numerosTextoComoArreglo(centro))
     this.getView().setZoom(Number(zoom))
   }
