@@ -1,4 +1,5 @@
-import { numerosTextoComoArreglo } from '@/utiles'
+import { valorarArregloNumerico, valorarMargenExtension } from '@/utiles'
+import * as validaciones from '@/utiles/validaciones'
 import olMap from 'ol/Map'
 
 /**
@@ -15,10 +16,16 @@ export default class Mapa extends olMap {
    *
    * @param {Object} param0
    */
-  asignarVista({ extension, centro, zoom }) {
-    // console.log(this.getView())
-    console.log('actualizar vista', extension)
-    this.getView().setCenter(numerosTextoComoArreglo(centro))
+  asignarVista({ extension, margenExtension, centro, zoom }) {
+    if (validaciones.extension(extension)) {
+      this.getView().fit(valorarArregloNumerico(extension), {
+        padding: valorarMargenExtension(margenExtension),
+      })
+
+      return
+    }
+
+    this.getView().setCenter(valorarArregloNumerico(centro))
     this.getView().setZoom(Number(zoom))
   }
 

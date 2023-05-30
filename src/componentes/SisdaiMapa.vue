@@ -6,11 +6,11 @@ const eventos = {
 
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { idAleatorio } from '@/utiles'
+import { idAleatorio, valorarArregloNumerico } from '@/utiles'
+import * as validaciones from '@/utiles/validaciones'
 import * as valoresPorDefecto from '@/valores/mapa'
 import 'ol/ol.css'
 import { onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
-
 const props = defineProps({
   id: {
     type: String,
@@ -23,35 +23,25 @@ const props = defineProps({
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator({ extension, centro, zoom }) {
-      if (extension !== undefined) {
-        // tipos admitidos para extension: [N,N,N,N], ['N','N','N','N'], o 'N,N,N,N'
-        const extensionComoArreglo =
-          typeof extension === typeof String()
-            ? extension.split(',')
-            : extension
-
+    validator({ extension, margenExtension, centro, zoom }) {
+      if (validaciones.extension(extension)) {
         if (
-          !Array.isArray(extensionComoArreglo) ||
-          isNaN(Number(extensionComoArreglo[0])) ||
-          isNaN(Number(extensionComoArreglo[1])) ||
-          isNaN(Number(extensionComoArreglo[2])) ||
-          isNaN(Number(extensionComoArreglo[3]))
+          margenExtension !== undefined &&
+          !validaciones.margenExtension(margenExtension)
         ) {
-          // eslint-disable-next-line
-          console.error(
-            'EL VALOR DE LA EXTENCIÓN DE LA VISTA DEL MAPA NO ES VALIDO, SE ESPERABA: [Number, Number, Number, Number]'
-          )
           return false
         }
 
         return true
       }
 
+      // tipos admitidos para margenExtension: [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
+      // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
+
       if (!zoom || !centro) {
         // eslint-disable-next-line
         console.error(
-          'EL ZOOM O EL CENTRO DE LA VISTA DEL MAPA NO HAN SIDO DEFINIDOS'
+          'LA PROPIEDAD ZOOM O CENTRO DE LA VISTA DEL MAPA NO HAN SIDO DEFINIDOS'
         )
         return false
       }
@@ -60,23 +50,23 @@ const props = defineProps({
       if (isNaN(Number(zoom)) || (Number(zoom) < 1 && Number(zoom) > 22)) {
         // eslint-disable-next-line
         console.error(
-          'EL VALOR DEL ZOOM DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
+          'LA PROPIEDAD "zoom" DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
         )
         return false
       }
 
       // tipos admitidos para centro: [N, N], ['N', 'N'], o 'N,N'
-      const centroComoArreglo =
-        typeof centro === typeof String() ? centro.split(',') : centro
+      // const centroComoArreglo = esTexto(centro) ? centro.split(',') : centro
+      const centroComoArreglo = valorarArregloNumerico(centro)
 
       if (
         !Array.isArray(centroComoArreglo) ||
-        isNaN(Number(centroComoArreglo[0])) ||
-        isNaN(Number(centroComoArreglo[1]))
+        centroComoArreglo.includes(NaN) ||
+        centroComoArreglo.includes(null)
       ) {
         // eslint-disable-next-line
         console.error(
-          'EL VALOR DEL CENTRO DE LA VISTA DEL MAPA NO ES VALIDO, SE ESPERABA: [Number, Number]'
+          'LA PROPIEDAD "centro" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Number, Number]'
         )
         return false
       }
@@ -109,7 +99,6 @@ onMounted(() => {
     .on('moveend', e => {
       emits(eventos.alMoverVista, e)
     })
-  // watch(vista, asignarValoresVista)
 })
 
 onUnmounted(() => {

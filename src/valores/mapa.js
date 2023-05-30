@@ -13,6 +13,8 @@ export const vista = {
    */
   extension: undefined,
 
+  margenExtension: [],
+
   /**
    *
    */

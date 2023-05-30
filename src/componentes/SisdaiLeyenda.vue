@@ -1,6 +1,6 @@
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue'
 
 var idMapa
@@ -43,7 +43,7 @@ onMounted(() => {
   console.log('SisdaiLeyenda', props.para)
   // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
 
-  idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiLeyenda.value)
+  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
 })

@@ -1,6 +1,6 @@
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import ImageLayer from 'ol/layer/Image'
 import ImageWMS from 'ol/source/ImageWMS'
 import { onBeforeUnmount, onMounted, shallowRef, toRefs } from 'vue'
@@ -60,7 +60,7 @@ function agregarCapa(mapa) {
 onMounted(() => {
   console.log('SisdaiCapaWms', props.id)
 
-  idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiCapaWms.value)
+  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaWms.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
 })

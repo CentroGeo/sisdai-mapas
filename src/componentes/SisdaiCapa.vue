@@ -1,6 +1,6 @@
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdaiMapa, idAleatorio } from '@/utiles'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
@@ -39,7 +39,7 @@ onMounted(() => {
   console.log('SisdaiCapa')
   // console.log(`agregar ${capa.get('id')} en mapa ${idMapa}`)
 
-  idMapa = buscarIdContenedorHtmlSisdaiMapa(sisdaiCapa.value)
+  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapa.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
 })

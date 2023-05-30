@@ -11,36 +11,93 @@ export function idAleatorio() {
 }
 
 /**
- * Busca el atributo `sisdai-mapa` en el elemnto padre del html de un componente.
+ * Busca el atributo `sisdai-{tipo}` en los elemntos padre del html de un componente y deviuelve
+ * su valor.
+ * @param {String} tipo puede ser contenedor de grafica, mapa o algun derivado de los mismos.
  * @param {HTMLElement} html de cualquier elemento.
- * @returns {String} id del mapa contenedor.
+ * @returns {String} valor del atrubutos sisdai-contenedor.
  */
-export function buscarIdContenedorHtmlSisdaiMapa({ parentElement }) {
-  // console.log('buscarIdContenedorHtmlSisdaiMapa', parentElement)
+export function buscarIdContenedorHtmlSisdai(tipo, { parentElement }) {
+  // console.log('buscarIdContenedorHtmlSisdai', parentElement)
+  const atributo = `sisdai-${tipo}`
 
-  if (parentElement.getAttribute('sisdai-mapa') !== null) {
-    // console.log('es SisdaiMapas')
-    return parentElement.getAttribute('sisdai-mapa')
+  if (parentElement.getAttribute(atributo) !== null) {
+    // console.log('es sisdai-contenedor')
+    return parentElement.getAttribute(atributo)
   }
 
   if (parentElement.parentElement !== null) {
     // console.log('buscar un nivel abajo', parentElement.parentElement)
-    return buscarIdContenedorHtmlSisdaiMapa(parentElement)
+    return buscarIdContenedorHtmlSisdai(tipo, parentElement)
   } else {
     // console.log('ya no hay más hijos')
     // eslint-disable-next-line
-    console.warn(`No se encontro el mapa para agregar la capa`)
+    console.warn(`No se encontro el contenedor con el atributo: ${atributo}`)
   }
 }
 
 /**
  *
- * @param {String} texto
- * @returns {Array}
+ * @param {any} esto
+ * @returns {Boolean}
  */
-export function numerosTextoComoArreglo(texto) {
-  return texto.split(',').map(n => Number(n))
+export function esTexto(esto) {
+  return typeof esto === typeof String()
 }
+
+/**
+ *
+ * @param {any} esto
+ * @returns {Boolean}
+ */
+export function esNuemro(esto) {
+  return typeof esto === typeof Number()
+}
+
+/**
+ *
+ * @param {String} esto
+ * @returns {Array|undefined}
+ */
+export function valorarArregloNumerico(esto) {
+  if (esNuemro(esto)) return [esto]
+
+  const arreglo = esTexto(esto) ? esto.split(',') : esto
+
+  if (Array.isArray(arreglo)) return arreglo.map(n => Number(n))
+
+  console.warn(`${esto} NO SE PUEDE VALORAR COMO ARREGLO NUMÉRICO`)
+}
+
+/**
+ *
+ * @param {*} esto
+ * @returns
+ */
+export function valorarMargenExtension(esto) {
+  const arreglo = esto !== undefined ? valorarArregloNumerico(esto) : []
+
+  // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
+  if (arreglo.length === 1) {
+    return [arreglo[0], arreglo[0], arreglo[0], arreglo[0]]
+  }
+
+  if (arreglo.length === 2) {
+    return [arreglo[0], arreglo[1], arreglo[0], arreglo[1]]
+  }
+
+  if (arreglo.length === 3) {
+    return [arreglo[0], arreglo[1], arreglo[2], arreglo[1]]
+  }
+
+  if (arreglo.length >= 4) {
+    return arreglo
+  }
+
+  return [0, 0, 0, 0]
+}
+
+// * * * * * * * * * * * * * * * * * * //
 
 /** D E P R E C A D O
  * getCurrentInstance
@@ -72,4 +129,12 @@ export function buscarIdContenedorSisdaiMapa({ parent }) {
  */
 export function buscarCapaEnMapa(mapa, idCapa) {
   return mapa.getAllLayers().find(capa => capa.get('id') === idCapa)
+}
+/** D E P R E C A D O
+ *
+ * @param {String} texto
+ * @returns {Array}
+ */
+export function numerosTextoComoArreglo(texto) {
+  return texto.split(',').map(n => Number(n))
 }
