@@ -1,42 +1,44 @@
 import { esNuemro, valorarArregloNumerico } from '@/utiles'
 
-export function extension(esto) {
-  if (esto === undefined) return false
+export function extension(valor) {
+  if (valor === undefined) return false
 
   // tipos admitidos para extension: [N,N,N,N], ['N','N','N','N'], o 'N,N,N,N'
-  const estoComoArreglo = valorarArregloNumerico(esto)
-
-  if (
-    !Array.isArray(estoComoArreglo) ||
-    estoComoArreglo.includes(NaN) ||
-    estoComoArreglo.includes(null)
-  ) {
-    // eslint-disable-next-line
-    console.error(
-      'LA PROPIEDAD "extension" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Number, Number, Number, Number]'
-    )
-    return false
-  }
-
-  return true
+  return arregloLleno(
+    valorarArregloNumerico(valor),
+    4,
+    'LA PROPIEDAD "extension" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número, Número, Número]'
+  )
 }
 
-export function margenExtension(esto) {
+export function margenExtension(valor) {
   // tipos admitidos para margenExtension: N, [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
-  if (esNuemro(esto)) return true
+  if (esNuemro(valor)) return true
 
   // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
-  const estoComoArreglo = valorarArregloNumerico(esto)
+  return arregloLleno(
+    valorarArregloNumerico(valor),
+    'LA PROPIEDAD "margenExtension" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número, Número, Número]'
+  )
+}
 
+/**
+ * Valida si un valor es arreglo, contiene un tamaño mínumo y no contiene nulos o NaN.
+ * @param {any} valor a evaluar.
+ * @param {Number} tamanioMinimo tamaño mínimo que debe tener el arreglo.
+ * @param {String} msgError Mensaje de error en caso de que el arreglo no sea valido.
+ * @returns {Boolean} `ture` en caso de ser válido.
+ */
+export function arregloLleno(valor, tamanioMinimo = 0, msgError) {
   if (
-    !Array.isArray(estoComoArreglo) ||
-    estoComoArreglo.includes(NaN) ||
-    estoComoArreglo.includes(null)
+    !Array.isArray(valor) ||
+    valor.length < tamanioMinimo ||
+    valor.includes(NaN) ||
+    valor.includes(null) ||
+    valor.includes(undefined)
   ) {
     // eslint-disable-next-line
-    console.error(
-      'LA PROPIEDAD "margenExtension" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Number, Number, Number, Number]'
-    )
+    console.error(msgError)
     return false
   }
 

@@ -29,14 +29,13 @@ const props = defineProps({
           margenExtension !== undefined &&
           !validaciones.margenExtension(margenExtension)
         ) {
+          // tipos admitidos para margenExtension: [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
+          // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
           return false
         }
 
         return true
       }
-
-      // tipos admitidos para margenExtension: [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
-      // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
 
       if (!zoom || !centro) {
         // eslint-disable-next-line
@@ -46,8 +45,9 @@ const props = defineProps({
         return false
       }
 
+      const zoomValido = Number(zoom)
       // tipos admitidos para zoom: N o "N"
-      if (isNaN(Number(zoom)) || (Number(zoom) < 1 && Number(zoom) > 22)) {
+      if (isNaN(zoomValido) || (zoomValido < 1 && zoomValido > 22)) {
         // eslint-disable-next-line
         console.error(
           'LA PROPIEDAD "zoom" DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
@@ -56,18 +56,13 @@ const props = defineProps({
       }
 
       // tipos admitidos para centro: [N, N], ['N', 'N'], o 'N,N'
-      // const centroComoArreglo = esTexto(centro) ? centro.split(',') : centro
-      const centroComoArreglo = valorarArregloNumerico(centro)
-
       if (
-        !Array.isArray(centroComoArreglo) ||
-        centroComoArreglo.includes(NaN) ||
-        centroComoArreglo.includes(null)
-      ) {
-        // eslint-disable-next-line
-        console.error(
-          'LA PROPIEDAD "centro" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Number, Number]'
+        !validaciones.arregloLleno(
+          valorarArregloNumerico(centro),
+          2,
+          'LA PROPIEDAD "centro" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número]'
         )
+      ) {
         return false
       }
 

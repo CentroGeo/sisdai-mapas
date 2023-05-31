@@ -37,45 +37,54 @@ export function buscarIdContenedorHtmlSisdai(tipo, { parentElement }) {
 }
 
 /**
- *
- * @param {any} esto
- * @returns {Boolean}
+ * Valida si un valor es de tipo texto.
+ * @param {any} valor a evaluar
+ * @returns {Boolean} `ture` en caso de ser texto.
  */
-export function esTexto(esto) {
-  return typeof esto === typeof String()
+export function esTexto(valor) {
+  return typeof valor === typeof String()
 }
 
 /**
- *
- * @param {any} esto
- * @returns {Boolean}
+ * Valida si un valor es de tipo número.
+ * @param {any} valor a evaluar
+ * @returns {Boolean} `ture` en caso de ser número.
  */
-export function esNuemro(esto) {
-  return typeof esto === typeof Number()
+export function esNuemro(valor) {
+  return typeof valor === typeof Number()
 }
 
 /**
- *
- * @param {String} esto
- * @returns {Array|undefined}
+ * Convierte un  valor a un arreglo de valores numericos. Si llega un número, devuelve ese valor
+ * dentro de un array de tamaño 1, si el valor es una cadena lo separa por comas y evalua cada
+ * elemnto como número. En caso de no poder generar el arreglo numérico no devolverá algún valor.
+ * @param {any} valor a evaluar.
+ * @returns {Array<Number>|undefined}
  */
-export function valorarArregloNumerico(esto) {
-  if (esNuemro(esto)) return [esto]
+export function valorarArregloNumerico(valor) {
+  if (esNuemro(valor)) return [valor]
 
-  const arreglo = esTexto(esto) ? esto.split(',') : esto
+  const arreglo = esTexto(valor) ? valor.split(',') : valor
 
   if (Array.isArray(arreglo)) return arreglo.map(n => Number(n))
 
-  console.warn(`${esto} NO SE PUEDE VALORAR COMO ARREGLO NUMÉRICO`)
+  console.warn(`${valor} NO SE PUEDE VALORAR COMO ARREGLO NUMÉRICO`)
 }
 
 /**
+ * Estructura los valores de forma adecueda para el margen de la extención (como lo necesita la
+ * opción padding del fit de la vista del mapa). Los valores pueden llegar en los ordenes:
+ * - todos
+ * - vertical, horizontal
+ * - arriba, horizontal, abajo
+ * - arriba, izquierda, abajo, derecha
+ * @see https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit
  *
- * @param {*} esto
- * @returns
+ * @param {Array|String|Number} valor a evaluar.
+ * @returns {Array<Number>} margenExtension válido: [arriba, izquierda, abajo, derecha].
  */
-export function valorarMargenExtension(esto) {
-  const arreglo = esto !== undefined ? valorarArregloNumerico(esto) : []
+export function valorarMargenExtension(valor) {
+  const arreglo = valor !== undefined ? valorarArregloNumerico(valor) : []
 
   // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
   if (arreglo.length === 1) {
