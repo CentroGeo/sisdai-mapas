@@ -1,16 +1,11 @@
-<script>
-const eventos = {
-  alMoverVista: 'alMoverVista',
-}
-</script>
-
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
 import { idAleatorio } from '@/utiles'
 import { vista as validarVista } from '@/utiles/validaciones'
 import * as valoresPorDefecto from '@/valores/mapa'
 import 'ol/ol.css'
-import { onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
+import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+
 const props = defineProps({
   id: {
     type: String,
@@ -29,7 +24,7 @@ const props = defineProps({
 
 const emits = defineEmits(Object.values(eventos))
 
-const mapa = ref(null)
+const mapa = shallowRef(null)
 
 const { vista } = toRefs(props)
 
@@ -91,3 +86,9 @@ defineExpose({
   height: 400px;
 }
 </style>
+
+<script>
+const eventos = {
+  alMoverVista: 'alMoverVista',
+}
+</script>

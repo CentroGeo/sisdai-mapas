@@ -6,6 +6,10 @@ import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import { ref } from 'vue'
 
 const capasMapa = ref([])
+
+function print(mgs) {
+  console.log(mgs)
+}
 </script>
 
 <template>
@@ -13,16 +17,10 @@ const capasMapa = ref([])
     <ol>
       <li
         v-for="(capa, idx) in [
-          'pueblosindigenas:asentamientos_historicos',
-          'pueblosindigenas:casas_comedores',
-          'pueblosindigenas:centros_coordinadores',
-          'pueblosindigenas:estados_hist_resi',
-          'pueblosindigenas:indigenas_residentes',
-          'pueblosindigenas:municipios_hist_resi',
-          'pueblosindigenas:nucleos_agrarios',
-          'pueblosindigenas:oficinas_representacion',
-          'pueblosindigenas:radiodifusoras_inpi',
-          'pueblosindigenas:territorios_pueblos_indigenas',
+          'contexto:gref_division_estatal_2020',
+          'contexto:gref_division_municipal_2020',
+          'contexto:gref_inst_educacion_sup_05_06_07_2021',
+          'contexto:gref_uneme_capa_ssa_2702202',
         ]"
         :key="`check-${idx}`"
       >
@@ -38,7 +36,7 @@ const capasMapa = ref([])
 
     <hr />
 
-    <SisdaiMapa>
+    <SisdaiMapa :vista="{ extension: '-118.3651, 14.5321, -86.7104, 32.7187' }">
       <SisdaiCapa
         id="capa-1"
         nombre="capasMapa"
@@ -53,6 +51,10 @@ const capasMapa = ref([])
         :parametros="{
           LAYERS: capa,
         }"
+        @alIniciarCarga="() => print(`${capa} cargando...`)"
+        @alFinalizarCarga="
+          estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
+        "
       />
       <SisdaiLeyenda
         v-for="capa in capasMapa"
