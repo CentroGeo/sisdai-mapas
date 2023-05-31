@@ -1,5 +1,5 @@
 <script setup>
-import SisdaiCapa from '@/componentes/SisdaiCapa.vue'
+import SisdaiCapaXyz from '@/componentes/SisdaiCapaXyz.vue'
 import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import { reactive, ref } from 'vue'
 
@@ -56,7 +56,7 @@ function alMoverVista({ map }) {
       :vista="vistaMapa"
       @alMoverVista="alMoverVista"
     >
-      <SisdaiCapa />
+      <SisdaiCapaXyz />
     </SisdaiMapa>
 
     <div class="derecha">derecha</div>
