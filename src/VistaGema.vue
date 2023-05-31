@@ -1,7 +1,7 @@
 <script setup>
 import SisdaiCapa from '@/componentes/SisdaiCapa.vue'
 import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 if (window.location.search === '') {
   window.location.search = '?capas=buscar'
@@ -9,6 +9,8 @@ if (window.location.search === '') {
 if (window.location.hash === '') {
   window.location.hash = '#map=10/19.6060/-98.7635'
 }
+
+const mapa = ref()
 
 const vistaMapa = reactive({
   extension: '-118.3651, 14.5321, -86.7104, 32.7187',
@@ -44,10 +46,13 @@ function alMoverVista({ map }) {
 
 <template>
   <div>
-    <header>header</header>
+    <header>
+      <button @click="mapa.exportarImagen('mapa-gema')">Exportar imagen</button>
+    </header>
     <div class="izquierda">izquierda</div>
 
     <SisdaiMapa
+      ref="mapa"
       :vista="vistaMapa"
       @alMoverVista="alMoverVista"
     >

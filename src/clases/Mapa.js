@@ -1,4 +1,5 @@
 import { valorarArregloNumerico, valorarMargenExtension } from '@/utiles'
+import crearImagenMapa from '@/utiles/CrearImagenMapa'
 import * as validaciones from '@/utiles/validaciones'
 import olMap from 'ol/Map'
 
@@ -46,5 +47,22 @@ export default class Mapa extends olMap {
   eliminarCapa(idCapa) {
     this.removeLayer(this.buscarCapa(idCapa))
     // console.log(this.getAllLayers().map(c => c.get('id')))
+  }
+
+  /**
+   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * pantalla, sin controles. El formato de descargá es PNG.
+   * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
+   * incluir extensión).
+   */
+  exportarImagen(nombreImagen = 'mapa') {
+    this.once('rendercomplete', function () {
+      const link = document.createElement('a')
+      link.href = crearImagenMapa(this)
+      link.download = `${nombreImagen}.png`
+      link.click()
+    })
+
+    this.renderSync()
   }
 }

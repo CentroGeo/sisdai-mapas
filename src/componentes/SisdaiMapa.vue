@@ -6,8 +6,8 @@ const eventos = {
 
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { idAleatorio, valorarArregloNumerico } from '@/utiles'
-import * as validaciones from '@/utiles/validaciones'
+import { idAleatorio } from '@/utiles'
+import { vista as validarVista } from '@/utiles/validaciones'
 import * as valoresPorDefecto from '@/valores/mapa'
 import 'ol/ol.css'
 import { onMounted, onUnmounted, ref, toRefs, watch } from 'vue'
@@ -23,51 +23,7 @@ const props = defineProps({
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator({ extension, margenExtension, centro, zoom }) {
-      if (validaciones.extension(extension)) {
-        if (
-          margenExtension !== undefined &&
-          !validaciones.margenExtension(margenExtension)
-        ) {
-          // tipos admitidos para margenExtension: [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
-          // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
-          return false
-        }
-
-        return true
-      }
-
-      if (!zoom || !centro) {
-        // eslint-disable-next-line
-        console.error(
-          'LA PROPIEDAD ZOOM O CENTRO DE LA VISTA DEL MAPA NO HAN SIDO DEFINIDOS'
-        )
-        return false
-      }
-
-      const zoomValido = Number(zoom)
-      // tipos admitidos para zoom: N o "N"
-      if (isNaN(zoomValido) || (zoomValido < 1 && zoomValido > 22)) {
-        // eslint-disable-next-line
-        console.error(
-          'LA PROPIEDAD "zoom" DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
-        )
-        return false
-      }
-
-      // tipos admitidos para centro: [N, N], ['N', 'N'], o 'N,N'
-      if (
-        !validaciones.arregloLleno(
-          valorarArregloNumerico(centro),
-          2,
-          'LA PROPIEDAD "centro" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número]'
-        )
-      ) {
-        return false
-      }
-
-      return true
-    },
+    validator: validarVista,
   },
 })
 
@@ -98,6 +54,13 @@ onMounted(() => {
 
 onUnmounted(() => {
   usarRegistroMapas().borrarMapa(props.id)
+})
+
+defineExpose({
+  exportarImagen: nombreImagen => {
+    console.log('exportarImagen', nombreImagen)
+    usarRegistroMapas().mapa(props.id).exportarImagen(nombreImagen)
+  },
 })
 </script>
 

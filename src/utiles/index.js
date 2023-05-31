@@ -108,7 +108,7 @@ export function valorarMargenExtension(valor) {
 
 // * * * * * * * * * * * * * * * * * * //
 
-/** D E P R E C A D O
+/** D E P R E C A D O -> buscarIdContenedorHtmlSisdai
  * getCurrentInstance
  * @param {*} param0
  * @returns
@@ -130,7 +130,7 @@ export function buscarIdContenedorSisdaiMapa({ parent }) {
     console.warn(`No se encontro el mapa para agregar la capa ${props.id}`)
   }
 }
-/** D E P R E C A D O
+/** D E P R E C A D O -> (import("clases/Mapa").default).buscarCapa
  *
  * @param {import("ol/Map").default} mapa
  * @param {String} idCapa
@@ -139,7 +139,7 @@ export function buscarIdContenedorSisdaiMapa({ parent }) {
 export function buscarCapaEnMapa(mapa, idCapa) {
   return mapa.getAllLayers().find(capa => capa.get('id') === idCapa)
 }
-/** D E P R E C A D O
+/** D E P R E C A D O -> valorarArregloNumerico
  *
  * @param {String} texto
  * @returns {Array}
