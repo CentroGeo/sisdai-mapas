@@ -1,7 +1,11 @@
 {
   "name": "mapas-vue3",
   "version": "0.0.0",
-  "private": true,
+  "main": "./src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -12,8 +16,7 @@
     "format-lint": "npm run format && npm run lint"
   },
   "dependencies": {
-    "ol": "^7.4.0",
-    "vue": "^3.3.4"
+    "ol": "^7.4.0"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.0",
@@ -27,9 +30,11 @@
     "happy-dom": "^9.20.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
+    "sisdai-css": "github:salsa-community/sisdai-css#develop",
     "vite": "^4.3.9",
     "vitest": "^0.31.4",
-    "volar-service-vetur": "^0.0.4"
+    "volar-service-vetur": "^0.0.4",
+    "vue": "^3.3.4"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
