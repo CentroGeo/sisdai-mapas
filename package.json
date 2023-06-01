@@ -12,7 +12,7 @@
     "format-lint": "npm run format && npm run lint"
   },
   "dependencies": {
-    "ol": "^7.3.0",
+    "ol": "^7.4.0",
     "vue": "^3.3.4"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
     "vite": "^4.3.9",
-    "vitest": "^0.31.3",
+    "vitest": "^0.31.4",
     "volar-service-vetur": "^0.0.4"
   },
   "gitHooks": {
