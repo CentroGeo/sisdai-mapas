@@ -1,6 +1,6 @@
-export default {
+export const tipoEstadoCarga = {
   no: 'indefinida',
-  ini: 'iniciada',
+  inicio: 'iniciada',
   error: 'error',
   fin: 'finalizada',
 }

@@ -1,5 +1,6 @@
 <script setup>
 import usarRegistroMapas from '@/composables/usarRegistroMapas'
+import eventos from '@/eventos/mapa'
 import { idAleatorio } from '@/utiles'
 import { vista as validarVista } from '@/utiles/validaciones'
 import * as valoresPorDefecto from '@/valores/mapa'
@@ -23,9 +24,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(Object.values(eventos))
-
 const mapa = shallowRef(null)
-
 const { vista } = toRefs(props)
 
 function asignarValoresVista() {
@@ -86,9 +85,3 @@ defineExpose({
   height: 400px;
 }
 </style>
-
-<script>
-const eventos = {
-  alMoverVista: 'alMoverVista',
-}
-</script>

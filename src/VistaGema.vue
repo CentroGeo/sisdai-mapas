@@ -42,6 +42,10 @@ function alMoverVista({ map }) {
     window.location.hash = hash
   }
 }
+
+function print(mgs) {
+  console.log(mgs)
+}
 </script>
 
 <template>
@@ -56,7 +60,12 @@ function alMoverVista({ map }) {
       :vista="vistaMapa"
       @alMoverVista="alMoverVista"
     >
-      <SisdaiCapaXyz />
+      <SisdaiCapaXyz
+        @alIniciarCarga="() => print(`GEMA: xyz cargando...`)"
+        @alFinalizarCarga="
+          estado => print(`GEMA: xyz ${estado ? 'cargada' : 'error'}`)
+        "
+      />
     </SisdaiMapa>
 
     <div class="derecha">derecha</div>
