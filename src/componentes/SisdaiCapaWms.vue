@@ -1,11 +1,11 @@
 <script setup>
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import eventos from '@/eventos/capa'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
 import { onBeforeUnmount, onMounted, shallowRef, toRefs } from 'vue'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import eventos from './../eventos/capa'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 
 var idMapa
 

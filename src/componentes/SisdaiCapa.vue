@@ -1,9 +1,9 @@
 <script setup>
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 
 var idMapa
 

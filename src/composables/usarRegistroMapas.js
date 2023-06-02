@@ -1,7 +1,7 @@
-import Mapa from '@/clases/Mapa'
-import RegistroObjetos from '@/clases/ResgistroObjetos'
 import View from 'ol/View'
 import { reactive } from 'vue'
+import Mapa from './../clases/Mapa'
+import RegistroObjetos from './../clases/ResgistroObjetos'
 
 const registroMapas = new RegistroObjetos('mapa')
 

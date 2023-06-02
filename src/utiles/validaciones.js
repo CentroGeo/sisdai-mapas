@@ -1,4 +1,4 @@
-import { esNuemro, valorarArregloNumerico } from '@/utiles'
+import { esNuemro, valorarArregloNumerico } from './'
 
 /**
  * Valida si un valor es arreglo, contiene un tamaño mínumo y no contiene nulos o NaN.

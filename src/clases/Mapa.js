@@ -1,7 +1,7 @@
-import { valorarArregloNumerico, valorarMargenExtension } from '@/utiles'
-import crearImagenMapa from '@/utiles/CrearImagenMapa'
-import * as validaciones from '@/utiles/validaciones'
 import olMap from 'ol/Map'
+import { valorarArregloNumerico, valorarMargenExtension } from './../utiles'
+import crearImagenMapa from './../utiles/CrearImagenMapa'
+import * as validaciones from './../utiles/validaciones'
 
 /**
  * @classdesc

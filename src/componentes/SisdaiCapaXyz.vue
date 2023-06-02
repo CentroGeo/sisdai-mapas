@@ -1,9 +1,4 @@
 <script setup>
-import MonitoreoCargaTeselas from '@/clases/MonitoreoCargaTeselas'
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { teselas as eventos } from '@/eventos/capa'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
-import { tipoEstadoCarga } from '@/valores/capa'
 import TileLayer from 'ol/layer/Tile'
 import TileEventType from 'ol/source/TileEventType'
 import XYZ from 'ol/source/XYZ'
@@ -15,6 +10,11 @@ import {
   toRefs,
   watch,
 } from 'vue'
+import MonitoreoCargaTeselas from './../clases/MonitoreoCargaTeselas'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import { teselas as eventos } from './../eventos/capa'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
+import { tipoEstadoCarga } from './../valores/capa'
 
 var idMapa
 

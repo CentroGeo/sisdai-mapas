@@ -1,4 +1,4 @@
-import { tipoEstadoCarga } from '@/valores/capa'
+import { tipoEstadoCarga } from './../valores/capa'
 
 export default class {
   reiniciar() {

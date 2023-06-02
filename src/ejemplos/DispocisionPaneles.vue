@@ -83,12 +83,21 @@ const paneles = ref([])
 </template>
 
 <style lang="scss">
+@import 'sisdai-css/src/_variables';
+@import 'sisdai-css/src/_mixins';
+
 .sisdai-contenedor-vis {
   .panel-encabezado-vis {
     background: skyblue;
   }
   .panel-izquierda-vis {
     background: sienna;
+  }
+  .contenido-vis {
+    background: #e9e9e9;
+    @include mediaquery('mov') {
+      background: hotpink;
+    }
   }
   .panel-derecha-vis {
     background: bisque;

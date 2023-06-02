@@ -1,7 +1,7 @@
 <script setup>
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '@/utiles'
 import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 
 var idMapa
 
