@@ -1,6 +1,7 @@
 <script setup>
 import SisdaiCapa from '@/componentes/SisdaiCapa.vue'
 import SisdaiCapaWms from '@/componentes/SisdaiCapaWms.vue'
+import SisdaiCapaXyz from '@/componentes/SisdaiCapaXyz.vue'
 import SisdaiLeyenda from '@/componentes/SisdaiLeyenda.vue'
 import SisdaiMapa from '@/componentes/SisdaiMapa.vue'
 import { ref } from 'vue'
@@ -34,14 +35,17 @@ function print(mgs) {
       </li>
     </ol>
 
-    <hr />
-
-    <SisdaiMapa :vista="{ extension: '-118.3651, 14.5321, -86.7104, 32.7187' }">
-      <SisdaiCapa
-        id="capa-1"
-        nombre="capasMapa"
-      />
-      <SisdaiLeyenda para="capa-1" />
+    <SisdaiMapa
+      class="con-panel-encabezado-vis"
+      :vista="{ extension: '-118.3651,14.5321,-86.7104,32.7187' }"
+    >
+      <div class="panel-encabezado-vis p-1">
+        <SisdaiCapa
+          id="capa-1"
+          nombre="capasMapa"
+        />
+        <SisdaiLeyenda para="capa-1" />
+      </div>
 
       <SisdaiCapaWms
         v-for="capa in capasMapa"
@@ -56,18 +60,20 @@ function print(mgs) {
           estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
         "
       />
-      <SisdaiLeyenda
-        v-for="capa in capasMapa"
-        :key="`leyenda-${capa}`"
-        :para="capa"
-      />
+
+      <div class="panel-pie-vis p-1">
+        <SisdaiLeyenda
+          v-for="capa in capasMapa"
+          :key="`leyenda-${capa}`"
+          :para="capa"
+        />
+      </div>
     </SisdaiMapa>
 
-    <hr />
+    <br />
 
-    <SisdaiMapa>
-      <!-- <SisdaiCapa /> -->
-      <!-- <SisdaiLeyenda para="capa-2" /> -->
+    <SisdaiMapa :vista="{ extension: '-118.3651,14.5321,-86.7104,32.7187' }">
+      <SisdaiCapaXyz />
     </SisdaiMapa>
   </div>
 </template>

@@ -6,6 +6,7 @@ import { vista as validarVista } from '@/utiles/validaciones'
 import * as valoresPorDefecto from '@/valores/mapa'
 import 'ol/ol.css'
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+import BotonConahcyt from './BotonConahcyt.vue'
 
 const props = defineProps({
   id: {
@@ -61,27 +62,31 @@ defineExpose({
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa"
+    class="sisdai-mapa sisdai-contenedor-vis borde borde-color-2 borde-redondeado-8"
   >
-    <h1>Hola, soy un contenedor de mapa 😎 [{{ id }}]</h1>
-
-    <figure
-      ref="mapa"
-      class="mapa"
-    />
-
     <slot />
+    <figure
+      class="contenido-vis"
+      ref="mapa"
+    />
+    <BotonConahcyt />
   </div>
 </template>
 
-<style>
-.sisdai-mapa {
-  width: 100%;
-  border: solid 1px tomato;
+<style lang="scss">
+@import './../estilos/ContenedorVis';
+
+.sisdai-mapa.sisdai-contenedor-vis .contenido-vis canvas {
+  border-radius: 14px 14px 0 0;
 }
 
-.sisdai-mapa .mapa {
-  width: 100%;
-  height: 400px;
-}
+// .sisdai-mapa {
+//   width: 100%;
+//   border: solid 1px tomato;
+// }
+
+// .sisdai-mapa .mapa {
+//   width: 100%;
+//   height: 400px;
+// }
 </style>
