@@ -92,6 +92,12 @@
   // min-width: 800px;
   width: 100%;
 
+  .panel-encabezado-vis,
+  .panel-izquierda-vis,
+  .panel-derecha-vis,
+  .panel-pie-vis {
+    overflow: auto;
+  }
   .panel-encabezado-vis {
     border-radius: 7px 7px 0 0;
   }
@@ -99,8 +105,8 @@
     border-top-left-radius: 7px;
   }
   .contenido-vis {
-    background: #e9e9e9;
     min-height: 300px;
+    max-height: calc(100vh - 160px);
     width: 100%;
     border-radius: 7px 7px 0 0;
   }

@@ -1,11 +1,11 @@
 <script setup>
-import usarRegistroMapas from '@/composables/usarRegistroMapas'
-import eventos from '@/eventos/mapa'
-import { idAleatorio } from '@/utiles'
-import { vista as validarVista } from '@/utiles/validaciones'
-import * as valoresPorDefecto from '@/valores/mapa'
 import 'ol/ol.css'
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import eventos from './../eventos/mapa'
+import { idAleatorio } from './../utiles'
+import { vista as validarVista } from './../utiles/validaciones'
+import * as valoresPorDefecto from './../valores/mapa'
 import BotonConahcyt from './BotonConahcyt.vue'
 
 const props = defineProps({
@@ -76,8 +76,12 @@ defineExpose({
 <style lang="scss">
 @import './../estilos/ContenedorVis';
 
-.sisdai-mapa.sisdai-contenedor-vis .contenido-vis canvas {
-  border-radius: 14px 14px 0 0;
+.sisdai-mapa.sisdai-contenedor-vis .contenido-vis {
+  background: #e9e9e9;
+
+  canvas {
+    border-radius: 14px 14px 0 0;
+  }
 }
 
 // .sisdai-mapa {
