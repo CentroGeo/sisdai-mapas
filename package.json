@@ -30,7 +30,7 @@
     "happy-dom": "^9.20.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
-    "sisdai-css": "github:salsa-community/sisdai-css#develop",
+    "sisdai-css": "github:salsa-community/sisdai-css#0.37.3",
     "vite": "^4.3.9",
     "vitest": "^0.31.4",
     "volar-service-vetur": "^0.0.4",
