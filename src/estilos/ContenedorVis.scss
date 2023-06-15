@@ -1,5 +1,8 @@
 @charset 'UTF-8';
 
+@import 'sisdai-css/src/_variables';
+@import 'sisdai-css/src/_mixins';
+
 .sisdai-contenedor-vis {
   display: grid;
   grid-gap: 0;
@@ -29,10 +32,12 @@
 
   &.con-panel-izquierda-vis,
   &.con-panel-derecha-vis {
-    grid-template-columns: repeat(3, 1fr);
-    .panel-encabezado-vis,
-    .panel-pie-vis {
-      grid-column: 1 / 4;
+    @include mediaquery('esc') {
+      grid-template-columns: repeat(3, 1fr);
+      .panel-encabezado-vis,
+      .panel-pie-vis {
+        grid-column: 1 / 4;
+      }
     }
   }
 
@@ -71,9 +76,6 @@
   // &.con-panel-pie-vis {
   // }
 }
-
-@import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
 
 @import 'sisdai-css/src/bordes/base';
 @import 'sisdai-css/src/bordes/redondeado';

@@ -1,20 +1,45 @@
 <script setup>
 import { ref } from 'vue'
-import SisdaiContenedorVis from './../componentes/SisdaiContenedorVis.vue'
+import SisdaiContenedorVis from './../componentes/SisdaiContenedorVis2.vue'
 
+const clasesNoElementos = ['sin-cargador', 'sin-boton-conahcyt', 'sin-bordes']
+
+const noElementos = ref([])
 const paneles = ref([])
+
+setTimeout(() => {
+  // noElementos.value = noElementos.value.filter(el => el !== 'sin-cargador')
+  noElementos.value.push('sin-cargador')
+}, 5000)
 </script>
 
 <template>
   <div>
     <div>
-      <input
-        type="checkbox"
-        id="solo-vis"
-        value="solo-vis"
-        v-model="paneles"
-      />
-      <label for="solo-vis"> solo vis, </label>
+      <span
+        v-for="elemento in clasesNoElementos"
+        :key="`input-${elemento}`"
+      >
+        <input
+          type="checkbox"
+          :id="elemento"
+          :value="elemento"
+          v-model="noElementos"
+        />
+        <label :for="elemento"> {{ elemento }}, </label>
+      </span>
+    </div>
+
+    <div>
+      <span>
+        <input
+          type="checkbox"
+          id="solo-vis"
+          value="solo-vis"
+          v-model="paneles"
+        />
+        <label for="solo-vis"> solo vis, </label>
+      </span>
 
       <span
         v-for="clase in [
@@ -38,7 +63,10 @@ const paneles = ref([])
     <div>
       <h2>Dinamico</h2>
       <SisdaiContenedorVis
-        :class="paneles.map(c => (c !== 'solo-vis' ? `con-${c}` : c))"
+        :class="[
+          ...paneles.map(c => (c !== 'solo-vis' ? `con-${c}` : c)),
+          ...noElementos,
+        ]"
       >
         <div
           class="p-1"
@@ -61,7 +89,10 @@ const paneles = ref([])
       <h2>Modificado</h2>
       <SisdaiContenedorVis
         class="contenedor-modificado"
-        :class="paneles.map(c => (c !== 'solo-vis' ? `con-${c}` : c))"
+        :class="[
+          ...paneles.map(c => (c !== 'solo-vis' ? `con-${c}` : c)),
+          ...noElementos,
+        ]"
       >
         <div
           class="p-1"
