@@ -4,7 +4,7 @@ import SisdaiCargando from './SisdaiCargando.vue'
 </script>
 
 <template>
-  <div class="sisdai-contenedor-vis borde borde-color-2 borde-redondeado-8">
+  <div class="contenedor-vis borde borde-color-2 borde-redondeado-8">
     <slot />
     <figure class="contenido-vis" />
     <SisdaiCargando />
@@ -17,20 +17,16 @@ import SisdaiCargando from './SisdaiCargando.vue'
 @charset 'UTF-8';
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
+@import 'sisdai-css/src/reticula/contenedor-vis';
 
 // Variables
 $alto-menus: 120px;
 $alto-boton-conahcyt: 40px;
-$alto-contenedor-vis: calc(100vh - $alto-menus);
+$alto-maximo-contenedor-vis: calc(100vh - $alto-menus);
 $alto-minimo-vis: 300px;
 
 // Disposición
-.sisdai-contenedor-vis {
-  display: grid;
-  grid-gap: 0;
-  // grid-template-rows: min($alto-minimo-vis);
-  grid-template-rows: auto min($alto-minimo-vis) auto auto auto;
-
+.contenedor-vis {
   // Filas por defecto
   .panel-encabezado-vis {
     grid-row: 1;
@@ -52,12 +48,12 @@ $alto-minimo-vis: 300px;
     // grid-template-rows: 0 min($alto-minimo-vis) 0;
     .panel-encabezado-vis,
     .panel-pie-vis {
-      max-height: calc($alto-contenedor-vis - $alto-minimo-vis);
+      max-height: calc($alto-maximo-contenedor-vis - $alto-minimo-vis);
     }
     &.con-panel-encabezado-vis.con-panel-pie-vis {
       .panel-encabezado-vis,
       .panel-pie-vis {
-        max-height: calc(($alto-contenedor-vis - $alto-minimo-vis) / 2);
+        max-height: calc(($alto-maximo-contenedor-vis - $alto-minimo-vis) / 2);
       }
     }
     &.con-panel-izquierda-vis,
@@ -67,7 +63,7 @@ $alto-minimo-vis: 300px;
       .panel-izquierda-vis,
       .panel-derecha-vis {
         min-height: $alto-minimo-vis;
-        max-height: calc($alto-contenedor-vis - $alto-boton-conahcyt);
+        max-height: calc($alto-maximo-contenedor-vis - $alto-boton-conahcyt);
       }
     }
     &.con-panel-izquierda-vis {
@@ -120,139 +116,6 @@ $alto-minimo-vis: 300px;
   }
 }
 
-// Bordes redondeados
-.sisdai-contenedor-vis {
-  .panel-encabezado-vis,
-  .contenido-vis {
-    border-radius: 7px 7px 0 0;
-  }
-  .sisdai-cargando {
-    border-radius: 7px;
-  }
-  &.con-panel-encabezado-vis .contenido-vis {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  @include mediaquery('esc') {
-    &.con-panel-izquierda-vis {
-      .panel-izquierda-vis {
-        border-top-left-radius: 7px;
-      }
-      .contenido-vis {
-        border-top-left-radius: 0;
-      }
-    }
-    &.con-panel-derecha-vis {
-      .contenido-vis {
-        border-top-right-radius: 0;
-      }
-      .panel-derecha-vis {
-        border-top-right-radius: 7px;
-      }
-    }
-    &.con-panel-encabezado-vis {
-      .panel-derecha-vis,
-      .panel-izquierda-vis {
-        border-top-left-radius: 0;
-        border-top-right-radius: 0;
-      }
-    }
-  }
-}
-
-// Escodner elementos
-.sisdai-contenedor-vis {
-  &.sin-cargador .sisdai-cargando {
-    display: none;
-  }
-
-  &.sin-boton-conahcyt {
-    padding-bottom: 0;
-
-    .boton.boton-conacyt {
-      display: none;
-    }
-
-    .contenido-vis,
-    .panel-izquierda-vis,
-    .panel-derecha-vis,
-    .panel-pie-vis {
-      border-bottom-right-radius: 7px;
-      border-bottom-left-radius: 7px;
-    }
-
-    &.con-panel-izquierda-vis .contenido-vis {
-      border-bottom-right-radius: 0;
-      border-bottom-left-radius: 0;
-    }
-    &.con-panel-derecha-vis {
-      .contenido-vis,
-      .panel-izquierda-vis {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-    &.con-panel-pie-vis {
-      .contenido-vis,
-      .panel-izquierda-vis,
-      .panel-derecha-vis {
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-    }
-
-    @include mediaquery('esc') {
-      &.con-panel-izquierda-vis {
-        .panel-izquierda-vis {
-          border-bottom-right-radius: 0;
-        }
-        .contenido-vis {
-          border-bottom-right-radius: 7px;
-        }
-      }
-      &.con-panel-derecha-vis {
-        .contenido-vis {
-          border-bottom-left-radius: 7px;
-        }
-        .panel-derecha-vis {
-          border-bottom-left-radius: 0;
-        }
-      }
-      &.con-panel-izquierda-vis.con-panel-derecha-vis {
-        .panel-izquierda-vis {
-          border-bottom-left-radius: 7px;
-        }
-        .contenido-vis {
-          border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-      &.con-panel-pie-vis.con-panel-izquierda-vis,
-      &.con-panel-pie-vis.con-panel-derecha-vis {
-        .panel-izquierda-vis,
-        .contenido-vis {
-          border-bottom-right-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-    }
-  }
-
-  &.sin-bordes {
-    border: none;
-
-    .contenido-vis,
-    .sisdai-cargando,
-    .panel-encabezado-vis,
-    .panel-izquierda-vis,
-    .panel-derecha-vis,
-    .panel-pie-vis,
-    .boton.boton-conacyt {
-      border-radius: 0 !important;
-    }
-  }
-}
-
 @import 'sisdai-css/src/bordes/base';
 @import 'sisdai-css/src/bordes/redondeado';
 @import 'sisdai-css/src/bordes/colores';
@@ -265,52 +128,18 @@ $alto-minimo-vis: 300px;
 
 @import 'sisdai-css/src/reticula/margenes';
 
-.sisdai-contenedor-vis {
-  // min-width: 800px;
-  width: 100%;
-
-  .contenido-vis {
-    // min-height: $alto-minimo-vis;
-    width: 100%;
-  }
-
-  .sisdai-cargando {
-    z-index: 10;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  // Botón conahcyt simepre este pegado abajo
-  position: relative;
-  padding-bottom: $alto-boton-conahcyt;
-  .boton.boton-conacyt {
-    position: absolute;
-    bottom: 0;
-  }
-
-  // Scroll en los paneles
-  .panel-encabezado-vis,
-  .panel-izquierda-vis,
-  .panel-derecha-vis,
-  .panel-pie-vis {
-    overflow: auto;
-    scrollbar-width: thin;
-  }
-
-  // Para verificar que no sobresalga de su espacio, escimandolo al boton pie
-  // .boton.boton-conacyt {
-  //   z-index: 1;
-  // }
-  // .contenido-vis,
-  // .sisdai-cargando,
-  // .panel-encabezado-vis,
-  // .panel-izquierda-vis,
-  // .panel-derecha-vis,
-  // .panel-pie-vis {
-  //   z-index: 2;
-  // }
-}
+// .contenedor-vis {
+// Para verificar que no sobresalga de su espacio, escimandolo al boton pie
+// .boton.boton-conacyt {
+//   z-index: 1;
+// }
+// .contenido-vis,
+// .sisdai-cargando,
+// .panel-encabezado-vis,
+// .panel-izquierda-vis,
+// .panel-derecha-vis,
+// .panel-pie-vis {
+//   z-index: 2;
+// }
+// }
 </style>
