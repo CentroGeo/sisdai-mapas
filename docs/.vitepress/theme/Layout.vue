@@ -26,6 +26,8 @@ const { site } = useData()
     <h1>{{ site.title }}</h1>
     <p>{{ site.description }}</p>
 
+    <Content />
+
     <SisdaiPiePaginaConahcyt />
     <SisdaiPiePaginaGobMx />
   </div>
