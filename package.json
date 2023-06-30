@@ -34,6 +34,7 @@
     "happy-dom": "^9.20.3",
     "lint-staged": "^13.2.3",
     "prettier": "^2.8.8",
+    "sisdai-componentes": "github:salsa-community/sisdai-componentes#prueba/componentes-simples",
     "sisdai-css": "github:salsa-community/sisdai-css#feature/contenedor-vis",
     "vite": "^4.3.9",
     "vitepress": "^1.0.0-beta.3",

@@ -1,21 +1,32 @@
 <script setup>
+import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
+import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
+import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
+import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
 import { useData } from 'vitepress'
 
 // https://vitepress.dev/reference/runtime-api#usedata
-const { site, frontmatter } = useData()
+const { site } = useData()
 </script>
 
 <template>
-  <div v-if="frontmatter.home">
+  <div>
+    <SisdaiNavegacionGobMx />
+    <SisdaiNavegacionPrincipal>
+      <ul class="nav-menu">
+        <a
+          class="nav-hipervinculo"
+          href="https://github.com/salsa-community/sisdai-mapas"
+        >
+          GitHub
+        </a>
+      </ul>
+    </SisdaiNavegacionPrincipal>
+
     <h1>{{ site.title }}</h1>
     <p>{{ site.description }}</p>
-    <ul>
-      <li><a href="/markdown-examples.html">Markdown Examples</a></li>
-      <li><a href="/api-examples.html">API Examples</a></li>
-    </ul>
-  </div>
-  <div v-else>
-    <a href="/">Home</a>
-    <Content />
+
+    <SisdaiPiePaginaConahcyt />
+    <SisdaiPiePaginaGobMx />
   </div>
 </template>
