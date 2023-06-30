@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import SisdaiContenedorVis from './../componentes/SisdaiContenedorVis2.vue'
+import SisdaiContenedorVis from './../componentes/SisdaiContenedorVis.vue'
 
 const clasesNoElementos = ['sin-cargador', 'sin-boton-conahcyt', 'sin-bordes']
 const clasesPaneles = [
@@ -69,18 +69,6 @@ setTimeout(() => {
             incidunt illo provident, laborum iure amet dolore error fugiat
             ducimus, est corrupti recusandae!
           </p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Accusantium inventore architecto tempora eligendi, aliquid labore
-            itaque voluptatem numquam. Fugit inventore unde molestias et
-            distinctio voluptatum similique fuga quidem quasi ratione?
-          </p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-            ratione fugit ex suscipit natus repudiandae commodi unde reiciendis
-            deleniti aliquam! Sapiente non alias aperiam reprehenderit dolorem
-            nulla qui doloremque vitae.
-          </p>
         </div>
       </SisdaiContenedorVis>
     </div>
@@ -103,6 +91,18 @@ setTimeout(() => {
             similique tempora dicta delectus, assumenda officiis veritatis alias
             incidunt illo provident, laborum iure amet dolore error fugiat
             ducimus, est corrupti recusandae!
+          </p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+            Accusantium inventore architecto tempora eligendi, aliquid labore
+            itaque voluptatem numquam. Fugit inventore unde molestias et
+            distinctio voluptatum similique fuga quidem quasi ratione?
+          </p>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
+            ratione fugit ex suscipit natus repudiandae commodi unde reiciendis
+            deleniti aliquam! Sapiente non alias aperiam reprehenderit dolorem
+            nulla qui doloremque vitae.
           </p>
         </div>
       </SisdaiContenedorVis>
@@ -139,19 +139,20 @@ setTimeout(() => {
   @include mediaquery('esc') {
     &.con-panel-encabezado-vis.con-panel-derecha-vis {
       .panel-encabezado-vis {
-        grid-area: 1 / 1 / span 1 / span 2;
+        grid-area: 1 / 1 / span 1 / span 8;
         border-top-right-radius: 0;
       }
       .panel-derecha-vis {
-        grid-area: 1 / 3 / span 2 / span 1;
+        grid-area: 1 / 9 / span 2 / span 4;
         border-top-right-radius: 7px;
+        // max-height: calc(300px + (100vh));
       }
       &.con-panel-izquierda-vis {
         .panel-encabezado-vis {
-          grid-area: 1 / 1 / span 1 / span 3;
+          grid-area: 1 / 1 / span 1 / span 9;
         }
         .panel-derecha-vis {
-          grid-area: 1 / 4 / span 2 / span 1;
+          grid-area: 1 / 10 / span 2 / span 3;
         }
       }
     }
