@@ -30,8 +30,10 @@ const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
         </li>
         <li v-for="social in theme.socialLinks">
           <a
-            class="nav-hipervinculo"
             :href="social.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="nav-hipervinculo"
           >
             <span :class="`icono-social-${social.icon}`" />
           </a>
@@ -39,13 +41,15 @@ const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
       </ul>
     </SisdaiNavegacionPrincipal>
 
-    <div v-if="frontmatter.home">
+    <main
+      v-if="frontmatter.home"
+      class="contenedor ancho-lectura"
+    >
       <h1>{{ site.title }}</h1>
       <p>{{ site.description }}</p>
-      <p>{{ frontmatter }}</p>
 
       <Content />
-    </div>
+    </main>
 
     <div
       class="flex"
@@ -61,9 +65,9 @@ const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
         </template>
       </SisdaiMenuLateral>
 
-      <div class="columna-12-esc columna-7-mov">
+      <main class="columna-12-esc columna-7-mov">
         <Content />
-      </div>
+      </main>
     </div>
 
     <SisdaiPiePaginaConahcyt />

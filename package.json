@@ -1,6 +1,7 @@
 {
   "name": "mapas-vue3",
   "version": "0.0.0",
+  "description": "purebas para mapas",
   "main": "./src/index.js",
   "files": [
     "src",
@@ -44,5 +45,9 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/salsa-community/sisdai-mapas"
   }
 }
