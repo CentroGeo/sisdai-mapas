@@ -1,20 +1,37 @@
 <script setup>
+import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
 import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
 import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
 import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
 import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
 import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
 import { useData, useRoute } from 'vitepress'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { site, theme, page, frontmatter } = useData()
 
-const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
+const seccion = computed(() => useRoute().data.relativePath.split('/')[0])
+
+const clasesAccesibles = ref([])
+
+function eliminarClase(claseCss) {
+  clasesAccesibles.value = clasesAccesibles.value.filter(
+    clase => clase !== claseCss
+  )
+}
+
+function agregarClases({ claseCss }) {
+  if (!clasesAccesibles.value.includes(claseCss)) {
+    clasesAccesibles.value.push(claseCss)
+  } else {
+    eliminarClase(claseCss)
+  }
+}
 </script>
 
 <template>
-  <div>
+  <div :class="clasesAccesibles">
     <SisdaiNavegacionGobMx />
     <SisdaiNavegacionPrincipal
       :nav-informacion="`Sección: <b>${page.title}</b>`"
@@ -58,7 +75,7 @@ const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
       <SisdaiMenuLateral class="columna-4-esc columna-1-mov">
         <template #contenido-menu-lateral>
           <ul>
-            <li v-for="sidebar in theme.sidebar[pathIn][0].items">
+            <li v-for="sidebar in theme.sidebar[seccion][0].items">
               <a :href="sidebar.link">{{ sidebar.text }}</a>
             </li>
           </ul>
@@ -70,6 +87,10 @@ const pathIn = computed(() => useRoute().data.relativePath.split('/')[0])
       </main>
     </div>
 
+    <SisdaiMenuAccesibilidad
+      @alSeleccionarOpcion="agregarClases"
+      @restablecer="clasesAccesibles = []"
+    />
     <SisdaiPiePaginaConahcyt />
     <SisdaiPiePaginaGobMx />
   </div>
