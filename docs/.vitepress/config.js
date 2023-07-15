@@ -20,6 +20,7 @@ export default defineConfig({
       { text: 'Visualizaciones', link: '/visualizaciones/' },
       { text: 'Clasificaciones', link: '/clasificaciones/' },
       { text: 'Avanzado', link: '/avanzado/' },
+      { text: 'solo', link: '/solo' },
     ],
 
     sidebar: {
@@ -104,7 +105,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: pkg.repository.url,
+        link: pkg.repository.url || '',
         ariaLabel: '',
       },
     ],

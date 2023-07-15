@@ -32,9 +32,10 @@ function agregarClases({ claseCss }) {
 
 <template>
   <div :class="clasesAccesibles">
-    <SisdaiNavegacionGobMx />
+    <SisdaiNavegacionGobMx v-if="!frontmatter.soloMapa" />
     <SisdaiNavegacionPrincipal
       :nav-informacion="`Sección: <b>${page.title}</b>`"
+      v-if="!frontmatter.soloMapa"
     >
       <ul class="nav-menu">
         <li v-for="nav in theme.nav">
@@ -59,11 +60,16 @@ function agregarClases({ claseCss }) {
     </SisdaiNavegacionPrincipal>
 
     <main
-      v-if="frontmatter.home"
-      class="contenedor ancho-lectura"
+      v-if="frontmatter.home || frontmatter.soloMapa"
+      :class="frontmatter.soloMapa ? '' : 'contenedor ancho-lectura'"
     >
-      <h1>{{ site.title }}</h1>
-      <p>{{ site.description }}</p>
+      <div
+        class="titulo-inicio"
+        v-if="!frontmatter.soloMapa"
+      >
+        <h1>{{ site.title }}</h1>
+        <p>{{ site.description }}</p>
+      </div>
 
       <Content />
     </main>
@@ -91,7 +97,7 @@ function agregarClases({ claseCss }) {
       @alSeleccionarOpcion="agregarClases"
       @restablecer="clasesAccesibles = []"
     />
-    <SisdaiPiePaginaConahcyt />
-    <SisdaiPiePaginaGobMx />
+    <SisdaiPiePaginaConahcyt v-if="!frontmatter.soloMapa" />
+    <SisdaiPiePaginaGobMx v-if="!frontmatter.soloMapa" />
   </div>
 </template>
