@@ -1,5 +1,7 @@
 # No ejecutar lint en node_modules
 node_modules
+package.json
+package-lock.json
 
 # No ejecutar lint en carpetas de compilación (asegúrese de que esté configurada con el nombre correcto de la carpeta de compilación)
 dist

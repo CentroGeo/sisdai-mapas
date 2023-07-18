@@ -101,12 +101,16 @@ div[class*='language-'] + div[class$='-api'] > div[class*='language-'] {
 [class*='language-'] .has-focused-lines .line:not(.has-focus) {
   filter: blur(0.095rem);
   opacity: 0.4;
-  transition: filter 0.35s, opacity 0.35s;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
 
 [class*='language-'] .has-focused-lines .line:not(.has-focus) {
   opacity: 0.7;
-  transition: filter 0.35s, opacity 0.35s;
+  transition:
+    filter 0.35s,
+    opacity 0.35s;
 }
 
 [class*='language-']:hover .has-focused-lines .line:not(.has-focus) {
@@ -154,7 +158,9 @@ div[class*='language-'].line-numbers-mode {
   line-height: var(--vp-code-line-height);
   font-size: var(--vp-code-font-size);
   color: var(--vp-code-line-number-color);
-  transition: border-color 0.5s, color 0.5s;
+  transition:
+    border-color 0.5s,
+    color 0.5s;
 }
 
 [class*='language-'] > button.copy {
@@ -176,7 +182,10 @@ div[class*='language-'].line-numbers-mode {
   background-position: 50%;
   background-size: 20px;
   background-repeat: no-repeat;
-  transition: border-color 0.25s, background-color 0.25s, opacity 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s,
+    opacity 0.25s;
 }
 
 [class*='language-']:hover > button.copy,
@@ -231,7 +240,9 @@ div[class*='language-'].line-numbers-mode {
   font-size: 12px;
   font-weight: 500;
   color: var(--vp-c-code-dimm);
-  transition: color 0.4s, opacity 0.4s;
+  transition:
+    color 0.4s,
+    opacity 0.4s;
 }
 
 [class*='language-']:hover > button.copy + span.lang,
