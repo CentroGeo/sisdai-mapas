@@ -71,6 +71,8 @@ function agregarClases({ claseCss }) {
         <p>{{ site.description }}</p>
       </div>
 
+      <div v-if="frontmatter.soloMapa">regresar</div>
+
       <Content />
     </main>
 
