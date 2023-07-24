@@ -7,6 +7,7 @@ import { idAleatorio } from './../utiles'
 import { vista as validarVista } from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
 import BotonConahcyt from './BotonConahcyt.vue'
+import SisdaiCargando from './SisdaiCargando.vue'
 
 const props = defineProps({
   id: {
@@ -62,13 +63,33 @@ defineExpose({
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa sisdai-contenedor-vis borde borde-color-2 borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis borde borde-color-2 borde-redondeado-8"
   >
+    <div class="panel-encabezado-vis">
+      <slot name="panel-encabezado-vis" />
+    </div>
+
+    <div class="panel-izquierda-vis">
+      <slot name="panel-izquierda-vis" />
+    </div>
+
+    <!-- slot para las capas -->
     <slot />
+
     <figure
       class="contenido-vis"
       ref="mapa"
     />
+
+    <div class="panel-derecha-vis">
+      <slot name="panel-derecha-vis" />
+    </div>
+
+    <div class="panel-pie-vis">
+      <slot name="panel-pie-vis" />
+    </div>
+
+    <SisdaiCargando />
     <BotonConahcyt />
   </div>
 </template>
@@ -76,21 +97,11 @@ defineExpose({
 <style lang="scss">
 @import './../estilos/ContenedorVis';
 
-.sisdai-mapa.sisdai-contenedor-vis .contenido-vis {
+.sisdai-mapa.contenedor-vis .contenido-vis {
   background: #e9e9e9;
 
   canvas {
     border-radius: 14px 14px 0 0;
   }
 }
-
-// .sisdai-mapa {
-//   width: 100%;
-//   border: solid 1px tomato;
-// }
-
-// .sisdai-mapa .mapa {
-//   width: 100%;
-//   height: 400px;
-// }
 </style>

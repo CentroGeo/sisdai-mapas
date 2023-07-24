@@ -54,33 +54,11 @@ const capasMapa = ref([])
 
 <template>
   <SisdaiMapa
+    class="sin-cargador sin-boton-conahcyt sin-bordes con-panel-izquierda-vis con-panel-derecha-vis"
     ref="mapa"
     :vista="vistaMapa"
     @alMoverVista="alMoverVista"
-    class="con-panel-izquierda-vis con-panel-derecha-vis"
   >
-    <div class="panel-izquierda-vis p-1">
-      <button @click="mapa.exportarImagen('mapa-gema')">Exportar imagen</button>
-
-      <p
-        v-for="(capa, idx) in [
-          'contexto:gref_division_estatal_2020',
-          'contexto:gref_division_municipal_2020',
-          'contexto:gref_inst_educacion_sup_05_06_07_2021',
-          'contexto:gref_uneme_capa_ssa_2702202',
-        ]"
-        :key="`check-${idx}`"
-      >
-        <input
-          type="checkbox"
-          :id="`check-${idx}`"
-          :value="capa"
-          v-model="capasMapa"
-        />
-        <label :for="`check-${idx}`">{{ capa }}</label>
-      </p>
-    </div>
-
     <SisdaiCapaXyz
       @alIniciarCarga="() => print(`GEMA: xyz cargando...`)"
       @alFinalizarCarga="
@@ -102,13 +80,41 @@ const capasMapa = ref([])
       "
     />
 
-    <div class="panel-derecha-vis p-1">
-      <SisdaiLeyenda
-        v-for="capa in capasMapa"
-        :key="`leyenda-${capa}`"
-        :para="capa"
-      />
-    </div>
+    <template #panel-izquierda-vis>
+      <div class="p-1">
+        <button @click="mapa.exportarImagen('mapa-gema')">
+          Exportar imagen
+        </button>
+
+        <p
+          v-for="(capa, idx) in [
+            'contexto:gref_division_estatal_2020',
+            'contexto:gref_division_municipal_2020',
+            'contexto:gref_inst_educacion_sup_05_06_07_2021',
+            'contexto:gref_uneme_capa_ssa_2702202',
+          ]"
+          :key="`check-${idx}`"
+        >
+          <input
+            type="checkbox"
+            :id="`check-${idx}`"
+            :value="capa"
+            v-model="capasMapa"
+          />
+          <label :for="`check-${idx}`">{{ capa }}</label>
+        </p>
+      </div>
+    </template>
+
+    <template #panel-derecha-vis>
+      <div class="p-1">
+        <SisdaiLeyenda
+          v-for="capa in capasMapa"
+          :key="`leyenda-${capa}`"
+          :para="capa"
+        />
+      </div>
+    </template>
   </SisdaiMapa>
 </template>
 

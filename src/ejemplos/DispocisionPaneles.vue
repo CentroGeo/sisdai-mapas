@@ -56,20 +56,22 @@ setTimeout(() => {
       <SisdaiContenedorVis
         :class="[...paneles.map(c => `con-${c}`), ...noElementos]"
       >
-        <div
-          class="p-1"
+        <template
           v-for="clase in paneles"
           :key="`panel-${clase}`"
-          :class="clase"
+          #[clase]
         >
-          <h2>{{ clase }}</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            similique tempora dicta delectus, assumenda officiis veritatis alias
-            incidunt illo provident, laborum iure amet dolore error fugiat
-            ducimus, est corrupti recusandae!
-          </p>
-        </div>
+          <div class="p-1">
+            <h2>{{ clase }}</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+              similique tempora dicta delectus, assumenda officiis veritatis
+              alias incidunt illo provident, laborum iure amet dolore error
+              fugiat ducimus, est corrupti recusandae!
+            </p>
+            <button class="boton-primario boton-chico">clase</button>
+          </div>
+        </template>
       </SisdaiContenedorVis>
     </div>
 
@@ -79,32 +81,33 @@ setTimeout(() => {
         class="contenedor-modificado"
         :class="[...paneles.map(c => `con-${c}`), ...noElementos]"
       >
-        <div
-          class="p-1"
+        <template
           v-for="clase in paneles"
           :key="`panel-${clase}-mod`"
-          :class="clase"
+          #[clase]
         >
-          <h2>{{ clase }}</h2>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-            similique tempora dicta delectus, assumenda officiis veritatis alias
-            incidunt illo provident, laborum iure amet dolore error fugiat
-            ducimus, est corrupti recusandae!
-          </p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Accusantium inventore architecto tempora eligendi, aliquid labore
-            itaque voluptatem numquam. Fugit inventore unde molestias et
-            distinctio voluptatum similique fuga quidem quasi ratione?
-          </p>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloremque
-            ratione fugit ex suscipit natus repudiandae commodi unde reiciendis
-            deleniti aliquam! Sapiente non alias aperiam reprehenderit dolorem
-            nulla qui doloremque vitae.
-          </p>
-        </div>
+          <div class="p-1">
+            <h2>{{ clase }}</h2>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+              similique tempora dicta delectus, assumenda officiis veritatis
+              alias incidunt illo provident, laborum iure amet dolore error
+              fugiat ducimus, est corrupti recusandae!
+            </p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Accusantium inventore architecto tempora eligendi, aliquid labore
+              itaque voluptatem numquam. Fugit inventore unde molestias et
+              distinctio voluptatum similique fuga quidem quasi ratione?
+            </p>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Doloremque ratione fugit ex suscipit natus repudiandae commodi
+              unde reiciendis deleniti aliquam! Sapiente non alias aperiam
+              reprehenderit dolorem nulla qui doloremque vitae.
+            </p>
+          </div>
+        </template>
       </SisdaiContenedorVis>
     </div>
   </div>

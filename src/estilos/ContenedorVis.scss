@@ -3,79 +3,7 @@
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 
-.sisdai-contenedor-vis {
-  display: grid;
-  grid-gap: 0;
-
-  .panel-encabezado-vis {
-    grid-row: 1;
-  }
-  .panel-izquierda-vis,
-  .contenido-vis,
-  .panel-derecha-vis {
-    grid-row: 2;
-  }
-  .panel-izquierda-vis {
-    grid-column: 1;
-  }
-  .panel-pie-vis {
-    grid-row: 3;
-  }
-
-  &.con-panel-encabezado-vis {
-    .panel-izquierda-vis,
-    .contenido-vis,
-    .panel-derecha-vis {
-      border-radius: 0;
-    }
-  }
-
-  &.con-panel-izquierda-vis,
-  &.con-panel-derecha-vis {
-    @include mediaquery('esc') {
-      grid-template-columns: repeat(3, 1fr);
-      .panel-encabezado-vis,
-      .panel-pie-vis {
-        grid-column: 1 / 4;
-      }
-    }
-  }
-
-  &.con-panel-izquierda-vis {
-    .contenido-vis {
-      grid-column: 2 / 4;
-      border-top-left-radius: 0;
-    }
-  }
-
-  &.con-panel-derecha-vis {
-    .contenido-vis {
-      grid-column: 1 / 3;
-      border-top-right-radius: 0;
-    }
-    .panel-derecha-vis {
-      grid-column: 3;
-    }
-  }
-
-  &.con-panel-izquierda-vis.con-panel-derecha-vis {
-    grid-template-columns: repeat(4, 1fr);
-    .panel-encabezado-vis,
-    .panel-pie-vis {
-      grid-column: 1 / 5;
-    }
-    .contenido-vis {
-      grid-column: 2 / 4;
-    }
-    .panel-derecha-vis {
-      grid-column: 4;
-    }
-  }
-
-  // Sin alteraciones para el pie por defecto
-  // &.con-panel-pie-vis {
-  // }
-}
+@import 'sisdai-css/src/reticula/contenedor-vis';
 
 @import 'sisdai-css/src/bordes/base';
 @import 'sisdai-css/src/bordes/redondeado';
@@ -89,56 +17,17 @@
 
 @import 'sisdai-css/src/reticula/margenes';
 
-.sisdai-contenedor-vis {
-  max-height: calc(100vh - 120px); // alto de la pantalla menos los menús
-  // min-width: 800px;
-  width: 100%;
-
-  .panel-encabezado-vis,
-  .panel-izquierda-vis,
-  .panel-derecha-vis,
-  .panel-pie-vis {
-    overflow: auto;
-  }
-  .panel-encabezado-vis {
-    border-radius: 7px 7px 0 0;
-  }
-  .panel-izquierda-vis {
-    border-top-left-radius: 7px;
-  }
-  .contenido-vis {
-    min-height: 300px;
-    max-height: calc(100vh - 160px);
-    width: 100%;
-    border-radius: 7px 7px 0 0;
-  }
-  .panel-derecha-vis {
-    border-top-right-radius: 7px;
-  }
-
-  // lo siguiente logra que el botón conahcyt simepre este pegado abajo
-  position: relative;
-  padding-bottom: 40px;
-  .boton.boton-conacyt {
-    position: absolute;
-    bottom: 0;
-  }
-
-  &.solo-vis {
-    padding: 0;
-    display: block;
-    border: none;
-
-    .contenido-vis {
-      border-radius: 0;
-    }
-
-    .panel-encabezado-vis,
-    .panel-izquierda-vis,
-    .panel-derecha-vis,
-    .panel-pie-vis,
-    .boton.boton-conacyt {
-      display: none;
-    }
-  }
-}
+// .contenedor-vis {
+//   // Para verificar que no sobresalga de su espacio, escimandolo al boton pie
+//   .boton.boton-conacyt {
+//     z-index: 1;
+//   }
+//   .contenido-vis,
+//   .sisdai-cargando,
+//   .panel-encabezado-vis,
+//   .panel-izquierda-vis,
+//   .panel-derecha-vis,
+//   .panel-pie-vis {
+//     z-index: 2;
+//   }
+// }
