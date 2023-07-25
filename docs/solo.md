@@ -3,6 +3,8 @@ soloMapa: true
 title: Solo el mapa
 ---
 
-<p>
-  Solo el mapa
-</p>
+<script setup>
+import gema from "./.vitepress/components/usos/gema.vue";
+</script>
+
+<gema />

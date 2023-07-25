@@ -1,5 +1,6 @@
 import 'sisdai-css'
 import 'vitepress/dist/client/theme-default/styles/vars.css'
+import SisdaiMapas from './../../../src/install'
 import './estilo/codigo.css'
 import './estilo/index.scss'
 
@@ -10,5 +11,6 @@ export default {
   Layout,
   enhanceApp({ app, router, siteData }) {
     // ...
+    app.use(SisdaiMapas)
   },
 }
