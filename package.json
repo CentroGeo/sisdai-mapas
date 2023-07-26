@@ -35,7 +35,7 @@
     "happy-dom": "^10.5.2",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.0",
-    "sisdai-componentes": "github:salsa-community/sisdai-componentes#prueba/componentes-simples",
+    "sisdai-componentes": "github:salsa-community/sisdai-componentes#test/simples",
     "sisdai-css": "github:salsa-community/sisdai-css#feature/contenedor-vis",
     "vite": "^4.4.7",
     "vitepress": "^1.0.0-beta.6",
@@ -49,5 +49,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/salsa-community/sisdai-mapas"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/salsa-community/sisdai-mapas/issues"
+  },
+  "homepage": "https://github.com/salsa-community/sisdai-mapas#readme"
 }

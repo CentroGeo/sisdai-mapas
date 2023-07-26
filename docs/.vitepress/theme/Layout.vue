@@ -1,32 +1,39 @@
 <script setup>
-import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
-import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
-import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
-import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
-import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
-import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
-import { useData, useRoute } from 'vitepress'
-import { computed, ref } from 'vue'
+// import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
+// import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
+// import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
+// import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
+// import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
+// import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
+import { useData } from 'vitepress'
+import { isActive } from 'vitepress/dist/client/shared'
+import { ref } from 'vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { site, theme, page, frontmatter } = useData()
 
-const seccion = computed(() => useRoute().data.relativePath.split('/')[0])
-
 const clasesAccesibles = ref([])
-
 function eliminarClase(claseCss) {
   clasesAccesibles.value = clasesAccesibles.value.filter(
     clase => clase !== claseCss
   )
 }
-
 function agregarClases({ claseCss }) {
   if (!clasesAccesibles.value.includes(claseCss)) {
     clasesAccesibles.value.push(claseCss)
   } else {
     eliminarClase(claseCss)
   }
+}
+
+function listaSidebar({ sidebar }, { relativePath }) {
+  return sidebar[
+    Object.keys(sidebar).find(side => isActive(relativePath, side, !!side))
+  ]
+}
+
+function tieneSidebar(theme, page) {
+  return listaSidebar(theme, page) !== undefined
 }
 </script>
 
@@ -40,8 +47,17 @@ function agregarClases({ claseCss }) {
       <ul class="nav-menu">
         <li v-for="nav in theme.nav">
           <a
-            :href="nav.link"
             class="nav-hipervinculo"
+            :class="{
+              'router-link-exact-active router-link-active': isActive(
+                page.relativePath,
+                nav.activeMatch || nav.link,
+                !!nav.activeMatch
+              ),
+            }"
+            :href="nav.link"
+            :target="nav.target"
+            :rel="nav.rel"
           >
             {{ nav.text }}
           </a>
@@ -59,39 +75,52 @@ function agregarClases({ claseCss }) {
       </ul>
     </SisdaiNavegacionPrincipal>
 
-    <main
-      v-if="frontmatter.home || frontmatter.soloMapa"
-      :class="frontmatter.soloMapa ? '' : 'contenedor ancho-lectura'"
-    >
-      <div
-        class="titulo-inicio"
-        v-if="!frontmatter.soloMapa"
+    <div :class="{ flex: tieneSidebar(theme, page) }">
+      <SisdaiMenuLateral
+        v-if="tieneSidebar(theme, page)"
+        class="columna-4-esc columna-1-mov"
       >
-        <h1>{{ site.title }}</h1>
-        <p>{{ site.description }}</p>
-      </div>
-
-      <!-- <div v-if="frontmatter.soloMapa">regresar</div> -->
-
-      <Content />
-    </main>
-
-    <div
-      class="flex"
-      v-else
-    >
-      <SisdaiMenuLateral class="columna-4-esc columna-1-mov">
         <template #contenido-menu-lateral>
           <ul>
-            <li v-for="sidebar in theme.sidebar[seccion][0].items">
+            <li v-for="sidebar in listaSidebar(theme, page).items">
               <a :href="sidebar.link">{{ sidebar.text }}</a>
             </li>
           </ul>
         </template>
       </SisdaiMenuLateral>
 
-      <main class="columna-12-esc columna-7-mov">
+      <main
+        :class="{
+          'columna-12-esc columna-7-mov': tieneSidebar(theme, page),
+          'contenedor ancho-lectura': frontmatter.home,
+        }"
+      >
+        <div
+          class="titulo-inicio"
+          v-if="frontmatter.home"
+        >
+          <h1>{{ site.title }}</h1>
+          <p>{{ site.description }}</p>
+        </div>
+
         <Content />
+        <hr />
+        <p>
+          {{
+            theme.lastUpdated?.text ||
+            theme.lastUpdatedText ||
+            'Última actualización'
+          }}:
+          <time :datetime="new Date(page.lastUpdated).toISOString()">{{
+            new Intl.DateTimeFormat(
+              'es-MX',
+              theme.lastUpdated?.formatOptions ?? {
+                dateStyle: 'short',
+                timeStyle: 'short',
+              }
+            ).format(new Date(page.lastUpdated))
+          }}</time>
+        </p>
       </main>
     </div>
 
@@ -101,5 +130,10 @@ function agregarClases({ claseCss }) {
     />
     <SisdaiPiePaginaConahcyt v-if="!frontmatter.soloMapa" />
     <SisdaiPiePaginaGobMx v-if="!frontmatter.soloMapa" />
+    <SisdaiInfoDeDespliegue
+      versionProyecto="-"
+      entornoProyecto="-"
+      actualizacionProyecto="-"
+    />
   </div>
 </template>

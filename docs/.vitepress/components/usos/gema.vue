@@ -50,7 +50,7 @@ const capasMapa = ref([])
 
 <template>
   <SisdaiMapa
-    class="mapa-gema sin-cargador sin-boton-conahcyt con-panel-izquierda-vis con-panel-derecha-vis"
+    class="mapa-gema sin-cargador sin-bordes sin-boton-conahcyt con-panel-izquierda-vis con-panel-derecha-vis"
     ref="mapa"
     :vista="vistaMapa"
     @alMoverVista="alMoverVista"
@@ -78,7 +78,10 @@ const capasMapa = ref([])
 
     <template #panel-izquierda-vis>
       <div class="p-1">
-        <button @click="mapa.exportarImagen('mapa-gema')">
+        <button
+          class="boton-chico"
+          @click="mapa.exportarImagen('mapa-gema')"
+        >
           Exportar imagen
         </button>
 
@@ -115,11 +118,13 @@ const capasMapa = ref([])
 </template>
 
 <style lang="scss">
+@import 'sisdai-css/src/_variables';
+@import 'sisdai-css/src/_mixins';
+
 div.mapa-gema {
   height: 100vh;
-
-  div.panel-izquierda-vis {
-    height: 100%;
+  @include mediaquery('esc') {
+    grid-template-rows: minmax(300px, 100%);
   }
 
   label,
