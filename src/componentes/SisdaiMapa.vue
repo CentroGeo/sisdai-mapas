@@ -1,5 +1,4 @@
 <script setup>
-import 'ol/ol.css'
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
@@ -95,13 +94,65 @@ defineExpose({
 </template>
 
 <style lang="scss">
-@import './../estilos/ContenedorVis';
+@import 'sisdai-css/src/_variables';
+@import 'sisdai-css/src/_mixins';
+// @import './../estilos/ContenedorVis.scss';
 
-.sisdai-mapa.contenedor-vis .contenido-vis {
-  background: #e9e9e9;
+.sisdai-mapa.contenedor-vis {
+  $border-radius-canvas: 14px;
 
-  canvas {
-    border-radius: 14px 14px 0 0;
+  .contenido-vis {
+    background: #e9e9e9;
+
+    canvas {
+      border-radius: $border-radius-canvas $border-radius-canvas 0 0;
+    }
+  }
+
+  &.con-panel-encabezado-vis canvas,
+  &.con-panel-izquierda-vis canvas {
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+  }
+  @include mediaquery('esc') {
+    &.con-panel-izquierda-vis canvas {
+      border-top-left-radius: 0;
+      border-top-right-radius: $border-radius-canvas;
+    }
+    &.con-panel-derecha-vis canvas {
+      border-top-right-radius: 0;
+    }
+  }
+
+  &.sin-boton-conahcyt {
+    canvas {
+      border-bottom-right-radius: $border-radius-canvas;
+      border-bottom-left-radius: $border-radius-canvas;
+    }
+    &.con-panel-derecha-vis canvas,
+    &.con-panel-pie-vis canvas {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    @include mediaquery('esc') {
+      &.con-panel-encabezado-vis.con-panel-izquierda-vis canvas {
+        border-top-right-radius: 0;
+      }
+      &.con-panel-izquierda-vis canvas {
+        border-bottom-left-radius: 0;
+      }
+      &.con-panel-izquierda-vis.con-panel-derecha-vis canvas,
+      &.con-panel-derecha-vis.con-panel-pie-vis canvas {
+        border-bottom-left-radius: 0;
+      }
+      &.con-panel-derecha-vis canvas {
+        border-bottom-left-radius: $border-radius-canvas;
+      }
+    }
+  }
+
+  &.sin-bordes canvas {
+    border-radius: 0;
   }
 }
 </style>

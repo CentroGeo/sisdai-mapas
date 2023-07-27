@@ -50,10 +50,12 @@ setTimeout(() => {
       </span>
     </div>
 
-    <SisdaiContenedorVis
+    <SisdaiMapa
       class="dinamico"
       :class="[...paneles.map(c => `con-${c}`), ...noElementos]"
     >
+      <SisdaiCapaXyz />
+
       <template
         v-for="clase in paneles"
         :key="`panel-${clase}`"
@@ -70,7 +72,7 @@ setTimeout(() => {
           <button class="boton-primario boton-chico">clase</button>
         </div>
       </template>
-    </SisdaiContenedorVis>
+    </SisdaiMapa>
   </div>
 </template>
 
