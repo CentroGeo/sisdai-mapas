@@ -127,7 +127,7 @@ function nav() {
     //   activeMatch: '/clasificaciones/',
     // },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    { text: 'solo', link: '/solo' },
+    { text: pkg.version, link: '/solo' },
   ]
 }
 
@@ -136,8 +136,8 @@ function sidebarComienza(path) {
     text: 'Comienza',
     // collapsed: false,
     items: [
-      { text: 'Instalación', link: `/${path}/instalacion` },
-      { text: 'Mapa Básico', link: `/${path}/basico` },
+      { text: 'Primeros pasos', link: `/${path}/` },
+      // { text: 'Mapa Básico', link: `/${path}/basico` },
       { text: 'Configuración', link: `/${path}/configuracion` },
       { text: 'Vista', link: `/${path}/vista` },
       { text: 'Capas', link: `/${path}/capas` },

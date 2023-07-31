@@ -1,10 +1,4 @@
 <script setup>
-// import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
-// import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
-// import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
-// import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
-// import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
-// import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
 import { useData } from 'vitepress'
 import { isActive } from 'vitepress/dist/client/shared'
 import { ref } from 'vue'
@@ -12,19 +6,7 @@ import { ref } from 'vue'
 // https://vitepress.dev/reference/runtime-api#usedata
 const { site, theme, page, frontmatter } = useData()
 
-const clasesAccesibles = ref([])
-function eliminarClase(claseCss) {
-  clasesAccesibles.value = clasesAccesibles.value.filter(
-    clase => clase !== claseCss
-  )
-}
-function agregarClases({ claseCss }) {
-  if (!clasesAccesibles.value.includes(claseCss)) {
-    clasesAccesibles.value.push(claseCss)
-  } else {
-    eliminarClase(claseCss)
-  }
-}
+const menuAccesibilidad = ref(null)
 
 function listaSidebar({ sidebar }, { relativePath }) {
   return sidebar[
@@ -38,7 +20,7 @@ function tieneSidebar(theme, page) {
 </script>
 
 <template>
-  <div :class="clasesAccesibles">
+  <div :class="menuAccesibilidad?.clasesSelecciondas">
     <SisdaiNavegacionGobMx v-if="!frontmatter.soloMapa" />
     <SisdaiNavegacionPrincipal
       :nav-informacion="`Sección: <b>${page.title}</b>`"
@@ -92,42 +74,55 @@ function tieneSidebar(theme, page) {
       <main
         :class="{
           'columna-12-esc columna-7-mov': tieneSidebar(theme, page),
-          'contenedor ancho-lectura': frontmatter.home,
+          'contenedor ancho-lectura m-y-5': frontmatter.home,
         }"
       >
         <div
-          class="titulo-inicio"
+          class="vista-inicio"
           v-if="frontmatter.home"
         >
-          <h1>{{ site.title }}</h1>
-          <p>{{ site.description }}</p>
+          <img
+            src="favicon.ico"
+            alt="Icono de Conahcyt"
+          />
+          <h1 class="titulo-pagina">{{ site.title }}</h1>
+          <p class="parrafo-texto-alto">{{ site.description }}</p>
+          <a
+            class="boton boton-primario"
+            href="/comienza/"
+          >
+            Empezar
+          </a>
         </div>
 
-        <Content />
-        <hr />
-        <p>
-          {{
-            theme.lastUpdated?.text ||
-            theme.lastUpdatedText ||
-            'Última actualización'
-          }}:
-          <time :datetime="new Date(page.lastUpdated).toISOString()">{{
-            new Intl.DateTimeFormat(
-              'es-MX',
-              theme.lastUpdated?.formatOptions ?? {
-                dateStyle: 'short',
-                timeStyle: 'short',
-              }
-            ).format(new Date(page.lastUpdated))
-          }}</time>
-        </p>
+        <Content class="m-r-3" />
+
+        <div
+          class="m-r-3"
+          v-if="!frontmatter.home"
+        >
+          <hr />
+          <p>
+            {{
+              theme.lastUpdated?.text ||
+              theme.lastUpdatedText ||
+              'Última actualización'
+            }}:
+            <time :datetime="new Date(page.lastUpdated).toISOString()">{{
+              new Intl.DateTimeFormat(
+                'es-MX',
+                theme.lastUpdated?.formatOptions ?? {
+                  dateStyle: 'short',
+                  timeStyle: 'short',
+                }
+              ).format(new Date(page.lastUpdated))
+            }}</time>
+          </p>
+        </div>
       </main>
     </div>
 
-    <SisdaiMenuAccesibilidad
-      @alSeleccionarOpcion="agregarClases"
-      @restablecer="clasesAccesibles = []"
-    />
+    <SisdaiMenuAccesibilidad ref="menuAccesibilidad" />
     <SisdaiPiePaginaConahcyt v-if="!frontmatter.soloMapa" />
     <SisdaiPiePaginaGobMx v-if="!frontmatter.soloMapa" />
     <SisdaiInfoDeDespliegue
@@ -137,3 +132,14 @@ function tieneSidebar(theme, page) {
     />
   </div>
 </template>
+
+<style lang="scss">
+.vista-inicio {
+  text-align: center;
+
+  img {
+    max-width: 100%;
+    max-height: 280px;
+  }
+}
+</style>

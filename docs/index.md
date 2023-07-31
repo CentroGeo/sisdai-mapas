@@ -3,7 +3,7 @@ home: true
 title: Inicio
 ---
 
-<script setup>
+<!-- <script setup>
 import basico from "./.vitepress/components/basico.vue";
 </script>
 
@@ -25,4 +25,4 @@ export default {
 <<< @/.vitepress/components/basico.vue{2}
 
 <style lang="sass">
-</style>
+</style> -->

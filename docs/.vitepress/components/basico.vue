@@ -1,3 +1,5 @@
 <template>
-  <div>hola soy un componente</div>
+  <SisdaiMapa>
+    <SisdaiCapaXyz />
+  </SisdaiMapa>
 </template>

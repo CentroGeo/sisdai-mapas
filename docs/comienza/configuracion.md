@@ -1,3 +1,3 @@
-# Mapa básico
+# Configuración
 
 aquí un ejemplo de mapa a básico
