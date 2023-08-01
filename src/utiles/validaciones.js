@@ -34,22 +34,22 @@ export function extension(valor) {
   )
 }
 
-export function margenExtension(valor) {
-  // tipos admitidos para margenExtension: N, [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
+export function extensionMargen(valor) {
+  // tipos admitidos para extensionMargen: N, [N, N, N, N], ['N', 'N', 'N', 'N'], o 'N,N,N,N'
   if (esNuemro(valor)) return true
 
-  // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
+  // tipos admitidos para extensionMargen: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
   return arregloSinVacios(
     valorarArregloNumerico(valor),
-    'LA PROPIEDAD "margenExtension" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número, Número, Número]'
+    'LA PROPIEDAD "extensionMargen" DE LA VISTA DEL MAPA NO ES VALIDA, SE ESPERABA: [Número, Número, Número, Número]'
   )
 }
 
 export function vista(valor) {
   if (extension(valor.extension)) {
     if (
-      valor.margenExtension !== undefined &&
-      !margenExtension(valor.margenExtension)
+      valor.extensionMargen !== undefined &&
+      !extensionMargen(valor.extensionMargen)
     ) {
       return false
     }

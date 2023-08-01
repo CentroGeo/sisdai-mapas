@@ -2,6 +2,8 @@
  * @module utiles/index
  */
 
+import { vista } from './../valores/mapa'
+
 /**
  * Devuelve una cadena de texto aleatoreo.
  * @returns {String}
@@ -74,19 +76,19 @@ export function valorarArregloNumerico(valor) {
 /**
  * Estructura los valores de forma adecueda para el margen de la extención (como lo necesita la
  * opción padding del fit de la vista del mapa). Los valores pueden llegar en los ordenes:
- * - todos
- * - vertical, horizontal
- * - arriba, horizontal, abajo
- * - arriba, izquierda, abajo, derecha
+ * - [todo]
+ * - [vertical, horizontal]
+ * - [arriba, horizontal, abajo]
+ * - [arriba, derecha, abajo, izquierda]
  * @see https://openlayers.org/en/latest/apidoc/module-ol_View-View.html#fit
  *
  * @param {Array|String|Number} valor a evaluar.
- * @returns {Array<Number>} margenExtension válido: [arriba, izquierda, abajo, derecha].
+ * @returns {Array<Number>} extensionMargen válido: [arriba, derecha, abajo, izquierda].
  */
-export function valorarMargenExtension(valor) {
+export function valorarExtensionMargen(valor) {
   const arreglo = valor !== undefined ? valorarArregloNumerico(valor) : []
 
-  // tipos admitidos para margenExtension: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
+  // tipos admitidos para extensionMargen: [all], [y,x], [top, x, bottom], [top, left, bottom, right]
   if (arreglo.length === 1) {
     return [arreglo[0], arreglo[0], arreglo[0], arreglo[0]]
   }
@@ -103,7 +105,17 @@ export function valorarMargenExtension(valor) {
     return arreglo
   }
 
-  return [0, 0, 0, 0]
+  return vista.extensionMargen
+}
+
+/**
+ * Compara si dos objetos son iguales utilisando la función `stringify` de la clase `JSON`.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {Boolean}
+ */
+export function stringifyIguales(a, b) {
+  return JSON.stringify(a) !== JSON.stringify(b)
 }
 
 // * * * * * * * * * * * * * * * * * * //

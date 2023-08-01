@@ -2,13 +2,16 @@
 import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
-import { idAleatorio } from './../utiles'
-import { vista as validarVista } from './../utiles/validaciones'
+import { idAleatorio, stringifyIguales } from './../utiles'
+import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
 import BotonConahcyt from './BotonConahcyt.vue'
 import SisdaiCargando from './SisdaiCargando.vue'
 
 const props = defineProps({
+  /**
+   *
+   */
   id: {
     type: String,
     default: () => idAleatorio(),
@@ -20,7 +23,7 @@ const props = defineProps({
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator: validarVista,
+    validator: validaciones.vista,
   },
 })
 
@@ -33,28 +36,70 @@ function asignarValoresVista() {
     .mapa(props.id)
     .asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
 }
-watch(vista, asignarValoresVista)
+function actualizarValoresVista(nv, vv) {
+  if (validaciones.extension(nv.extension)) {
+    if (stringifyIguales(nv.extension, vv.extension)) {
+      usarRegistroMapas().mapa(props.id).asignarExtension(nv.extension)
+    }
+
+    // if (stringifyIguales(nv.extensionMargen, vv.extensionMargen)) {
+    //   lista.push('extensionMargen')
+    // }
+
+    return
+  }
+
+  if (stringifyIguales(nv.centro, vv.centro)) {
+    usarRegistroMapas().mapa(props.id).asignarCentro(nv.centro)
+  }
+
+  if (Number(nv.zoom) !== vv.Zoom) {
+    usarRegistroMapas().mapa(props.id).asignarZoom(nv.zoom)
+  }
+}
+watch(vista, actualizarValoresVista)
+
+function olMoveend(e) {
+  emits(eventos.alMoverVista, e)
+
+  const nuevoCentro = e.map.getView().getCenter()
+  if (stringifyIguales(nuevoCentro, vista.value.centro)) {
+    emits(eventos.alCambiarCentro, nuevoCentro)
+  }
+
+  const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (Number(vista.value.zoom) !== nuevoZoom) {
+    emits(eventos.alCambiarZoom, nuevoZoom)
+  }
+}
 
 onMounted(() => {
   console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(props.id, mapa.value)
   asignarValoresVista()
-
-  usarRegistroMapas()
-    .mapa(props.id)
-    .on('moveend', e => {
-      emits(eventos.alMoverVista, e)
-    })
+  usarRegistroMapas().mapa(props.id).on('moveend', olMoveend)
 })
 
 onUnmounted(() => {
+  usarRegistroMapas().mapa(props.id).un('moveend', olMoveend)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
 defineExpose({
+  /**
+   *
+   * @param {*} nombreImagen
+   */
   exportarImagen: nombreImagen => {
     console.log('exportarImagen', nombreImagen)
     usarRegistroMapas().mapa(props.id).exportarImagen(nombreImagen)
+  },
+
+  /**
+   *
+   */
+  ajustarVista: () => {
+    asignarValoresVista()
   },
 })
 </script>
@@ -94,65 +139,5 @@ defineExpose({
 </template>
 
 <style lang="scss">
-@import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
-// @import './../estilos/ContenedorVis.scss';
-
-.sisdai-mapa.contenedor-vis {
-  $border-radius-canvas: 14px;
-
-  .contenido-vis {
-    background: #e9e9e9;
-
-    canvas {
-      border-radius: $border-radius-canvas $border-radius-canvas 0 0;
-    }
-  }
-
-  &.con-panel-encabezado-vis canvas,
-  &.con-panel-izquierda-vis canvas {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
-  @include mediaquery('esc') {
-    &.con-panel-izquierda-vis canvas {
-      border-top-left-radius: 0;
-      border-top-right-radius: $border-radius-canvas;
-    }
-    &.con-panel-derecha-vis canvas {
-      border-top-right-radius: 0;
-    }
-  }
-
-  &.sin-boton-conahcyt {
-    canvas {
-      border-bottom-right-radius: $border-radius-canvas;
-      border-bottom-left-radius: $border-radius-canvas;
-    }
-    &.con-panel-derecha-vis canvas,
-    &.con-panel-pie-vis canvas {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-    }
-    @include mediaquery('esc') {
-      &.con-panel-encabezado-vis.con-panel-izquierda-vis canvas {
-        border-top-right-radius: 0;
-      }
-      &.con-panel-izquierda-vis canvas {
-        border-bottom-left-radius: 0;
-      }
-      &.con-panel-izquierda-vis.con-panel-derecha-vis canvas,
-      &.con-panel-derecha-vis.con-panel-pie-vis canvas {
-        border-bottom-left-radius: 0;
-      }
-      &.con-panel-derecha-vis canvas {
-        border-bottom-left-radius: $border-radius-canvas;
-      }
-    }
-  }
-
-  &.sin-bordes canvas {
-    border-radius: 0;
-  }
-}
+@import './../estilos/SisdaiMapa.scss';
 </style>

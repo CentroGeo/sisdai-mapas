@@ -1,5 +1,5 @@
 import olMap from 'ol/Map'
-import { valorarArregloNumerico, valorarMargenExtension } from './../utiles'
+import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
 
@@ -14,20 +14,44 @@ export default class Mapa extends olMap {
   }
 
   /**
-   *
-   * @param {Object} param0
+   * Asigna el valor del centro en el mapa.
+   * @param {Array<Number>|String} centro
    */
-  asignarVista({ extension, margenExtension, centro, zoom }) {
-    if (validaciones.extension(extension)) {
-      this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarMargenExtension(margenExtension),
-      })
+  asignarCentro(centro) {
+    this.getView().setCenter(valorarArregloNumerico(centro))
+  }
 
+  /**
+   * Asigna el valor del zoom en el mapa.
+   * @param {Number} zoom
+   */
+  asignarZoom(zoom) {
+    this.getView().setZoom(Number(zoom))
+  }
+
+  /**
+   * Asigna el valor de la extención del mapa en el mapa.
+   * @param {Array<Number>|String} extension
+   * @param {Array<Number>|String} extensionMargen
+   */
+  asignarExtension(extension, extensionMargen) {
+    this.getView().fit(valorarArregloNumerico(extension), {
+      padding: valorarExtensionMargen(extensionMargen),
+    })
+  }
+
+  /**
+   * Asigna los valores de de la vista del mapa.
+   * @param {Object} propiedades
+   */
+  asignarVista({ extension, extensionMargen, centro, zoom }) {
+    if (validaciones.extension(extension)) {
+      this.asignarExtension(extension, extensionMargen)
       return
     }
 
-    this.getView().setCenter(valorarArregloNumerico(centro))
-    this.getView().setZoom(Number(zoom))
+    this.asignarCentro(centro)
+    this.asignarZoom(zoom)
   }
 
   /**

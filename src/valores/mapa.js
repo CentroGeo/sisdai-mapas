@@ -4,11 +4,12 @@
 
 export const vista = {
   /**
-   * - Tipo: `Array`
-   * - Valor por defecto: `[0, 0]`
-   * - Interactivo: ✅
-   *
    * Coordenadas `[x, y]` del centro inicial de la vista.
+   *
+   * - Tipo: `Array<Number>|String`
+   * - Valor por defecto: `[0, 0]`
+   * - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
+   * - Interactivo: ✅
    *
    * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
@@ -17,11 +18,12 @@ export const vista = {
   centro: [0, 0],
 
   /**
-   * - Tipo: `Array`
-   * - Valor por defecto: `undefined`
-   * - Interactivo: ✅
-   *
    * Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
+   *
+   * - Tipo: `Array<Number>`
+   * - Valor por defecto: `undefined`
+   * - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
+   * - Interactivo: ✅
    *
    * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
@@ -30,16 +32,23 @@ export const vista = {
   extension: undefined,
 
   /**
+   * Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores en la matriz son margen superior, derecho, inferior e izquierdo.
    *
+   * - Tipo: `Array<Number>|String`
+   * - Valor por defecto: `[10, 10, 10, 10]`
+   * - Admite: `N`, `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
+   * - Interactivo: ❌
+   *
+   * > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
-  margenExtension: [],
+  extensionMargen: [10, 10, 10, 10],
 
   /**
+   * Nivel de zoom utilizado para calcular la resolución inicial de la vista.
+   *
    * - Tipo: `Number`
    * - Valor por defecto: `1`
    * - Interactivo: ✅
-   *
-   * Nivel de zoom utilizado para calcular la resolución inicial de la vista.
    *
    * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
    */
@@ -47,11 +56,11 @@ export const vista = {
 }
 
 /**
+ * Código de identificación SRS que define la proyección de la vista.
+ *
  * - Tipo: `String`
  * - Valor por defecto: `EPSG:4326`
  * - Interactivo: ❌
- *
- * Código de identificación SRS que define la proyección de la vista.
  *
  * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
  */

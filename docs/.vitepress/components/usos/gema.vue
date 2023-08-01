@@ -12,7 +12,7 @@ const mapa = ref()
 
 const vistaMapa = reactive({
   extension: '-118.3651,14.5321,-86.7104,32.7187',
-  margenExtension: 30,
+  extensionMargen: 30,
   centro: [undefined, undefined],
   zoom: undefined,
 })
