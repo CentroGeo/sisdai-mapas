@@ -1,0 +1,22 @@
+.sisdai-mapa #descriptor-mapa {
+  display: none;
+}
+
+.a11y-simplificada .sisdai-mapa {
+  display: block;
+  padding-bottom: 0;
+  border: none;
+
+  .panel-encabezado-vis,
+  .panel-izquierda-vis,
+  .contenido-vis,
+  .panel-derecha-vis,
+  .panel-pie-vis,
+  .boton-conahcyt {
+    display: none;
+  }
+
+  #descriptor-mapa {
+    display: block;
+  }
+}

@@ -1,6 +1,6 @@
 <template>
   <a
-    class="boton boton-conacyt"
+    class="boton boton-conahcyt"
     href="https://conahcyt.mx/"
     target="_blank"
   >
@@ -13,7 +13,7 @@
 </template>
 
 <style lang="scss">
-.boton.boton-conacyt {
+.boton.boton-conahcyt {
   // position: absolute;
   // box-sizing: border-box;
   // bottom: 0;

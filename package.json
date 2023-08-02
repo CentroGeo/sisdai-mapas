@@ -37,9 +37,9 @@
     "prettier": "^3.0.0",
     "sisdai-componentes": "github:salsa-community/sisdai-componentes#test/install-for-vue3",
     "sisdai-css": "github:salsa-community/sisdai-css#feature/contenedor-vis",
-    "vite": "^4.4.7",
+    "vite": "^4.4.8",
     "vitepress": "^1.0.0-beta.7",
-    "vitest": "^0.33.0",
+    "vitest": "^0.34.1",
     "volar-service-vetur": "^0.0.11",
     "vue": "^3.3.4"
   },

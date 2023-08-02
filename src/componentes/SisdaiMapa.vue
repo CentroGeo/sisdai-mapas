@@ -18,7 +18,24 @@ const props = defineProps({
   },
 
   /**
-   * dar prioridad a la extención en caso de ser valida
+   *
+   */
+  elementosDescriptivos: {
+    type: String,
+    default: '',
+  },
+
+  descripcion: {
+    type: String,
+    default: valoresPorDefecto.descripcion,
+  },
+
+  /**
+   * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
+   *
+   * - Tipo: `Object`
+   * - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
+   * - Interactivo: ✅
    */
   vista: {
     type: Object,
@@ -29,7 +46,7 @@ const props = defineProps({
 
 const emits = defineEmits(Object.values(eventos))
 const mapa = shallowRef(null)
-const { vista } = toRefs(props)
+const { vista, elementosDescriptivos } = toRefs(props)
 
 function asignarValoresVista() {
   usarRegistroMapas()
@@ -123,7 +140,12 @@ defineExpose({
     <figure
       class="contenido-vis"
       ref="mapa"
+      :aria-describedby="elementosDescriptivos"
     />
+
+    <!-- <div id="descriptor-mapa">
+      <p>Mapa: {{ descripcion }}</p>
+    </div> -->
 
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />
@@ -140,4 +162,28 @@ defineExpose({
 
 <style lang="scss">
 @import './../estilos/SisdaiMapa.scss';
+// @import './../estilos/Accesibilidad.scss';
+
+.sisdai-mapa #descriptor-mapa {
+  display: none;
+}
+
+.a11y-simplificada .sisdai-mapa {
+  display: block;
+  padding-bottom: 0;
+  border: none;
+
+  // .panel-encabezado-vis,
+  // .panel-izquierda-vis,
+  .contenido-vis,
+  // .panel-derecha-vis,
+  // .panel-pie-vis,
+  .boton-conahcyt {
+    display: none;
+  }
+
+  // #descriptor-mapa {
+  //   display: block;
+  // }
+}
 </style>
