@@ -12,10 +12,7 @@ El componente `SisdaiMapa` es el componente princial de esta librería. Dentro d
 
 ```html
 <SisdaiMapa>
-  <!-- 
-    Aquí van las capas, leyendas y contenedores que
-    quedarán dentro del mapa 
-  -->
+  <!-- Aquí van las capas, leyendas y slots de paneles que quedarán dentro del mapa -->
 </SisdaiMapa>
 ```
 
@@ -23,7 +20,7 @@ El componente `SisdaiMapa` es el componente princial de esta librería. Dentro d
 
 #### `elementosDescriptivos`
 
-Recíbe los ID de los elementos que describen al mapa como título, descripciones cortas o largas.
+Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
 
 - Tipo: `String`
 - Valor por defecto: `''`
@@ -54,6 +51,20 @@ Define si se agrega la escala grafica en el mapa.
 
 ```html
 <SisdaiMapa :escalaGrafica="<Boolean>"> ... </SisdaiMapa>
+```
+
+#### `id`
+
+Identificador único del mapa. Si no es definido se asignará un valor aleatorio.
+
+- Tipo: `String`
+- Valor por defecto: Aleatorio
+- Interactivo: ❌
+
+**Uso:**
+
+```html
+<SisdaiMapa :id="<String>"> ... </SisdaiMapa>
 ```
 
 #### `proyeccion`

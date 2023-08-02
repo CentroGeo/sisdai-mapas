@@ -21,6 +21,13 @@ Coordenadas `[x, y]` del centro inicial de la vista.
 
 > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
 
+**Uso:**
+
+```html
+<!-- centro de la República Mexicana -->
+<SisdaiMapa :vista="{ centro: [-102, 24], ... }"> ... </SisdaiMapa>
+```
+
 #### `extension`
 
 Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
@@ -34,6 +41,17 @@ Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 
 > ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `zoom` serán ignoradas.
 
+**Uso:**
+
+```html
+<!-- extensión de la República Mexicana -->
+<SisdaiMapa
+  :vista="{ extension: [-118.3651, 14.5321, -86.7104, 32.7187], ... }"
+>
+  ...
+</SisdaiMapa>
+```
+
 #### `extensionMargen`
 
 Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores en la matriz son margen superior, derecho, inferior e izquierdo.
@@ -45,15 +63,30 @@ Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores
 
 > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
 
+**Uso:**
+
+```html
+<SisdaiMapa :vista="{ extensionMargen: [15, 15, 15, 15], ... }">
+  ...
+</SisdaiMapa>
+```
+
 #### `zoom`
 
 Nivel de zoom utilizado para calcular la resolución inicial de la vista.
 
 - Tipo: `Number`
-- Valor por defecto: `1`
+- Valor por defecto: `1.5`
 - Interactivo: ✅
 
 > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+
+**Uso:**
+
+```html
+<!-- zoom de la República Mexicana -->
+<SisdaiMapa :vista="{ zoom: 4.4, ... }"> ... </SisdaiMapa>
+```
 
 ## Funciones
 
@@ -62,6 +95,19 @@ A continuación se describen las funciones que pueden modificar el estado de la 
 #### `ajustarVista()`
 
 Ajusta la vista del mapa a los valores definidos en la propiedad vista.
+
+**Uso:**
+
+```js
+import { ref } from 'vue'
+const mapa = ref()
+```
+
+```html
+<SisdaiMapa ref="mapa"> ... </SisdaiMapa>
+
+<button @click="mapa.ajustarVista()">Ajustar vista con boton externo</button>
+```
 
 ## Eventos
 
@@ -75,6 +121,14 @@ Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
 
 - `Array`: Nuevo valor del centro.
 
+**Uso:**
+
+```html
+<SisdaiMapa @alCambiarCentro="(nuevoCentro) => `ejecutar una funcion`">
+  ...
+</SisdaiMapa>
+```
+
 #### `@alCambiarZoom`
 
 Ejecutado cuando se detecta que el zoom de la vista del mapa ha cambiado.
@@ -82,6 +136,14 @@ Ejecutado cuando se detecta que el zoom de la vista del mapa ha cambiado.
 **Parámetros:**
 
 - `Number`: Nuevo valor de zoom.
+
+**Uso:**
+
+```html
+<SisdaiMapa @alCambiarZoom="(nuevoZoom) => `ejecutar una funcion`">
+  ...
+</SisdaiMapa>
+```
 
 ## Ejemplo
 

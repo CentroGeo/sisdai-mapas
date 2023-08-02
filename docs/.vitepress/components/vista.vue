@@ -35,8 +35,8 @@ const vistaActual = reactive({
       extension: extensiones[extensionSeleccionada],
       zoom: centros[centroSeleccionado].zoom,
     }"
-    @alCambiarZoom="nuevoZoom => (vistaActual.zoom = nuevoZoom)"
     @alCambiarCentro="nuevoCentro => (vistaActual.centro = nuevoCentro)"
+    @alCambiarZoom="nuevoZoom => (vistaActual.zoom = nuevoZoom)"
   >
     <template #panel-encabezado-vis>
       <div>
@@ -79,7 +79,7 @@ const vistaActual = reactive({
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
             <button
-              @click="ajustar"
+              @click="mapa.ajustarVista()"
               class="boton-primario boton-chico"
             >
               Ajustar vista con boton externo

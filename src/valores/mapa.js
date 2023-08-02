@@ -2,8 +2,6 @@
  *
  */
 
-export const descripcion = 'Sin descripción.'
-
 export const vista = {
   /**
    * Coordenadas `[x, y]` del centro inicial de la vista.

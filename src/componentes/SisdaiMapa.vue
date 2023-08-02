@@ -10,24 +10,42 @@ import SisdaiCargando from './SisdaiCargando.vue'
 
 const props = defineProps({
   /**
+   * Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
    *
-   */
-  id: {
-    type: String,
-    default: () => idAleatorio(),
-  },
-
-  /**
+   * - Tipo: `String`
+   * - Valor por defecto: `''`
+   * - Interactivo: ✅
    *
+   * > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
    */
   elementosDescriptivos: {
     type: String,
     default: '',
   },
 
-  descripcion: {
+  /**
+   * Define si se agrega la escala grafica en el mapa.
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `true`
+   * - Interactivo: ✅
+   */
+  escalaGrafica: {
+    type: Boolean,
+    default: true,
+    validator: valor => typeof valor === typeof Boolean(),
+  },
+
+  /**
+   * Identificador único del mapa. Si no es definido se asignará un valor aleatorio.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: Aleatorio
+   * - Interactivo: ❌
+   */
+  id: {
     type: String,
-    default: valoresPorDefecto.descripcion,
+    default: () => idAleatorio(),
   },
 
   /**
@@ -41,6 +59,22 @@ const props = defineProps({
     type: Object,
     default: () => valoresPorDefecto.vista,
     validator: validaciones.vista,
+  },
+
+  /**
+   * Código de identificación SRS que define la proyección de la vista.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'EPSG:4326'`
+   * - Interactivo: ❌
+   *
+   * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+   *
+   * > ⚠️ **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+   */
+  proyeccion: {
+    type: String,
+    default: valoresPorDefecto.proyeccion,
   },
 })
 
@@ -143,10 +177,6 @@ defineExpose({
       :aria-describedby="elementosDescriptivos"
     />
 
-    <!-- <div id="descriptor-mapa">
-      <p>Mapa: {{ descripcion }}</p>
-    </div> -->
-
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />
     </div>
@@ -162,28 +192,5 @@ defineExpose({
 
 <style lang="scss">
 @import './../estilos/SisdaiMapa.scss';
-// @import './../estilos/Accesibilidad.scss';
-
-.sisdai-mapa #descriptor-mapa {
-  display: none;
-}
-
-.a11y-simplificada .sisdai-mapa {
-  display: block;
-  padding-bottom: 0;
-  border: none;
-
-  // .panel-encabezado-vis,
-  // .panel-izquierda-vis,
-  .contenido-vis,
-  // .panel-derecha-vis,
-  // .panel-pie-vis,
-  .boton-conahcyt {
-    display: none;
-  }
-
-  // #descriptor-mapa {
-  //   display: block;
-  // }
-}
+@import './../estilos/Accesibilidad.scss';
 </style>

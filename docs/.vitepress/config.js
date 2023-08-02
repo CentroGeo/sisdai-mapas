@@ -8,7 +8,7 @@ const pkg = require('./../../package.json')
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: 'es-mx',
-  title: pkg.name,
+  title: 'SISDAI-MAPAS',
   description: pkg.description,
 
   lastUpdated: true,
