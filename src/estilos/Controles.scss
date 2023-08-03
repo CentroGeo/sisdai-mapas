@@ -1,0 +1,63 @@
+.sisdai-mapa-control {
+  --margen: 16px;
+
+  position: absolute;
+
+  > button {
+    height: 40px;
+    width: 40px;
+    // color: var(--tipografia-color);
+    background: var(--pagina-fondo);
+
+    > span {
+      margin: auto;
+    }
+  }
+
+  &-acercar-alejar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    top: var(--margen);
+    right: var(--margen);
+    > button {
+      margin: 0;
+    }
+  }
+
+  &-ajuste-vista {
+    top: calc(var(--margen) + 88px);
+    right: var(--margen);
+  }
+
+  &-escala-grafica {
+    bottom: calc(var(--margen) / 2);
+    left: calc(var(--margen) / 2);
+
+    .ol-scale-bar-inner {
+      .ol-scale-step-marker {
+        height: 10px;
+        top: 0px !important;
+      }
+      .ol-scale-singlebar {
+        height: 3px;
+        top: 8px;
+      }
+      .ol-scale-step-text {
+        bottom: 10px;
+        font-size: 11px;
+      }
+      div > .ol-scale-step-marker {
+        top: -2px !important;
+      }
+    }
+  }
+
+  &-etiqueta-atribucion {
+    right: 0;
+    bottom: 0;
+    > button {
+      display: none;
+    }
+  }
+}
