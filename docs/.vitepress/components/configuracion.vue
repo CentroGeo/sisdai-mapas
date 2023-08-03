@@ -9,6 +9,7 @@ const mapa = ref()
     class="sin-cargador con-panel-pie-vis con-panel-encabezado-vis"
     ref="mapa"
     elementosDescriptivos="titulo-mapa descripcion-corta-mapa"
+    proyeccion="EPSG:3857"
   >
     <template #panel-encabezado-vis>
       <div class="m-2">

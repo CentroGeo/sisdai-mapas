@@ -126,7 +126,7 @@ function olMoveend(e) {
 
 onMounted(() => {
   console.log('SisdaiMapa')
-  usarRegistroMapas().registrarMapa(props.id, mapa.value)
+  usarRegistroMapas().registrarMapa(props.id, mapa.value, props.proyeccion)
   asignarValoresVista()
   usarRegistroMapas().mapa(props.id).on('moveend', olMoveend)
 })
@@ -193,4 +193,5 @@ defineExpose({
 <style lang="scss">
 @import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
+@import './../estilos/Controles.scss';
 </style>

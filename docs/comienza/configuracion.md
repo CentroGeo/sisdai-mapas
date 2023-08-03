@@ -82,7 +82,7 @@ Código de identificación SRS que define la proyección de la vista.
 **Uso:**
 
 ```html
-<SisdaiMapa proyeccion="EPSG:32614"> ... </SisdaiMapa>
+<SisdaiMapa proyeccion="EPSG:3857"> ... </SisdaiMapa>
 ```
 
 #### `vista`
