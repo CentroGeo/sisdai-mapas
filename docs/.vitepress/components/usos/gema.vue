@@ -28,9 +28,9 @@ function procesarParametrosHash({ hash }) {
 }
 procesarParametrosHash(window.location)
 
-function alMoverVista({ map }) {
-  let zoom = map.getView().getZoom()
-  let centro = map.getView().getCenter()
+function alMoverVista(vista) {
+  let zoom = vista.getZoom()
+  let centro = vista.getCenter()
 
   let hash = `#map=${zoom.toFixed(0)}/${centro[1].toFixed(
     4

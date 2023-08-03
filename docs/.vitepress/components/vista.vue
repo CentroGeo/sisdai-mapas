@@ -16,13 +16,10 @@ const centroSeleccionado = ref('República Mexicana')
 watch(centroSeleccionado, () => (extensionSeleccionada.value = undefined))
 
 const mapa = ref(null)
-function ajustar() {
-  mapa.value.ajustarVista()
-}
 
 const vistaActual = reactive({
-  centro: centros[centroSeleccionado.value].centro,
-  zoom: centros[centroSeleccionado.value].zoom,
+  centro: undefined,
+  zoom: undefined,
 })
 </script>
 
@@ -88,7 +85,7 @@ const vistaActual = reactive({
           <div class="columna-8-esc">
             <p class="m-t-0">
               <b>Actual:</b> zoom:{{ vistaActual.zoom }} <br />
-              centro: {{ vistaActual.centro.toString() }}
+              centro: {{ vistaActual.centro?.toString() }}
             </p>
           </div>
         </div>

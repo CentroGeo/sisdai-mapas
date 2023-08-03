@@ -41,7 +41,7 @@ export const vista = {
    *
    * > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
-  extensionMargen: [10, 10, 10, 10],
+  extensionMargen: 10,
 
   /**
    * Nivel de zoom utilizado para calcular la resolución inicial de la vista.

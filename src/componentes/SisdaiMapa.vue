@@ -1,5 +1,12 @@
 <script setup>
-import { onMounted, onUnmounted, shallowRef, toRefs, watch } from 'vue'
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+  shallowRef,
+  toRefs,
+  watch,
+} from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
@@ -79,78 +86,99 @@ const props = defineProps({
 })
 
 const emits = defineEmits(Object.values(eventos))
-const mapa = shallowRef(null)
+const refMapa = shallowRef(null)
 const { vista, elementosDescriptivos } = toRefs(props)
 
-function asignarValoresVista() {
-  usarRegistroMapas()
-    .mapa(props.id)
-    .asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+/**
+ * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
+ * ocupe el mapa.
+ */
+function mapa() {
+  return usarRegistroMapas().mapa(props.id)
 }
-function actualizarValoresVista(nv, vv) {
-  if (validaciones.extension(nv.extension)) {
-    if (stringifyIguales(nv.extension, vv.extension)) {
-      usarRegistroMapas().mapa(props.id).asignarExtension(nv.extension)
-    }
 
-    // if (stringifyIguales(nv.extensionMargen, vv.extensionMargen)) {
-    //   lista.push('extensionMargen')
-    // }
+/**
+ * Actualizar vista en el mapa registrado.
+ */
+watch(vista, (nv, vv) => {
+  const _nv = { ...valoresPorDefecto.vista, ...nv }
 
-    return
+  if (stringifyIguales(_nv.centro, vv.centro)) {
+    mapa().asignarCentro(_nv.centro)
   }
 
-  if (stringifyIguales(nv.centro, vv.centro)) {
-    usarRegistroMapas().mapa(props.id).asignarCentro(nv.centro)
+  if (Number(_nv.zoom) !== vv.Zoom) {
+    mapa().asignarZoom(_nv.zoom)
   }
 
-  if (Number(nv.zoom) !== vv.Zoom) {
-    usarRegistroMapas().mapa(props.id).asignarZoom(nv.zoom)
+  if (stringifyIguales(_nv.extension, vv.extension)) {
+    mapa().asignarExtension(_nv.extension, _nv.extensionMargen)
   }
-}
-watch(vista, actualizarValoresVista)
+})
 
-function olMoveend(e) {
-  emits(eventos.alMoverVista, e)
+/**
+ * Objeto reactivo utilizado para evaluar en que momento el centro o zoom de la vista es diferente
+ * a la anterior cada que se mueva el mapa.
+ */
+const estadoVistaMovida = reactive({
+  centro: undefined,
+  zoom: undefined,
+})
 
-  const nuevoCentro = e.map.getView().getCenter()
-  if (stringifyIguales(nuevoCentro, vista.value.centro)) {
-    emits(eventos.alCambiarCentro, nuevoCentro)
+/**
+ * Desencadena los emits requeridos en cada movimiento
+ * @param {Object} e
+ */
+function olMoveend({ map }) {
+  emits(eventos.alMoverVista, map.getView())
+
+  if (stringifyIguales(map.getView().getCenter(), estadoVistaMovida.centro)) {
+    estadoVistaMovida.centro = map.getView().getCenter()
+    emits(eventos.alCambiarCentro, estadoVistaMovida.centro)
   }
 
-  const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
-  if (Number(vista.value.zoom) !== nuevoZoom) {
-    emits(eventos.alCambiarZoom, nuevoZoom)
+  // const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (map.getView().getZoom() !== estadoVistaMovida.zoom) {
+    estadoVistaMovida.zoom = map.getView().getZoom()
+    emits(eventos.alCambiarZoom, estadoVistaMovida.zoom)
   }
 }
 
 onMounted(() => {
   console.log('SisdaiMapa')
-  usarRegistroMapas().registrarMapa(props.id, mapa.value, props.proyeccion)
-  asignarValoresVista()
-  usarRegistroMapas().mapa(props.id).on('moveend', olMoveend)
+  usarRegistroMapas().registrarMapa(
+    props.id,
+    refMapa.value,
+    props.proyeccion,
+    emits
+  )
+  mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+  mapa().on('moveend', olMoveend)
 })
 
 onUnmounted(() => {
-  usarRegistroMapas().mapa(props.id).un('moveend', olMoveend)
+  mapa().un('moveend', olMoveend)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
 defineExpose({
   /**
-   *
-   * @param {*} nombreImagen
+   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * pantalla, sin controles. El formato de descargá es PNG.
+   * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
+   * incluir extensión).
    */
   exportarImagen: nombreImagen => {
-    console.log('exportarImagen', nombreImagen)
-    usarRegistroMapas().mapa(props.id).exportarImagen(nombreImagen)
+    // console.log('exportarImagen', nombreImagen)
+    mapa().exportarImagen(nombreImagen)
   },
 
   /**
-   *
+   * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
+   * AjustarVista.
    */
   ajustarVista: () => {
-    asignarValoresVista()
+    mapa().buscarControl('AjustarVista').ajustarVista()
   },
 })
 </script>
@@ -173,7 +201,7 @@ defineExpose({
 
     <figure
       class="contenido-vis"
-      ref="mapa"
+      ref="refMapa"
       :aria-describedby="elementosDescriptivos"
     />
 

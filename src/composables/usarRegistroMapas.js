@@ -2,17 +2,27 @@ import View from 'ol/View'
 import { reactive } from 'vue'
 import Mapa from './../clases/Mapa'
 import RegistroObjetos from './../clases/ResgistroObjetos'
-import controles from './../controles'
+import * as controles from './../controles'
 
 const registroMapas = new RegistroObjetos('mapa')
 
-export default function (idMapa) {
-  function registrarMapa(_idMapa, target, proyeccion) {
-    registroMapas.registrar(_idMapa, reactive(crearMapa(target, proyeccion)))
+/**
+ *
+ * @param {*} idMapa
+ * @param {*} target
+ * @param {*} proyeccion
+ * @returns
+ */
+export default function (idMapa, target, proyeccion, emits) {
+  function registrarMapa(_idMapa, _target, _proyeccion, _emits) {
+    registroMapas.registrar(
+      _idMapa,
+      reactive(crearMapa(_target, _proyeccion, _emits))
+    )
   }
 
   if (idValido(idMapa)) {
-    registrarMapa(idMapa)
+    registrarMapa(idMapa, target, proyeccion, emits)
   }
 
   function mapa(_idMapa) {
@@ -45,15 +55,13 @@ function idValido(id) {
  * @param {String} proyeccion
  * @returns {import("./../clases/Mapa.js").default} Mapa
  */
-function crearMapa(target, proyeccion) {
-  console.log('proyeccion:', proyeccion)
-
+function crearMapa(target, proyeccion, emits) {
   return new Mapa({
     target,
     layers: [],
     controls: [
       new controles.AcercarAlejar(),
-      new controles.AjusteVista(),
+      new controles.AjustarVista(emits),
       new controles.EscalaGrafica(),
     ],
     view: new View({

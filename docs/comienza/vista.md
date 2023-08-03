@@ -113,6 +113,22 @@ const mapa = ref()
 
 A continuación se describen los eventos que desencadena el mapa relacionados con los cambios de la vista.
 
+#### `@alAjustarVista`
+
+Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores iniciales de la propiedad vista mediante el control AjustarVista.
+
+**Parámetros:**
+
+- `Object`: Nuevo valor de la vista de OpenLayers.
+
+**Uso:**
+
+```html
+<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
+  ...
+</SisdaiMapa>
+```
+
 #### `@alCambiarCentro`
 
 Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
@@ -141,6 +157,22 @@ Ejecutado cuando se detecta que el zoom de la vista del mapa ha cambiado.
 
 ```html
 <SisdaiMapa @alCambiarZoom="(nuevoZoom) => `ejecutar una funcion`">
+  ...
+</SisdaiMapa>
+```
+
+#### `@alMoverVista`
+
+Ejecutado cuando se detecta que la vista del mapa ha cambiado.
+
+**Parámetros:**
+
+- `Object`: Nuevo valor de la vista de OpenLayers.
+
+**Uso:**
+
+```html
+<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
   ...
 </SisdaiMapa>
 ```

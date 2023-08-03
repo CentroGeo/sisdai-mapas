@@ -18,15 +18,8 @@ export default class Mapa extends olMap {
    * @param {Array<Number>|String} centro
    */
   asignarCentro(centro) {
+    this.getView().set('centro', centro)
     this.getView().setCenter(valorarArregloNumerico(centro))
-  }
-
-  /**
-   * Asigna el valor del zoom en el mapa.
-   * @param {Number} zoom
-   */
-  asignarZoom(zoom) {
-    this.getView().setZoom(Number(zoom))
   }
 
   /**
@@ -35,9 +28,17 @@ export default class Mapa extends olMap {
    * @param {Array<Number>|String} extensionMargen
    */
   asignarExtension(extension, extensionMargen) {
-    this.getView().fit(valorarArregloNumerico(extension), {
-      padding: valorarExtensionMargen(extensionMargen),
-    })
+    if (validaciones.extension(extension)) {
+      this.getView().set('extension', extension)
+      this.getView().set('extensionMargen', extensionMargen)
+
+      this.getView().fit(valorarArregloNumerico(extension), {
+        padding: valorarExtensionMargen(extensionMargen),
+      })
+    } else {
+      this.getView().set('extension', undefined)
+      this.getView().set('extensionMargen', undefined)
+    }
   }
 
   /**
@@ -45,13 +46,19 @@ export default class Mapa extends olMap {
    * @param {Object} propiedades
    */
   asignarVista({ extension, extensionMargen, centro, zoom }) {
-    if (validaciones.extension(extension)) {
-      this.asignarExtension(extension, extensionMargen)
-      return
-    }
-
     this.asignarCentro(centro)
     this.asignarZoom(zoom)
+
+    this.asignarExtension(extension, extensionMargen)
+  }
+
+  /**
+   * Asigna el valor del zoom en el mapa.
+   * @param {Number} zoom
+   */
+  asignarZoom(zoom) {
+    this.getView().set('acercamiento', zoom)
+    this.getView().setZoom(Number(zoom))
   }
 
   /**
@@ -62,6 +69,12 @@ export default class Mapa extends olMap {
   buscarCapa(idCapa) {
     // quizá promesa!
     return this.getAllLayers().find(capa => capa.get('id') === idCapa)
+  }
+
+  buscarControl(nombreControl) {
+    return this.getControls()
+      .getArray()
+      .find(olControl => olControl.nombre === nombreControl)
   }
 
   /**

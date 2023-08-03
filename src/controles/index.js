@@ -1,9 +1,3 @@
-import AcercarAlejar from './AcercarAlejar'
-import AjusteVista from './AjusteVista'
-import EscalaGrafica from './EscalaGrafica'
-
-export default {
-  AcercarAlejar,
-  AjusteVista,
-  EscalaGrafica,
-}
+export { default as AcercarAlejar } from './AcercarAlejar'
+export { default as AjustarVista } from './AjustarVista'
+export { default as EscalaGrafica } from './EscalaGrafica'
