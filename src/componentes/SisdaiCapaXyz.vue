@@ -63,6 +63,8 @@ watch(
 
 function agregarCapa(mapa) {
   const source = new XYZ({
+    attributions:
+      'Mosaicos <a href="https://carto.com/" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
     url: url.value,
     crossOrigin: 'Anonymous',
   })
