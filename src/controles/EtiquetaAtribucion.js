@@ -32,10 +32,14 @@ export default class EtiquetaAtribucion extends Attribution {
   constructor() {
     super()
 
-    this.agregarClasesSisdai()
-
     this.setCollapsible(false)
     this.setCollapsed(false)
+
+    /**
+     * Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
+     */
+    this.element.classList.add('sisdai-mapa-control')
+    this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
 
     // this.render = ({ frameState }) => {
     //   this.updateElement_(frameState)
@@ -45,14 +49,6 @@ export default class EtiquetaAtribucion extends Attribution {
     //       atribucionOpenLayers + this.ulElement_.innerHTML
     //   }
     // }
-  }
-
-  /**
-   * Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
-   */
-  agregarClasesSisdai() {
-    this.element.classList.add('sisdai-mapa-control')
-    this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
   }
 }
 

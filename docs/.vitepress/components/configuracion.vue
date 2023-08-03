@@ -21,8 +21,8 @@ const mapa = ref()
         </p>
 
         <p id="descripcion-corta-mapa">
-          Este mapa es un ejemplo de como configurar el mapa para tener un mapa
-          adecuado a tus necesidades.
+          Este mapa es un ejemplo de como configurar el mapa para ajustarlo
+          conforme a las necesidades de cada proyecto.
         </p>
       </div>
     </template>

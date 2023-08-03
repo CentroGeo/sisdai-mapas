@@ -14,24 +14,6 @@ Instalación y descarga de la biblioteca desde GitHub:
 npm i github:salsa-community/sisdai-mapas#version-a-instalar
 ```
 
-## Documentación en local
-
-Para revisar la documentación en local primero clona este repositorio y accede a la carpeta del proyecto con:
-
-```bash
-git clone https://github.com/salsa-community/sisdai-mapas
-cd sisdai-mapas
-```
-
-Seguido de la instalación de las dependencias y ejecución de vuepress:
-
-```bash
-npm install
-npm run docs
-```
-
-Se habilitara en [localhost:5173](http://localhost:5173) (por defecto).
-
 ## Importación y registro
 
 En el archivo que se desee utilizar el componente:
@@ -55,6 +37,24 @@ Código:
 Resultado:
 
 <EjemploBasico />
+
+## Documentación en local
+
+Para revisar la documentación en local primero clona este repositorio y accede a la carpeta del proyecto con:
+
+```bash
+git clone https://github.com/salsa-community/sisdai-mapas
+cd sisdai-mapas
+```
+
+Seguido de la instalación de las dependencias y ejecución de vuepress:
+
+```bash
+npm install
+npm run docs
+```
+
+Se habilitara en [localhost:5173](http://localhost:5173) (por defecto).
 
 ## Contribución
 

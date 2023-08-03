@@ -115,19 +115,19 @@ function nav() {
       activeMatch: '/comienza/',
       // items: [],
     },
-    { text: 'Fuentes', link: '/fuentes/', activeMatch: '/fuentes/' },
-    // {
-    //   text: 'Visualizaciones',
-    //   link: '/visualizaciones/',
-    //   activeMatch: '/visualizaciones/',
-    // },
+    { text: 'Datos', link: '/fuentes/', activeMatch: '/fuentes/' },
+    {
+      text: 'Visualizaciones',
+      link: '/visualizaciones/',
+      activeMatch: '/visualizaciones/',
+    },
     // {
     //   text: 'Clasificaciones',
     //   link: '/clasificaciones/',
     //   activeMatch: '/clasificaciones/',
     // },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    { text: pkg.version, link: '/solo' },
+    // { text: pkg.version, link: '/solo' },
   ]
 }
 

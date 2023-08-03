@@ -34,10 +34,16 @@ const vistaActual = reactive({
     }"
     @alCambiarCentro="nuevoCentro => (vistaActual.centro = nuevoCentro)"
     @alCambiarZoom="nuevoZoom => (vistaActual.zoom = nuevoZoom)"
+    elementosDescriptivos="descripcion-mapa"
   >
     <template #panel-encabezado-vis>
       <div>
-        <p class="m-x-2">Interación de la vista del mapa:</p>
+        <p
+          class="m-x-2"
+          id="descripcion-mapa"
+        >
+          Interación de la vista del mapa:
+        </p>
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
             <label for="selector-centro-zoom">Vista con Centro y Zoom</label>

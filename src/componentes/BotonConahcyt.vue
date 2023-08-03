@@ -6,7 +6,7 @@
   >
     <img
       src="https://conacyt.mx/wp-content/uploads/2021/10/logo_conacyt_con_sintagma_azul_completo.svg"
-      alt="Conachyt"
+      alt="Conahcyt"
       height="28px"
     />
   </a>

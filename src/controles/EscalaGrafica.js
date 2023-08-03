@@ -44,14 +44,13 @@ export default class EscalaGrafica extends ScaleLine {
   constructor() {
     super(consifguracion)
 
-    this.agregarClasesSisdai()
-  }
-
-  /**
-   * Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
-   */
-  agregarClasesSisdai() {
+    /**
+     * Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
+     */
     this.element.classList.add('sisdai-mapa-control')
     this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
+
+    // this.element.ariaHidden = true
+    this.element.setAttribute('aria-hidden', true)
   }
 }

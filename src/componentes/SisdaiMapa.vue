@@ -1,5 +1,6 @@
 <script setup>
 import {
+  computed,
   onMounted,
   onUnmounted,
   reactive,
@@ -87,7 +88,7 @@ const props = defineProps({
 
 const emits = defineEmits(Object.values(eventos))
 const refMapa = shallowRef(null)
-const { vista, elementosDescriptivos } = toRefs(props)
+const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 
 /**
  * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
@@ -181,6 +182,13 @@ defineExpose({
     mapa().buscarControl('AjustarVista').ajustarVista()
   },
 })
+
+/**
+ * Variable computada para el asignar la regla css `display` al elemento de la escala gráfica.
+ */
+const escalaGraficaVisible = computed(() =>
+  escalaGrafica.value ? 'block' : 'none'
+)
 </script>
 
 <template>
@@ -203,6 +211,7 @@ defineExpose({
       class="contenido-vis"
       ref="refMapa"
       :aria-describedby="elementosDescriptivos"
+      aria-label="Mapa interactivo"
     />
 
     <div class="panel-derecha-vis">
@@ -222,4 +231,8 @@ defineExpose({
 @import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
+
+.sisdai-mapa-control-escala-grafica {
+  display: v-bind(escalaGraficaVisible);
+}
 </style>
