@@ -32,7 +32,7 @@
     "eslint": "^8.46.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-vue": "^9.16.1",
-    "happy-dom": "^10.7.0",
+    "happy-dom": "^10.8.0",
     "lint-staged": "^13.2.3",
     "prettier": "^3.0.1",
     "sisdai-componentes": "github:salsa-community/sisdai-componentes#test/install-for-vue3",
