@@ -96,7 +96,7 @@ function nav() {
       activeMatch: '/visualizaciones/',
     },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    // { text: pkg.version, link: '/solo' },
+    { text: pkg.version, link: '/solo' },
   ]
 }
 
