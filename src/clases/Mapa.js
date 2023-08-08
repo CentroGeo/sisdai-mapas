@@ -71,6 +71,11 @@ export default class Mapa extends olMap {
     return this.getAllLayers().find(capa => capa.get('id') === idCapa)
   }
 
+  /**
+   *
+   * @param {*} nombreControl
+   * @returns
+   */
   buscarControl(nombreControl) {
     return this.getControls()
       .getArray()

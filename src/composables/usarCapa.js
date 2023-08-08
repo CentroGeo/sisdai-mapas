@@ -1,4 +1,5 @@
-import { idAleatorio } from './../utiles'
+import { onBeforeUnmount, onMounted, toRefs, watch } from 'vue'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 import usarRegistroMapas from './usarRegistroMapas'
 
 export const props = {
@@ -27,12 +28,21 @@ export const props = {
   },
 }
 
-export default function usarCapa(props) {
-  function agregar(idMapa, fn_agregarCapa) {
-    usarRegistroMapas().mapaPromesa(idMapa).then(fn_agregarCapa)
+export default function usarCapa(props, refVar) {
+  var idMapa
+  const { nombre } = toRefs(props)
+
+  function agregar(fn_agregarCapa) {
+    usarRegistroMapas()
+      .mapaPromesa(idMapa)
+      .then(mapa => {
+        fn_agregarCapa(mapa)
+
+        watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
+      })
   }
 
-  function eliminar(idMapa) {
+  function eliminar() {
     console.log('quitando capa', props.id)
 
     usarRegistroMapas()
@@ -42,8 +52,19 @@ export default function usarCapa(props) {
       })
   }
 
+  onMounted(() => {
+    console.log('onMounted composable')
+
+    idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
+  })
+
+  onBeforeUnmount(() => {
+    console.log('onBeforeUnmount composable')
+    eliminar()
+  })
+
   return {
     agregar,
-    eliminar,
+    // eliminar,
   }
 }

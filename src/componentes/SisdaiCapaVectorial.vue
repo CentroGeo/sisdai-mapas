@@ -1,18 +1,14 @@
 <script setup>
 import ImageLayer from 'ol/layer/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onBeforeUnmount, onMounted, shallowRef, toRefs } from 'vue'
+import { onMounted, shallowRef } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
-import { buscarIdContenedorHtmlSisdai } from './../utiles'
-
-var idMapa
 
 const props = defineProps({ ...propsCapa })
 
 const sisdaiCapaVectorial = shallowRef()
-const { nombre } = toRefs(props)
 
-const { agregar, eliminar } = usarCapa(props)
+const { agregar } = usarCapa(props, sisdaiCapaVectorial)
 
 function agregarCapa(mapa) {
   const source = new ImageWMS({
@@ -26,24 +22,15 @@ function agregarCapa(mapa) {
     new ImageLayer({
       source,
       id: props.id,
-      nombre: nombre.value,
+      nombre: props.nombre,
     })
   )
-
-  // watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
-  console.log('agregando capa vectorial')
 }
 
 onMounted(() => {
   console.log('sisdaiCapaVectorial', props.id)
 
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaVectorial.value)
-
-  agregar(idMapa, agregarCapa)
-})
-
-onBeforeUnmount(() => {
-  eliminar(idMapa)
+  agregar(agregarCapa)
 })
 </script>
 
