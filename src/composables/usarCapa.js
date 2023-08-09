@@ -28,19 +28,32 @@ export const props = {
   },
 }
 
-export default function usarCapa(props, refVar) {
+export default function usarCapa(refVar, props) {
   var idMapa
   const { nombre } = toRefs(props)
 
-  function agregar(fn_agregarCapa) {
+  var fnConfiguracion
+  function configurar(_fnConfiguracion) {
+    fnConfiguracion = _fnConfiguracion
+  }
+
+  function agregar() {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
       .then(mapa => {
-        fn_agregarCapa(mapa)
+        mapa.addLayer(fnConfiguracion())
 
         watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
       })
   }
+
+  onMounted(() => {
+    console.log('onMounted composable')
+
+    idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
+
+    agregar()
+  })
 
   function eliminar() {
     console.log('quitando capa', props.id)
@@ -52,19 +65,13 @@ export default function usarCapa(props, refVar) {
       })
   }
 
-  onMounted(() => {
-    console.log('onMounted composable')
-
-    idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
-  })
-
   onBeforeUnmount(() => {
     console.log('onBeforeUnmount composable')
     eliminar()
   })
 
   return {
-    agregar,
+    configurar,
     // eliminar,
   }
 }

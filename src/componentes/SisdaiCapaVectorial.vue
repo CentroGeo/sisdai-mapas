@@ -8,9 +8,9 @@ const props = defineProps({ ...propsCapa })
 
 const sisdaiCapaVectorial = shallowRef()
 
-const { agregar } = usarCapa(props, sisdaiCapaVectorial)
+const { configurar } = usarCapa(sisdaiCapaVectorial, props)
 
-function agregarCapa(mapa) {
+configurar(() => {
   const source = new ImageWMS({
     url: 'https://gema.conacyt.mx/geoserver/wms',
     params: { LAYERS: 'contexto:gref_division_estatal_2020' },
@@ -18,19 +18,15 @@ function agregarCapa(mapa) {
     crossOrigin: 'Anonymous',
   })
 
-  mapa.addLayer(
-    new ImageLayer({
-      source,
-      id: props.id,
-      nombre: props.nombre,
-    })
-  )
-}
+  return new ImageLayer({
+    source,
+    id: props.id,
+    nombre: props.nombre,
+  })
+})
 
 onMounted(() => {
   console.log('sisdaiCapaVectorial', props.id)
-
-  agregar(agregarCapa)
 })
 </script>
 

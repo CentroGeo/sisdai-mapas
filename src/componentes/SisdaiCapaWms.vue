@@ -2,29 +2,19 @@
 import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onBeforeUnmount, onMounted, shallowRef, toRefs } from 'vue'
-import usarRegistroMapas from './../composables/usarRegistroMapas'
+import { onMounted, shallowRef, toRefs } from 'vue'
+import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
-
-var idMapa
 
 const props = defineProps({
-  id: {
-    type: String,
-    default: () => idAleatorio(),
-  },
-  nombre: {
-    type: String,
-    default: 'Nombre no asignado',
-  },
   /**
    * url del servicio wms
    */
   url: {
     type: String,
-    default: 'https://gema.conacyt.mx/geoserver/wms',
+    default: 'https://gema.conahcyt.mx/geoserver/wms',
   },
+
   /**
    * parametros del servicio wms, layers, cql, styles, etc
    */
@@ -41,6 +31,7 @@ const props = defineProps({
       return validarLayer
     },
   },
+
   /**
    * Parametro de tipo de servidor.
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_WMSServerType.html
@@ -49,6 +40,8 @@ const props = defineProps({
     type: String,
     default: 'geoserver',
   },
+
+  ...propsCapa,
 })
 
 const emits = defineEmits(Object.values(eventos))
@@ -56,7 +49,9 @@ const emits = defineEmits(Object.values(eventos))
 const sisdaiCapaWms = shallowRef()
 const { nombre, url, parametros } = toRefs(props)
 
-function agregarCapa(mapa) {
+const { configurar } = usarCapa(sisdaiCapaWms, props)
+
+configurar(() => {
   const source = new ImageWMS({
     url: url.value,
     params: parametros.value,
@@ -77,31 +72,15 @@ function agregarCapa(mapa) {
     // estatusCarga.value = tiposEstatusCarga.fin
   })
 
-  mapa.addLayer(
-    new ImageLayer({
-      source,
-      id: props.id,
-      nombre: nombre.value,
-    })
-  )
-}
+  return new ImageLayer({
+    source,
+    id: props.id,
+    nombre: nombre.value,
+  })
+})
 
 onMounted(() => {
   console.log('SisdaiCapaWms', props.id)
-
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaWms.value)
-
-  usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
-})
-
-onBeforeUnmount(() => {
-  console.log('quitando capa', props.id)
-
-  usarRegistroMapas()
-    .mapaPromesa(idMapa)
-    .then(mapa => {
-      mapa.eliminarCapa(props.id)
-    })
 })
 </script>
 
