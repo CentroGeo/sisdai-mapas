@@ -52,27 +52,27 @@ const { url, parametros } = toRefs(props)
 const { configurar } = usarCapa(sisdaiCapaWms, props)
 
 configurar(() => {
-  const source = new ImageWMS({
+  const olSource = new ImageWMS({
     url: url.value,
     params: parametros.value,
     serverType: props.servidor,
     crossOrigin: 'Anonymous',
   })
 
-  source.on(ImageSourceEventType.IMAGELOADSTART, () => {
+  olSource.on(ImageSourceEventType.IMAGELOADSTART, () => {
     emits(eventos.alIniciarCarga)
     // estatusCarga.value = tiposEstatusCarga.ini
   })
-  source.on(ImageSourceEventType.IMAGELOADERROR, () => {
+  olSource.on(ImageSourceEventType.IMAGELOADERROR, () => {
     emits(eventos.alFinalizarCarga, false)
     // estatusCarga.value = tiposEstatusCarga.error
   })
-  source.on(ImageSourceEventType.IMAGELOADEND, () => {
+  olSource.on(ImageSourceEventType.IMAGELOADEND, () => {
     emits(eventos.alFinalizarCarga, true)
     // estatusCarga.value = tiposEstatusCarga.fin
   })
 
-  return { olSource: source, olLayerClass: ImageLayer }
+  return { olSource, olLayerClass: ImageLayer }
 })
 
 onMounted(() => {

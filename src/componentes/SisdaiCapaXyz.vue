@@ -48,27 +48,27 @@ watch(
 )
 
 configurar(() => {
-  const source = new XYZ({
+  const olSource = new XYZ({
     attributions:
       'Mosaicos <a href="https://carto.com/" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
     url: url.value,
     crossOrigin: 'Anonymous',
   })
 
-  source.on(TileEventType.TILELOADSTART, () => {
+  olSource.on(TileEventType.TILELOADSTART, () => {
     emits(eventos.alIniciarCargaTesela)
     monitoreoCargaTeselas.inicio++
   })
-  source.on(TileEventType.TILELOADEND, () => {
+  olSource.on(TileEventType.TILELOADEND, () => {
     emits(eventos.alFinalizarCargaTesela, true)
     monitoreoCargaTeselas.fin++
   })
-  source.on(TileEventType.TILELOADERROR, () => {
+  olSource.on(TileEventType.TILELOADERROR, () => {
     emits(eventos.alFinalizarCargaTesela, false)
     monitoreoCargaTeselas.error++
   })
 
-  return { olSource: source, olLayerClass: TileLayer }
+  return { olSource, olLayerClass: TileLayer }
 })
 
 onMounted(() => {

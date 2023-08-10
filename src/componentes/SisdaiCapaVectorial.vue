@@ -3,8 +3,10 @@ import GeoJSON from 'ol/format/GeoJSON.js'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
+import VectorEventType from 'ol/source/VectorEventType'
 import { onMounted, shallowRef, toRefs } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
+import eventos from './../eventos/capa'
 
 const props = defineProps({
   // datos: {
@@ -58,20 +60,31 @@ const props = defineProps({
 
 const sisdaiCapaVectorial = shallowRef()
 const { fuente } = toRefs(props)
+const emits = defineEmits(Object.values(eventos))
 
 const { configurar } = usarCapa(sisdaiCapaVectorial, props)
 
 configurar(() => {
-  const olSource = new VectorSource(
-    typeof fuente.value === typeof String()
-      ? {
-          url: fuente.value,
-          format: new GeoJSON(),
-        }
-      : {
-          features: new GeoJSON().readFeatures(fuente.value),
-        }
-  )
+  const opcionesSource = {}
+
+  if (typeof fuente.value === typeof String()) {
+    opcionesSource.url = fuente.value
+    opcionesSource.format = new GeoJSON()
+  } else {
+    opcionesSource.features = new GeoJSON().readFeatures(fuente.value)
+  }
+
+  const olSource = new VectorSource(opcionesSource)
+
+  olSource.on(VectorEventType.FEATURESLOADSTART, () => {
+    emits(eventos.alIniciarCarga)
+  })
+  olSource.on(VectorEventType.FEATURESLOADERROR, () => {
+    emits(eventos.alFinalizarCarga, false)
+  })
+  olSource.on(VectorEventType.FEATURESLOADEND, () => {
+    emits(eventos.alFinalizarCarga, true)
+  })
 
   return {
     olSource,

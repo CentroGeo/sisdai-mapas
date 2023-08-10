@@ -1,9 +1,7 @@
 <script setup>
 import { ref } from 'vue'
-// import estados from './ejemplo-estados.json'
 
 const nombre = ref('Capa vectorial')
-const opacidad = ref(1)
 </script>
 
 <template>
@@ -15,19 +13,9 @@ const opacidad = ref(1)
   >
     <template #panel-encabezado-vis>
       <div>
-        <!-- <input
+        <input
           type="text"
           v-model="nombre"
-        /> -->
-
-        <label for="range">Opacidad {{ opacidad }}</label>
-        <input
-          type="range"
-          id="range"
-          v-model="opacidad"
-          max="1"
-          min="0"
-          step="0.1"
         />
       </div>
     </template>
@@ -37,12 +25,12 @@ const opacidad = ref(1)
     <SisdaiCapaVectorial
       id="idVectorial"
       :nombre="nombre"
-      fuente="/assets/ejemplo-estados.geojson"
-      :opacidad="opacidad"
       :posicion="2"
       :renderizarComoImagen="true"
       :visible="true"
+      fuente="/assets/ejemplo-estados.geojson"
     />
+
     <!-- :fuente="estados" -->
     <!-- fuente="https://cultura.conacyt.mx/pueblosindigenas-registro-api/media/capa_comunidades_indigenas/comunidades_localidad.geojson" -->
 
