@@ -1,28 +1,76 @@
 <script setup>
-import ImageLayer from 'ol/layer/Image'
-import ImageWMS from 'ol/source/ImageWMS'
-import { onMounted, shallowRef } from 'vue'
+import formatoGeoJSON from 'ol/format/GeoJSON.js'
+import VectorLayer from 'ol/layer/Vector'
+import VectorImageLayer from 'ol/layer/VectorImage'
+import VectorSource from 'ol/source/Vector'
+import { onMounted, shallowRef, toRefs } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 
-const props = defineProps({ ...propsCapa })
+const props = defineProps({
+  // datos: {
+  //   type: Object,
+  //   default: undefined,
+  // },
+
+  /**
+   *
+   *
+   * - Tipo: `String|Object`
+   * - Valor obligatorio.
+   * - Interactivo: ✅
+   */
+  fuente: {
+    type: [String, Object],
+    required: true,
+  },
+
+  /**
+   * Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 'topojson'.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'geojson'`.
+   * - Interactivo: ❌
+   */
+  formato: {
+    type: String,
+    default: 'geojson',
+  },
+
+  /**
+   * ???
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `false`.
+   * - Interactivo: ❌
+   */
+  renderizarComoImagen: {
+    type: Boolean,
+    default: false,
+  },
+
+  // url: {
+  //   type: String,
+  //   default: undefined,
+  // },
+
+  ...propsCapa,
+})
 
 const sisdaiCapaVectorial = shallowRef()
+const { fuente } = toRefs(props)
 
 const { configurar } = usarCapa(sisdaiCapaVectorial, props)
 
 configurar(() => {
-  const source = new ImageWMS({
-    url: 'https://gema.conacyt.mx/geoserver/wms',
-    params: { LAYERS: 'contexto:gref_division_estatal_2020' },
-    serverType: 'geoserver',
-    crossOrigin: 'Anonymous',
+  const olSource = new VectorSource({
+    url: fuente.value,
+    format: new formatoGeoJSON(),
   })
 
-  return new ImageLayer({
-    source,
-    id: props.id,
-    nombre: props.nombre,
-  })
+  return {
+    olSource,
+    olLayerClass: props.renderizarComoImagen ? VectorImageLayer : VectorLayer,
+  }
 })
 
 onMounted(() => {

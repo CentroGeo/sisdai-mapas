@@ -47,7 +47,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { nombre, url, parametros } = toRefs(props)
+const { url, parametros } = toRefs(props)
 
 const { configurar } = usarCapa(sisdaiCapaWms, props)
 
@@ -72,11 +72,7 @@ configurar(() => {
     // estatusCarga.value = tiposEstatusCarga.fin
   })
 
-  return new ImageLayer({
-    source,
-    id: props.id,
-    nombre: nombre.value,
-  })
+  return { olSource: source, olLayerClass: ImageLayer }
 })
 
 onMounted(() => {

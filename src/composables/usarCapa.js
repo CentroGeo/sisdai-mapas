@@ -41,7 +41,15 @@ export default function usarCapa(refVar, props) {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
       .then(mapa => {
-        mapa.addLayer(fnConfiguracion())
+        const { olLayerClass, olSource } = fnConfiguracion()
+
+        mapa.addLayer(
+          new olLayerClass({
+            source: olSource,
+            id: props.id,
+            nombre: nombre.value,
+          })
+        )
 
         watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
       })

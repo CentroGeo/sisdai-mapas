@@ -2,31 +2,13 @@
 import TileLayer from 'ol/layer/Tile'
 import TileEventType from 'ol/source/TileEventType'
 import XYZ from 'ol/source/XYZ'
-import {
-  onBeforeUnmount,
-  onMounted,
-  reactive,
-  shallowRef,
-  toRefs,
-  watch,
-} from 'vue'
+import { onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
 import MonitoreoCargaTeselas from './../clases/MonitoreoCargaTeselas'
-import usarRegistroMapas from './../composables/usarRegistroMapas'
+import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import { teselas as eventos } from './../eventos/capa'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 import { tipoEstadoCarga } from './../valores/capa'
 
-var idMapa
-
 const props = defineProps({
-  id: {
-    type: String,
-    default: () => idAleatorio(),
-  },
-  nombre: {
-    type: String,
-    default: 'Nombre no asignado',
-  },
   /**
    * `url`
    * - Tipo: `String`
@@ -40,12 +22,16 @@ const props = defineProps({
     default:
       'https://{a-c}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png',
   },
+
+  ...propsCapa,
 })
 
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaXyz = shallowRef()
-const { nombre, url } = toRefs(props)
+const { url } = toRefs(props)
+
+const { configurar } = usarCapa(sisdaiCapaXyz, props)
 
 const monitoreoCargaTeselas = reactive(new MonitoreoCargaTeselas())
 
@@ -61,7 +47,7 @@ watch(
   }
 )
 
-function agregarCapa(mapa) {
+configurar(() => {
   const source = new XYZ({
     attributions:
       'Mosaicos <a href="https://carto.com/" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
@@ -82,33 +68,11 @@ function agregarCapa(mapa) {
     monitoreoCargaTeselas.error++
   })
 
-  mapa.addLayer(
-    new TileLayer({
-      source,
-      id: props.id,
-      nombre: nombre.value,
-    })
-  )
-
-  watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
-}
+  return { olSource: source, olLayerClass: TileLayer }
+})
 
 onMounted(() => {
   console.log('sisdaiCapaXyz', props.id)
-
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaXyz.value)
-
-  usarRegistroMapas().mapaPromesa(idMapa).then(agregarCapa)
-})
-
-onBeforeUnmount(() => {
-  console.log('quitando sisdaiCapaXyz', props.id)
-
-  usarRegistroMapas()
-    .mapaPromesa(idMapa)
-    .then(mapa => {
-      mapa.eliminarCapa(props.id)
-    })
 })
 </script>
 
