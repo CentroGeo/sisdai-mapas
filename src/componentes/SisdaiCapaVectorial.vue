@@ -1,5 +1,5 @@
 <script setup>
-import formatoGeoJSON from 'ol/format/GeoJSON.js'
+import GeoJSON from 'ol/format/GeoJSON.js'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
@@ -62,10 +62,16 @@ const { fuente } = toRefs(props)
 const { configurar } = usarCapa(sisdaiCapaVectorial, props)
 
 configurar(() => {
-  const olSource = new VectorSource({
-    url: fuente.value,
-    format: new formatoGeoJSON(),
-  })
+  const olSource = new VectorSource(
+    typeof fuente.value === typeof String()
+      ? {
+          url: fuente.value,
+          format: new GeoJSON(),
+        }
+      : {
+          features: new GeoJSON().readFeatures(fuente.value),
+        }
+  )
 
   return {
     olSource,

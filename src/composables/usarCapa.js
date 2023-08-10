@@ -26,11 +26,47 @@ export const props = {
     type: String,
     default: 'Nombre no asignado',
   },
+
+  /**
+   * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
+   *
+   * - Tipo: Number
+   * - Valor por defecto: 1
+   * - Interactivo: ✅
+   */
+  opacidad: {
+    type: [Number, String],
+    default: 1,
+  },
+
+  /**
+   * Indica la posición respecto a otras capas. Las capas con un valor mayor en este parámetro se mostrarán enfrente.
+   *
+   * - Tipo: Number
+   * - Valor por defecto: undefined
+   * - Interactivo: ✅
+   */
+  posicion: {
+    type: Number,
+    default: undefined,
+  },
+
+  /**
+   * Visibilidad de la capa.
+   *
+   * - Tipo: Boolean
+   * - Valor por defecto: true
+   * - Interactivo: ✅
+   */
+  visible: {
+    type: Boolean,
+    default: true,
+  },
 }
 
 export default function usarCapa(refVar, props) {
   var idMapa
-  const { nombre } = toRefs(props)
+  const { nombre, opacidad, posicion, visible } = toRefs(props)
 
   var fnConfiguracion
   function configurar(_fnConfiguracion) {
@@ -45,13 +81,19 @@ export default function usarCapa(refVar, props) {
 
         mapa.addLayer(
           new olLayerClass({
-            source: olSource,
             id: props.id,
             nombre: nombre.value,
+            opacity: Number(opacidad.value),
+            source: olSource,
+            visible: visible.value,
+            zIndex: posicion.value,
           })
         )
 
         watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
+        watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
+        watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(nv))
+        watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
       })
   }
 
