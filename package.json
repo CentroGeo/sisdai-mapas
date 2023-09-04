@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Biblioteca de componentes reutilizables en proyectos escritos en VueJS, que forma parte del SIS-DAI y permite crear mapas interactivos de manera sencilla con diferentes formas de representación de datos geográficos (clasificación de datos, coropletas, símbolos graduados, clusters y texturas).",
   "private": true,
   "scripts": {
