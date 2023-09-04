@@ -1,7 +1,13 @@
-dist
-coverage
-libs
+# No ejecutar prettier en node_modules
 node_modules
+
+# No ejecutar prettier en carpetas de compilación (asegúrese de que esté configurada con el nombre correcto de la carpeta de compilación)
+dist
 docs/.vuepress/dist
 docs/.vitepress/dist
+
+# No ejecutar prettier en la salida de nyc coverage
+coverage
+
+# No ejecutar prettier en carpeta deprecada
 deprecated

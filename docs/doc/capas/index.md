@@ -48,10 +48,10 @@ Visibilidad de la capa.
 
 Indica la posición respecto a otras capas, cuando se define un z-index mas alto respecto a las demás capas, esa capa se posicionara enfrente de ellas.
 
-### `extension`
+#### `extension`
 
 - Tipo: `Array`
-- Valor por defecto: `undefined`
+- Valor por defecto: `[0, 0, 0, 0]`
 - Interactivo: ❌
 
 Extensión de la capa. Con este parametro se calcularán los mínimos y máximos de las capas registradas en el mapa.

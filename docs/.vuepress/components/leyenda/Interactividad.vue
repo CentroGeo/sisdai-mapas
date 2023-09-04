@@ -1,11 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const mapa = ref({
-  centro: [-102, 24],
-  zoom: 4.5,
-})
-
 const osm = ref({
   id: 'osm-capa-id',
   nombre: 'Capa de OpenStreetMap',
@@ -25,31 +20,11 @@ const wms = ref({
 
 <template>
   <SisdaiMapa
-    :centro="mapa.centro"
-    :zoom="mapa.zoom"
+    :vista="{
+      centro: [-102, 24],
+      zoom: 4.5,
+    }"
   >
-    <SisdaiMapaEncabezado>
-      Cotroles que no son del mapa
-      <div class="inline">
-        WMS:
-        <button
-          class="boton-secundario boton-chico"
-          @click="wms.visible = !wms.visible"
-        >
-          {{ wms.visible ? 'Apagar' : 'Prender' }}
-        </button>
-        <input
-          type="text"
-          v-model="wms.nombre"
-        />
-      </div>
-
-      <hr />
-      Controles del mapa
-      <SisdaiMapaLeyenda :para="wms.id" />
-      <SisdaiMapaLeyenda :para="osm.id" />
-    </SisdaiMapaEncabezado>
-
     <SisdaiMapaCapas>
       <SisdaiCapaOsm
         :id="osm.id"
@@ -68,6 +43,29 @@ const wms = ref({
         @alCambiarVisibilidad="v => (wms.visible = v)"
       />
     </SisdaiMapaCapas>
+
+    <SisdaiMapaEncabezado>
+      Cotroles que no son del mapa
+      <div class="inline">
+        WMS:
+        <button
+          class="boton-secundario boton-chico"
+          @click="wms.visible = !wms.visible"
+        >
+          {{ wms.visible ? 'Apagar' : 'Prender' }}
+        </button>
+        <input
+          type="text"
+          v-model="wms.nombre"
+        />
+      </div>
+
+      <hr />
+      <SisdaiMapaLeyenda
+        titulo="Controles del mapa"
+        :para="[wms.id, osm.id]"
+      />
+    </SisdaiMapaEncabezado>
   </SisdaiMapa>
 </template>
 

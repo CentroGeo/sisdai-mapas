@@ -1,10 +1,13 @@
-# don't ever lint node_modules
+# No ejecutar lint en node_modules
 node_modules
-# don't lint build output (make sure it's set to your correct build folder name)
+
+# No ejecutar lint en carpetas de compilación (asegúrese de que esté configurada con el nombre correcto de la carpeta de compilación)
 dist
-# don't lint nyc coverage output
-coverage
-libs
 docs/.vuepress/dist
 docs/.vitepress/dist
+
+# No ejecutar lint en la salida de nyc coverage
+coverage
+
+# No ejecutar prettier en carpeta deprecada
 deprecated

@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Indice",
+    "collapsable": false,
+    "children": ["indice"]
+  },
+  {
+    "title": "Mapa",
+    "collapsable": false,
+    "children": ["extensionPorCapasVisibles"]
+  },
+  {
+    "title": "Capas",
+    "collapsable": false,
+    "children": ["capasEstilosInteractivos"]
+  }
+]

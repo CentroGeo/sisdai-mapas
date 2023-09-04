@@ -8,7 +8,7 @@ import tiposEstatusCarga from './../defaults/estatusCarga'
 /**
  * Objeto de objetos de capas de openlayers, los leys de cada objeto debe ser el id de cada capa.
  */
-const capasRegistradas = {}
+let capasRegistradas = {}
 
 /**
  * Variable que indica si hay capas que tienen el cargador visible en proceso de carga/actualiación.
@@ -31,6 +31,13 @@ export default function usarCapasRegistradas() {
         mapa.addLayer(capasRegistradas[idCapa].value)
       }
     }
+  }
+
+  /**
+   * Limpia el objeto de capas registradas.
+   */
+  function limpiarRegistro() {
+    capasRegistradas = {}
   }
 
   /**
@@ -75,17 +82,67 @@ export default function usarCapasRegistradas() {
   )
 
   /**
+   * Devuelve un booleando dependiendo si la capa de referencia está registrada en las capas.
+   * @param {String} idCapa identificador de la capa.
+   * @returns {Boolean} ture si la capa está registrada.
+   */
+  function capaEstaRegistrada(idCapa) {
+    return Object.hasOwnProperty.call(capasRegistradas, idCapa)
+  }
+
+  /**
    * Esta función en un pequeño composable para acceder a propiedades reactivas y funciones de a
    * una capa en especifico.
    * @param {String} idCapa id de la caopa a la que se vinculará.
    */
   function vincularCapa(idCapa) {
-    const capa = () => capasRegistradas[idCapa].value
+    if (!capaEstaRegistrada(idCapa)) {
+      // eslint-disable-next-line
+      console.warn(`La capa ${idCapa} no existe`)
+      return {}
+    }
 
-    const nombre = ref(capa().get('nombre'))
-    const estatusCarga = ref(capa().get('estatusCarga'))
-    // const verCargador = ref(capa().get('verCargador'))
+    const capa = () => capasRegistradas[idCapa].value
+    const conseguir = id => capa().values_[id]
+    const asignar = (id, nvoValor) => capa().set(id, nvoValor)
+
+    const nombre = ref(conseguir('nombre'))
+    const estatusCarga = ref(conseguir('estatusCarga'))
+    const estilo = ref(conseguir('estilo'))
+    // const verCargador = ref(conseguir('verCargador'))
     const visibilidad = ref(capa().getVisible())
+
+    /**
+     * Cambia el nombre de la capa, la cual es visible en la leyenda nativa.
+     * @param {String} nvoNombre nombre a asignar.
+     */
+    const cambiarNombre = nvoNombre => asignar('nombre', nvoNombre)
+    watch(
+      () => conseguir('nombre'),
+      nvoNombre => (nombre.value = nvoNombre)
+    )
+
+    /**
+     *
+     * @param {*} nvoEstatus
+     */
+    function cambiarEstatusCarga(nvoEstatus) {
+      estatusCarga.value = nvoEstatus
+    }
+    watch(estatusCarga, nvoEstatus => capa().set('estatusCarga', nvoEstatus))
+
+    /**
+     *
+     * @param {*} nvoEstilo
+     */
+    function cambiarEstilo(nvoEstilo, accion) {
+      asignar('estilo', JSON.stringify(nvoEstilo))
+      accion(capa())
+    }
+    watch(
+      () => conseguir('estilo'),
+      nvoEstilo => (estilo.value = nvoEstilo)
+    )
 
     /**
      * Cambiar el estado de visivilidad de una capa de acuerdo con su id. Si no se define el
@@ -102,38 +159,24 @@ export default function usarCapasRegistradas() {
     )
     watch(visibilidad, alternarVisibilidad)
 
-    /**
-     * Cambia el nombre de la capa, la cual es visible en la leyenda nativa.
-     * @param {String} estado nombre a asignar.
-     */
-    function cambiarNombre(nuevoNombre) {
-      capa().set('nombre', nuevoNombre)
-    }
-    watch(
-      () => capa().values_.nombre,
-      nuevoValor => (nombre.value = nuevoValor)
-    )
-
-    function cambiarEstatusCarga(nuevoEstatus) {
-      estatusCarga.value = nuevoEstatus
-    }
-    watch(estatusCarga, nuevoEstatus =>
-      capa().set('estatusCarga', nuevoEstatus)
-    )
-
     return {
-      alternarVisibilidad,
+      capa,
       visibilidad,
-      cambiarNombre,
+      alternarVisibilidad,
       nombre,
+      cambiarNombre,
       cambiarEstatusCarga,
+      estilo,
+      cambiarEstilo,
     }
   }
 
   return {
     agregarTodoALMapa,
+    limpiarRegistro,
     registrarNuevaCapa,
     vincularCapa,
+    capaEstaRegistrada,
     hayCapasCargadorVisibleProcesando,
   }
 }

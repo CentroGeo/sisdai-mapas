@@ -21,13 +21,21 @@ Este componente permite agregar, dentro de uno de los contenedores del mapa, una
 
 ## Propiedades
 
-#### para
+#### `para`
 
-- Tipo: `String`
+- Tipo: `String` o `Array`
 - Obligatorio: ✅
-- Interactivo: ❌
+- Interactivo: ✅
 
 Identificador de la capa a la que se quiere vincular el control de leyenda.
+
+#### `titulo`
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Interactivo: ✅
+
+Titulo que tendrá la leyenda por encima de los controles de las capas con las que se vincule.
 
 ## Ejemplo
 

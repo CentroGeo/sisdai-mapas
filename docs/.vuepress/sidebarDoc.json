@@ -2,38 +2,42 @@
   {
     "title": "Inicio",
     "collapsable": false,
-    "children": ["introduccion"]
+    "children": ["introduccion", "primeros-pasos"]
   },
   {
     "title": "Mapa",
-    "collapsable": false,
-    "children": ["mapa"]
-  },
-  {
-    "title": "Contenedores",
     "collapsable": true,
-    "children": ["contenedores"]
+    "children": ["mapa/", "mapa/vista", "mapa/contenedores"]
   },
   {
     "title": "Capas",
-    "collapsable": false,
-    "children": [
-      "capas-general",
-      "capas-teselas",
-      "capas-vectoriales",
-      "capas-xyz",
-      "capas-wms",
-      "capas-geojson"
-    ]
+    "collapsable": true,
+    "children": ["capas/", "capas/teselas", "capas/vectoriales"]
   },
   {
     "title": "Clasificación",
     "collapsable": true,
-    "children": []
+    "children": [
+      "clasificacion/",
+      "clasificacion/categorias",
+      "clasificacion/cuantiles",
+      "clasificacion/linear",
+      "clasificacion/cortes-naturales"
+    ]
   },
   {
     "title": "Leyendas",
-    "collapsable": false,
-    "children": ["leyenda"]
+    "collapsable": true,
+    "children": ["leyenda/"]
+  },
+  {
+    "title": "Información",
+    "collapsable": true,
+    "children": ["info/", "info/globo", "info/recuadro"]
+  },
+  {
+    "title": "Visualizaciones",
+    "collapsable": true,
+    "children": []
   }
 ]

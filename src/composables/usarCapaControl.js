@@ -1,5 +1,5 @@
 /**
- * @module composables/usarLeyenda
+ * @module composables/usarCapaControl
  */
 
 import { ref, watch } from 'vue'
@@ -26,34 +26,35 @@ export const props = {
  * @param {Object} propsParam props genéricos de leyenda.
  * @returns {Function} composable.
  */
-export default function usarLeyenda(propsParam) {
+export default function usarCapaControl(propsParam) {
   const visibilidadCapa = ref(false)
   const nombreCapa = ref('Cargando...')
-
-  /**
-   * En caso de que no se encuentre la capa en las capas registradas, llegar a esta funciónß.
-   * @param {String} id id de la capa con la que se trató de vincular.
-   function capaNoVinculada(id) {
-     console.warn(`La capa '${id}' no fue encontrada`)
-    }
-   */
+  const estiloCapa = ref({})
 
   /**
    * Ejecutar esta función para vincular el idCapa con alguna capa registrada.
    */
   function vincularCapa() {
-    // console.log('tratando de vincular', propsParam.para)
+    if (!usarCapasRegistradas().capaEstaRegistrada(propsParam.para)) return
 
-    const { alternarVisibilidad, visibilidad, nombre } =
+    const { alternarVisibilidad, visibilidad, nombre, estilo } =
       usarCapasRegistradas().vincularCapa(propsParam.para)
 
     visibilidadCapa.value = visibilidad.value
-    watch(visibilidad, nuevoValor => (visibilidadCapa.value = nuevoValor))
+    watch(visibilidad, nvoValor => (visibilidadCapa.value = nvoValor))
     watch(visibilidadCapa, alternarVisibilidad)
 
     nombreCapa.value = nombre.value
-    watch(nombre, nuevoValor => (nombreCapa.value = nuevoValor))
+    watch(nombre, nvoNombre => (nombreCapa.value = nvoNombre))
+
+    estiloCapa.value = JSON.parse(estilo.value ? estilo.value : '{}')
+    watch(estilo, nvoEstilo => (estiloCapa.value = JSON.parse(nvoEstilo)))
   }
 
-  return { vincularCapa, visibilidadCapa, nombreCapa }
+  return {
+    vincularCapa,
+    visibilidadCapa,
+    nombreCapa,
+    estiloCapa,
+  }
 }

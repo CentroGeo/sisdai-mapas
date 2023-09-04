@@ -1,4 +1,5 @@
 <script setup>
+import { onMounted } from 'vue'
 import ImageLayer from 'ol/layer/Image'
 import ImageWMS from 'ol/source/ImageWMS'
 import { ImageSourceEventType } from 'ol/source/Image'
@@ -35,15 +36,6 @@ const propsSetup = defineProps({
     default: 'geoserver',
   },
 
-  /**
-   * Extensión de la capa. Con este parametro se calcularán los mínimos y máximos de las capas
-   * registradas en el mapa.
-   */
-  extension: {
-    type: Array,
-    default: () => [],
-  },
-
   ...props,
 })
 
@@ -72,12 +64,14 @@ source.on(ImageSourceEventType.IMAGELOADEND, () => {
   estatusCarga.value = tiposEstatusCarga.fin
 })
 
-registrar(
-  new ImageLayer({
-    source,
-    // className: this.className,
-  })
-)
+onMounted(() => {
+  registrar(
+    new ImageLayer({
+      source,
+      // className: this.className,
+    })
+  )
+})
 </script>
 
 <template style="display: none"><span /></template>

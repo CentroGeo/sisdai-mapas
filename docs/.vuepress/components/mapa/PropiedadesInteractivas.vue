@@ -121,8 +121,11 @@ function cambiarZoom({ target }) {
     <SisdaiMapa
       :centro="centros[mapa.centro]"
       :escalaGrafica="mapa.escalaGrafica"
-      :zoom="mapa.zoom"
-      :extension="extensiones[mapa.extension]"
+      :vista="{
+        centro: centros[mapa.centro],
+        zoom: mapa.zoom,
+        extension: extensiones[mapa.extension],
+      }"
     >
       <SisdaiCapaOsm />
     </SisdaiMapa>

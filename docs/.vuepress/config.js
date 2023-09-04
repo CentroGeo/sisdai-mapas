@@ -1,6 +1,7 @@
 const { description, version, repository } = require('./../../package')
 const navbar = require('./navbar')
 const sidebarDoc = require('./sidebarDoc')
+const sidebarEjem = require('./sidebarEjem')
 
 module.exports = {
   /**
@@ -51,6 +52,7 @@ module.exports = {
     nav: navbar,
     sidebar: {
       '/doc/': sidebarDoc,
+      '/ejem/': sidebarEjem,
     },
   },
 
