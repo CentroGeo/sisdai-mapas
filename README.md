@@ -67,7 +67,7 @@ Seguido de la instalación de las dependencias y ejecución de vuepress:
 
 ```bash
 npm install
-npm run docs:serve
+npm run docs
 ```
 
 Se habilitara en [localhost:8080](localhost:8080).
