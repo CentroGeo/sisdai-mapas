@@ -1,4 +1,5 @@
 <script setup>
+import MapEventType from 'ol/MapEventType'
 import {
   computed,
   onMounted,
@@ -154,11 +155,11 @@ onMounted(() => {
     emits
   )
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
-  mapa().on('moveend', olMoveend)
+  mapa().on(MapEventType.MOVEEND, olMoveend)
 })
 
 onUnmounted(() => {
-  mapa().un('moveend', olMoveend)
+  mapa().un(MapEventType.MOVEEND, olMoveend)
   usarRegistroMapas().borrarMapa(props.id)
 })
 

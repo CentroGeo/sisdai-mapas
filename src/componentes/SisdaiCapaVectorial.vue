@@ -15,15 +15,16 @@ const props = defineProps({
   // },
 
   /**
+   * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
    *
-   *
-   * - Tipo: `String|Object`
-   * - Valor obligatorio.
+   * - Tipo: `String` o `Function`
+   * - Valor por defecto: `undefined`.
    * - Interactivo: ✅
    */
-  fuente: {
-    type: [String, Object],
-    required: true,
+  globoInformativo: {
+    type: [String, Function],
+    default: undefined,
   },
 
   /**
@@ -36,6 +37,18 @@ const props = defineProps({
   formato: {
     type: String,
     default: 'geojson',
+  },
+
+  /**
+   *
+   *
+   * - Tipo: `String` o `Object`
+   * - Valor obligatorio.
+   * - Interactivo: ✅
+   */
+  fuente: {
+    type: [String, Object],
+    required: true,
   },
 
   /**

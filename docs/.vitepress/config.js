@@ -1,12 +1,13 @@
 import { createRequire } from 'module'
-import { defineConfig } from 'vitepress'
+// import { defineConfig } from 'vitepress'
 
 const require = createRequire(import.meta.url)
 
 const pkg = require('./../../package.json')
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+// export default defineConfig({
+export default {
   lang: 'es-mx',
   title: 'SISDAI-MAPAS',
   description: pkg.description,
@@ -72,7 +73,7 @@ export default defineConfig({
       text: 'Última actualización',
     },
   },
-})
+}
 
 function nav() {
   return [

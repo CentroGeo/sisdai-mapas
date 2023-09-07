@@ -1,4 +1,5 @@
 import olMap from 'ol/Map'
+import RenderEventType from 'ol/render/EventType'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -98,7 +99,7 @@ export default class Mapa extends olMap {
    * incluir extensión).
    */
   exportarImagen(nombreImagen = 'mapa') {
-    this.once('rendercomplete', function () {
+    this.once(RenderEventType.RENDERCOMPLETE, function () {
       const link = document.createElement('a')
       link.href = crearImagenMapa(this)
       link.download = `${nombreImagen}.png`

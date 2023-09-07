@@ -40,6 +40,7 @@ export default class EtiquetaAtribucion extends Attribution {
      */
     this.element.classList.add('sisdai-mapa-control')
     this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
+    this.element.classList.remove('ol-control')
 
     // this.render = ({ frameState }) => {
     //   this.updateElement_(frameState)
