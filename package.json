@@ -8,18 +8,18 @@
     "README.md"
   ],
   "scripts": {
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "docs": "vitepress dev docs",
-    "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "dev": "vite",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:preview": "vitepress preview docs",
     "format": "prettier . --write",
     "format-lint": "npm run format && npm run lint",
-    "reinstall": "rm -rf node_modules && rm package-lock.json && npm i"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "preview": "vite preview",
+    "reinstall": "rm -rf node_modules && rm package-lock.json && npm cache clean -f && npm cache verify && npm i",
+    "test": "vitest"
   },
   "dependencies": {
     "ol": "^8.1.0"
@@ -33,13 +33,13 @@
     "eslint": "^8.48.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-vue": "^9.17.0",
-    "happy-dom": "^11.0.2",
+    "happy-dom": "^11.0.4",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
     "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#feature/contenedor-vis",
     "vite": "^4.4.9",
-    "vitepress": "^1.0.0-rc.10",
+    "vitepress": "^1.0.0-rc.12",
     "vitest": "^0.34.3",
     "volar-service-vetur": "^0.0.13",
     "vue": "^3.3.4"

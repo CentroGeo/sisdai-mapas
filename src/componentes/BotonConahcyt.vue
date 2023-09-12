@@ -1,15 +1,23 @@
 <template>
-  <a
-    class="boton boton-conahcyt"
-    href="https://conahcyt.mx/"
-    target="_blank"
-  >
-    <img
-      src="https://conacyt.mx/wp-content/uploads/2021/10/logo_conacyt_con_sintagma_azul_completo.svg"
-      alt="Conahcyt"
-      height="28px"
-    />
-  </a>
+  <div class="boton boton-conahcyt-vis">
+    <a
+      href="https://conahcyt.mx/"
+      target="_blank"
+    >
+      <img
+        src="https://conahcyt.mx/wp-content/uploads/2021/10/logo_conacyt_con_sintagma_azul_completo.svg"
+        alt="Conahcyt"
+      />
+    </a>
+
+    <a
+      href="https://sisdai.conahcyt.mx/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      Sisdai
+    </a>
+  </div>
 </template>
 
 <style lang="scss">

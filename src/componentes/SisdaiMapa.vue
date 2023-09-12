@@ -195,7 +195,7 @@ const escalaGraficaVisible = computed(() =>
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis borde borde-color-2 borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
     <div class="panel-encabezado-vis">
       <slot name="panel-encabezado-vis" />
@@ -209,7 +209,7 @@ const escalaGraficaVisible = computed(() =>
     <slot />
 
     <figure
-      class="contenido-vis"
+      class="contenido-vis p-2"
       ref="refMapa"
       :aria-describedby="elementosDescriptivos"
       aria-label="Mapa interactivo"

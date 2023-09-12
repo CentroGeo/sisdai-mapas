@@ -3,10 +3,10 @@
 // @import './../estilos/ContenedorVis.scss';
 
 .sisdai-mapa.contenedor-vis {
-  $border-radius-canvas: 14px;
+  $border-radius-canvas: 0px;
 
   .contenido-vis {
-    background: #e9e9e9;
+    // background: #e9e9e9;
 
     canvas {
       border-radius: $border-radius-canvas $border-radius-canvas 0 0;
