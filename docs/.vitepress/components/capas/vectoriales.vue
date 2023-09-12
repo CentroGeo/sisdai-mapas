@@ -12,8 +12,9 @@ const nombre = ref('Capa vectorial')
     }"
   >
     <template #panel-encabezado-vis>
-      <div>
+      <div class="p-y-2">
         <input
+          class="m-0"
           type="text"
           v-model="nombre"
         />
@@ -41,3 +42,9 @@ const nombre = ref('Capa vectorial')
     </template>
   </SisdaiMapa>
 </template>
+
+<style lang="scss">
+input.m-0 {
+  margin: 0 !important;
+}
+</style>

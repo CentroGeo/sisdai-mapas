@@ -197,11 +197,11 @@ const escalaGraficaVisible = computed(() =>
     :sisdai-mapa="id"
     class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
-    <div class="panel-encabezado-vis">
+    <div class="panel-encabezado-vis p-x-2">
       <slot name="panel-encabezado-vis" />
     </div>
 
-    <div class="panel-izquierda-vis">
+    <div class="panel-izquierda-vis p-l-2">
       <slot name="panel-izquierda-vis" />
     </div>
 
@@ -215,11 +215,11 @@ const escalaGraficaVisible = computed(() =>
       aria-label="Mapa interactivo"
     />
 
-    <div class="panel-derecha-vis">
+    <div class="panel-derecha-vis p-r-2">
       <slot name="panel-derecha-vis" />
     </div>
 
-    <div class="panel-pie-vis">
+    <div class="panel-pie-vis p-x-2">
       <slot name="panel-pie-vis" />
     </div>
 

@@ -12,7 +12,7 @@ const mapa = ref()
     proyeccion="EPSG:3857"
   >
     <template #panel-encabezado-vis>
-      <div class="m-2">
+      <div class="m-y-2">
         <p
           class="vis-titulo-visualizacion"
           id="titulo-mapa"
@@ -29,7 +29,7 @@ const mapa = ref()
     <SisdaiCapaXyz />
 
     <template #panel-pie-vis>
-      <div class="m-1">
+      <div class="m-b-2">
         <button
           class="boton-primario boton-chico"
           @click="mapa.exportarImagen('mapa-sisdai')"
