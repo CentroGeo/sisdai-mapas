@@ -8,8 +8,6 @@
     "README.md"
   ],
   "scripts": {
-    "build": "vite build",
-    "dev": "vite",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",
@@ -33,13 +31,13 @@
     "eslint": "^8.48.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-vue": "^9.17.0",
-    "happy-dom": "^11.0.4",
+    "happy-dom": "^11.2.0",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
-    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#feature/contenedor-vis",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#fix/elementos-en-contenedor",
     "vite": "^4.4.9",
-    "vitepress": "^1.0.0-rc.12",
+    "vitepress": "^1.0.0-rc.13",
     "vitest": "^0.34.3",
     "volar-service-vetur": "^0.0.13",
     "vue": "^3.3.4"

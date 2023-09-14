@@ -61,9 +61,9 @@ function crearMapa(target, proyeccion, emits) {
     target,
     layers: [],
     controls: [
+      new controles.EscalaGrafica(),
       new controles.AcercarAlejar(),
       new controles.AjustarVista(emits),
-      new controles.EscalaGrafica(),
       new controles.EtiquetaAtribucion(),
     ],
     view: new View({
