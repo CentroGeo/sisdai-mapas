@@ -1,6 +1,7 @@
 <template>
-  <div class="boton boton-conahcyt-vis">
+  <div class="contenedor-vis-atribuciones">
     <a
+      class="logo-conacyt"
       href="https://conahcyt.mx/"
       target="_blank"
     >
@@ -19,14 +20,3 @@
     </a>
   </div>
 </template>
-
-<style lang="scss">
-.boton.boton-conahcyt {
-  // position: absolute;
-  // box-sizing: border-box;
-  // bottom: 0;
-  min-height: 40px;
-  // height: 40px;
-  max-height: 40px;
-}
-</style>

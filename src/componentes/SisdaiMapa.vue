@@ -14,7 +14,7 @@ import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
-import BotonConahcyt from './BotonConahcyt.vue'
+import ContenedorVisAtribuciones from './ContenedorVisAtribuciones.vue'
 import SisdaiCargando from './SisdaiCargando.vue'
 
 const props = defineProps({
@@ -224,7 +224,7 @@ const escalaGraficaVisible = computed(() =>
     </div>
 
     <SisdaiCargando />
-    <BotonConahcyt />
+    <ContenedorVisAtribuciones />
   </div>
 </template>
 
