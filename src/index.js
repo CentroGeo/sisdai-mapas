@@ -1,38 +1,30 @@
-import './estilos/index.scss'
-import Mapa from './componentes/SisdaiMapa.vue'
-import * as Capas from './componentes/capas'
-import * as Leyendas from './componentes/leyendas'
-import * as Elementos from './componentes/elementos'
+import 'ol/ol.css'
+// import 'sisdai-css'
 
-export default function plugin(Vue) {
-  //if (plugin.installed) {
-  //  return
-  //}
-  //
-  //plugin.installed = true
+import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
+import SisdaiCapaWms from './componentes/SisdaiCapaWms.vue'
+import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
+// import SisdaiContenedorVis from './componentes/SisdaiContenedorVis.vue'
+import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
+import SisdaiMapa from './componentes/SisdaiMapa.vue'
 
-  /**
-   *
-   * @param {Object} componente
-   */
-  function agregarComponente(componente) {
-    Vue.component(componente.__name, componente)
-  }
-
-  /**
-   *
-   * @param {*} componentes
-   */
-  function agregarComponentes(componentes) {
-    Object.values(componentes).forEach(componente =>
-      agregarComponente(componente)
-    )
-  }
-
-  agregarComponente(Mapa)
-  agregarComponentes(Capas)
-  agregarComponentes(Elementos)
-  agregarComponentes(Leyendas)
+export default {
+  install: Vue => {
+    Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
+    Vue.component('SisdaiCapaWms', SisdaiCapaWms)
+    Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
+    // Vue.component('SisdaiContenedorVis', SisdaiContenedorVis)
+    Vue.component('SisdaiLeyenda', SisdaiLeyenda)
+    Vue.component('SisdaiMapa', SisdaiMapa)
+  },
 }
 
-export { plugin as install }
+export {
+  SisdaiCapaVectorial,
+  SisdaiCapaWms,
+  SisdaiCapaXyz,
+  // SisdaiContenedorVis,
+  SisdaiLeyenda,
+  SisdaiMapa
+}
+

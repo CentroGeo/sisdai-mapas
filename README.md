@@ -63,14 +63,14 @@ git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas
 cd sisdai-mapas
 ```
 
-Seguido de la instalación de las dependencias y ejecución de vuepress:
+Seguido de la instalación de las dependencias y ejecución de vitepress:
 
 ```bash
 npm install
 npm run docs
 ```
 
-Se habilitara en [localhost:8080](localhost:8080).
+Se habilitara en [localhost:5173](localhost:5173).
 
 **SOFTWARE LIBRE Y ESTÁNDARES ABIERTOS**
 
