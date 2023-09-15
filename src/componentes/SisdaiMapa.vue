@@ -1,5 +1,7 @@
 <script setup>
+import MapEventType from 'ol/MapEventType'
 import {
+  computed,
   onMounted,
   onUnmounted,
   reactive,
@@ -12,7 +14,7 @@ import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
-import BotonConahcyt from './BotonConahcyt.vue'
+import ContenedorVisAtribuciones from './ContenedorVisAtribuciones.vue'
 import SisdaiCargando from './SisdaiCargando.vue'
 
 const props = defineProps({
@@ -87,7 +89,7 @@ const props = defineProps({
 
 const emits = defineEmits(Object.values(eventos))
 const refMapa = shallowRef(null)
-const { vista, elementosDescriptivos } = toRefs(props)
+const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 
 /**
  * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
@@ -153,11 +155,11 @@ onMounted(() => {
     emits
   )
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
-  mapa().on('moveend', olMoveend)
+  mapa().on(MapEventType.MOVEEND, olMoveend)
 })
 
 onUnmounted(() => {
-  mapa().un('moveend', olMoveend)
+  mapa().un(MapEventType.MOVEEND, olMoveend)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
@@ -181,18 +183,25 @@ defineExpose({
     mapa().buscarControl('AjustarVista').ajustarVista()
   },
 })
+
+/**
+ * Variable computada para el asignar la regla css `display` al elemento de la escala gráfica.
+ */
+const escalaGraficaVisible = computed(() =>
+  escalaGrafica.value ? 'block' : 'none'
+)
 </script>
 
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis borde borde-color-2 borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
-    <div class="panel-encabezado-vis">
+    <div class="panel-encabezado-vis p-x-2">
       <slot name="panel-encabezado-vis" />
     </div>
 
-    <div class="panel-izquierda-vis">
+    <div class="panel-izquierda-vis p-l-2">
       <slot name="panel-izquierda-vis" />
     </div>
 
@@ -200,21 +209,22 @@ defineExpose({
     <slot />
 
     <figure
-      class="contenido-vis"
+      class="contenido-vis p-2"
       ref="refMapa"
       :aria-describedby="elementosDescriptivos"
+      aria-label="Mapa interactivo"
     />
 
-    <div class="panel-derecha-vis">
+    <div class="panel-derecha-vis p-r-2">
       <slot name="panel-derecha-vis" />
     </div>
 
-    <div class="panel-pie-vis">
+    <div class="panel-pie-vis p-x-2">
       <slot name="panel-pie-vis" />
     </div>
 
     <SisdaiCargando />
-    <BotonConahcyt />
+    <ContenedorVisAtribuciones />
   </div>
 </template>
 
@@ -222,4 +232,8 @@ defineExpose({
 @import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
+
+.sisdai-mapa-control-escala-grafica {
+  display: v-bind(escalaGraficaVisible);
+}
 </style>

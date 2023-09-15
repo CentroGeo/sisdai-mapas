@@ -61,7 +61,7 @@ setTimeout(() => {
         :key="`panel-${clase}`"
         #[clase]
       >
-        <div class="p-1">
+        <div class="">
           <h2>{{ clase }}</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione

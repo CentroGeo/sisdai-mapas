@@ -1,12 +1,13 @@
 import { createRequire } from 'module'
-import { defineConfig } from 'vitepress'
+// import { defineConfig } from 'vitepress'
 
 const require = createRequire(import.meta.url)
 
 const pkg = require('./../../package.json')
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+// export default defineConfig({
+export default {
   lang: 'es-mx',
   title: 'SISDAI-MAPAS',
   description: pkg.description,
@@ -29,7 +30,7 @@ export default defineConfig({
 
     sidebar: {
       '/comienza/': sidebarComienza('comienza'),
-      '/fuentes/': sidebarFuentes('fuentes'),
+      '/datos/': sidebarDatos('datos'),
 
       // visualizaciones: [
       //   {
@@ -53,32 +54,6 @@ export default defineConfig({
       //     ],
       //   },
       // ],
-
-      // clasificacion: [
-      //   {
-      //     text: 'Clasificación de datos',
-      //     // collapsed: false,
-      //     items: [
-      //       { text: 'Categórica', link: '/clasificacion/categorica' },
-      //       {
-      //         text: 'Cortes naturales',
-      //         link: '/clasificacion/cortes-naturales',
-      //       },
-      //       {
-      //         text: 'Cortes suavizados**',
-      //         link: '/clasificacion/cortes-suavizados',
-      //       },
-      //       { text: 'Cuantiles', link: '/clasificacion/cuantiles' },
-      //       {
-      //         text: 'Desviación estándar**',
-      //         link: '/clasificacion/desviación',
-      //       },
-      //       { text: 'Intervalo igual', link: '/clasificacion/intervalo-igual' },
-      //       { text: 'Logarítmica**', link: '/clasificacion/logarítmica' },
-      //       { text: 'Personalizada', link: '/clasificacion/personalizada' },
-      //     ],
-      //   },
-      // ],
     },
 
     socialLinks: [
@@ -98,7 +73,7 @@ export default defineConfig({
       text: 'Última actualización',
     },
   },
-})
+}
 
 function nav() {
   return [
@@ -115,46 +90,75 @@ function nav() {
       activeMatch: '/comienza/',
       // items: [],
     },
-    { text: 'Fuentes', link: '/fuentes/', activeMatch: '/fuentes/' },
-    // {
-    //   text: 'Visualizaciones',
-    //   link: '/visualizaciones/',
-    //   activeMatch: '/visualizaciones/',
-    // },
-    // {
-    //   text: 'Clasificaciones',
-    //   link: '/clasificaciones/',
-    //   activeMatch: '/clasificaciones/',
-    // },
+    { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
+    {
+      text: 'Visualizaciones',
+      link: '/visualizaciones/',
+      activeMatch: '/visualizaciones/',
+    },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
     { text: pkg.version, link: '/solo' },
   ]
 }
 
 function sidebarComienza(path) {
-  return {
-    text: 'Comienza',
-    // collapsed: false,
-    items: [
-      { text: 'Primeros pasos', link: `/${path}/` },
-      // { text: 'Mapa Básico', link: `/${path}/basico` },
-      { text: 'Configuración', link: `/${path}/configuracion` },
-      { text: 'Vista', link: `/${path}/vista` },
-      { text: 'Capas', link: `/${path}/capas` },
-      { text: 'Globos de información', link: `/${path}/globos` },
-      { text: 'Leyenda', link: `/${path}/leyenda` },
-    ],
-  }
+  return [
+    {
+      text: 'Mapa',
+      // collapsed: false,
+      items: [
+        { text: 'Primeros pasos', link: `/${path}/` },
+        // { text: 'Mapa Básico', link: `/${path}/basico` },
+        { text: 'Configuración', link: `/${path}/configuracion` },
+        { text: 'Vista', link: `/${path}/vista` },
+      ],
+    },
+
+    {
+      text: 'Capas',
+      // collapsed: false,
+      items: [
+        { text: 'Capas', link: `/${path}/capas` },
+        { text: 'Globos de información', link: `/${path}/globos` },
+        { text: 'Leyenda', link: `/${path}/leyenda` },
+      ],
+    },
+  ]
 }
 
-function sidebarFuentes(path) {
-  return {
-    text: 'Fuentes',
-    // collapsed: false,
-    items: [
-      { text: 'Mosaicos', link: `/${path}/mosaicos` },
-      { text: 'WFS', link: `/${path}/wfs` },
-      { text: 'WMS', link: `/${path}/wms` },
-    ],
-  }
+function sidebarDatos(path) {
+  return [
+    {
+      text: 'Fuentes',
+      // collapsed: false,
+      items: [
+        { text: 'Mosaicos', link: `/${path}/mosaicos` },
+        { text: 'WFS', link: `/${path}/wfs` },
+        { text: 'WMS', link: `/${path}/wms` },
+      ],
+    },
+    {
+      text: 'Clasificación',
+      // collapsed: false,
+      items: [
+        { text: 'Categórica', link: `/${path}/categorica` },
+        {
+          text: 'Cortes naturales',
+          link: `/${path}/cortes-naturales`,
+        },
+        {
+          text: 'Cortes suavizados**',
+          link: `/${path}/cortes-suavizados`,
+        },
+        { text: 'Cuantiles', link: `/${path}/cuantiles` },
+        {
+          text: 'Desviación estándar**',
+          link: `/${path}/desviación`,
+        },
+        { text: 'Intervalo igual', link: `/${path}/intervalo-igual` },
+        { text: 'Logarítmica**', link: `/${path}/logarítmica` },
+        { text: 'Personalizada', link: `/${path}/personalizada` },
+      ],
+    },
+  ]
 }

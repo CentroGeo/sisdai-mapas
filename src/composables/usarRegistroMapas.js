@@ -1,4 +1,5 @@
 import View from 'ol/View'
+import PointerEventType from 'ol/pointer/EventType'
 import { reactive } from 'vue'
 import Mapa from './../clases/Mapa'
 import RegistroObjetos from './../clases/ResgistroObjetos'
@@ -56,17 +57,33 @@ function idValido(id) {
  * @returns {import("./../clases/Mapa.js").default} Mapa
  */
 function crearMapa(target, proyeccion, emits) {
-  return new Mapa({
+  const x = new Mapa({
     target,
     layers: [],
     controls: [
+      new controles.EscalaGrafica(),
       new controles.AcercarAlejar(),
       new controles.AjustarVista(emits),
-      new controles.EscalaGrafica(),
       new controles.EtiquetaAtribucion(),
     ],
     view: new View({
       projection: proyeccion,
     }),
   })
+
+  x.on(PointerEventType.POINTERMOVE, ({ originalEvent }) => {
+    const pixel = x.getEventPixel(originalEvent)
+
+    const feature = originalEvent.target.closest('.sisdai-mapa-control')
+      ? undefined
+      : x.forEachFeatureAtPixel(pixel, function (feature) {
+          return feature
+        })
+
+    if (feature) {
+      console.log(feature)
+    }
+  })
+
+  return x
 }
