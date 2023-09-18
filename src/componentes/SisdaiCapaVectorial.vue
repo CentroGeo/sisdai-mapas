@@ -40,7 +40,8 @@ const props = defineProps({
   },
 
   /**
-   *
+   * Origen de la capa. Puede ser una url externa o relativa a las carpetas del proyecto, e
+   * incluso un objeto en formato geojson o topojson con coordenadas y atributos.
    *
    * - Tipo: `String` o `Object`
    * - Valor obligatorio.

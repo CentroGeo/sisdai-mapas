@@ -8,6 +8,7 @@ export const props = {
    * aleatorea. Para hacer uso de la leyenda esta propiedad pasa a ser obligatoria.
    *
    * - Tipo: `String`
+   * - Valor por defecto: Aleatorio
    * - Interactivo: ❌
    */
   id: {
@@ -30,8 +31,8 @@ export const props = {
   /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
-   * - Tipo: Number
-   * - Valor por defecto: 1
+   * - Tipo: `Number`
+   * - Valor por defecto: `1`
    * - Interactivo: ✅
    */
   opacidad: {
@@ -42,8 +43,8 @@ export const props = {
   /**
    * Indica la posición respecto a otras capas. Las capas con un valor mayor en este parámetro se mostrarán enfrente.
    *
-   * - Tipo: Number
-   * - Valor por defecto: undefined
+   * - Tipo: `Number`
+   * - Valor por defecto: `undefined`
    * - Interactivo: ✅
    */
   posicion: {
@@ -54,8 +55,8 @@ export const props = {
   /**
    * Visibilidad de la capa.
    *
-   * - Tipo: Boolean
-   * - Valor por defecto: true
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `true`
    * - Interactivo: ✅
    */
   visible: {
@@ -98,7 +99,7 @@ export default function usarCapa(refVar, props) {
   }
 
   onMounted(() => {
-    console.log('onMounted composable')
+    console.log('onMounted composable capa')
 
     idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
 

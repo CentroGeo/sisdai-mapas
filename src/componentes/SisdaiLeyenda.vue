@@ -53,7 +53,7 @@ onUnmounted(() => {})
 
 <template>
   <span ref="sisdaiLeyenda">
-    <h2>Hola, soy una leyenda 😇 para: {{ para }}</h2>
+    <!-- <h2>Hola, soy una leyenda 😇 para: {{ para }}</h2> -->
 
     <form>
       <input

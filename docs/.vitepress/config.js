@@ -119,6 +119,7 @@ function sidebarComienza(path) {
       // collapsed: false,
       items: [
         { text: 'Capas', link: `/${path}/capas` },
+        { text: 'Vectoriales', link: `/${path}/capasVectoriales` },
         { text: 'Globos de información', link: `/${path}/globos` },
         { text: 'Leyenda', link: `/${path}/leyenda` },
       ],
