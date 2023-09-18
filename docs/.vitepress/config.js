@@ -97,7 +97,7 @@ function nav() {
       activeMatch: '/visualizaciones/',
     },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    { text: pkg.version, link: '/solo' },
+    { text: `v${pkg.version}`, link: '/solo' },
   ]
 }
 
@@ -119,9 +119,10 @@ function sidebarComienza(path) {
       // collapsed: false,
       items: [
         { text: 'Capas', link: `/${path}/capas` },
-        { text: 'Vectoriales', link: `/${path}/capasVectoriales` },
-        { text: 'Globos de información', link: `/${path}/globos` },
-        { text: 'Leyenda', link: `/${path}/leyenda` },
+        { text: 'Vectorial', link: `/${path}/capaVectorial` },
+        { text: 'WMS', link: `/${path}/capaWms` },
+        // { text: 'Globos de información', link: `/${path}/globos` },
+        // { text: 'Leyenda', link: `/${path}/leyenda` },
       ],
     },
   ]

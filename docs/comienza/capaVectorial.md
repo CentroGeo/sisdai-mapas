@@ -2,11 +2,21 @@
 import CapasVectoriales from "./../.vitepress/components/capas/vectoriales.vue";
 </script>
 
-# Capas Vectoriales
+# Capa Vectorial
+
+Las capas vectoriales nos permiten manipular su información de forma local, esto nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos.
+
+**Uso:**
+
+```html{2}
+<SisdaiMapa>
+  <SisdaiCapaVectorial />
+</SisdaiMapa>
+```
 
 ## Propiedades
 
-Hereda las propiedades definidad en la sección Capas más las siguientes:
+Hereda las propiedades definidas en la sección Capas más las siguientes:
 
 #### `formato`
 

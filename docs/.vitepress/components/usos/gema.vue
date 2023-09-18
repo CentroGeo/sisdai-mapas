@@ -65,6 +65,7 @@ const capasMapa = ref([])
     <SisdaiCapaWms
       v-for="capa in capasMapa"
       :key="`capa-${capa}`"
+      url="https://dev-dadsig-gema.crip.conahcyt.mx/geoserver/wms"
       :id="capa"
       :nombre="capa"
       :parametros="{

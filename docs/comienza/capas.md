@@ -1,7 +1,3 @@
-<script setup>
-import CapasVectoriales from "./../.vitepress/components/capas/vectoriales.vue";
-</script>
-
 # Capas
 
 ## Propiedades
@@ -45,18 +41,6 @@ Visibilidad de la capa.
 - Tipo: `Boolean`
 - Valor por defecto: `true`
 - Interactivo: ✅
-
-### Vectoriales
-
-Las capas vectoriales nos permiten manipular su información de forma local, esto nos dá la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos.
-
-<CapasVectoriales />
-
-<!-- <<< @/.vitepress/components/capas/vectoriales.vue -->
-
-### WMS
-
-Componenete para desplegar capas desde servicios wms publicos o privados.
 
 ### XYZ
 

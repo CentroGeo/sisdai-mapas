@@ -12,7 +12,7 @@ const nombre = ref('Capa vectorial')
     }"
   >
     <template #panel-encabezado-vis>
-      <div class="p-y-2">Ejemplo del uso de capa vectorial</div>
+      <div class="p-y-2">Ejemplo del uso de capa vectorial.</div>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
