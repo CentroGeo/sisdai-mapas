@@ -1,30 +1,61 @@
-$margen: 12px;
-
 .sisdai-mapa-control {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  margin: $margen;
+  --margen: 16px;
 
-  &-zoom {
+  position: absolute;
+
+  > button {
+    height: 40px;
+    width: 40px;
+    // color: var(--tipografia-color);
+    background: var(--pagina-fondo);
+
+    > span {
+      margin: auto;
+    }
+  }
+
+  &-acercar-alejar {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    top: var(--margen);
+    right: var(--margen);
     > button {
       margin: 0;
-      &:not(:last-child) {
-        margin-bottom: calc($margen / 2);
-        margin-right: 0px;
-      }
     }
   }
 
   &-ajuste-vista {
-    bottom: 0;
+    top: calc(var(--margen) + 88px);
+    right: var(--margen);
   }
 
   &-escala-grafica {
-    bottom: 0;
-    left: calc(34px + $margen) !important;
+    bottom: calc(var(--margen) / 2);
+    left: calc(var(--margen) / 2);
+
+    .sisdai-mapa-escala-numerica {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      color: transparent;
+    }
 
     .ol-scale-bar-inner {
+      // .ol-scale-text {
+      // div.sisdai-mapa:nth-child(1) > figure:nth-child(4) > div:nth-child(1) > div:nth-child(3) > div:nth-child(3) > div:nth-child(1) > div:nth-child(1)
+      // html.mac body div#app div div main div.m-r-3 div div.sisdai-mapa.contenedor-vis.borde-redondeado-8.mapa-gema.sin-cargador.sin-bordes.sin-boton-conahcyt.con-panel-izquierda-vis.con-panel-derecha-vis figure.contenido-vis.p-2 div.ol-viewport div.ol-overlaycontainer-stopevent div.ol-scale-bar.ol-unselectable.sisdai-mapa-control.sisdai-mapa-control-escala-grafica div.ol-scale-bar-inner div.ol-scale-text
+      // sisdai-mapa
+      //   .sisdai-mapa-control-escala-grafica
+      //   > .ol-scale-bar-inner
+      //   > .ol-scale-text {
+      // }
+      // display: none;
+      // visibility: hidden;
+
+      // text-shadow: none;
+      // color: transparent;
+      // }
       .ol-scale-step-marker {
         height: 10px;
         top: 0px !important;
@@ -40,6 +71,14 @@ $margen: 12px;
       div > .ol-scale-step-marker {
         top: -2px !important;
       }
+    }
+  }
+
+  &-etiqueta-atribucion {
+    right: 0;
+    bottom: 0;
+    > button {
+      display: none;
     }
   }
 }

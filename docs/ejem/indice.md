@@ -1,3 +1,0 @@
-# Ejemplos
-
-Aquí el índice

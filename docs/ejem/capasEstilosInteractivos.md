@@ -1,3 +1,0 @@
-# Estilos Interactivos
-
-<capas-ColoresInteractivos />

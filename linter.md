@@ -1,6 +1,14 @@
 # Linter de código
 
-Permite definir ciertas reglas para que todos los desarrolladores de ese proyecto las cumplan y las apliquen en el código.
+Permite definir ciertas reglas para que todos los desarrolladores de este proyecto las cumplan y las apliquen en el código.
+
+El siguiente comando sirve para dar formato y correcciones de las reglas definidas para el código:
+
+```sh
+npm run format-lint
+```
+
+> Es posible automatizar la corrección de errores en _Visual Studio Code_, al guardar archivos, con la configuración definida en la carpeta `.vscode` en la raíz del proyecto.
 
 ## EditorConfig
 
@@ -12,29 +20,11 @@ Visita [editorconfig.org](https://editorconfig.org) para más información
 
 - Se agregó el archivo [.editorconfig](./.editorconfig)
 
-## ESlint
-
-Encuentra y soluciona problemas en tu código JavaScript
-
-ESLint analiza estáticamente su código para encontrar problemas rápidamente. Está integrado en la mayoría de los editores de texto y puede ejecutar ESLint como parte de su proceso de integración continua.
-
-Visita [eslint.org](https://eslint.org) para más información
-
-### Configuración ESlint
-
-- Se ejecutó el siguiente comando para instalar las dependencias necesarias para la cinfiguración de eslint con formateo de prettier:
-
-```sh
-vue add @vue/cli-plugin-eslint
-```
-
-- Además se habilitaron la opción de formatear al guardar y ejecutar el `linter` en cada `commit`.
-
 ## Prettier
 
 Es un formateador de código que admite muchos lenguajes y se integra con la mayoría de los editores.
 
-Permite configurarse para formatear al guardar cambios ahorrando tiempo y energía
+Permite configurarse para formatear al guardar cambios ahorrando tiempo y energía.
 
 ### Configuración Prettier
 
@@ -50,4 +40,34 @@ npm install --save-dev --save-exact prettier
 
 ```sh
 npm run format
+```
+
+## ESlint
+
+Encuentra y soluciona problemas en tu código JavaScript.
+
+ESLint analiza estáticamente su código para encontrar problemas rápidamente. Está integrado en la mayoría de los editores de texto y puede ejecutar ESLint como parte de su proceso de integración continua.
+
+Visita [eslint.org](https://eslint.org) para más información
+
+### Configuración ESlint
+
+- Se ejecutó el siguiente comando para instalar las dependencias necesarias para la cinfiguración de eslint con formateo de prettier:
+
+```sh
+vue add @vue/cli-plugin-eslint
+```
+
+- El comando preparado para ejecutar el linter en este proyecto con `vue-cli-service lint` es:
+
+```sh
+npm run lint
+```
+
+- Además, se habilitó el siguiente git hook con la opción de formatear y ejecutar el `linter` en cada `commit` en el archivo `packaje.json`:
+
+```json
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
 ```

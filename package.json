@@ -1,56 +1,58 @@
 {
   "name": "sisdai-mapas",
   "version": "1.0.1",
-  "description": "Biblioteca de componentes reutilizables en proyectos escritos en VueJS, que forma parte del SIS-DAI y permite crear mapas interactivos de manera sencilla con diferentes formas de representación de datos geográficos (clasificación de datos, coropletas, símbolos graduados, clusters y texturas).",
-  "private": true,
+  "description": "Biblioteca de mapas interactivos: Componentes de software libre para el Sistema de Diseño y Accesibilidad para la Investigación (Sisdai).",
+  "main": "./src/index.js",
+  "files": [
+    "src",
+    "README.md"
+  ],
   "scripts": {
-    "build": "vue-cli-service build --target lib src/index.js",
-    "lint": "vue-cli-service lint",
+    "deprecated:install": "cd deprecated && npm install",
+    "deprecated:serve": "cd deprecated && vuepress dev docs",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:dev": "vitepress dev docs",
+    "docs:preview": "vitepress preview docs",
     "format": "prettier . --write",
     "format-lint": "npm run format && npm run lint",
-    "fld:build": "npm run format-lint && vuepress build docs && npm run build",
-    "docs:build": "vuepress build docs",
-    "docs:build-nossr": "vuepress buildnossr docs",
-    "docs": "vuepress dev docs",
-    "deprecated:install": "cd deprecated && npm install",
-    "deprecated:serve": "cd deprecated && vuepress dev docs"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "preview": "vite preview",
+    "reinstall": "rm -rf node_modules && rm package-lock.json && npm cache clean -f && npm cache verify && npm i",
+    "test": "vitest"
   },
-  "main": "./dist/sisdai-mapas.umd.js",
-  "files": [
-    "dist/*"
-  ],
   "dependencies": {
-    "core-js": "^3.29.0",
-    "d3": "^7.8.0",
-    "ol": "^7.3.0",
-    "simple-statistics": "^7.8.3",
-    "sisdai-css": "github:salsa-community/sisdai-css#v0.31.2",
-    "vue": "^2.7.14"
+    "ol": "^8.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.0",
-    "@babel/eslint-parser": "^7.19.1",
-    "@vue/cli-plugin-babel": "^5.0.8",
-    "@vue/cli-plugin-eslint": "^5.0.8",
-    "@vue/cli-service": "^5.0.8",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
+    "@rushstack/eslint-patch": "^1.3.3",
+    "@testing-library/vue": "^7.0.0",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "@vue/test-utils": "^2.4.1",
+    "eslint": "^8.48.0",
     "eslint-plugin-html": "^7.1.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.8.0",
-    "lint-staged": "^13.1.2",
-    "prettier": "^2.8.4",
-    "sass": "^1.57.1",
-    "sass-loader": "^10.4.1",
-    "vue-template-compiler": "^2.7.14",
-    "vuepress": "^1.9.9",
-    "vuepress-html-webpack-plugin": "^3.2.0"
+    "eslint-plugin-vue": "^9.17.0",
+    "happy-dom": "^11.2.0",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
+    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.42.2",
+    "vite": "^4.4.9",
+    "vitepress": "^1.0.0-rc.13",
+    "vitest": "^0.34.3",
+    "volar-service-vetur": "^0.0.13",
+    "vue": "^3.3.4"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/salsa-community/sisdai-mapas"
-  }
+    "url": "https://codigo.conahcyt.mx/sisdai/sisdai-mapas"
+  },
+  "bugs": {
+    "url": "https://codigo.conahcyt.mx/sisdai/sisdai-mapas/issues"
+  },
+  "homepage": "https://codigo.conahcyt.mx/sisdai/sisdai-mapas#readme"
 }
