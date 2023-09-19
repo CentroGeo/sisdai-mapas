@@ -90,14 +90,14 @@ function nav() {
       activeMatch: '/comienza/',
       // items: [],
     },
-    { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
-    {
-      text: 'Visualizaciones',
-      link: '/visualizaciones/',
-      activeMatch: '/visualizaciones/',
-    },
+    // { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
+    // {
+    //   text: 'Visualizaciones',
+    //   link: '/visualizaciones/',
+    //   activeMatch: '/visualizaciones/',
+    // },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    { text: `v${pkg.version}`, link: '/solo' },
+    { text: `v${pkg.version}`, link: pkg.repository.url },
   ]
 }
 

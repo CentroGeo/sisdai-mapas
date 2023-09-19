@@ -26,7 +26,7 @@ const { theme, page } = useData()
           {{ nav.text }}
         </a>
       </li>
-      <li v-for="social in theme.socialLinks">
+      <!-- <li v-for="social in theme.socialLinks">
         <a
           :href="social.link"
           target="_blank"
@@ -35,7 +35,7 @@ const { theme, page } = useData()
         >
           <span :class="`icono-social-${social.icon}`" />
         </a>
-      </li>
+      </li> -->
     </ul>
   </SisdaiNavegacionPrincipal>
 </template>
