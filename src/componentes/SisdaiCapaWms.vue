@@ -8,15 +8,12 @@ import eventos from './../eventos/capa'
 
 const props = defineProps({
   /**
-   * url del servicio wms
-   */
-  url: {
-    type: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms',
-  },
-
-  /**
-   * parametros del servicio wms, layers, cql, styles, etc
+   * Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio.
+   * Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
+   *
+   * - Tipo: `Object`
+   * - Valor por defecto: `{}`.
+   * - Interactivo: ✅
    */
   parametros: {
     type: Object,
@@ -33,12 +30,29 @@ const props = defineProps({
   },
 
   /**
-   * Parametro de tipo de servidor.
-   * @see https://openlayers.org/en/latest/apidoc/module-ol_source_WMSServerType.html
+   * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `geoserver`.
+   * - Interactivo: ❌
+   *
+   * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
-  servidor: {
+  tipoServidor: {
     type: String,
     default: 'geoserver',
+  },
+
+  /**
+   * URL del servicio WMS.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`.
+   * - Interactivo: ❌
+   */
+  url: {
+    type: String,
+    default: 'https://gema.conahcyt.mx/geoserver/wms',
   },
 
   ...propsCapa,
@@ -55,7 +69,7 @@ configurar(() => {
   const olSource = new ImageWMS({
     url: url.value,
     params: parametros.value,
-    serverType: props.servidor,
+    serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
   })
 
