@@ -4,6 +4,20 @@ import usarRegistroMapas from './usarRegistroMapas'
 
 export const props = {
   /**
+   * Establece las atribuciones de la fuente.
+   *
+   * - Tipo: `String` o `Array<String>`
+   * - Valor por defecto: `undefined`
+   * - Interactivo: ❌
+   *
+   * @see https://openlayers.org/en/latest/apidoc/module-ol_source_Source.html#~AttributionLike
+   */
+  atribuciones: {
+    type: [String, Array],
+    default: undefined,
+  },
+
+  /**
    * Identificador único de la capa. Si no es detectado, se asignará una cadena de texto
    * aleatorea. Para hacer uso de la leyenda esta propiedad pasa a ser obligatoria.
    *

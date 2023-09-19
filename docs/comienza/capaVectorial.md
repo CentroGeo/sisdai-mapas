@@ -34,6 +34,8 @@ Origen de la capa. Puede ser una url externa o relativa a las carpetas del proye
 - Valor obligatorio.
 - Interactivo: ✅
 
+## Ejemplo
+
 <CapasVectoriales />
 
 <<< @/.vitepress/components/capas/vectoriales.vue

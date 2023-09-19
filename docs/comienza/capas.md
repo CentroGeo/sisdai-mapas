@@ -2,6 +2,14 @@
 
 ## Propiedades
 
+#### `atribuciones`
+
+Establece las atribuciones de la fuente.
+
+- Tipo: `String` o `Array<String>`
+- Valor por defecto: `undefined`
+- Interactivo: ❌
+
 #### `id`
 
 Identificador único de la capa. Si no es detectado, se asignará una cadena de texto aleatorea. Para hacer uso de la leyenda esta propiedad pasa a ser obligatoria.
@@ -41,7 +49,3 @@ Visibilidad de la capa.
 - Tipo: `Boolean`
 - Valor por defecto: `true`
 - Interactivo: ✅
-
-### XYZ
-
-Capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel de zoom y la coordenada x/y de una imagen (mosaico), regularmente se usa para desplegar mapas base como los de OSM, ESRI, etc.

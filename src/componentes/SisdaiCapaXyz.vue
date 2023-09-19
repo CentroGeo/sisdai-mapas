@@ -2,7 +2,7 @@
 import TileLayer from 'ol/layer/Tile'
 import TileEventType from 'ol/source/TileEventType'
 import XYZ from 'ol/source/XYZ'
-import { onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
+import { onMounted, reactive, shallowRef, watch } from 'vue'
 import MonitoreoCargaTeselas from './../clases/MonitoreoCargaTeselas'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import { teselas as eventos } from './../eventos/capa'
@@ -10,17 +10,40 @@ import { tipoEstadoCarga } from './../valores/capa'
 
 const props = defineProps({
   /**
-   * `url`
+   * Nivel de acercamiento máximo.
+   *
+   * - Tipo: `Number`
+   * - Valor por defecto: `undefined`
+   * - Interactivo: ❌
+   */
+  acercamientoMaximo: {
+    type: Number,
+    default: undefined,
+  },
+
+  /**
+   * Nivel de acercamiento mínimo.
+   *
+   * - Tipo: `Number`
+   * - Valor por defecto: `undefined`
+   * - Interactivo: ❌
+   */
+  acercamientoMinimo: {
+    type: Number,
+    default: undefined,
+  },
+
+  /**
+   * Url remota de la capa.
+   *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
    * - Interactivo: ❌
-   *
-   * Url remota de la capa.
    */
   url: {
     type: String,
     default:
-      'https://{a-c}.basemaps.cartocdn.com/rastertiles/light_nolabels/{z}/{x}/{y}.png',
+      'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
   },
 
   ...propsCapa,
@@ -29,7 +52,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaXyz = shallowRef()
-const { url } = toRefs(props)
+// const { url } = toRefs(props)
 
 const { configurar } = usarCapa(sisdaiCapaXyz, props)
 
@@ -49,9 +72,13 @@ watch(
 
 configurar(() => {
   const olSource = new XYZ({
-    attributions:
-      'Mosaicos <a href="https://carto.com/" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
-    url: url.value,
+    // url: url.value,
+    url: props.url,
+    attributions: props.atribuciones,
+    // attributions:
+    //   '<a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
+    maxZoom: props.acercamientoMaximo,
+    minZoom: props.acercamientoMinimo,
     crossOrigin: 'Anonymous',
   })
 

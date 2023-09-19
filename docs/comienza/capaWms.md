@@ -42,7 +42,7 @@ URL del servicio WMS.
 - Valor por defecto: `undefined`.
 - Interactivo: ❌
 
-## Uso
+## Ejemplo
 
 <CapasWms />
 
