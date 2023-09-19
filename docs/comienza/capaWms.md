@@ -1,0 +1,49 @@
+<script setup>
+import CapasWms from "./../.vitepress/components/capas/wms.vue";
+</script>
+
+# Capa WMS
+
+Componenete para desplegar capas desde servicios wms publicos o privados.
+
+**Uso:**
+
+```html{2}
+<SisdaiMapa>
+  <SisdaiCapaWms />
+</SisdaiMapa>
+```
+
+## Propiedades
+
+Hereda las propiedades definidas en la sección Capas más las siguientes:
+
+#### `parametros`
+
+Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio. Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
+
+- Tipo: `Object`
+- Valor por defecto: `{}`.
+- Interactivo: ✅
+
+#### `tipoServidor`
+
+Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
+
+- Tipo: `String`
+- Valor por defecto: `geoserver`.
+- Interactivo: ❌
+
+#### `url`
+
+URL del servicio WMS.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`.
+- Interactivo: ❌
+
+## Ejemplo
+
+<CapasWms />
+
+<<< @/.vitepress/components/capas/wms.vue

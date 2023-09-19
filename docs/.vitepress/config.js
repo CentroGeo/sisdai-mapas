@@ -90,14 +90,14 @@ function nav() {
       activeMatch: '/comienza/',
       // items: [],
     },
-    { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
-    {
-      text: 'Visualizaciones',
-      link: '/visualizaciones/',
-      activeMatch: '/visualizaciones/',
-    },
+    // { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
+    // {
+    //   text: 'Visualizaciones',
+    //   link: '/visualizaciones/',
+    //   activeMatch: '/visualizaciones/',
+    // },
     // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
-    { text: pkg.version, link: '/solo' },
+    { text: `v${pkg.version}`, link: pkg.repository.url },
   ]
 }
 
@@ -119,8 +119,11 @@ function sidebarComienza(path) {
       // collapsed: false,
       items: [
         { text: 'Capas', link: `/${path}/capas` },
-        { text: 'Globos de información', link: `/${path}/globos` },
-        { text: 'Leyenda', link: `/${path}/leyenda` },
+        { text: 'Vectorial', link: `/${path}/capaVectorial` },
+        { text: 'WMS', link: `/${path}/capaWms` },
+        { text: 'XYZ', link: `/${path}/capaXyz` },
+        // { text: 'Globos de información', link: `/${path}/globos` },
+        // { text: 'Leyenda', link: `/${path}/leyenda` },
       ],
     },
   ]
