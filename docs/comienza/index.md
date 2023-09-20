@@ -10,7 +10,7 @@ import EjemploBasico from "./../.vitepress/components/basico.vue";
 
 Instalación y descarga de la biblioteca desde GitHub:
 
-```bash
+```sh
 npm i github:salsa-community/sisdai-mapas#version-a-instalar
 ```
 
