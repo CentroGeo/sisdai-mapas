@@ -12,7 +12,13 @@ const nombre = ref('Capa vectorial')
     }"
   >
     <template #panel-encabezado-vis>
-      <div class="p-y-2">Ejemplo del uso de capa vectorial.</div>
+      <div class="p-y-2">
+        <input
+          class="m-0"
+          type="text"
+          v-model="nombre"
+        />
+      </div>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
@@ -36,3 +42,9 @@ const nombre = ref('Capa vectorial')
     </template>
   </SisdaiMapa>
 </template>
+
+<style lang="scss">
+input.m-0 {
+  margin: 0 !important;
+}
+</style>

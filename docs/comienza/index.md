@@ -4,13 +4,13 @@ import EjemploBasico from "./../.vitepress/components/basico.vue";
 
 # Introducción
 
-**Sisdai-mapas** es una biblioteca de componentes de [Vue.js](https://vuejs.org/) para generar mapas interactivos con datos georeferenciados. Está creada con [Vue.js](https://vuejs.org/) y con la versión 7.4.0 de [OpenLayers](https://openlayers.org/).
+**Sisdai-mapas** es una biblioteca de componentes de [Vue.js](https://vuejs.org/) para generar mapas interactivos con datos georeferenciados. Está creada con [Vue.js](https://vuejs.org/) y la versión 8.1.0 de [OpenLayers](https://openlayers.org/).
 
 ## Instalación
 
 Instalación y descarga de la biblioteca desde GitHub:
 
-```bash
+```sh
 npm i github:salsa-community/sisdai-mapas#version-a-instalar
 ```
 

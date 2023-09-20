@@ -1,5 +1,6 @@
 import SisdaiComponentes from 'sisdai-componentes'
 import 'sisdai-css'
+import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
 import 'vitepress/dist/client/theme-default/styles/vars.css'
 import SisdaiMapas from './../../../src'
 import './estilo/codigo.css'
