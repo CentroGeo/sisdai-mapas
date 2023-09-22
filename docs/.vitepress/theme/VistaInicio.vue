@@ -8,7 +8,7 @@ const { site, frontmatter } = useData()
 <template>
   <div class="vista-inicio">
     <img
-      src="favicon.ico"
+      src="/favicon.ico"
       alt="Icono de Conahcyt"
     />
     <h1 class="titulo-pagina">{{ site.title }}</h1>
