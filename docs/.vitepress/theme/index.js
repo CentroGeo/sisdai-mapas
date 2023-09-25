@@ -1,8 +1,8 @@
-import SisdaiComponentes from 'sisdai-componentes'
+import SisdaiComponentes from 'sisdai-componentes/src/index.js'
 import 'sisdai-css'
 import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
 import 'vitepress/dist/client/theme-default/styles/vars.css'
-import SisdaiMapas from './../../../src'
+import SisdaiMapas from './../../../src/index.js'
 import './estilo/codigo.css'
 
 // https://vitepress.dev/guide/custom-theme

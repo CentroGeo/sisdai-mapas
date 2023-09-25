@@ -1,0 +1,7 @@
+podman build -t sidaimapas1 .
+
+podman  run --name sisdaimaps1 -p 80:5173 -d  sisdaimaps1
+
+podman stop sidaimapas1
+podman rm sidaimapas1
+podman image rm sidaimapas1

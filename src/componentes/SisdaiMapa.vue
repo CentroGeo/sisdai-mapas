@@ -1,13 +1,13 @@
 <script setup>
 import MapEventType from 'ol/MapEventType'
 import {
-computed,
-onMounted,
-onUnmounted,
-reactive,
-shallowRef,
-toRefs,
-watch,
+  computed,
+  onMounted,
+  onUnmounted,
+  reactive,
+  shallowRef,
+  toRefs,
+  watch,
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
@@ -231,7 +231,7 @@ const escalaGraficaVisible = computed(() =>
 <style lang="scss">
 @import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
-@import './../estilos/Controles.scss';
+@import './../estilos/controles.scss';
 
 .sisdai-mapa-control-escala-grafica {
   display: v-bind(escalaGraficaVisible);
