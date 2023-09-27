@@ -34,6 +34,14 @@ Origen de la capa. Puede ser una url externa o relativa a las carpetas del proye
 - Valor obligatorio.
 - Interactivo: ✅
 
+#### `globoInformativo`
+
+Contenido del globo de información que aparecerá al pasar el cursor sobre la capa. Puede ser un texto estático o una función que accede a las propiedades del elemento al que se sobrepone.
+
+- Tipo: `String` o `Function`
+- Valor por defecto: `undefined`.
+- Interactivo: ✅
+
 ## Ejemplo
 
 <CapasVectoriales />

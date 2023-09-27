@@ -43,7 +43,7 @@ export default class GloboInfo {
 
     const pixel = mapa.getEventPixel(originalEvent)
     let layerActual = undefined
-    const feature = originalEvent.target.closest('.ol-control')
+    const feature = originalEvent.target.closest('.sisdai-mapa-control')
       ? undefined
       : mapa.forEachFeatureAtPixel(pixel, (feature, layer) => {
           layerActual = layer
