@@ -1,5 +1,5 @@
 import View from 'ol/View'
-import PointerEventType from 'ol/pointer/EventType'
+// import PointerEventType from 'ol/pointer/EventType'
 import { reactive } from 'vue'
 import Mapa from './../clases/Mapa'
 import RegistroObjetos from './../clases/ResgistroObjetos'
@@ -71,19 +71,19 @@ function crearMapa(target, proyeccion, emits) {
     }),
   })
 
-  x.on(PointerEventType.POINTERMOVE, ({ originalEvent }) => {
-    const pixel = x.getEventPixel(originalEvent)
+  // x.on(PointerEventType.POINTERMOVE, ({ originalEvent }) => {
+  //   const pixel = x.getEventPixel(originalEvent)
 
-    const feature = originalEvent.target.closest('.sisdai-mapa-control')
-      ? undefined
-      : x.forEachFeatureAtPixel(pixel, function (feature) {
-          return feature
-        })
+  //   const feature = originalEvent.target.closest('.sisdai-mapa-control')
+  //     ? undefined
+  //     : x.forEachFeatureAtPixel(pixel, function (feature) {
+  //         return feature
+  //       })
 
-    if (feature) {
-      console.log(feature)
-    }
-  })
+  //   if (feature) {
+  //     console.log(feature)
+  //   }
+  // })
 
   return x
 }

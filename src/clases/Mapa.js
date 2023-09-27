@@ -1,8 +1,10 @@
 import olMap from 'ol/Map'
+import PointerEventType from 'ol/pointer/EventType'
 import RenderEventType from 'ol/render/EventType'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
+import GloboInfo from './GloboInfo'
 
 /**
  * @classdesc
@@ -12,6 +14,22 @@ import * as validaciones from './../utiles/validaciones'
 export default class Mapa extends olMap {
   constructor(opcionesOlMap) {
     super(opcionesOlMap)
+
+    this.globoInfo = new GloboInfo()
+
+    this.getViewport().appendChild(this.globoInfo.getContenedor())
+
+    this.on(PointerEventType.POINTERMOVE, ({ originalEvent }) => {
+      const pixel = this.getEventPixel(originalEvent)
+
+      this.globoInfo.setVisibilidad(true)
+      this.globoInfo.setPosicionDesdePixel(pixel, this.getViewport())
+      this.globoInfo.setContenido(pixel)
+    })
+
+    this.cuando(PointerEventType.POINTERLEAVE, () => {
+      this.globoInfo.setVisibilidad(false)
+    })
   }
 
   /**
@@ -81,6 +99,24 @@ export default class Mapa extends olMap {
     return this.getControls()
       .getArray()
       .find(olControl => olControl.nombre === nombreControl)
+  }
+
+  /**
+   *
+   * @param {*} type
+   * @param {*} listener
+   */
+  cuando(type, listener) {
+    this.getTargetElement().addEventListener(type, listener)
+  }
+
+  /**
+   *
+   * @param {*} type
+   * @param {*} listener
+   */
+  hasta(type, listener) {
+    this.getTargetElement().removeEventListener(type, listener)
   }
 
   /**
