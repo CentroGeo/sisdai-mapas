@@ -14,6 +14,7 @@ export default class GloboInfo {
      */
     this.contenedor_ = document.createElement('div')
     this.contenedor_.className = 'contenedor-globo-info'
+    this.contenedor_.setAttribute('aria-live', 'assertive')
     // this.contenedor_.style.position = 'absolute'
     this.setVisibilidad(false, mapa)
     this.setPosicion(this.posicion)
@@ -50,22 +51,22 @@ export default class GloboInfo {
           return feature
         })
 
-    if (feature) {
+    if (feature && layerActual.get('globoInfo')) {
       this.setPosicionDesdePixel(pixel, mapa.getViewport())
       this.setContenido(pixel)
       this.setVisibilidad(true, mapa)
-      this.procesarContenido(feature, layerActual.get('globoInfo'))
+      this.setContenido(
+        this.procesarContenido(feature, layerActual.get('globoInfo'))
+      )
     } else {
       this.setVisibilidad(false, mapa)
     }
   }
 
   procesarContenido(feature, contenido) {
-    this.setContenido(
-      typeof contenido === 'function'
-        ? contenido(feature.getProperties())
-        : contenido
-    )
+    return typeof contenido === 'function'
+      ? contenido(feature.getProperties())
+      : contenido
   }
 
   getContenedor() {

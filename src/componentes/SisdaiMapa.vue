@@ -146,6 +146,19 @@ function olMoveend({ map }) {
   }
 }
 
+/**
+ *
+ * @param {*} describedby
+ */
+function ariaCanvas(describedby) {
+  mapa()
+    .busquedaPromesa(_mapa => _mapa.getViewport().querySelector('canvas'))
+    .then(canvas => {
+      canvas.setAttribute('aria-label', 'Mapa interactivo')
+      canvas.setAttribute('aria-describedby', describedby)
+    })
+}
+
 onMounted(() => {
   console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(
@@ -156,6 +169,9 @@ onMounted(() => {
   )
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
   mapa().on(MapEventType.MOVEEND, olMoveend)
+
+  ariaCanvas(elementosDescriptivos.value)
+  watch(elementosDescriptivos, ariaCanvas)
 })
 
 onUnmounted(() => {
@@ -211,9 +227,7 @@ const escalaGraficaVisible = computed(() =>
     <div
       class="contenido-vis"
       ref="refMapa"
-      :aria-describedby="elementosDescriptivos"
-      aria-label="Mapa interactivo"
-    ></div>
+    />
 
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />

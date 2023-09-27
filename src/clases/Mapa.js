@@ -18,6 +18,28 @@ export default class Mapa extends olMap {
   }
 
   /**
+   * Devuelve un elemento del mapa como promesa. Esta funcion es pensada para acceder a elementos
+   * que tardan en crearse.
+   * @param {Function} busqueda
+   * @returns {Promise}
+   */
+  busquedaPromesa(busqueda) {
+    return new Promise(resolve => {
+      const _this = this
+
+      function revisar() {
+        if (busqueda(_this)) {
+          resolve(busqueda(_this))
+        } else {
+          setTimeout(revisar, 50)
+        }
+      }
+
+      revisar()
+    })
+  }
+
+  /**
    * Asigna el valor del centro en el mapa.
    * @param {Array<Number>|String} centro
    */
