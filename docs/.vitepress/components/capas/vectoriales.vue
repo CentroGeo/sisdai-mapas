@@ -26,6 +26,7 @@ const nombre = ref('Capa vectorial')
       :renderizarComoImagen="true"
       :visible="true"
       fuente="/assets/ejemplo-estados.geojson"
+      :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
     />
 
     <!-- :fuente="estados" -->

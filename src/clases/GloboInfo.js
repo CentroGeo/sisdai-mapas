@@ -1,8 +1,10 @@
+import PointerEventType from 'ol/pointer/EventType'
+
 /**
  * @classdesc
  */
 export default class GloboInfo {
-  constructor() {
+  constructor(mapa) {
     this.margen = 8
     this.posicion = { x: 0, y: 0 }
 
@@ -12,8 +14,8 @@ export default class GloboInfo {
      */
     this.contenedor_ = document.createElement('div')
     this.contenedor_.className = 'contenedor-globo-info'
-    this.contenedor_.style.position = 'absolute'
-    this.setVisibilidad(false)
+    // this.contenedor_.style.position = 'absolute'
+    this.setVisibilidad(false, mapa)
     this.setPosicion(this.posicion)
 
     /**
@@ -23,6 +25,47 @@ export default class GloboInfo {
     this.cuerpo_ = document.createElement('div')
     this.cuerpo_.className = 'cuerpo-globo-info'
     this.contenedor_.appendChild(this.cuerpo_)
+
+    mapa.getViewport().appendChild(this.contenedor_)
+    mapa.on(PointerEventType.POINTERMOVE, evt => this.procesar(mapa, evt))
+    mapa
+      .getTargetElement()
+      .addEventListener(PointerEventType.POINTERLEAVE, () =>
+        this.setVisibilidad(false, mapa)
+      )
+  }
+
+  procesar(mapa, { dragging, originalEvent }) {
+    if (dragging) {
+      this.setVisibilidad(false, mapa)
+      return
+    }
+
+    const pixel = mapa.getEventPixel(originalEvent)
+    let layerActual = undefined
+    const feature = originalEvent.target.closest('.ol-control')
+      ? undefined
+      : mapa.forEachFeatureAtPixel(pixel, (feature, layer) => {
+          layerActual = layer
+          return feature
+        })
+
+    if (feature) {
+      this.setPosicionDesdePixel(pixel, mapa.getViewport())
+      this.setContenido(pixel)
+      this.setVisibilidad(true, mapa)
+      this.procesarContenido(feature, layerActual.get('globoInfo'))
+    } else {
+      this.setVisibilidad(false, mapa)
+    }
+  }
+
+  procesarContenido(feature, contenido) {
+    this.setContenido(
+      typeof contenido === 'function'
+        ? contenido(feature.getProperties())
+        : contenido
+    )
   }
 
   getContenedor() {
@@ -59,7 +102,11 @@ export default class GloboInfo {
     })
   }
 
-  setVisibilidad(valor) {
+  setVisibilidad(valor, mapa = undefined) {
     this.contenedor_.style.display = valor ? 'block' : 'none'
+
+    if (mapa) {
+      mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
+    }
   }
 }

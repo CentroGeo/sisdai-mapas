@@ -92,7 +92,7 @@ export default function usarCapa(refVar, props) {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
       .then(mapa => {
-        const { olLayerClass, olSource } = fnConfiguracion()
+        const { olLayerClass, olSource, globoInformativo } = fnConfiguracion()
 
         mapa.addLayer(
           new olLayerClass({
@@ -109,6 +109,13 @@ export default function usarCapa(refVar, props) {
         watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
         watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(nv))
         watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
+
+        if (globoInformativo !== undefined) {
+          mapa.buscarCapa(props.id).set('globoInfo', globoInformativo.value)
+          watch(globoInformativo, nv =>
+            mapa.buscarCapa(props.id).set('globoInfo', nv)
+          )
+        }
       })
   }
 

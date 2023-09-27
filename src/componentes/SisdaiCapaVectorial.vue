@@ -73,7 +73,7 @@ const props = defineProps({
 })
 
 const sisdaiCapaVectorial = shallowRef()
-const { fuente } = toRefs(props)
+const { fuente, globoInformativo } = toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
 const { configurar } = usarCapa(sisdaiCapaVectorial, props)
@@ -103,6 +103,7 @@ configurar(() => {
   return {
     olSource,
     olLayerClass: props.renderizarComoImagen ? VectorImageLayer : VectorLayer,
+    globoInformativo,
   }
 })
 

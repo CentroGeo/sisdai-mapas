@@ -208,12 +208,12 @@ const escalaGraficaVisible = computed(() =>
     <!-- slot para las capas -->
     <slot />
 
-    <figure
+    <div
       class="contenido-vis"
       ref="refMapa"
       :aria-describedby="elementosDescriptivos"
       aria-label="Mapa interactivo"
-    />
+    ></div>
 
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />
@@ -229,9 +229,10 @@ const escalaGraficaVisible = computed(() =>
 </template>
 
 <style lang="scss">
-@import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
+@import './../estilos/GloboInfo.scss';
+@import './../estilos/SisdaiMapa.scss';
 
 .sisdai-mapa-control-escala-grafica {
   display: v-bind(escalaGraficaVisible);

@@ -57,7 +57,7 @@ function idValido(id) {
  * @returns {import("./../clases/Mapa.js").default} Mapa
  */
 function crearMapa(target, proyeccion, emits) {
-  const x = new Mapa({
+  return new Mapa({
     target,
     layers: [],
     controls: [
@@ -70,20 +70,4 @@ function crearMapa(target, proyeccion, emits) {
       projection: proyeccion,
     }),
   })
-
-  // x.on(PointerEventType.POINTERMOVE, ({ originalEvent }) => {
-  //   const pixel = x.getEventPixel(originalEvent)
-
-  //   const feature = originalEvent.target.closest('.sisdai-mapa-control')
-  //     ? undefined
-  //     : x.forEachFeatureAtPixel(pixel, function (feature) {
-  //         return feature
-  //       })
-
-  //   if (feature) {
-  //     console.log(feature)
-  //   }
-  // })
-
-  return x
 }
