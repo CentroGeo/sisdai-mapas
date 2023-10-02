@@ -39,21 +39,32 @@ export function buscarIdContenedorHtmlSisdai(tipo, { parentElement }) {
 }
 
 /**
- * Valida si un valor es de tipo texto.
- * @param {any} valor a evaluar
- * @returns {Boolean} `ture` en caso de ser texto.
- */
-export function esTexto(valor) {
-  return typeof valor === typeof String()
-}
-
-/**
  * Valida si un valor es de tipo número.
  * @param {any} valor a evaluar
  * @returns {Boolean} `ture` en caso de ser número.
  */
 export function esNuemro(valor) {
   return typeof valor === typeof Number()
+}
+
+/**
+ * Valida si un valor es de tipo Objeto.
+ * @param {any} valor a evaluar
+ * @returns {Boolean} `ture` en caso de ser objeto.
+ */
+export function esObjeto(valor) {
+  return (
+    typeof valor === typeof Object() && valor !== null && !Array.isArray(valor)
+  )
+}
+
+/**
+ * Valida si un valor es de tipo texto.
+ * @param {any} valor a evaluar
+ * @returns {Boolean} `ture` en caso de ser texto.
+ */
+export function esTexto(valor) {
+  return typeof valor === typeof String()
 }
 
 /**

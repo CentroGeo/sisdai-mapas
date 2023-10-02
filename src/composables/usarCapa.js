@@ -88,11 +88,18 @@ export default function usarCapa(refVar, props) {
     fnConfiguracion = _fnConfiguracion
   }
 
+  var fnAgregada = () => {}
+  function agregada(_fnAgregada) {
+    if (typeof _fnAgregada === typeof (() => {})) {
+      fnAgregada = _fnAgregada
+    }
+  }
+
   function agregar() {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
       .then(mapa => {
-        const { olLayerClass, olSource, globoInformativo } = fnConfiguracion()
+        const { olLayerClass, olSource } = fnConfiguracion()
 
         mapa.addLayer(
           new olLayerClass({
@@ -110,12 +117,7 @@ export default function usarCapa(refVar, props) {
         watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(nv))
         watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
 
-        if (globoInformativo !== undefined) {
-          mapa.buscarCapa(props.id).set('globoInfo', globoInformativo.value)
-          watch(globoInformativo, nv =>
-            mapa.buscarCapa(props.id).set('globoInfo', nv)
-          )
-        }
+        fnAgregada(mapa.buscarCapa(props.id))
       })
   }
 
@@ -143,6 +145,7 @@ export default function usarCapa(refVar, props) {
   })
 
   return {
+    agregada,
     configurar,
     // eliminar,
   }

@@ -147,8 +147,8 @@ function olMoveend({ map }) {
 }
 
 /**
- *
- * @param {*} describedby
+ * Asigna al canvas valores de accesibilidad ARIA.
+ * @param {String} describedby
  */
 function ariaCanvas(describedby) {
   mapa()
@@ -187,7 +187,6 @@ defineExpose({
    * incluir extensión).
    */
   exportarImagen: nombreImagen => {
-    // console.log('exportarImagen', nombreImagen)
     mapa().exportarImagen(nombreImagen)
   },
 
