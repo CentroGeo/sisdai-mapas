@@ -132,8 +132,8 @@ function sidebarComienza(path) {
       // collapsed: false,
       items: [
         { text: 'Puntos', link: `/${path}/estiloPuntos` },
-        { text: 'Líneas', link: `/${path}/estiloLineas` },
-        { text: 'Polígonos', link: `/${path}/estiloPoligono` },
+        // { text: 'Líneas', link: `/${path}/estiloLineas` },
+        // { text: 'Polígonos', link: `/${path}/estiloPoligono` },
       ],
     },
   ]

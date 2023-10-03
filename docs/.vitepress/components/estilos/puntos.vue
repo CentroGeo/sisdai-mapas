@@ -8,13 +8,13 @@ const fuente =
 
 const estilos = {
   'Por defecto': undefined,
-  'circiulos amarillos': {
+  'Circiulos amarillos': {
     'circulo-relleno-color': 'amarillo',
     'circulo-radio': 10,
   },
   Pictogramas: {
     'icono-fuente': '/assets/aves.svg',
-    'icono-escala': 2,
+    'icono-escala': 0.8,
   },
   Cuadrados: {
     'forma-puntos': 4,
@@ -51,7 +51,6 @@ const seleccion = ref(undefined)
     <SisdaiCapaVectorial
       :posicion="2"
       :fuente="fuente"
-      :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
       :estilo="seleccion"
     />
   </SisdaiMapa>
