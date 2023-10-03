@@ -12,7 +12,9 @@ const nombre = ref('Capa vectorial')
     }"
   >
     <template #panel-encabezado-vis>
-      <div class="p-y-2">Ejemplo del uso de capa vectorial.</div>
+      <div>
+        <p class="m-t-0">Ejemplo del uso de capa vectorial.</p>
+      </div>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
@@ -23,7 +25,8 @@ const nombre = ref('Capa vectorial')
       :posicion="2"
       :renderizarComoImagen="true"
       :visible="true"
-      fuente="/assets/ejemplo-estados.geojson"
+      fuente="/assets/estados-poligonos.geojson"
+      :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
     />
 
     <!-- :fuente="estados" -->

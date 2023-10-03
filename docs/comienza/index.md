@@ -54,7 +54,7 @@ npm install
 npm run docs
 ```
 
-Se habilitara en [localhost:5173](http://localhost:5173) (por defecto).
+<!-- Se habilitara en [localhost:5173](http://localhost:5173) (por defecto). -->
 
 ## Contribución
 
