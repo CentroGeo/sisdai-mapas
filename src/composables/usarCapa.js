@@ -88,6 +88,13 @@ export default function usarCapa(refVar, props) {
     fnConfiguracion = _fnConfiguracion
   }
 
+  var fnAgregada = () => {}
+  function agregada(_fnAgregada) {
+    if (typeof _fnAgregada === typeof (() => {})) {
+      fnAgregada = _fnAgregada
+    }
+  }
+
   function agregar() {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
@@ -109,6 +116,8 @@ export default function usarCapa(refVar, props) {
         watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
         watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(nv))
         watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
+
+        fnAgregada(mapa.buscarCapa(props.id))
       })
   }
 
@@ -136,6 +145,7 @@ export default function usarCapa(refVar, props) {
   })
 
   return {
+    agregada,
     configurar,
     // eliminar,
   }

@@ -146,6 +146,19 @@ function olMoveend({ map }) {
   }
 }
 
+/**
+ * Asigna al canvas valores de accesibilidad ARIA.
+ * @param {String} describedby
+ */
+function ariaCanvas(describedby) {
+  mapa()
+    .busquedaPromesa(_mapa => _mapa.getViewport().querySelector('canvas'))
+    .then(canvas => {
+      canvas.setAttribute('aria-label', 'Mapa interactivo')
+      canvas.setAttribute('aria-describedby', describedby)
+    })
+}
+
 onMounted(() => {
   console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(
@@ -156,6 +169,9 @@ onMounted(() => {
   )
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
   mapa().on(MapEventType.MOVEEND, olMoveend)
+
+  ariaCanvas(elementosDescriptivos.value)
+  watch(elementosDescriptivos, ariaCanvas)
 })
 
 onUnmounted(() => {
@@ -171,7 +187,6 @@ defineExpose({
    * incluir extensión).
    */
   exportarImagen: nombreImagen => {
-    // console.log('exportarImagen', nombreImagen)
     mapa().exportarImagen(nombreImagen)
   },
 
@@ -208,11 +223,9 @@ const escalaGraficaVisible = computed(() =>
     <!-- slot para las capas -->
     <slot />
 
-    <figure
+    <div
       class="contenido-vis"
       ref="refMapa"
-      :aria-describedby="elementosDescriptivos"
-      aria-label="Mapa interactivo"
     />
 
     <div class="panel-derecha-vis">
@@ -229,9 +242,10 @@ const escalaGraficaVisible = computed(() =>
 </template>
 
 <style lang="scss">
-@import './../estilos/SisdaiMapa.scss';
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
+@import './../estilos/GloboInfo.scss';
+@import './../estilos/SisdaiMapa.scss';
 
 .sisdai-mapa-control-escala-grafica {
   display: v-bind(escalaGraficaVisible);

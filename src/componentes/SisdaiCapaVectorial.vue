@@ -4,9 +4,11 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
 import VectorEventType from 'ol/source/VectorEventType'
-import { onMounted, shallowRef, toRefs } from 'vue'
+import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
+import { parseEstilo } from './../utiles/estiloVectores'
+import { estiloVector } from './../valores/capa'
 
 const props = defineProps({
   // datos: {
@@ -15,16 +17,12 @@ const props = defineProps({
   // },
 
   /**
-   * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
-   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
-   *
-   * - Tipo: `String` o `Function`
-   * - Valor por defecto: `undefined`.
-   * - Interactivo: ✅
+   * REFACTORIZAR
+   * El estilo simple es aquel que es constante para la capa, por ejemplo, independientemente de los datos que tenga un poligono o punto en el sigueinte mapa siempre tendra el mismo color y contorno de su simbologia.
    */
-  globoInformativo: {
-    type: [String, Function],
-    default: undefined,
+  estilo: {
+    type: Object,
+    default: () => estiloVector,
   },
 
   /**
@@ -53,6 +51,19 @@ const props = defineProps({
   },
 
   /**
+   * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
+   *
+   * - Tipo: `String` o `Function`
+   * - Valor por defecto: `undefined`.
+   * - Interactivo: ✅
+   */
+  globoInformativo: {
+    type: [String, Function],
+    default: undefined,
+  },
+
+  /**
    * ???
    *
    * - Tipo: `Boolean`
@@ -61,7 +72,7 @@ const props = defineProps({
    */
   renderizarComoImagen: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 
   // url: {
@@ -73,10 +84,10 @@ const props = defineProps({
 })
 
 const sisdaiCapaVectorial = shallowRef()
-const { fuente } = toRefs(props)
+const { estilo, fuente, globoInformativo } = toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
-const { configurar } = usarCapa(sisdaiCapaVectorial, props)
+const { configurar, agregada } = usarCapa(sisdaiCapaVectorial, props)
 
 configurar(() => {
   const opcionesSource = {}
@@ -104,6 +115,19 @@ configurar(() => {
     olSource,
     olLayerClass: props.renderizarComoImagen ? VectorImageLayer : VectorLayer,
   }
+})
+
+const estiloConbinado = computed(() =>
+  parseEstilo({ ...estiloVector, ...estilo.value })
+)
+
+agregada(capa => {
+  capa.set('globoInfo', globoInformativo.value)
+  capa.setStyle(estiloConbinado.value)
+
+  // reactivo
+  watch(globoInformativo, nv => capa.set('globoInfo', nv))
+  watch(estiloConbinado, nv => capa.setStyle(nv))
 })
 
 onMounted(() => {
