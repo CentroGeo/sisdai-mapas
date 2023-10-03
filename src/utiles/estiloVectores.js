@@ -1,4 +1,4 @@
-import { esObjeto } from './index'
+import { esObjeto } from '.'
 
 /**
  * @see https://openlayers.org/en/latest/examples/style-expressions.html
@@ -41,38 +41,61 @@ const dicColores = {
   turquesa: 'turquoise',
   verde: 'green',
   violeta: 'violet',
+  oscuro: 'dark',
 }
 
-/**
- *
- * @param {*} original
- * @returns
- */
+function traducirColor(color) {
+  // 'verde-oscuro'.split('-').reverse().join('')
+  return color
+    .split('-')
+    .map(colorSeparado =>
+      Object.hasOwnProperty.call(dicColores, colorSeparado)
+        ? dicColores[colorSeparado]
+        : colorSeparado
+    )
+    .reverse()
+    .join('')
+}
+
+function traducirId(id) {
+  return id
+    .split('-')
+    .map(idSeparado =>
+      Object.hasOwnProperty.call(dicEstilosOl, idSeparado)
+        ? dicEstilosOl[idSeparado]
+        : idSeparado
+    )
+    .join('-')
+}
+
+function traducirValor(idTraducido, valor) {
+  if (idTraducido.endsWith(dicEstilosOl.color)) {
+    // return Object.hasOwnProperty.call(dicColores, valor)
+    //   ? dicColores[valor]
+    //   : valor
+    return traducirColor(valor)
+  }
+
+  return valor
+}
+
 export function parseEstilo(original) {
   const traducido = {}
 
-  for (const id in original) {
-    if (Object.hasOwnProperty.call(dicEstilosOl, id)) {
-      if (esObjeto(original[id])) {
-        const anidado = parseEstilo(original[id])
+  Object.keys(original).forEach(id => {
+    const idTraducido = traducirId(id)
+    const valor = original[id]
 
-        Object.keys(anidado).forEach(idAnidado => {
-          traducido[`${dicEstilosOl[id]}-${idAnidado}`] = anidado[idAnidado]
-        })
-      } else {
-        if (
-          id === 'color' &&
-          Object.hasOwnProperty.call(dicColores, original[id])
-        ) {
-          traducido[dicEstilosOl[id]] = dicColores[original[id]]
-        } else {
-          traducido[dicEstilosOl[id]] = original[id]
-        }
-      }
+    if (esObjeto(valor)) {
+      const anidado = parseEstilo(valor)
+
+      Object.keys(anidado).forEach(idAnidado => {
+        traducido[`${idTraducido}-${idAnidado}`] = anidado[idAnidado]
+      })
     } else {
-      traducido[id] = original[id]
+      traducido[idTraducido] = traducirValor(idTraducido, valor)
     }
-  }
+  })
 
   return traducido
 }

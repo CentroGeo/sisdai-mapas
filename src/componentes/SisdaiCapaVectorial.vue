@@ -4,11 +4,11 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
 import VectorEventType from 'ol/source/VectorEventType'
-import { onMounted, shallowRef, toRefs, watch } from 'vue'
+import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 import { parseEstilo } from './../utiles/estiloVectores'
-// import estiloCapaPorDefecto from './../valores/estiloCapa'
+import { estiloVector } from './../valores/capa'
 
 const props = defineProps({
   // datos: {
@@ -22,7 +22,7 @@ const props = defineProps({
    */
   estilo: {
     type: Object,
-    default: () => undefined,
+    default: () => estiloVector,
   },
 
   /**
@@ -117,20 +117,17 @@ configurar(() => {
   }
 })
 
+const estiloConbinado = computed(() =>
+  parseEstilo({ ...estiloVector, ...estilo.value })
+)
+
 agregada(capa => {
   capa.set('globoInfo', globoInformativo.value)
-
-  console.log(parseEstilo(estilo.value))
-  // watch(estiloP, parseEstilo)
-  capa.setStyle({
-    'circle-fill-color': 'gray',
-    'circle-radius': 5,
-    'circle-stroke-color': 'white',
-    'circle-stroke-width': 0.5,
-  })
+  capa.setStyle(estiloConbinado.value)
 
   // reactivo
   watch(globoInformativo, nv => capa.set('globoInfo', nv))
+  watch(estiloConbinado, nv => capa.setStyle(nv))
 })
 
 onMounted(() => {
