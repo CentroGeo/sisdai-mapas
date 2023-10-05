@@ -1,4 +1,4 @@
-//import 'ol/ol.css'
+import 'ol/ol.css'
 // import 'sisdai-css'
 
 import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
