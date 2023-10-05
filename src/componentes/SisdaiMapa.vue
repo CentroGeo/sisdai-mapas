@@ -226,6 +226,7 @@ const escalaGraficaVisible = computed(() =>
     <div
       class="contenido-vis"
       ref="refMapa"
+      tabindex="0"
     />
 
     <div class="panel-derecha-vis">

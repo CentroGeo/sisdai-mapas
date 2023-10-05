@@ -1,8 +1,13 @@
 import olMap from 'ol/Map'
+import EventType from 'ol/events/EventType'
+import { intersects } from 'ol/extent'
+import VectorLayer from 'ol/layer/Vector'
+import VectorImageLayer from 'ol/layer/VectorImage'
 import RenderEventType from 'ol/render/EventType'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
+import { teclasAtajo } from './../valores/mapa'
 import GloboInfo from './GloboInfo'
 
 /**
@@ -15,6 +20,89 @@ export default class Mapa extends olMap {
     super(opcionesOlMap)
 
     this.globoInfo = new GloboInfo(this)
+
+    this.on(EventType.KEYDOWN, ({ originalEvent }) => {
+      // console.log(EventType.KEYDOWN, originalEvent)
+
+      switch (originalEvent.key.toLowerCase()) {
+        case teclasAtajo.INFORMACION:
+          this.teclado()
+          break
+
+        case teclasAtajo.NORTE:
+          console.log('NORTE')
+          this.getView().setRotation(0)
+          break
+
+        case teclasAtajo.ROTAR_IZQUIERDA:
+          console.log('ROTAR_IZQUIERDA')
+          this.getView().setRotation(this.getView().getRotation() + Math.PI / 8)
+          break
+
+        case teclasAtajo.ROTAR_DERECHA:
+          console.log('ROTAR_DERECHA')
+          this.getView().setRotation(this.getView().getRotation() - Math.PI / 8)
+          break
+
+        default:
+          console.log(originalEvent.key.toLowerCase())
+          break
+      }
+    })
+
+    // this.addEventListener(EventType.FOCUS, x => {
+    //   console.log(EventType.FOCUS, x)
+    // })
+  }
+
+  teclado() {
+    console.log('Buscar contenido de la vista')
+
+    const extent = this.getView().calculateExtent()
+
+    // Itera a través de todas las capas en tu mapa
+    const featuresVista = this.getAllLayers()
+      .filter(
+        // Verifica si la capa es una capa vectorial (puedes personalizar esto según tus necesidades)
+        capa =>
+          Boolean(
+            (capa instanceof VectorLayer || capa instanceof VectorImageLayer) &&
+              capa.get('globoInfo')
+          )
+      )
+      .map(capa =>
+        capa
+          .getSource()
+          .getFeatures()
+          .filter(feature =>
+            // filtra los que están dentro de la vista
+            intersects(extent, feature.getGeometry().getExtent())
+          )
+          .map(feature =>
+            this.getPixelFromCoordinate(feature.getGeometry().getCoordinates())
+          )
+      )
+      .flat()
+
+    console.log('elementos encontrados:', featuresVista.length)
+
+    const contenido = this.globoInfo.buscarContenidoEnPixel(
+      featuresVista[0],
+      this
+    )
+
+    // console.log(contenido)
+
+    this.globoInfo.mostrar(contenido, featuresVista[0], this)
+
+    // this.globoInfo.setContenido('hola ejeje')
+    // this.globoInfo.setVisibilidad(true)
+    // this.globoInfo.setPosicionDesdePixel(
+    //   this.getPixelFromCoordinate(
+    //     featuresVista[0].getGeometry().getCoordinates()
+    //   ),
+    //   this.getViewport()
+    // )
   }
 
   /**
