@@ -1,12 +1,15 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 
-if (window.location.search === '') {
-  window.location.search = '?capas=buscar'
-}
-if (window.location.hash === '') {
-  window.location.hash = '#map=10/19.6060/-98.7635'
-}
+onMounted(() => {
+  if (window.location.search === '') {
+    window.location.search = '?capas=buscar'
+  }
+  if (window.location.hash === '') {
+    window.location.hash = '#map=10/19.6060/-98.7635'
+  }
+  procesarParametrosHash(window.location)
+})
 
 const mapa = ref()
 
@@ -26,7 +29,6 @@ function procesarParametrosHash({ hash }) {
   vistaMapa.extension = undefined
   // console.log('vista', JSON.stringify(vistaMapa))
 }
-procesarParametrosHash(window.location)
 
 function alMoverVista(vista) {
   let zoom = vista.getZoom()

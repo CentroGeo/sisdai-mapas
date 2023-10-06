@@ -25,6 +25,5 @@ export {
   SisdaiCapaXyz,
   // SisdaiContenedorVis,
   SisdaiLeyenda,
-  SisdaiMapa
+  SisdaiMapa,
 }
-
