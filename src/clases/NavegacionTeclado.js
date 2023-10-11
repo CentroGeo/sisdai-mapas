@@ -18,6 +18,10 @@ export default class NavegacionTeclado {
   elementosIterables = []
   paginaActual = 0
 
+  /**
+   *
+   * @param {import("./Mapa").default} mapa
+   */
   constructor(mapa) {
     this.div =
       document.getElementById('lista-teclado') || document.createElement('div')
@@ -48,6 +52,12 @@ export default class NavegacionTeclado {
 
         case teclasAtajo.LISTAR_SIGUIENTES:
           this.listarSiguientes()
+          break
+
+        case teclasAtajo.TABULADOR:
+          // mapa.addControl(new controlNavegacionTeclado())
+          // mapa.removeControl()
+          // console.log('hizo tab')
           break
 
         default:

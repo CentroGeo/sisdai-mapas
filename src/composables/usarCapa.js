@@ -130,7 +130,7 @@ export default function usarCapa(refVar, props) {
   }
 
   onMounted(() => {
-    console.log('onMounted composable capa')
+    // console.log('onMounted composable capa')
 
     idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
 
@@ -138,7 +138,7 @@ export default function usarCapa(refVar, props) {
   })
 
   function eliminar() {
-    console.log('quitando capa', props.id)
+    // console.log('quitando capa', props.id)
 
     usarRegistroMapas()
       .mapaPromesa(idMapa)
@@ -148,7 +148,7 @@ export default function usarCapa(refVar, props) {
   }
 
   onBeforeUnmount(() => {
-    console.log('onBeforeUnmount composable')
+    // console.log('onBeforeUnmount composable')
     eliminar()
   })
 

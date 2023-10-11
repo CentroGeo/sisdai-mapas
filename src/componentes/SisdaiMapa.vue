@@ -5,6 +5,7 @@ import {
   onMounted,
   onUnmounted,
   reactive,
+  ref,
   shallowRef,
   toRefs,
   watch,
@@ -160,7 +161,7 @@ function ariaCanvas(describedby) {
 }
 
 onMounted(() => {
-  console.log('SisdaiMapa')
+  // console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(
     props.id,
     refMapa.value,
@@ -205,6 +206,27 @@ defineExpose({
 const escalaGraficaVisible = computed(() =>
   escalaGrafica.value ? 'block' : 'none'
 )
+
+const focoEnMapa = ref(false)
+const navegacionTecladoVisible = ref('none')
+
+watch(focoEnMapa, nv => {
+  if (!nv) {
+    setTimeout(() => {
+      if (!focoEnMapa.value) {
+        // console.log('se ha quitado el foco, quitar control')
+        navegacionTecladoVisible.value = 'none'
+      }
+    }, 2000)
+  }
+})
+
+function keydown({ key }) {
+  if (key === 'Tab' && focoEnMapa.value) {
+    // console.log('hacer visible el control')
+    navegacionTecladoVisible.value = 'block'
+  }
+}
 </script>
 
 <template>
@@ -227,6 +249,9 @@ const escalaGraficaVisible = computed(() =>
       class="contenido-vis"
       ref="refMapa"
       tabindex="0"
+      @focusin="focoEnMapa = true"
+      @focusout="focoEnMapa = false"
+      @keydown="keydown"
     />
 
     <div class="panel-derecha-vis">
@@ -248,7 +273,13 @@ const escalaGraficaVisible = computed(() =>
 @import './../estilos/GloboInfo.scss';
 @import './../estilos/SisdaiMapa.scss';
 
-.sisdai-mapa-control-escala-grafica {
-  display: v-bind(escalaGraficaVisible);
+.sisdai-mapa-control {
+  &-escala-grafica {
+    display: v-bind(escalaGraficaVisible);
+  }
+
+  &-navegacion-teclado {
+    display: v-bind(navegacionTecladoVisible);
+  }
 }
 </style>

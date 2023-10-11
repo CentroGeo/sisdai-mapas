@@ -1,11 +1,14 @@
 .sisdai-mapa-control {
   --margen: 16px;
+  --alto-boton: 40px;
+  --ancho-boton: 40px;
+  --espacio-entre-botones: 4px;
 
   position: absolute;
 
   > button {
-    height: 40px;
-    width: 40px;
+    height: var(--alto-boton);
+    width: var(--ancho-boton);
     // color: var(--tipografia-color);
     background: var(--pagina-fondo);
 
@@ -17,7 +20,7 @@
   &-acercar-alejar {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: var(--espacio-entre-botones);
     top: var(--margen);
     right: var(--margen);
     > button {
@@ -26,7 +29,9 @@
   }
 
   &-ajuste-vista {
-    top: calc(var(--margen) + 88px);
+    top: calc(
+      var(--margen) + (2 * (var(--alto-boton) + var(--espacio-entre-botones)))
+    );
     right: var(--margen);
   }
 
@@ -80,5 +85,12 @@
     > button {
       display: none;
     }
+  }
+
+  &-navegacion-teclado {
+    top: calc(
+      var(--margen) + (3 * (var(--alto-boton) + var(--espacio-entre-botones)))
+    );
+    right: var(--margen);
   }
 }

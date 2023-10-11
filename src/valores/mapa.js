@@ -82,4 +82,5 @@ export const teclasAtajo = {
   ESCAPAR: 'escape',
   LISTAR_ANTERIORES: '8',
   LISTAR_SIGUIENTES: '9',
+  TABULADOR: 'tab',
 }
