@@ -16,7 +16,7 @@
       :posicion="3"
       fuente="/assets/estados-centroides.geojson"
       :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
-      accesibilidadTecladoNombre="nom_edo"
+      nombreAccesiblePorElemento="nom_edo"
       :visible="true"
     />
 
@@ -24,7 +24,7 @@
       :posicion="2"
       fuente="/assets/estados-poligonos.geojson"
       :globoInformativo="f => `ENTIDAD: <b>${f.nom_edo}</b>`"
-      :visible="false"
+      :visible="true"
     />
   </SisdaiMapa>
 </template>

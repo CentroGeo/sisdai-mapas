@@ -84,7 +84,8 @@ const props = defineProps({
 })
 
 const sisdaiCapaVectorial = shallowRef()
-const { estilo, fuente, globoInformativo } = toRefs(props)
+const { estilo, fuente, globoInformativo, nombreAccesiblePorElemento } =
+  toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
 const { configurar, agregada } = usarCapa(sisdaiCapaVectorial, props)
@@ -122,12 +123,14 @@ const estiloConbinado = computed(() =>
 )
 
 agregada(capa => {
-  capa.set('globoInfo', globoInformativo.value)
   capa.setStyle(estiloConbinado.value)
+  capa.set('globoInfo', globoInformativo.value)
+  capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
   // reactivo
-  watch(globoInformativo, nv => capa.set('globoInfo', nv))
   watch(estiloConbinado, nv => capa.setStyle(nv))
+  watch(globoInformativo, nv => capa.set('globoInfo', nv))
+  watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
 })
 
 onMounted(() => {

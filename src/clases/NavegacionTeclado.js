@@ -139,8 +139,10 @@ export default class NavegacionTeclado {
               capa.get('globoInfo')
           )
       )
-      .map(capa =>
-        capa
+      .map(capa => {
+        var nombreAccesible = capa.get('nombreAccesible')
+
+        const conicidentes = capa
           .getSource()
           .getFeatures()
           .filter(feature =>
@@ -149,15 +151,41 @@ export default class NavegacionTeclado {
           )
           // esta validación posiblemente se quite
           .filter(feature => feature.getGeometry() instanceof Point)
-          .map(feature => ({
-            titulo: feature.get('nom_edo'),
-            // pixel para el globo de información
-            pixel: mapa.getPixelFromCoordinate(
-              feature.getGeometry().getCoordinates()
-            ),
-          }))
-      )
+          .map((feature, i) => {
+            if (i === 0) {
+              nombreAccesible = this.validarNombreAccesible(
+                nombreAccesible,
+                capa.getSource().getFeatures()[0]
+              )
+            }
+
+            return {
+              // titulo para el cuadro de asignación numérica
+              titulo: feature.get(nombreAccesible),
+              // pixel para el globo de información
+              pixel: mapa.getPixelFromCoordinate(
+                feature.getGeometry().getCoordinates()
+              ),
+            }
+          })
+
+        return conicidentes
+      })
       .flat()
+  }
+
+  validarNombreAccesible(nombreAccesible, feature) {
+    if (nombreAccesible) {
+      if (feature.getKeys().includes(nombreAccesible)) {
+        return nombreAccesible
+      }
+
+      console.warn(
+        `${nombreAccesible} no fue encontrada en los atributos de la capa, se usará otro nombre.`
+      )
+    }
+
+    return feature.getKeys().filter(k => k !== 'geometry')[0]
   }
 
   __teclado(mapa) {
