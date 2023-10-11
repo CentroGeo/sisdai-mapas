@@ -80,4 +80,6 @@ export const teclasAtajo = {
   ROTAR_DERECHA: 'd',
   AJUSTAR: 'h',
   ESCAPAR: 'escape',
+  LISTAR_ANTERIORES: '8',
+  LISTAR_SIGUIENTES: '9',
 }

@@ -1,3 +1,4 @@
+import MapEventType from 'ol/MapEventType'
 import EventType from 'ol/events/EventType'
 import * as olExtent from 'ol/extent'
 import GeometryCollection from 'ol/geom/GeometryCollection'
@@ -12,13 +13,18 @@ import VectorImageLayer from 'ol/layer/VectorImage'
 import { teclasAtajo } from './../valores/mapa'
 
 export default class NavegacionTeclado {
-  constructor(mapa) {
-    mapa.on(EventType.KEYDOWN, ({ originalEvent }) => {
-      // console.log(EventType.KEYDOWN, originalEvent)
+  elementosPagina = 7
+  maximoElementos = 21
+  elementosIterables = []
+  paginaActual = 0
 
+  constructor(mapa) {
+    this.div =
+      document.getElementById('lista-teclado') || document.createElement('div')
+
+    mapa.on(EventType.KEYDOWN, ({ originalEvent }) => {
       switch (originalEvent.key.toLowerCase()) {
-        case teclasAtajo.INFORMACION:
-          this.teclado(mapa)
+        case teclasAtajo.AJUSTAR:
           break
 
         case teclasAtajo.NORTE:
@@ -36,8 +42,22 @@ export default class NavegacionTeclado {
           mapa.getView().setRotation(mapa.getView().getRotation() - Math.PI / 8)
           break
 
+        case teclasAtajo.LISTAR_ANTERIORES:
+          this.listarAnteriores()
+          break
+
+        case teclasAtajo.LISTAR_SIGUIENTES:
+          this.listarSiguientes()
+          break
+
         default:
-          // console.log(originalEvent.key.toLowerCase())
+          var numero = Number(originalEvent.key)
+
+          if (numero >= 0 && numero <= 7) {
+            if (numero <= this.elementosIterables.length) {
+              this.mostrarGlobo(mapa, this.elementosIterables[numero - 1].pixel)
+            }
+          }
           break
       }
     })
@@ -45,23 +65,71 @@ export default class NavegacionTeclado {
     // mapa.addEventListener(EventType.FOCUS, x => {
     //   console.log(EventType.FOCUS, x)
     // })
+
+    mapa.on(MapEventType.MOVEEND, () => {
+      this.actalizarElementosIterables(mapa)
+      this.paginaActual = 0
+      this.actualizartAsignacionNumerica()
+    })
   }
 
-  teclado(mapa) {
-    console.log('Buscar contenido de la vista')
+  mostrarGlobo(mapa, pixel) {
+    const contenido = mapa.globoInfo.buscarContenidoEnPixel(pixel, mapa)
 
+    mapa.globoInfo.mostrar(contenido, pixel, mapa)
+  }
+
+  listarAnteriores() {
+    if (this.paginaActual > 0) {
+      this.paginaActual--
+      this.actualizartAsignacionNumerica()
+    }
+  }
+
+  listarSiguientes() {
+    if (
+      this.paginaActual <
+      Math.floor(this.elementosIterables.length / this.elementosPagina)
+    ) {
+      this.paginaActual++
+      this.actualizartAsignacionNumerica()
+    }
+  }
+
+  actualizartAsignacionNumerica() {
+    var texto = ''
+
+    if (this.elementosIterables.length === 0) {
+      texto = 'No se encontraron elementos accesibles'
+    } else if (this.elementosIterables.length > this.maximoElementos) {
+      texto = `${this.elementosIterables.length} resultados encontrados en el área de búsqueda. Presione la tecla más (+) para acercar y reducir la cantidad de resultados`
+    } else {
+      const pagina = this.elementosIterables.slice(
+        this.paginaActual * this.elementosPagina,
+        (this.paginaActual + 1) * this.elementosPagina
+      )
+
+      texto =
+        `${this.elementosIterables.length} elementos accesibles, presiona las teclas numéricas para ver desatlles: <br />` +
+        `${pagina.map((f, i) => `<b>${i + 1}</b>: ${f.titulo}`).join(';\t')}` +
+        `${
+          this.paginaActual > 0 ? ';\t<b>8</b>: Ver resultados anteriores' : ''
+        }` +
+        `${
+          this.paginaActual <
+          Math.floor(this.elementosIterables.length / this.elementosPagina)
+            ? ';\t<b>9</b>: Ver más resultados'
+            : ''
+        }`
+    }
+
+    this.div.innerHTML = `<p>${texto}</p>`
+  }
+
+  actalizarElementosIterables(mapa) {
     const extent = mapa.getView().calculateExtent()
 
-    // console.log(
-    //   extent,
-    //   olExtent.getBottomLeft(extent), // x1, y1
-    //   olExtent.getTopLeft(extent),
-    //   olExtent.getTopRight(extent), // x2, y2
-    //   olExtent.getBottomRight(extent)
-    // )
-
-    // Itera a través de todas las capas en tu mapa
-    const featuresVista = mapa
+    this.elementosIterables = mapa
       .getAllLayers()
       .filter(
         // Verifica si la capa es una capa vectorial (puedes personalizar esto según tus necesidades)
@@ -81,6 +149,47 @@ export default class NavegacionTeclado {
           )
           // esta validación posiblemente se quite
           .filter(feature => feature.getGeometry() instanceof Point)
+          .map(feature => ({
+            titulo: feature.get('nom_edo'),
+            // pixel para el globo de información
+            pixel: mapa.getPixelFromCoordinate(
+              feature.getGeometry().getCoordinates()
+            ),
+          }))
+      )
+      .flat()
+  }
+
+  __teclado(mapa) {
+    const extent = mapa.getView().calculateExtent()
+
+    // console.log(
+    //   extent,
+    //   olExtent.getBottomLeft(extent), // x1, y1
+    //   olExtent.getTopLeft(extent),
+    //   olExtent.getTopRight(extent), // x2, y2
+    //   olExtent.getBottomRight(extent)
+    // )
+
+    // Itera a través de todas las capas en tu mapa
+    mapa
+      .getAllLayers()
+      .filter(
+        // Verifica si la capa es una capa vectorial (puedes personalizar esto según tus necesidades)
+        capa =>
+          Boolean(
+            (capa instanceof VectorLayer || capa instanceof VectorImageLayer) &&
+              capa.get('globoInfo')
+          )
+      )
+      .map(capa =>
+        capa
+          .getSource()
+          .getFeatures()
+          .filter(feature =>
+            // filtra los que están dentro de la vista
+            olExtent.intersects(extent, feature.getGeometry().getExtent())
+          )
           .map(feature => {
             // console.log(
             //   // feature.getGeometryName(),
@@ -109,41 +218,15 @@ export default class NavegacionTeclado {
             }
 
             // regresa solo el pixel de la geometria
-            return mapa.getPixelFromCoordinate(
-              feature.getGeometry().getCoordinates()
-            )
+            return {
+              titulo: feature.get('nom_edo'),
+              pixel: mapa.getPixelFromCoordinate(
+                feature.getGeometry().getCoordinates()
+              ),
+            }
           })
       )
       .flat()
-
-    const div = document.getElementById('lista-teclado')
-
-    if (featuresVista.length === 0) {
-      div.innerHTML = '<p>No se encontraron elementos accesibles</p>'
-      return
-    }
-
-    if (featuresVista.length > 21) {
-      div.innerHTML = `<p>${featuresVista.length} resultados encontrados en el área de búsqueda. Presione la tecla más para acercar y reducir la cantidad de resultados</p>`
-      return
-    }
-
-    div.innerHTML = featuresVista.length
-
-    // console.log('elementos encontrados:', featuresVista.length)
-    console.log(
-      `elementos encontrados: ${featuresVista.length}\n${featuresVista
-        .slice(0, 7)
-        .map((f, i) => `${i + 1}: ${f}`)
-        .join('\n')}`
-    )
-
-    const contenido = mapa.globoInfo.buscarContenidoEnPixel(
-      featuresVista[0],
-      mapa
-    )
-
-    mapa.globoInfo.mostrar(contenido, featuresVista[0], mapa)
   }
 }
 

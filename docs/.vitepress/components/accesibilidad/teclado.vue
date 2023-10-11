@@ -16,6 +16,7 @@
       :posicion="3"
       fuente="/assets/estados-centroides.geojson"
       :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
+      accesibilidadTecladoNombre="nom_edo"
       :visible="true"
     />
 
