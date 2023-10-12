@@ -43,6 +43,14 @@ export const props = {
   },
 
   /**
+   *
+   */
+  nombreAccesiblePorElemento: {
+    type: String,
+    default: undefined,
+  },
+
+  /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
    * - Tipo: `Number`
@@ -122,7 +130,7 @@ export default function usarCapa(refVar, props) {
   }
 
   onMounted(() => {
-    console.log('onMounted composable capa')
+    // console.log('onMounted composable capa')
 
     idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
 
@@ -130,7 +138,7 @@ export default function usarCapa(refVar, props) {
   })
 
   function eliminar() {
-    console.log('quitando capa', props.id)
+    // console.log('quitando capa', props.id)
 
     usarRegistroMapas()
       .mapaPromesa(idMapa)
@@ -140,7 +148,7 @@ export default function usarCapa(refVar, props) {
   }
 
   onBeforeUnmount(() => {
-    console.log('onBeforeUnmount composable')
+    // console.log('onBeforeUnmount composable')
     eliminar()
   })
 

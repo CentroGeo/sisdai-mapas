@@ -5,6 +5,7 @@ import {
   onMounted,
   onUnmounted,
   reactive,
+  ref,
   shallowRef,
   toRefs,
   watch,
@@ -58,6 +59,17 @@ const props = defineProps({
   },
 
   /**
+   * PARA USO DE PRUEBA EN LA NAVEGACIÓN POR TECLADO,
+   * LA INTENCIÓN ES QUE AL APROBAR LA NAVEGACIÓN POR TECLADO
+   * ESTE PARÁMETRO Y SUS VALIDACIONES SE QUITEN PARA QUE
+   * SEA USADA POR DEFECTO
+   */
+  navegacionTeclado: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
    *
    * - Tipo: `Object`
@@ -94,6 +106,8 @@ const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 /**
  * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
  * ocupe el mapa.
+ *
+ * @returns {import("./../clases/Mapa").default}
  */
 function mapa() {
   return usarRegistroMapas().mapa(props.id)
@@ -160,7 +174,7 @@ function ariaCanvas(describedby) {
 }
 
 onMounted(() => {
-  console.log('SisdaiMapa')
+  // console.log('SisdaiMapa')
   usarRegistroMapas().registrarMapa(
     props.id,
     refMapa.value,
@@ -205,6 +219,58 @@ defineExpose({
 const escalaGraficaVisible = computed(() =>
   escalaGrafica.value ? 'block' : 'none'
 )
+
+const focoEnMapa = ref(false)
+const navegacionTecladoVisible = ref('none')
+
+watch(focoEnMapa, nv => {
+  if (!nv) {
+    setTimeout(() => {
+      if (!focoEnMapa.value) {
+        // console.log('se ha quitado el foco, quitar control')
+        navegacionTecladoVisible.value = 'none'
+        // mapa().navegacionTeclado.desactivar()
+      }
+    }, 2000)
+  }
+})
+
+function alTeclear({ key }) {
+  switch (key.toLowerCase()) {
+    case 'tab':
+      if (focoEnMapa.value) {
+        // if (key === 'Tab' && focoEnMapa.value) {
+        // console.log('hacer visible el control')
+        if (props.navegacionTeclado) {
+          navegacionTecladoVisible.value = 'block'
+        }
+      }
+      break
+
+    case valoresPorDefecto.teclasAtajo.AJUSTAR:
+      mapa().buscarControl('AjustarVista').ajustarVista()
+      break
+
+    case valoresPorDefecto.teclasAtajo.NORTE:
+      mapa().getView().setRotation(0)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_IZQUIERDA:
+      /**
+       * @see https://openlayers.org/en/latest/examples/full-screen-drag-rotate-and-zoom.html
+       */
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() + Math.PI / 8)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_DERECHA:
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() - Math.PI / 8)
+      break
+  }
+}
 </script>
 
 <template>
@@ -226,6 +292,10 @@ const escalaGraficaVisible = computed(() =>
     <div
       class="contenido-vis"
       ref="refMapa"
+      tabindex="0"
+      @focusin="focoEnMapa = true"
+      @focusout="focoEnMapa = false"
+      @keydown="alTeclear"
     />
 
     <div class="panel-derecha-vis">
@@ -247,7 +317,13 @@ const escalaGraficaVisible = computed(() =>
 @import './../estilos/GloboInfo.scss';
 @import './../estilos/SisdaiMapa.scss';
 
-.sisdai-mapa-control-escala-grafica {
-  display: v-bind(escalaGraficaVisible);
+.sisdai-mapa-control {
+  &-escala-grafica {
+    display: v-bind(escalaGraficaVisible);
+  }
+
+  &-navegacion-teclado {
+    display: v-bind(navegacionTecladoVisible);
+  }
 }
 </style>

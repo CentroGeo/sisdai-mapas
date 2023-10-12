@@ -1,9 +1,11 @@
 import olMap from 'ol/Map'
+
 import RenderEventType from 'ol/render/EventType'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
 import GloboInfo from './GloboInfo'
+import NavegacionTeclado from './NavegacionTeclado'
 
 /**
  * @classdesc
@@ -15,6 +17,8 @@ export default class Mapa extends olMap {
     super(opcionesOlMap)
 
     this.globoInfo = new GloboInfo(this)
+
+    this.navegacionTeclado = new NavegacionTeclado(this)
   }
 
   /**
