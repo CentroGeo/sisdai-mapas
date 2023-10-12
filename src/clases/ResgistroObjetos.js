@@ -37,7 +37,7 @@ export default class RegistroObjetos {
   registrar(id, valor) {
     if (!this.existe(id)) {
       this.registros[id] = valor
-      console.log(`registro ${this.tipoObjetos}: ${id}`)
+      // console.log(`registro ${this.tipoObjetos}: ${id}`)
     } else {
       // eslint-disable-next-line
       console.warn(`${this.tipoObjetos} ${id} ya existe`)
@@ -101,7 +101,7 @@ export default class RegistroObjetos {
   borrar(id) {
     if (this.existe(id)) {
       delete this.registros[id]
-      console.log(`borrado ${this.tipoObjetos}: ${id}`)
+      // console.log(`borrado ${this.tipoObjetos}: ${id}`)
     }
   }
 }

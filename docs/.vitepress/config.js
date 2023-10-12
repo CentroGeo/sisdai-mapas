@@ -30,6 +30,7 @@ export default {
 
     sidebar: {
       '/comienza/': sidebarComienza('comienza'),
+      '/accesibilidad/': sidebarAccesibilidad('accesibilidad'),
       '/datos/': sidebarDatos('datos'),
 
       // visualizaciones: [
@@ -90,6 +91,11 @@ function nav() {
       activeMatch: '/comienza/',
       // items: [],
     },
+    {
+      text: 'Accesibilidad',
+      link: '/accesibilidad/',
+      activeMatch: '/accesibilidad/',
+    },
     // { text: 'Datos', link: '/datos/', activeMatch: '/datos/' },
     // {
     //   text: 'Visualizaciones',
@@ -135,6 +141,16 @@ function sidebarComienza(path) {
         // { text: 'Líneas', link: `/${path}/estiloLineas` },
         // { text: 'Polígonos', link: `/${path}/estiloPoligono` },
       ],
+    },
+  ]
+}
+
+function sidebarAccesibilidad(path) {
+  return [
+    {
+      text: 'Navegación',
+      // collapsed: false,
+      items: [{ text: 'Teclado', link: `/${path}/` }],
     },
   ]
 }
