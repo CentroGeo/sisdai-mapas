@@ -32,3 +32,6 @@ docs/.vitepress/.temp
 *.njsproj
 *.sln
 *.sw?
+
+# No subir cambios en carpeta deprecada
+deprecated

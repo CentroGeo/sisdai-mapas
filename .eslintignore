@@ -11,4 +11,6 @@ docs/.vitepress/dist
 # No ejecutar lint en la salida de nyc coverage
 coverage
 libs
+
+# No ejecutar prettier en carpeta deprecada
 deprecated

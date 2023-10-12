@@ -6,6 +6,10 @@ import NavegacionPrincipal from './NavegacionPrincipal.vue'
 import PiePagina from './PiePagina.vue'
 import VistaInicio from './VistaInicio.vue'
 
+import SisdaiColapsableNavegacion from 'sisdai-componentes/src/componentes/colapsable-navegacion/SisdaiColapsableNavegacion.vue'
+import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
+import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
+
 // https://vitepress.dev/reference/runtime-api#usedata
 const { theme, page, frontmatter } = useData()
 

@@ -313,7 +313,7 @@ function alTeclear({ key }) {
 
 <style lang="scss">
 @import './../estilos/Accesibilidad.scss';
-@import './../estilos/Controles.scss';
+@import './../estilos/controles.scss';
 @import './../estilos/GloboInfo.scss';
 @import './../estilos/SisdaiMapa.scss';
 
