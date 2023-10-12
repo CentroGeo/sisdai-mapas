@@ -59,6 +59,17 @@ const props = defineProps({
   },
 
   /**
+   * PARA USO DE PRUEBA EN LA NAVEGACIÓN POR TECLADO,
+   * LA INTENCIÓN ES QUE AL APROBAR LA NAVEGACIÓN POR TECLADO
+   * ESTE PARÁMETRO Y SUS VALIDACIONES SE QUITEN PARA QUE
+   * SEA USADA POR DEFECTO
+   */
+  navegacionTeclado: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
    *
    * - Tipo: `Object`
@@ -230,7 +241,9 @@ function alTeclear({ key }) {
       if (focoEnMapa.value) {
         // if (key === 'Tab' && focoEnMapa.value) {
         // console.log('hacer visible el control')
-        navegacionTecladoVisible.value = 'block'
+        if (props.navegacionTeclado) {
+          navegacionTecladoVisible.value = 'block'
+        }
       }
       break
 

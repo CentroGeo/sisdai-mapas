@@ -80,13 +80,11 @@ export default class NavegacionTeclado {
         var numero = Number(tecla)
 
         if (numero >= 0 && numero <= 7) {
-          if (numero <= this.elementosIterables.length) {
-            this.mostrarGlobo(
-              mapa,
-              this.elementosIterables[
-                numero - 1 + this.elementosPagina * this.paginaActual
-              ].pixel
-            )
+          const seleccion =
+            numero - 1 + this.elementosPagina * this.paginaActual
+
+          if (seleccion < this.elementosIterables.length) {
+            this.mostrarGlobo(mapa, this.elementosIterables[seleccion].pixel)
           }
         }
         break
@@ -106,6 +104,12 @@ export default class NavegacionTeclado {
     mapa.globoInfo.mostrar(contenido, pixel, mapa)
   }
 
+  totalPaginas() {
+    return Math.floor(
+      (this.elementosIterables.length - 1) / this.elementosPagina
+    )
+  }
+
   listarAnteriores() {
     if (this.paginaActual > 0) {
       this.paginaActual--
@@ -114,10 +118,7 @@ export default class NavegacionTeclado {
   }
 
   listarSiguientes() {
-    if (
-      this.paginaActual <
-      Math.floor(this.elementosIterables.length / this.elementosPagina)
-    ) {
+    if (this.paginaActual < this.totalPaginas()) {
       this.paginaActual++
       this.actualizartAsignacionNumerica()
     }
@@ -143,8 +144,7 @@ export default class NavegacionTeclado {
           this.paginaActual > 0 ? ';\t<b>8</b>: Ver resultados anteriores' : ''
         }` +
         `${
-          this.paginaActual <
-          Math.floor(this.elementosIterables.length / this.elementosPagina)
+          this.paginaActual < this.totalPaginas()
             ? ';\t<b>9</b>: Ver más resultados'
             : ''
         }`

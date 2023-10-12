@@ -16,12 +16,9 @@ import AccesibilidadTeclado from "./../.vitepress/components/accesibilidad/tecla
 - Presione la tecla `h` para regresar a la ubicación inicial del mapa.
 <!-- - Para obtener detalles sobre su área actual, presione la tecla `i`. -->
 
-<!-- **Para abrir los globos de información de los elementos visibles**
+**Navegación de los elementos en la vista**
 
-- Presiones la tecla numerica del `1` al `7` para acceder a los elementos visibles
-- Si en el área visible hay 8 elementos o más:
-  - Use la tecla 9 para
-    para listar asignar una tecla a más resultados -->
+Acciona el botón <span class="icono-accesibilidad" aria-hidden="true" /> para visualizar las instrucciones para acceder a los elementos accesibles en la vista del mapa (puntos vectoriales).
 
 <br />
 

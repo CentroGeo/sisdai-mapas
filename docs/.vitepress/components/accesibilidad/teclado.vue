@@ -5,6 +5,7 @@
       extension: '-118.3651,14.5321,-86.7104,32.7187',
       extensionMargen: 0,
     }"
+    :navegacionTeclado="true"
   >
     <template #panel-encabezado-vis>
       <div id="lista-teclado"></div>
@@ -24,7 +25,7 @@
       :posicion="2"
       fuente="/assets/estados-poligonos.geojson"
       :globoInformativo="f => `ENTIDAD: <b>${f.nom_edo}</b>`"
-      :visible="true"
+      :visible="false"
     />
   </SisdaiMapa>
 </template>
