@@ -1,14 +1,14 @@
 <script setup>
 import MapEventType from 'ol/MapEventType'
 import {
-  computed,
-  onMounted,
-  onUnmounted,
-  reactive,
-  ref,
-  shallowRef,
-  toRefs,
-  watch,
+computed,
+onMounted,
+onUnmounted,
+reactive,
+ref,
+shallowRef,
+toRefs,
+watch,
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
@@ -313,7 +313,7 @@ function alTeclear({ key }) {
 
 <style lang="scss">
 @import './../estilos/Accesibilidad.scss';
-@import './../estilos/controles.scss';
+@import './../estilos/Controles.scss';
 @import './../estilos/GloboInfo.scss';
 @import './../estilos/SisdaiMapa.scss';
 

@@ -80,7 +80,7 @@ function nav() {
   return [
     {
       text: 'Sisdai',
-      link: 'https://sisdai.conacyt.mx/',
+      link: 'https://sisdai.conahcyt.mx/',
       rel: 'noopener noreferrer',
       target: '_blank',
     },
