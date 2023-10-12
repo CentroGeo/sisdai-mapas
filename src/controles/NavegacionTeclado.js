@@ -58,7 +58,6 @@ export default class NavegacionTeclado extends Control {
   }
 
   iniciarNavegacion() {
-    console.log('se va a iniciar la navegación por teclado')
-    console.log('agregar foco al mapa')
+    this.getMap().navegacionTeclado.activar(this.getMap())
   }
 }

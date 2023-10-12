@@ -10,9 +10,10 @@ import Point from 'ol/geom/Point'
 import Polygon from 'ol/geom/Polygon'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
-import { teclasAtajo } from './../valores/mapa'
+import { teclasAtajo } from '../valores/mapa'
 
 export default class NavegacionTeclado {
+  estado_ = false
   elementosPagina = 7
   maximoElementos = 21
   elementosIterables = []
@@ -26,61 +27,77 @@ export default class NavegacionTeclado {
     this.div =
       document.getElementById('lista-teclado') || document.createElement('div')
 
-    mapa.on(EventType.KEYDOWN, ({ originalEvent }) => {
-      switch (originalEvent.key.toLowerCase()) {
-        case teclasAtajo.AJUSTAR:
-          break
-
-        case teclasAtajo.NORTE:
-          mapa.getView().setRotation(0)
-          break
-
-        case teclasAtajo.ROTAR_IZQUIERDA:
-          /**
-           * @see https://openlayers.org/en/latest/examples/full-screen-drag-rotate-and-zoom.html
-           */
-          mapa.getView().setRotation(mapa.getView().getRotation() + Math.PI / 8)
-          break
-
-        case teclasAtajo.ROTAR_DERECHA:
-          mapa.getView().setRotation(mapa.getView().getRotation() - Math.PI / 8)
-          break
-
-        case teclasAtajo.LISTAR_ANTERIORES:
-          this.listarAnteriores()
-          break
-
-        case teclasAtajo.LISTAR_SIGUIENTES:
-          this.listarSiguientes()
-          break
-
-        case teclasAtajo.TABULADOR:
-          // mapa.addControl(new controlNavegacionTeclado())
-          // mapa.removeControl()
-          // console.log('hizo tab')
-          break
-
-        default:
-          var numero = Number(originalEvent.key)
-
-          if (numero >= 0 && numero <= 7) {
-            if (numero <= this.elementosIterables.length) {
-              this.mostrarGlobo(mapa, this.elementosIterables[numero - 1].pixel)
-            }
-          }
-          break
+    mapa.on(EventType.KEYDOWN, ({ originalEvent, map }) => {
+      if (this.estado_) {
+        this.alTeclearMapa(map, originalEvent.key.toLowerCase())
       }
     })
 
-    // mapa.addEventListener(EventType.FOCUS, x => {
-    //   console.log(EventType.FOCUS, x)
-    // })
+    mapa.on(MapEventType.MOVEEND, ({ map }) => {
+      if (this.estado_) {
+        this.alMoverMapa(map)
+      }
+    })
+  }
 
-    mapa.on(MapEventType.MOVEEND, () => {
+  activar(mapa) {
+    if (!this.estado_) {
+      // console.log('activando navegación por teclado')
+      mapa.getTargetElement().focus()
+      this.estado_ = true
+
       this.actalizarElementosIterables(mapa)
       this.paginaActual = 0
       this.actualizartAsignacionNumerica()
-    })
+    }
+  }
+
+  desactivar() {
+    if (this.estado_) {
+      console.log('desactivando navegación por teclado!!!')
+      this.estado_ = false
+
+      this.div.innerHTML = ''
+    }
+  }
+
+  alTeclearMapa(mapa, tecla) {
+    // console.log('mapa tecleado', this.paginaActual)
+    switch (tecla) {
+      case teclasAtajo.TABULADOR:
+        this.desactivar()
+        break
+
+      case teclasAtajo.LISTAR_ANTERIORES:
+        this.listarAnteriores()
+        break
+
+      case teclasAtajo.LISTAR_SIGUIENTES:
+        this.listarSiguientes()
+        break
+
+      default:
+        var numero = Number(tecla)
+
+        if (numero >= 0 && numero <= 7) {
+          if (numero <= this.elementosIterables.length) {
+            this.mostrarGlobo(
+              mapa,
+              this.elementosIterables[
+                numero - 1 + this.elementosPagina * this.paginaActual
+              ].pixel
+            )
+          }
+        }
+        break
+    }
+  }
+
+  alMoverMapa(mapa) {
+    // console.log('mapa movido', this.paginaActual)
+    this.actalizarElementosIterables(mapa)
+    this.paginaActual = 0
+    this.actualizartAsignacionNumerica()
   }
 
   mostrarGlobo(mapa, pixel) {

@@ -18,7 +18,7 @@ export default class Mapa extends olMap {
 
     this.globoInfo = new GloboInfo(this)
 
-    new NavegacionTeclado(this)
+    this.navegacionTeclado = new NavegacionTeclado(this)
   }
 
   /**

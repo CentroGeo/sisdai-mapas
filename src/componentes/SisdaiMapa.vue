@@ -95,6 +95,8 @@ const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 /**
  * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
  * ocupe el mapa.
+ *
+ * @returns {import("./../clases/Mapa").default}
  */
 function mapa() {
   return usarRegistroMapas().mapa(props.id)
@@ -216,15 +218,44 @@ watch(focoEnMapa, nv => {
       if (!focoEnMapa.value) {
         // console.log('se ha quitado el foco, quitar control')
         navegacionTecladoVisible.value = 'none'
+        // mapa().navegacionTeclado.desactivar()
       }
     }, 2000)
   }
 })
 
-function keydown({ key }) {
-  if (key === 'Tab' && focoEnMapa.value) {
-    // console.log('hacer visible el control')
-    navegacionTecladoVisible.value = 'block'
+function alTeclear({ key }) {
+  switch (key.toLowerCase()) {
+    case 'tab':
+      if (focoEnMapa.value) {
+        // if (key === 'Tab' && focoEnMapa.value) {
+        // console.log('hacer visible el control')
+        navegacionTecladoVisible.value = 'block'
+      }
+      break
+
+    case valoresPorDefecto.teclasAtajo.AJUSTAR:
+      mapa().buscarControl('AjustarVista').ajustarVista()
+      break
+
+    case valoresPorDefecto.teclasAtajo.NORTE:
+      mapa().getView().setRotation(0)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_IZQUIERDA:
+      /**
+       * @see https://openlayers.org/en/latest/examples/full-screen-drag-rotate-and-zoom.html
+       */
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() + Math.PI / 8)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_DERECHA:
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() - Math.PI / 8)
+      break
   }
 }
 </script>
@@ -251,7 +282,7 @@ function keydown({ key }) {
       tabindex="0"
       @focusin="focoEnMapa = true"
       @focusout="focoEnMapa = false"
-      @keydown="keydown"
+      @keydown="alTeclear"
     />
 
     <div class="panel-derecha-vis">

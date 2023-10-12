@@ -14,9 +14,7 @@ import AccesibilidadTeclado from "./../.vitepress/components/accesibilidad/tecla
 - Presione la tecla `a` para rotar el mapa hacia la izquierda.
 - Presione la tecla `n` para rotar el mapa hacia el norte.
 - Presione la tecla `h` para regresar a la ubicación inicial del mapa.
-- Para obtener detalles sobre su área actual, presione la tecla `i`.
-
-<br />
+<!-- - Para obtener detalles sobre su área actual, presione la tecla `i`. -->
 
 <!-- **Para abrir los globos de información de los elementos visibles**
 
@@ -24,6 +22,8 @@ import AccesibilidadTeclado from "./../.vitepress/components/accesibilidad/tecla
 - Si en el área visible hay 8 elementos o más:
   - Use la tecla 9 para
     para listar asignar una tecla a más resultados -->
+
+<br />
 
 <AccesibilidadTeclado />
 
