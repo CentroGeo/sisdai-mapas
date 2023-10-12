@@ -65,3 +65,22 @@ export const vista = {
  * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
  */
 export const proyeccion = 'EPSG:4326'
+
+/**
+ * Claves para atajos en la navegación por teclado
+ */
+export const teclasAtajo = {
+  IZQUIERDA: 'arrowleft',
+  ARRIBA: 'arrowup',
+  DERECHA: 'arrowright',
+  ABAJO: 'arrowdown',
+  INFORMACION: 'i',
+  NORTE: 'n',
+  ROTAR_IZQUIERDA: 'a',
+  ROTAR_DERECHA: 'd',
+  AJUSTAR: 'h',
+  ESCAPAR: 'escape',
+  LISTAR_ANTERIORES: '8',
+  LISTAR_SIGUIENTES: '9',
+  TABULADOR: 'tab',
+}

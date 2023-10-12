@@ -18,6 +18,7 @@ export function crearContenedorControl(claseCss) {
 
 /**
  * Crea un elemento html de tipo botón con las siguientes características
+ * @param {String} ariaLabel texto que se asignará al elemento para el asistente de voz.
  * @param {String} claseCss Clase que distinguirá al elemento, recomendable usar la misma clase
  * del contenedor
  * @param {String} icono Icono que se visualizará dentro del botón
