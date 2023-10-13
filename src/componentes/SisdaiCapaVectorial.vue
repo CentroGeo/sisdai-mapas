@@ -124,11 +124,13 @@ const estiloConbinado = computed(() =>
 
 agregada(capa => {
   capa.setStyle(estiloConbinado.value)
+  capa.set('estilo', estilo.value)
   capa.set('globoInfo', globoInformativo.value)
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
   // reactivo
   watch(estiloConbinado, nv => capa.setStyle(nv))
+  watch(estilo, nv => capa.set('estilo', nv))
   watch(globoInformativo, nv => capa.set('globoInfo', nv))
   watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
 })

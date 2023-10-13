@@ -30,25 +30,40 @@ const seleccion = ref(undefined)
 
 <template>
   <SisdaiMapa
-    class="sin-cargador con-panel-encabezado-vis"
+    class="sin-cargador con-panel-izquierda-vis"
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
   >
-    <template #panel-encabezado-vis>
-      <select v-model="seleccion">
-        <option
-          v-for="(estilo, id) in estilos"
-          :value="estilo"
+    <template #panel-izquierda-vis>
+      <div class="m-r-2">
+        <h5 class="m-y-0">Puntos</h5>
+        <select
+          class="m-y-1"
+          v-model="seleccion"
         >
-          {{ id }}
-        </option>
-      </select>
+          <option
+            v-for="(estilo, id) in estilos"
+            :value="estilo"
+          >
+            {{ id }}
+          </option>
+        </select>
+
+        <SisdaiLeyenda para="puntos" />
+
+        <h5 class="m-y-0">Líneas</h5>
+        <!-- <SisdaiLeyenda para="puntos" /> -->
+
+        <h5 class="m-y-0">Polígonos</h5>
+        <!-- <SisdaiLeyenda para="puntos" /> -->
+      </div>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
 
     <SisdaiCapaVectorial
+      id="puntos"
       :posicion="2"
       :fuente="fuente"
       :estilo="seleccion"

@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue'
-import usarRegistroMapas from './../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
+import { onMounted, reactive, shallowRef, watch } from 'vue'
+import usarRegistroMapas from '../composables/usarRegistroMapas'
+import { buscarIdContenedorHtmlSisdai, idAleatorio } from '../utiles'
 
 var idMapa
 
@@ -21,6 +21,7 @@ const idCheck = `${props.para}-${idAleatorio()}`
 const capa = reactive({
   visible: false,
   nombre: 'Cargando...',
+  // estilo: parseEstilo(estiloVector),
 })
 
 /**
@@ -28,30 +29,33 @@ const capa = reactive({
  * @param {import("ol/layer/Layer").default} capa
  */
 function vincularCapa(_capa) {
-  console.log('capa', _capa)
+  // console.log('capa', _capa)
+
+  /**
+   *
+   */
+  capa.nombre = _capa?.get('nombre')
+  watch(
+    () => _capa?.get('nombre'),
+    nv => (capa.nombre = nv)
+  )
 
   /**
    *
    */
   capa.visible = _capa.getVisible()
   watch(
+    () => _capa.getVisible(),
+    nv => (capa.visible = nv)
+  )
+  watch(
     () => capa.visible,
     nv => _capa.setVisible(nv)
-  )
-
-  /**
-   *
-   */
-  capa.nombre = _capa.get('nombre')
-  watch(
-    () => _capa?.get('nombre'),
-    nv => (capa.nombre = nv)
   )
 }
 
 onMounted(() => {
-  console.log('SisdaiLeyenda', props.para)
-  // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
+  // console.log('SisdaiLeyenda', props.para)
 
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
@@ -61,21 +65,25 @@ onMounted(() => {
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
-
-onUnmounted(() => {})
 </script>
 
 <template>
-  <span ref="sisdaiLeyenda">
-    <!-- <h2>Hola, soy una leyenda 😇 para: {{ para }}</h2> -->
+  <span
+    ref="sisdaiLeyenda"
+    class="controlador-vis"
+  >
+    <span class="figura-variable" />
 
-    <form>
-      <input
-        type="checkbox"
-        :id="idCheck"
-        v-model="capa.visible"
-      />
-      <label :for="idCheck">{{ capa.nombre }}</label>
-    </form>
+    <input
+      type="checkbox"
+      :id="idCheck"
+      v-model="capa.visible"
+    />
+    <label
+      class="nombre-variable"
+      :for="idCheck"
+    >
+      {{ capa.nombre }}
+    </label>
   </span>
 </template>
