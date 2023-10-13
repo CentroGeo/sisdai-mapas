@@ -2,6 +2,11 @@
  * @module utiles/index
  */
 
+import ImageLayer from 'ol/layer/Image'
+import TileLayer from 'ol/layer/Tile'
+import VectorLayer from 'ol/layer/Vector'
+import VectorImageLayer from 'ol/layer/VectorImage'
+import { tipoCapa } from '../valores/capa'
 import { vista } from './../valores/mapa'
 
 /**
@@ -117,6 +122,25 @@ export function valorarExtensionMargen(valor) {
   }
 
   return vista.extensionMargen
+}
+
+/**
+ *
+ * @param {import("ol/layer/Layer").default} capa
+ * @returns {String|undefined}
+ */
+export function valorarTipoCapa(capa) {
+  if (capa instanceof VectorLayer || capa instanceof VectorImageLayer) {
+    return tipoCapa.vectorial
+  }
+
+  if (capa instanceof ImageLayer) {
+    return tipoCapa.wms
+  }
+
+  if (capa instanceof TileLayer) {
+    return tipoCapa.xyz
+  }
 }
 
 /**

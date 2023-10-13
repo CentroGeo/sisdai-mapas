@@ -33,9 +33,7 @@ const nombre = ref('Capa vectorial')
     <!-- fuente="https://cultura.conacyt.mx/pueblosindigenas-registro-api/media/capa_comunidades_indigenas/comunidades_localidad.geojson" -->
 
     <template #panel-pie-vis>
-      <div>
-        <SisdaiLeyenda para="idVectorial" />
-      </div>
+      <SisdaiLeyenda para="idVectorial" />
     </template>
   </SisdaiMapa>
 </template>

@@ -7,8 +7,21 @@ import PiePagina from './PiePagina.vue'
 import VistaInicio from './VistaInicio.vue'
 
 import SisdaiColapsableNavegacion from 'sisdai-componentes/src/componentes/colapsable-navegacion/SisdaiColapsableNavegacion.vue'
+import SisdaiInfoDeDespliegue from 'sisdai-componentes/src/componentes/info-de-despliegue/SisdaiInfoDeDespliegue.vue'
+import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
 import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/SisdaiMenuLateral.vue'
 import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
+import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
+import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
+// import {
+//   SisdaiColapsableNavegacion,
+//   SisdaiInfoDeDespliegue,
+//   SisdaiMenuAccesibilidad,
+//   SisdaiMenuLateral,
+//   SisdaiNavegacionGobMx,
+//   SisdaiPiePaginaConahcyt,
+//   SisdaiPiePaginaGobMx,
+// } from 'sisdai-componentes'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { theme, page, frontmatter } = useData()

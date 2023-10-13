@@ -2,7 +2,7 @@
 import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onMounted, shallowRef, toRefs } from 'vue'
+import { onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 
@@ -13,7 +13,7 @@ const props = defineProps({
    *
    * - Tipo: `Object`
    * - Valor por defecto: `{}`.
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   parametros: {
     type: Object,
@@ -34,7 +34,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `geoserver`.
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
@@ -48,7 +48,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`.
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   url: {
     type: String,
@@ -72,6 +72,8 @@ configurar(() => {
     serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
   })
+
+  watch(parametros, nv => olSource.updateParams(nv))
 
   olSource.on(ImageSourceEventType.IMAGELOADSTART, () => {
     emits(eventos.alIniciarCarga)

@@ -8,8 +8,6 @@
     "README.md"
   ],
   "scripts": {
-    "deprecated:install": "cd deprecated && npm install",
-    "deprecated:serve": "cd deprecated && vuepress dev docs",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:dev": "vitepress dev docs",

@@ -8,7 +8,7 @@ Establece las atribuciones de la fuente.
 
 - Tipo: `String` o `Array<String>`
 - Valor por defecto: `undefined`
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `id`
 
@@ -16,7 +16,7 @@ Identificador único de la capa. Si no es detectado, se asignará una cadena de 
 
 - Tipo: `String`
 - Valor por defecto: Aleatorio
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `nombre`
 
@@ -24,7 +24,7 @@ Nombre de la capa que aparecerá en el control de la leyenda.
 
 - Tipo: `String`
 - Valor por defecto: `'Nombre no asignado'`.
-- Interactivo: ✅
+- Reactivo: ✅
 
 #### `opacidad`
 
@@ -32,7 +32,7 @@ Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente i
 
 - Tipo: `Number`
 - Valor por defecto: `1`
-- Interactivo: ✅
+- Reactivo: ✅
 
 #### `posicion`
 
@@ -40,7 +40,7 @@ Indica la posición respecto a otras capas. Las capas con un valor mayor en este
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Interactivo: ✅
+- Reactivo: ✅
 
 #### `visible`
 
@@ -48,4 +48,4 @@ Visibilidad de la capa.
 
 - Tipo: `Boolean`
 - Valor por defecto: `true`
-- Interactivo: ✅
+- Reactivo: ✅

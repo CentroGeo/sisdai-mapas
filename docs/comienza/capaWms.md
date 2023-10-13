@@ -24,7 +24,7 @@ Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas 
 
 - Tipo: `Object`
 - Valor por defecto: `{}`.
-- Interactivo: ✅
+- Reactivo: ✅
 
 #### `tipoServidor`
 
@@ -32,7 +32,7 @@ Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o q
 
 - Tipo: `String`
 - Valor por defecto: `geoserver`.
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `url`
 
@@ -40,7 +40,7 @@ URL del servicio WMS.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`.
-- Interactivo: ❌
+- Reactivo: ❌
 
 ## Ejemplo
 

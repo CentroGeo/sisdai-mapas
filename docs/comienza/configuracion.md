@@ -24,7 +24,7 @@ Recíbe los ID, separados por espacios, de los elementos que describen al mapa c
 
 - Tipo: `String`
 - Valor por defecto: `''`
-- Interactivo: ✅
+- Reactivo: ✅
 
 > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
 
@@ -45,7 +45,7 @@ Define si se agrega la escala grafica en el mapa.
 
 - Tipo: `Boolean`
 - Valor por defecto: `true`
-- Interactivo: ✅
+- Reactivo: ✅
 
 **Uso:**
 
@@ -59,7 +59,7 @@ Identificador único del mapa. Si no es definido se asignará un valor aleatorio
 
 - Tipo: `String`
 - Valor por defecto: Aleatorio
-- Interactivo: ❌
+- Reactivo: ❌
 
 **Uso:**
 
@@ -73,7 +73,7 @@ Código de identificación SRS que define la proyección de la vista.
 
 - Tipo: `String`
 - Valor por defecto: `'EPSG:4326'`
-- Interactivo: ❌
+- Reactivo: ❌
 
 > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
 
@@ -91,7 +91,7 @@ Objeto que define la vista del mapa. Revisa los detalles de la vista en la [secc
 
 - Tipo: `Object`
 - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
-- Interactivo: ✅
+- Reactivo: ✅
 
 ## Funciones ​
 

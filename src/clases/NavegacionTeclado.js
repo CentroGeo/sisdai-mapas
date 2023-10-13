@@ -138,7 +138,7 @@ export default class NavegacionTeclado {
       )
 
       texto =
-        `${this.elementosIterables.length} elementos accesibles, presiona las teclas numéricas para ver desatlles: <br />` +
+        `${this.elementosIterables.length} elementos accesibles, presiona las teclas numéricas para ver detalles: <br />` +
         `${pagina.map((f, i) => `<b>${i + 1}</b>: ${f.titulo}`).join(';\t')}` +
         `${
           this.paginaActual > 0 ? ';\t<b>8</b>: Ver resultados anteriores' : ''

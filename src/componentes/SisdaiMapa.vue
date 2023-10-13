@@ -15,8 +15,7 @@ import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
-import ContenedorVisAtribuciones from './ContenedorVisAtribuciones.vue'
-import SisdaiCargando from './SisdaiCargando.vue'
+import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
 
 const props = defineProps({
   /**
@@ -24,7 +23,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `''`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    *
    * > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
    */
@@ -38,7 +37,7 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   escalaGrafica: {
     type: Boolean,
@@ -51,7 +50,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   id: {
     type: String,
@@ -74,7 +73,7 @@ const props = defineProps({
    *
    * - Tipo: `Object`
    * - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   vista: {
     type: Object,
@@ -87,7 +86,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `'EPSG:4326'`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    *
    * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
    *
@@ -306,14 +305,14 @@ function alTeclear({ key }) {
       <slot name="panel-pie-vis" />
     </div>
 
-    <SisdaiCargando />
+    <!-- <SisdaiCargando /> -->
     <ContenedorVisAtribuciones />
   </div>
 </template>
 
 <style lang="scss">
 @import './../estilos/Accesibilidad.scss';
-@import './../estilos/controles.scss';
+@import './../estilos/Controles.scss';
 @import './../estilos/GloboInfo.scss';
 @import './../estilos/SisdaiMapa.scss';
 

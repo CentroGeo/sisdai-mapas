@@ -79,7 +79,7 @@ function traducirValor(idTraducido, valor) {
   return valor
 }
 
-export function parseEstilo(original) {
+export function traducirEstilo(original) {
   const traducido = {}
 
   Object.keys(original).forEach(id => {
@@ -87,7 +87,7 @@ export function parseEstilo(original) {
     const valor = original[id]
 
     if (esObjeto(valor)) {
-      const anidado = parseEstilo(valor)
+      const anidado = traducirEstilo(valor)
 
       Object.keys(anidado).forEach(idAnidado => {
         traducido[`${idTraducido}-${idAnidado}`] = anidado[idAnidado]

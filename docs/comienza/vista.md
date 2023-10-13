@@ -15,7 +15,7 @@ Coordenadas `[x, y]` del centro inicial de la vista.
 - Tipo: `Array<Number>|String`
 - Valor por defecto: `[0, 0]`
 - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
-- Interactivo: ✅
+- Reactivo: ✅
 
 > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
 
@@ -35,7 +35,7 @@ Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 - Tipo: `Array<Number>`
 - Valor por defecto: `undefined`
 - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-- Interactivo: ✅
+- Reactivo: ✅
 
 > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
 
@@ -59,7 +59,7 @@ Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores
 - Tipo: `Array<Number>|String`
 - Valor por defecto: `[10, 10, 10, 10]`
 - Admite: `N`, `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-- Interactivo: ❌
+- Reactivo: ❌
 
 > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
 
@@ -77,7 +77,7 @@ Nivel de zoom utilizado para calcular la resolución inicial de la vista.
 
 - Tipo: `Number`
 - Valor por defecto: `1.5`
-- Interactivo: ✅
+- Reactivo: ✅
 
 > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
 

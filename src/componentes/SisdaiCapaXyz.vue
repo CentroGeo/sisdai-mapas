@@ -14,7 +14,7 @@ const props = defineProps({
    *
    * - Tipo: `Number`
    * - Valor por defecto: `undefined`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   acercamientoMaximo: {
     type: Number,
@@ -26,7 +26,7 @@ const props = defineProps({
    *
    * - Tipo: `Number`
    * - Valor por defecto: `undefined`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   acercamientoMinimo: {
     type: Number,
@@ -38,7 +38,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   url: {
     type: String,

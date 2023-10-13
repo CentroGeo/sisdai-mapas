@@ -8,7 +8,7 @@ export const props = {
    *
    * - Tipo: `String` o `Array<String>`
    * - Valor por defecto: `undefined`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_Source.html#~AttributionLike
    */
@@ -23,7 +23,7 @@ export const props = {
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   id: {
     type: String,
@@ -35,7 +35,7 @@ export const props = {
    *
    * - Tipo: `String`
    * - Valor por defecto: `'Nombre no asignado'`.
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   nombre: {
     type: String,
@@ -43,19 +43,11 @@ export const props = {
   },
 
   /**
-   *
-   */
-  nombreAccesiblePorElemento: {
-    type: String,
-    default: undefined,
-  },
-
-  /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
    * - Tipo: `Number`
    * - Valor por defecto: `1`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   opacidad: {
     type: [Number, String],
@@ -67,7 +59,7 @@ export const props = {
    *
    * - Tipo: `Number`
    * - Valor por defecto: `undefined`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   posicion: {
     type: Number,
@@ -79,7 +71,7 @@ export const props = {
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   visible: {
     type: Boolean,
