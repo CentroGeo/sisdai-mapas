@@ -24,7 +24,7 @@ Nivel de acercamiento máximo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `acercamientoMinimo`
 
@@ -32,7 +32,7 @@ Nivel de acercamiento mínimo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `url`
 
@@ -40,7 +40,7 @@ Url remota de la capa.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
-- Interactivo: ❌
+- Reactivo: ❌
 
 ## Ejemplo
 

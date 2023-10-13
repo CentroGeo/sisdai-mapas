@@ -30,7 +30,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `'geojson'`.
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   formato: {
     type: String,
@@ -43,7 +43,7 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Object`
    * - Valor obligatorio.
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   fuente: {
     type: [String, Object],
@@ -56,7 +56,7 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Function`
    * - Valor por defecto: `undefined`.
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    */
   globoInformativo: {
     type: [String, Function],
@@ -68,7 +68,7 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `false`.
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    */
   renderizarComoImagen: {
     type: Boolean,

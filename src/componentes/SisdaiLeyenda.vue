@@ -6,6 +6,9 @@ import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 var idMapa
 
 const props = defineProps({
+  /**
+   *
+   */
   para: {
     type: String,
     require: true,
@@ -20,21 +23,28 @@ const capa = reactive({
   nombre: 'Cargando...',
 })
 
-// const visible = ref(false)
-// const nombre = ref('')
+/**
+ *
+ * @param {import("ol/layer/Layer").default} capa
+ */
+function vincularCapa(_capa) {
+  console.log('capa', _capa)
 
-function vincularCapa(mapa) {
-  // console.log(mapa)
-
-  capa.visible = mapa.buscarCapa(props.para).getVisible()
+  /**
+   *
+   */
+  capa.visible = _capa.getVisible()
   watch(
     () => capa.visible,
-    nv => mapa.buscarCapa(props.para).setVisible(nv)
+    nv => _capa.setVisible(nv)
   )
 
-  capa.nombre = mapa.buscarCapa(props.para).get('nombre')
+  /**
+   *
+   */
+  capa.nombre = _capa.get('nombre')
   watch(
-    () => mapa.buscarCapa(props.para)?.get('nombre'),
+    () => _capa?.get('nombre'),
     nv => (capa.nombre = nv)
   )
 }
@@ -45,7 +55,11 @@ onMounted(() => {
 
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
-  usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
+  // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
+  usarRegistroMapas()
+    .mapaPromesa(idMapa)
+    .then(mapa => mapa.buscarCapaPromesa(props.para))
+    .then(vincularCapa)
 })
 
 onUnmounted(() => {})
