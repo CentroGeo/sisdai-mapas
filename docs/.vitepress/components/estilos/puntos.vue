@@ -53,20 +53,47 @@ const seleccion = ref(undefined)
         <SisdaiLeyenda para="puntos" />
 
         <h5 class="m-y-0">Líneas</h5>
-        <!-- <SisdaiLeyenda para="puntos" /> -->
+        <SisdaiLeyenda para="lineas" />
 
         <h5 class="m-y-0">Polígonos</h5>
-        <!-- <SisdaiLeyenda para="puntos" /> -->
+        <SisdaiLeyenda para="poligonos" />
+
+        <h5 class="m-y-0">Base</h5>
+        <SisdaiLeyenda para="base" />
       </div>
     </template>
 
-    <SisdaiCapaXyz :posicion="1" />
+    <SisdaiCapaXyz
+      id="base"
+      :posicion="1"
+    />
 
     <SisdaiCapaVectorial
       id="puntos"
-      :posicion="2"
-      :fuente="fuente"
+      :posicion="4"
+      fuente="/assets/estados-centroides.geojson"
       :estilo="seleccion"
+      geometria="punto"
     />
+    <!-- 
+     -->
+
+    <SisdaiCapaVectorial
+      id="lineas"
+      :posicion="3"
+      fuente="https://gema.conahcyt.mx/geoserver/wms?service=wfs&version=1.3.0&request=GetFeature&typename=gref_corredores_red_nac_caminos_21_nal_l&outputFormat=application/json"
+      geometria="linea"
+    />
+    <!-- 
+     -->
+
+    <SisdaiCapaVectorial
+      id="poligonos"
+      :posicion="2"
+      fuente="/assets/estados-poligonos.geojson"
+    />
+    <!-- 
+      geometria="poligono"
+     -->
   </SisdaiMapa>
 </template>

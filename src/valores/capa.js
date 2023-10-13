@@ -5,6 +5,17 @@ export const tipoEstadoCarga = {
   fin: 'finalizada',
 }
 
+export const tipoCapa = {
+  vectorial: 'vectorial',
+  wms: 'wms',
+  xyz: 'xyz',
+}
+export const tipoGeometria = {
+  punto: 'punto',
+  linea: 'linea',
+  poligono: 'poligono',
+}
+
 /**
  * @see https://openlayers.org/en/latest/apidoc/module-ol_style_Style-Style.html
  */

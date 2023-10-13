@@ -7,7 +7,7 @@ import VectorEventType from 'ol/source/VectorEventType'
 import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
-import { parseEstilo } from './../utiles/estiloVectores'
+import { traducirEstilo } from './../utiles/estiloVectores'
 import { estiloVector } from './../valores/capa'
 
 const props = defineProps({
@@ -64,6 +64,25 @@ const props = defineProps({
   },
 
   /**
+   * Punto: Point y MultiPoint
+   * Linea: LineString y MultiLineString
+   * Poligono: Polygon y MultiPolygon
+   */
+  geometria: {
+    type: String,
+    default: undefined,
+    // 'LinearRing', 'GeometryCollection', 'Circle'
+  },
+
+  /**
+   *
+   */
+  nombreAccesiblePorElemento: {
+    type: String,
+    default: undefined,
+  },
+
+  /**
    * ???
    *
    * - Tipo: `Boolean`
@@ -75,17 +94,17 @@ const props = defineProps({
     default: true,
   },
 
-  // url: {
-  //   type: String,
-  //   default: undefined,
-  // },
-
   ...propsCapa,
 })
 
 const sisdaiCapaVectorial = shallowRef()
-const { estilo, fuente, globoInformativo, nombreAccesiblePorElemento } =
-  toRefs(props)
+const {
+  estilo,
+  fuente,
+  globoInformativo,
+  geometria,
+  nombreAccesiblePorElemento,
+} = toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
 const { configurar, agregada } = usarCapa(sisdaiCapaVectorial, props)
@@ -119,19 +138,21 @@ configurar(() => {
 })
 
 const estiloConbinado = computed(() =>
-  parseEstilo({ ...estiloVector, ...estilo.value })
+  traducirEstilo({ ...estiloVector, ...estilo.value })
 )
 
 agregada(capa => {
   capa.setStyle(estiloConbinado.value)
   capa.set('estilo', estilo.value)
   capa.set('globoInfo', globoInformativo.value)
+  capa.set('geometria', geometria.value)
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
   // reactivo
   watch(estiloConbinado, nv => capa.setStyle(nv))
   watch(estilo, nv => capa.set('estilo', nv))
   watch(globoInformativo, nv => capa.set('globoInfo', nv))
+  watch(geometria, nv => capa.set('geometria', nv))
   watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
 })
 

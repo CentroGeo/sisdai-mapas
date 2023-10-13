@@ -1,7 +1,13 @@
 <script setup>
 import { onMounted, reactive, shallowRef, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '../utiles'
+import {
+  buscarIdContenedorHtmlSisdai,
+  idAleatorio,
+  valorarTipoCapa,
+} from '../utiles'
+import { tipoCapa } from './../valores/capa'
+import SisdaiSimbologia from './SisdaiSimbologia.vue'
 
 var idMapa
 
@@ -21,7 +27,10 @@ const idCheck = `${props.para}-${idAleatorio()}`
 const capa = reactive({
   visible: false,
   nombre: 'Cargando...',
-  // estilo: parseEstilo(estiloVector),
+  // estilo: traducirEstilo(estiloVector),
+  estilo: undefined,
+  tipo: undefined,
+  geometria: undefined,
 })
 
 /**
@@ -30,6 +39,20 @@ const capa = reactive({
  */
 function vincularCapa(_capa) {
   // console.log('capa', _capa)
+
+  capa.tipo = valorarTipoCapa(_capa)
+  if (capa.tipo === tipoCapa.vectorial) {
+    capa.geometria = _capa?.get('geometria')
+  }
+
+  /**
+   *
+   */
+  capa.estilo = _capa?.get('estilo')
+  watch(
+    () => _capa?.get('estilo'),
+    nv => (capa.estilo = nv)
+  )
 
   /**
    *
@@ -70,9 +93,15 @@ onMounted(() => {
 <template>
   <span
     ref="sisdaiLeyenda"
-    class="controlador-vis"
+    :class="{ 'controlador-vis': capa.tipo !== tipoCapa.xyz }"
   >
-    <span class="figura-variable" />
+    <!-- <span class="figura-variable" /> -->
+    <SisdaiSimbologia
+      v-if="capa.tipo !== tipoCapa.xyz"
+      :estiloCapa="capa.estilo"
+      :tipoCapa="capa.tipo"
+      :geometriaCapa="capa.geometria"
+    />
 
     <input
       type="checkbox"
@@ -80,7 +109,7 @@ onMounted(() => {
       v-model="capa.visible"
     />
     <label
-      class="nombre-variable"
+      :class="{ 'nombre-variable': capa.tipo !== tipoCapa.xyz }"
       :for="idCheck"
     >
       {{ capa.nombre }}
