@@ -24,7 +24,7 @@ Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 't
 
 - Tipo: `String`
 - Valor por defecto: `'geojson'`.
-- Interactivo: ❌
+- Reactivo: ❌
 
 #### `fuente`
 
@@ -32,7 +32,7 @@ Origen de la capa. Puede ser una url externa o relativa a las carpetas del proye
 
 - Tipo: `String` o `Object`
 - Valor obligatorio.
-- Interactivo: ✅
+- Reactivo: ✅
 
 #### `globoInformativo`
 
@@ -40,7 +40,7 @@ Contenido del globo de información que aparecerá al pasar el cursor sobre la c
 
 - Tipo: `String` o `Function`
 - Valor por defecto: `undefined`.
-- Interactivo: ✅
+- Reactivo: ✅
 
 ## Ejemplo
 

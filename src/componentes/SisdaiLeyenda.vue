@@ -1,11 +1,20 @@
 <script setup>
-import { onMounted, onUnmounted, reactive, shallowRef, watch } from 'vue'
-import usarRegistroMapas from './../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
+import { onMounted, reactive, shallowRef, watch } from 'vue'
+import usarRegistroMapas from '../composables/usarRegistroMapas'
+import {
+  buscarIdContenedorHtmlSisdai,
+  idAleatorio,
+  valorarTipoCapa,
+} from '../utiles'
+import { tipoCapa } from './../valores/capa'
+import SisdaiSimbologia from './SisdaiSimbologia.vue'
 
 var idMapa
 
 const props = defineProps({
+  /**
+   *
+   */
   para: {
     type: String,
     require: true,
@@ -18,50 +27,92 @@ const idCheck = `${props.para}-${idAleatorio()}`
 const capa = reactive({
   visible: false,
   nombre: 'Cargando...',
+  // estilo: traducirEstilo(estiloVector),
+  estilo: undefined,
+  tipo: undefined,
+  geometria: undefined,
 })
 
-// const visible = ref(false)
-// const nombre = ref('')
+/**
+ *
+ * @param {import("ol/layer/Layer").default} capa
+ */
+function vincularCapa(_capa) {
+  // console.log('capa', _capa)
 
-function vincularCapa(mapa) {
-  // console.log(mapa)
+  capa.tipo = valorarTipoCapa(_capa)
+  if (capa.tipo === tipoCapa.vectorial) {
+    capa.geometria = _capa?.get('geometria')
+  }
 
-  capa.visible = mapa.buscarCapa(props.para).getVisible()
+  /**
+   *
+   */
+  capa.estilo = _capa?.get('estilo')
   watch(
-    () => capa.visible,
-    nv => mapa.buscarCapa(props.para).setVisible(nv)
+    () => _capa?.get('estilo'),
+    nv => (capa.estilo = nv)
   )
 
-  capa.nombre = mapa.buscarCapa(props.para).get('nombre')
+  /**
+   *
+   */
+  capa.nombre = _capa?.get('nombre')
   watch(
-    () => mapa.buscarCapa(props.para)?.get('nombre'),
+    () => _capa?.get('nombre'),
     nv => (capa.nombre = nv)
+  )
+
+  /**
+   *
+   */
+  capa.visible = _capa.getVisible()
+  watch(
+    () => _capa.getVisible(),
+    nv => (capa.visible = nv)
+  )
+  watch(
+    () => capa.visible,
+    nv => _capa.setVisible(nv)
   )
 }
 
 onMounted(() => {
-  console.log('SisdaiLeyenda', props.para)
-  // console.log(`buscar capa ${props.para} en mapa ${idMapa}`)
+  // console.log('SisdaiLeyenda', props.para)
 
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
-  usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
+  // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
+  usarRegistroMapas()
+    .mapaPromesa(idMapa)
+    .then(mapa => mapa.buscarCapaPromesa(props.para))
+    .then(vincularCapa)
 })
-
-onUnmounted(() => {})
 </script>
 
 <template>
-  <span ref="sisdaiLeyenda">
-    <!-- <h2>Hola, soy una leyenda 😇 para: {{ para }}</h2> -->
+  <span
+    ref="sisdaiLeyenda"
+    :class="{ 'controlador-vis': capa.tipo !== tipoCapa.xyz }"
+  >
+    <!-- <span class="figura-variable" /> -->
+    <SisdaiSimbologia
+      v-if="capa.tipo !== tipoCapa.xyz"
+      :estiloCapa="capa.estilo"
+      :tipoCapa="capa.tipo"
+      :geometriaCapa="capa.geometria"
+    />
 
-    <form>
-      <input
-        type="checkbox"
-        :id="idCheck"
-        v-model="capa.visible"
-      />
-      <label :for="idCheck">{{ capa.nombre }}</label>
-    </form>
+    <input
+      type="checkbox"
+      :id="idCheck"
+      v-model="capa.visible"
+    />
+    <label
+      :class="{ 'nombre-variable': capa.tipo !== tipoCapa.xyz }"
+      :for="idCheck"
+    >
+      {{ capa.nombre }}
+    </label>
   </span>
 </template>

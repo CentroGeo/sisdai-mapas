@@ -101,9 +101,15 @@ export default class Mapa extends olMap {
     return this.getAllLayers().find(capa => capa.get('id') === idCapa)
   }
 
+  buscarCapaPromesa(idCapa) {
+    return this.busquedaPromesa(mapa =>
+      mapa.getAllLayers().find(capa => capa.get('id') === idCapa)
+    )
+  }
+
   /**
    *
-   * @param {*} nombreControl
+   * @param {String} nombreControl
    * @returns
    */
   buscarControl(nombreControl) {

@@ -2,6 +2,9 @@
 import { useData } from 'vitepress'
 import { isActive } from 'vitepress/dist/client/shared'
 
+import SisdaiNavegacionPrincipal from 'sisdai-componentes/src/componentes/navegacion-principal/SisdaiNavegacionPrincipal.vue'
+// import { SisdaiNavegacionPrincipal } from 'sisdai-componentes'
+
 // https://vitepress.dev/reference/runtime-api#usedata
 const { theme, page } = useData()
 </script>

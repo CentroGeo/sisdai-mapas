@@ -30,28 +30,70 @@ const seleccion = ref(undefined)
 
 <template>
   <SisdaiMapa
-    class="sin-cargador con-panel-encabezado-vis"
+    class="sin-cargador con-panel-izquierda-vis"
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
   >
-    <template #panel-encabezado-vis>
-      <select v-model="seleccion">
-        <option
-          v-for="(estilo, id) in estilos"
-          :value="estilo"
+    <template #panel-izquierda-vis>
+      <div class="m-r-2">
+        <h5 class="m-y-0">Puntos</h5>
+        <select
+          class="m-y-1"
+          v-model="seleccion"
         >
-          {{ id }}
-        </option>
-      </select>
+          <option
+            v-for="(estilo, id) in estilos"
+            :value="estilo"
+          >
+            {{ id }}
+          </option>
+        </select>
+
+        <SisdaiLeyenda para="puntos" />
+
+        <h5 class="m-y-0">Líneas</h5>
+        <SisdaiLeyenda para="lineas" />
+
+        <h5 class="m-y-0">Polígonos</h5>
+        <SisdaiLeyenda para="poligonos" />
+
+        <h5 class="m-y-0">Base</h5>
+        <SisdaiLeyenda para="base" />
+      </div>
     </template>
 
-    <SisdaiCapaXyz :posicion="1" />
+    <SisdaiCapaXyz
+      id="base"
+      :posicion="1"
+    />
 
     <SisdaiCapaVectorial
-      :posicion="2"
-      :fuente="fuente"
+      id="puntos"
+      :posicion="4"
+      fuente="/assets/estados-centroides.geojson"
       :estilo="seleccion"
+      geometria="punto"
     />
+    <!-- 
+     -->
+
+    <SisdaiCapaVectorial
+      id="lineas"
+      :posicion="3"
+      fuente="https://gema.conahcyt.mx/geoserver/wms?service=wfs&version=1.3.0&request=GetFeature&typename=gref_corredores_red_nac_caminos_21_nal_l&outputFormat=application/json"
+      geometria="linea"
+    />
+    <!-- 
+     -->
+
+    <SisdaiCapaVectorial
+      id="poligonos"
+      :posicion="2"
+      fuente="/assets/estados-poligonos.geojson"
+    />
+    <!-- 
+      geometria="poligono"
+     -->
   </SisdaiMapa>
 </template>

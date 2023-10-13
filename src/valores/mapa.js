@@ -9,7 +9,7 @@ export const vista = {
    * - Tipo: `Array<Number>|String`
    * - Valor por defecto: `[0, 0]`
    * - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    *
    * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
@@ -23,7 +23,7 @@ export const vista = {
    * - Tipo: `Array<Number>`
    * - Valor por defecto: `undefined`
    * - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    *
    * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
@@ -37,7 +37,7 @@ export const vista = {
    * - Tipo: `Array<Number>|String`
    * - Valor por defecto: `[10, 10, 10, 10]`
    * - Admite: `N`, `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-   * - Interactivo: ❌
+   * - Reactivo: ❌
    *
    * > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
@@ -48,7 +48,7 @@ export const vista = {
    *
    * - Tipo: `Number`
    * - Valor por defecto: `1`
-   * - Interactivo: ✅
+   * - Reactivo: ✅
    *
    * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
    */
@@ -60,7 +60,7 @@ export const vista = {
  *
  * - Tipo: `String`
  * - Valor por defecto: `EPSG:4326`
- * - Interactivo: ❌
+ * - Reactivo: ❌
  *
  * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
  */
