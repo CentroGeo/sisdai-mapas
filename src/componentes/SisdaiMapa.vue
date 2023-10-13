@@ -15,8 +15,8 @@ import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
-import ContenedorVisAtribuciones from './ContenedorVisAtribuciones.vue'
-import SisdaiCargando from './SisdaiCargando.vue'
+import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
+import SisdaiCargando from './internos/SisdaiCargando.vue'
 
 const props = defineProps({
   /**

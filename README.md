@@ -43,11 +43,8 @@ la etiqueta `SisdaiMapa` dentro del `template` del HTML y agrega las capas y
 directivas que necesites:
 
 ```html
-<SisdaiMapa
-  :zoom="2"
-  :centro="0,0"
->
-  <SisdaiCapaXyzOsm />
+<SisdaiMapa>
+  <SisdaiCapaXyz />
 </SisdaiMapa>
 ```
 
