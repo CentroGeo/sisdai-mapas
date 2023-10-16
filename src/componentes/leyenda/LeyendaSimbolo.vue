@@ -37,7 +37,12 @@ function asgignar(reglas) {
     'stroke-width': reglas['stroke-width'],
   })
 }
-asgignar(estilo.value)
+
+if (geometria.value === tipoGeometria.punto) {
+  asgignar(estilo.value.graphics[0])
+} else {
+  asgignar(estilo.value)
+}
 
 const espacio = 18
 </script>
@@ -48,6 +53,23 @@ const espacio = 18
     :width="espacio"
     :height="espacio"
   >
+    <circle
+      v-if="geometria === tipoGeometria.punto"
+      :cx="espacio / 2"
+      :cy="espacio / 2"
+      r="9"
+      :style="estiloSvg"
+    />
+
+    <line
+      v-if="geometria === tipoGeometria.linea"
+      x1="0"
+      :y1="espacio / 2"
+      :x2="espacio"
+      :y2="espacio / 2"
+      :style="estiloSvg"
+    />
+
     <rect
       v-if="geometria === tipoGeometria.poligono"
       x="0"

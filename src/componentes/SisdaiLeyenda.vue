@@ -1,8 +1,11 @@
 <script setup>
 import { onMounted, ref, shallowRef, toRaw, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai } from '../utiles'
-import { tipoCapa, tipoGeometria } from '../valores/capa'
+import {
+  buscarIdContenedorHtmlSisdai,
+  valorarTipoGeometriaTexo,
+} from '../utiles'
+import { tipoCapa } from '../valores/capa'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
@@ -21,8 +24,15 @@ const sisdaiLeyenda = shallowRef()
 
 const nombre = ref('Cargando...')
 const visible = ref(false)
-
+const simbolo = ref(undefined)
 const clases = ref([])
+
+function simboloDesdeWms(obj) {
+  return {
+    estilo: Object.values(obj)[0],
+    geometria: valorarTipoGeometriaTexo(Object.keys(obj)[0]),
+  }
+}
 
 /**
  *
@@ -31,12 +41,14 @@ const clases = ref([])
 function estiloWms(capa) {
   console.log('buscar estilo remoto')
 
-  const url = `${capa.getUrl()}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
-    capa.getParams().LAYERS
-  }`
-  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
-  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
-  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_snii_sexo_22_est_a'
+  const url =
+    //
+    `${capa.getUrl()}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
+      capa.getParams().LAYERS
+    }`
+  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
+  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
+  // 'https://dadsigvisgeo.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=vacunacion%3Abackground_limites_210521'
 
   fetch(url)
     .then(r => r.json())
@@ -45,16 +57,15 @@ function estiloWms(capa) {
       const reglas = Legend[0].rules
 
       if (reglas.length === 1) {
-        console.log('asgignar un solo estilo')
+        clases.value = []
+
+        simbolo.value = simboloDesdeWms(reglas[0].symbolizers[0])
       } else if (reglas.length > 1) {
-        // estilo.value = undefined
+        simbolo.value = undefined
 
         clases.value = reglas.map(regla => {
           return {
-            simbolo: {
-              estilo: regla.symbolizers[0].Polygon,
-              geometria: tipoGeometria.poligono,
-            },
+            simbolo: simboloDesdeWms(regla.symbolizers[0]),
             etiqueta: regla.title,
           }
         })
@@ -117,7 +128,10 @@ onMounted(() => {
     class="sisdai-leyenda"
   >
     <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
-    <LeyendaControl :etiqueta="nombre" />
+    <LeyendaControl
+      :simbolo="simbolo"
+      :etiqueta="nombre"
+    />
 
     <div
       v-if="clases.length > 1"

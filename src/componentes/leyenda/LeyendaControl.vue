@@ -57,15 +57,19 @@ const sinControlCss = computed(() => ({
 </template>
 
 <style lang="scss">
-.controlador-vis [type='checkbox'] + label::before {
-  display: v-bind('sinControlCss.visibilidadInput');
-}
+.controlador-vis {
+  .figura-variable {
+    margin-left: v-bind('sinControlCss.margenSimbolo');
+  }
 
-.controlador-vis [type='checkbox'] + label {
-  padding-left: v-bind('sinControlCss.paddingEtiqueta');
-}
+  input[type='checkbox'] {
+    + label {
+      padding-left: v-bind('sinControlCss.paddingEtiqueta');
 
-.controlador-vis .figura-variable {
-  margin-left: v-bind('sinControlCss.margenSimbolo');
+      &::before {
+        display: v-bind('sinControlCss.visibilidadInput');
+      }
+    }
+  }
 }
 </style>

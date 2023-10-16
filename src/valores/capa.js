@@ -10,6 +10,7 @@ export const tipoCapa = {
   wms: 'wms',
   xyz: 'xyz',
 }
+
 export const tipoGeometria = {
   punto: 'punto',
   linea: 'linea',
