@@ -16,7 +16,6 @@ import { idAleatorio, stringifyIguales } from './../utiles'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
 import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
-import SisdaiCargando from './internos/SisdaiCargando.vue'
 
 const props = defineProps({
   /**
@@ -306,7 +305,7 @@ function alTeclear({ key }) {
       <slot name="panel-pie-vis" />
     </div>
 
-    <SisdaiCargando />
+    <!-- <SisdaiCargando /> -->
     <ContenedorVisAtribuciones />
   </div>
 </template>

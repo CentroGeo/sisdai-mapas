@@ -137,7 +137,7 @@ function sidebarComienza(path) {
       text: 'Estilos',
       // collapsed: false,
       items: [
-        { text: 'Puntos', link: `/${path}/estiloPuntos` },
+        { text: 'Vectores', link: `/${path}/estiloPuntos` },
         // { text: 'Líneas', link: `/${path}/estiloLineas` },
         // { text: 'Polígonos', link: `/${path}/estiloPoligono` },
       ],
