@@ -99,7 +99,7 @@ configurar(() => {
 })
 
 onMounted(() => {
-  console.log('sisdaiCapaXyz', props.id)
+  // console.log('sisdaiCapaXyz', props.id)
 })
 </script>
 

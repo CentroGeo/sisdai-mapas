@@ -151,3 +151,5 @@ export default function usarCapa(refVar, props) {
     // eliminar,
   }
 }
+
+// PARA PRUEBAS UNITARIAS QUIZÁ VERIFICAR SI LA CAPA SE AGREGÓ CORRECTAMENTE

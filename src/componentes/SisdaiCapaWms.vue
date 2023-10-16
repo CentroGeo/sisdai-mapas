@@ -93,7 +93,7 @@ configurar(() => {
 })
 
 onMounted(() => {
-  console.log('SisdaiCapaWms', props.id)
+  // console.log('SisdaiCapaWms', props.id)
 })
 </script>
 
