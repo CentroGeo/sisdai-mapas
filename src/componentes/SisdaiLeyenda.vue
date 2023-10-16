@@ -2,7 +2,7 @@
 import { onMounted, ref, shallowRef, toRaw, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdai } from '../utiles'
-import { tipoCapa } from '../valores/capa'
+import { tipoCapa, tipoGeometria } from '../valores/capa'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
@@ -21,9 +21,8 @@ const sisdaiLeyenda = shallowRef()
 
 const nombre = ref('Cargando...')
 const visible = ref(false)
-const estilo = ref(undefined)
 
-const clases = ref(['calse 1', 'calse 1'])
+const clases = ref([])
 
 /**
  *
@@ -48,15 +47,17 @@ function estiloWms(capa) {
       if (reglas.length === 1) {
         console.log('asgignar un solo estilo')
       } else if (reglas.length > 1) {
-        console.log('asgignar varios estilos')
-
-        estilo.value = undefined
+        // estilo.value = undefined
 
         clases.value = reglas.map(regla => {
-          return { estilo: reglas[0].symbolizers[0], etiqueta: regla.title }
+          return {
+            simbolo: {
+              estilo: regla.symbolizers[0].Polygon,
+              geometria: tipoGeometria.poligono,
+            },
+            etiqueta: regla.title,
+          }
         })
-
-        console.log()
       }
     })
 }
@@ -111,23 +112,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <span ref="sisdaiLeyenda">
+  <span
+    ref="sisdaiLeyenda"
+    class="sisdai-leyenda"
+  >
     <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
-    <LeyendaControl
-      :estilo="estilo"
-      :etiqueta="nombre"
-    />
+    <LeyendaControl :etiqueta="nombre" />
 
     <div
       v-if="clases.length > 1"
-      class="m-l-1"
+      class="m-l-1 lista"
     >
       <LeyendaControl
         v-for="clase in clases"
         :key="clase"
-        :estilo="clase.estilo"
+        :sinControl="true"
+        :simbolo="clase.simbolo"
         :etiqueta="clase.etiqueta"
       />
     </div>
   </span>
 </template>
+
+<style lang="scss">
+.sisdai-leyenda .lista {
+  display: flex;
+  flex-direction: column;
+}
+</style>

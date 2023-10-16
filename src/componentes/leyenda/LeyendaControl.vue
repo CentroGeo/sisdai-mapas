@@ -1,17 +1,22 @@
 <script setup>
-import { toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 import { idAleatorio } from '../../utiles'
 import LeyendaSimbolo from './LeyendaSimbolo.vue'
 
 const props = defineProps({
   tipoControl: {},
 
+  sinControl: {
+    typo: Boolean,
+    default: false,
+  },
+
   etiqueta: {
     typo: String,
     default: 'Cargando...',
   },
 
-  estilo: {
+  simbolo: {
     typo: Object,
     default: undefined,
   },
@@ -19,13 +24,23 @@ const props = defineProps({
 
 const idCheck = `${props.para}-${idAleatorio()}`
 
-const { etiqueta } = toRefs(props)
+const { etiqueta, simbolo, sinControl } = toRefs(props)
+
+const sinControlCss = computed(() => ({
+  margenSimbolo: sinControl.value ? '14px' : '40px',
+  paddingEtiqueta: sinControl.value ? '40px' : '64px',
+  visibilidadInput: sinControl.value ? 'none' : 'block',
+}))
 </script>
 
 <template>
-  <span :class="{ 'controlador-vis': estilo }">
+  <span :class="{ 'controlador-vis': simbolo }">
     <!-- <span class="figura-variable" /> -->
-    <LeyendaSimbolo v-if="estilo" />
+    <LeyendaSimbolo
+      v-if="simbolo"
+      :estilo="simbolo.estilo"
+      :geometria="simbolo.geometria"
+    />
 
     <input
       type="checkbox"
@@ -33,10 +48,24 @@ const { etiqueta } = toRefs(props)
     />
 
     <label
-      :class="{ 'nombre-variable': estilo }"
+      :class="{ 'nombre-variable': simbolo }"
       :for="idCheck"
     >
       {{ etiqueta }}
     </label>
   </span>
 </template>
+
+<style lang="scss">
+.controlador-vis [type='checkbox'] + label::before {
+  display: v-bind('sinControlCss.visibilidadInput');
+}
+
+.controlador-vis [type='checkbox'] + label {
+  padding-left: v-bind('sinControlCss.paddingEtiqueta');
+}
+
+.controlador-vis .figura-variable {
+  margin-left: v-bind('sinControlCss.margenSimbolo');
+}
+</style>
