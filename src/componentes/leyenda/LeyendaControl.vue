@@ -1,40 +1,41 @@
 <script setup>
-import { computed, toRefs } from 'vue'
+import { toRefs } from 'vue'
 import { idAleatorio } from '../../utiles'
 import LeyendaSimbolo from './LeyendaSimbolo.vue'
 
 const props = defineProps({
-  tipoControl: {},
+  etiqueta: {
+    typo: String,
+    default: 'Cargando...',
+  },
 
   sinControl: {
     typo: Boolean,
     default: false,
   },
 
-  etiqueta: {
-    typo: String,
-    default: 'Cargando...',
-  },
-
   simbolo: {
     typo: Object,
     default: undefined,
+  },
+
+  tipoControl: {},
+
+  modelValue: {
+    type: Boolean,
+    default: false,
   },
 })
 
 const idCheck = `${props.para}-${idAleatorio()}`
 
-const { etiqueta, simbolo, sinControl } = toRefs(props)
+const { etiqueta, simbolo, sinControl, modelValue } = toRefs(props)
 
-const sinControlCss = computed(() => ({
-  margenSimbolo: sinControl.value ? '14px' : '40px',
-  paddingEtiqueta: sinControl.value ? '40px' : '64px',
-  visibilidadInput: sinControl.value ? 'none' : 'block',
-}))
+defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <span :class="{ 'controlador-vis': simbolo }">
+  <span :class="{ 'controlador-vis': simbolo, 'sin-control': sinControl }">
     <!-- <span class="figura-variable" /> -->
     <LeyendaSimbolo
       v-if="simbolo"
@@ -43,8 +44,12 @@ const sinControlCss = computed(() => ({
     />
 
     <input
+      v-if="!sinControl"
       type="checkbox"
       :id="idCheck"
+      :checked="modelValue"
+      @input="$emit('update:modelValue', $event.target.checked)"
+      :tabindex="undefined"
     />
 
     <label
@@ -57,19 +62,19 @@ const sinControlCss = computed(() => ({
 </template>
 
 <style lang="scss">
-.controlador-vis {
+.controlador-vis.sin-control {
+  padding: 9px;
+
   .figura-variable {
-    margin-left: v-bind('sinControlCss.margenSimbolo');
+    margin-left: 5px;
+    margin-top: 0;
   }
 
-  input[type='checkbox'] {
-    + label {
-      padding-left: v-bind('sinControlCss.paddingEtiqueta');
-
-      &::before {
-        display: v-bind('sinControlCss.visibilidadInput');
-      }
-    }
+  input + label,
+  .nombre-variable {
+    padding-left: 0px;
+    margin-left: 28px;
+    color: var(--tipografia-color);
   }
 }
 </style>

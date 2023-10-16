@@ -39,8 +39,6 @@ function simboloDesdeWms(obj) {
  * @param {import("ol/source/ImageLayer").default} capa
  */
 function estiloWms(capa) {
-  console.log('buscar estilo remoto')
-
   const url =
     //
     `${capa.getUrl()}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
@@ -49,6 +47,7 @@ function estiloWms(capa) {
   // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
   // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
   // 'https://dadsigvisgeo.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=vacunacion%3Abackground_limites_210521'
+  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=salu_egresos_plaguicidas_10_20_loc_p&style=salu_egresos_plaguicidas_10_20_loc_p'
 
   fetch(url)
     .then(r => r.json())
@@ -63,12 +62,10 @@ function estiloWms(capa) {
       } else if (reglas.length > 1) {
         simbolo.value = undefined
 
-        clases.value = reglas.map(regla => {
-          return {
-            simbolo: simboloDesdeWms(regla.symbolizers[0]),
-            etiqueta: regla.title,
-          }
-        })
+        clases.value = reglas.map(regla => ({
+          simbolo: simboloDesdeWms(regla.symbolizers[0]),
+          etiqueta: regla.title ? regla.title : regla.name,
+        }))
       }
     })
 }
@@ -131,6 +128,7 @@ onMounted(() => {
     <LeyendaControl
       :simbolo="simbolo"
       :etiqueta="nombre"
+      v-model="visible"
     />
 
     <div

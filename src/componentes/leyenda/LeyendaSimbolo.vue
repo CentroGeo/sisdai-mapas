@@ -1,5 +1,5 @@
 <script setup>
-import { ref, toRaw, toRefs } from 'vue'
+import { ref, toRefs } from 'vue'
 import { tipoGeometria } from '../../valores/capa'
 
 const props = defineProps({
@@ -25,7 +25,7 @@ function pasarObjetoATexto(obj) {
 }
 
 function asgignar(reglas) {
-  console.log(toRaw(reglas))
+  // console.log(toRaw(reglas))
 
   estiloSvg.value = pasarObjetoATexto({
     fill: reglas['fill'],
