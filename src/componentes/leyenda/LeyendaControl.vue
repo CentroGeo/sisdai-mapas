@@ -9,6 +9,11 @@ const props = defineProps({
     default: 'Cargando...',
   },
 
+  id: {
+    type: String,
+    default: () => idAleatorio(),
+  },
+
   sinControl: {
     typo: Boolean,
     default: false,
@@ -32,7 +37,7 @@ const props = defineProps({
   },
 })
 
-const idCheck = `${props.para}-${idAleatorio()}`
+const idCheck = `${props.id}-${idAleatorio()}`
 
 const { etiqueta, simbolo, sinControl, modelValue } = toRefs(props)
 

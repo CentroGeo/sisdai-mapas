@@ -21,12 +21,6 @@ const props = defineProps({
 })
 
 const sisdaiLeyenda = shallowRef()
-
-// const nombre = ref('Cargando...')
-// const visible = ref(false)
-// const simbolo = ref(undefined)
-// const clases = ref([])
-
 const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
@@ -148,6 +142,7 @@ onMounted(() => {
   >
     <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
     <LeyendaControl
+      :id="`${para}-control`"
       :etiqueta="capa.nombre"
       :simbolo="capa.simbolo"
       :tipoCapa="capa.tipo"
@@ -159,8 +154,9 @@ onMounted(() => {
       class="m-l-1 lista"
     >
       <LeyendaControl
-        v-for="clase in capa.clases"
-        :key="clase"
+        v-for="(clase, idx) in capa.clases"
+        :key="`${para}-clase-control-${idx}`"
+        :id="`${para}-clase-control-${idx}`"
         :etiqueta="clase.etiqueta"
         :simbolo="clase.simbolo"
         :sinControl="true"

@@ -30,7 +30,7 @@ Nombre de la capa que aparecerá en el control de la leyenda.
 
 Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
 
-- Tipo: `Number`
+- Tipo: `Number` o `String`
 - Valor por defecto: `1`
 - Reactivo: ✅
 
@@ -38,7 +38,7 @@ Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente i
 
 Indica la posición respecto a otras capas. Las capas con un valor mayor en este parámetro se mostrarán enfrente.
 
-- Tipo: `Number`
+- Tipo: `Number` o `String`
 - Valor por defecto: `undefined`
 - Reactivo: ✅
 

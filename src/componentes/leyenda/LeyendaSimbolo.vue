@@ -1,5 +1,5 @@
 <script setup>
-import { ref, toRefs } from 'vue'
+import { reactive, ref, toRefs } from 'vue'
 import { traducirEstilo } from '../../utiles/estiloVectores'
 import { tipoGeometria, tiposCapa } from '../../valores/capa'
 
@@ -22,6 +22,11 @@ const props = defineProps({
 
 const { estilo, geometria, tipoCapa } = toRefs(props)
 
+const dimensiones = reactive({
+  espacio: 18,
+  radio: 9,
+  margen: 0,
+})
 const estiloSvg = ref('')
 
 function pasarObjetoATexto(obj) {
@@ -32,11 +37,16 @@ function pasarObjetoATexto(obj) {
 
 function asgignar(reglas) {
   // console.log(toRaw(reglas))
+  dimensiones.margen = Number(reglas['stroke-width'])
+  dimensiones.radio = dimensiones.espacio / 2 - dimensiones.margen
 
   estiloSvg.value = pasarObjetoATexto({
-    fill: reglas[
-      tipoCapa.value === tiposCapa.vectorial ? 'fill-color' : 'fill'
-    ],
+    fill:
+      tipoCapa.value === tiposCapa.wms
+        ? reglas['fill']
+          ? reglas['fill']
+          : 'transparent'
+        : reglas['fill-color'],
     'fill-opacity': reglas['fill-opacity'],
     // stroke: reglas['stroke'],
     stroke:
@@ -59,41 +69,39 @@ if (tipoCapa.value === tiposCapa.vectorial) {
     asgignar(estilo.value)
   }
 }
-
-const espacio = 18
 </script>
 
 <template>
   <svg
     class="figura-variable"
-    :width="espacio"
-    :height="espacio"
+    :width="dimensiones.espacio"
+    :height="dimensiones.espacio"
   >
     <circle
       v-if="geometria === tipoGeometria.punto"
-      :cx="espacio / 2"
-      :cy="espacio / 2"
-      r="9"
+      :cx="dimensiones.espacio / 2"
+      :cy="dimensiones.espacio / 2"
+      :r="dimensiones.radio"
       :style="estiloSvg"
     />
 
     <line
       v-if="geometria === tipoGeometria.linea"
       x1="0"
-      :y1="espacio / 2"
-      :x2="espacio"
-      :y2="espacio / 2"
+      :y1="dimensiones.espacio / 2"
+      :x2="dimensiones.espacio"
+      :y2="dimensiones.espacio / 2"
       :style="estiloSvg"
     />
 
     <rect
       v-if="geometria === tipoGeometria.poligono"
-      x="0"
-      y="0"
+      :x="dimensiones.margen"
+      :y="dimensiones.margen"
       rx="2"
       ry="2"
-      :width="espacio"
-      :height="espacio"
+      :width="dimensiones.radio * 2"
+      :height="dimensiones.radio * 2"
       :style="estiloSvg"
     />
   </svg>

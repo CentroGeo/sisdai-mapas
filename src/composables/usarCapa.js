@@ -45,7 +45,7 @@ export const props = {
   /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
-   * - Tipo: `Number`
+   * - Tipo: `Number` o `String`
    * - Valor por defecto: `1`
    * - Reactivo: ✅
    */
@@ -57,12 +57,12 @@ export const props = {
   /**
    * Indica la posición respecto a otras capas. Las capas con un valor mayor en este parámetro se mostrarán enfrente.
    *
-   * - Tipo: `Number`
+   * - Tipo: `Number` o `String`
    * - Valor por defecto: `undefined`
    * - Reactivo: ✅
    */
   posicion: {
-    type: Number,
+    type: [Number, String],
     default: undefined,
   },
 
@@ -109,13 +109,13 @@ export default function usarCapa(refVar, props) {
             source: olSource,
             tipo,
             visible: visible.value,
-            zIndex: posicion.value,
+            zIndex: Number(posicion.value),
           })
         )
 
         watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
         watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
-        watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(nv))
+        watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(Number(nv)))
         watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
 
         fnAgregada(mapa.buscarCapa(props.id))
