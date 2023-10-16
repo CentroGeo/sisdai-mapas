@@ -99,7 +99,7 @@ export default function usarCapa(refVar, props) {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
       .then(mapa => {
-        const { olLayerClass, olSource } = fnConfiguracion()
+        const { olLayerClass, olSource, tipo } = fnConfiguracion()
 
         mapa.addLayer(
           new olLayerClass({
@@ -107,6 +107,7 @@ export default function usarCapa(refVar, props) {
             nombre: nombre.value,
             opacity: Number(opacidad.value),
             source: olSource,
+            tipo,
             visible: visible.value,
             zIndex: posicion.value,
           })

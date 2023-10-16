@@ -6,7 +6,7 @@ import { onMounted, reactive, shallowRef, watch } from 'vue'
 import MonitoreoCargaTeselas from './../clases/MonitoreoCargaTeselas'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import { teselas as eventos } from './../eventos/capa'
-import { tipoEstadoCarga } from './../valores/capa'
+import { tipoCapa, tipoEstadoCarga } from './../valores/capa'
 
 const props = defineProps({
   /**
@@ -95,7 +95,7 @@ configurar(() => {
     monitoreoCargaTeselas.error++
   })
 
-  return { olSource, olLayerClass: TileLayer }
+  return { olSource, olLayerClass: TileLayer, tipo: tipoCapa.xyz }
 })
 
 onMounted(() => {

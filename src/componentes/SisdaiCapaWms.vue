@@ -5,6 +5,7 @@ import ImageWMS from 'ol/source/ImageWMS'
 import { onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
+import { tipoCapa } from './../valores/capa'
 
 const props = defineProps({
   /**
@@ -88,7 +89,7 @@ configurar(() => {
     // estatusCarga.value = tiposEstatusCarga.fin
   })
 
-  return { olSource, olLayerClass: ImageLayer }
+  return { olSource, olLayerClass: ImageLayer, tipo: tipoCapa.wms }
 })
 
 onMounted(() => {

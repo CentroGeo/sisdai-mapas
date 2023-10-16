@@ -1,13 +1,9 @@
 <script setup>
-import { onMounted, reactive, shallowRef, watch } from 'vue'
+import { onMounted, ref, shallowRef, toRaw, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import {
-  buscarIdContenedorHtmlSisdai,
-  idAleatorio,
-  valorarTipoCapa,
-} from '../utiles'
-import { tipoCapa } from './../valores/capa'
-import SisdaiSimbologia from './SisdaiSimbologia.vue'
+import { buscarIdContenedorHtmlSisdai } from '../utiles'
+import { tipoCapa } from '../valores/capa'
+import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
 
@@ -22,57 +18,81 @@ const props = defineProps({
 })
 
 const sisdaiLeyenda = shallowRef()
-const idCheck = `${props.para}-${idAleatorio()}`
 
-const capa = reactive({
-  visible: false,
-  nombre: 'Cargando...',
-  // estilo: traducirEstilo(estiloVector),
-  estilo: undefined,
-  tipo: undefined,
-  geometria: undefined,
-})
+const nombre = ref('Cargando...')
+const visible = ref(false)
+const estilo = ref(undefined)
+
+const clases = ref(['calse 1', 'calse 1'])
+
+/**
+ *
+ * @param {import("ol/source/ImageLayer").default} capa
+ */
+function estiloWms(capa) {
+  console.log('buscar estilo remoto')
+
+  const url = `${capa.getUrl()}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
+    capa.getParams().LAYERS
+  }`
+  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
+  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
+  // const url = 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_snii_sexo_22_est_a'
+
+  fetch(url)
+    .then(r => r.json())
+    .then(({ Legend }) => {
+      // console.log(Legend[0].rules)
+      const reglas = Legend[0].rules
+
+      if (reglas.length === 1) {
+        console.log('asgignar un solo estilo')
+      } else if (reglas.length > 1) {
+        console.log('asgignar varios estilos')
+
+        estilo.value = undefined
+
+        clases.value = reglas.map(regla => {
+          return { estilo: reglas[0].symbolizers[0], etiqueta: regla.title }
+        })
+
+        console.log()
+      }
+    })
+}
 
 /**
  *
  * @param {import("ol/layer/Layer").default} capa
  */
 function vincularCapa(_capa) {
-  // console.log('capa', _capa)
-
-  capa.tipo = valorarTipoCapa(_capa)
-  if (capa.tipo === tipoCapa.vectorial) {
-    capa.geometria = _capa?.get('geometria')
+  switch (_capa.get('tipo')) {
+    case tipoCapa.vectorial:
+      break
+    case tipoCapa.wms:
+      estiloWms(toRaw(_capa.getSource()))
+      break
   }
 
   /**
    *
    */
-  capa.estilo = _capa?.get('estilo')
-  watch(
-    () => _capa?.get('estilo'),
-    nv => (capa.estilo = nv)
-  )
-
-  /**
-   *
-   */
-  capa.nombre = _capa?.get('nombre')
+  nombre.value = _capa.get('nombre')
   watch(
     () => _capa?.get('nombre'),
-    nv => (capa.nombre = nv)
+    nv => (nombre.value = nv)
   )
 
   /**
    *
    */
-  capa.visible = _capa.getVisible()
+  visible.value = _capa.getVisible()
   watch(
     () => _capa.getVisible(),
-    nv => (capa.visible = nv)
+    nv => (visible.value = nv)
   )
   watch(
-    () => capa.visible,
+    () => visible.value,
     nv => _capa.setVisible(nv)
   )
 }
@@ -91,28 +111,23 @@ onMounted(() => {
 </script>
 
 <template>
-  <span
-    ref="sisdaiLeyenda"
-    :class="{ 'controlador-vis': capa.tipo !== tipoCapa.xyz }"
-  >
-    <!-- <span class="figura-variable" /> -->
-    <SisdaiSimbologia
-      v-if="capa.tipo !== tipoCapa.xyz"
-      :estiloCapa="capa.estilo"
-      :tipoCapa="capa.tipo"
-      :geometriaCapa="capa.geometria"
+  <span ref="sisdaiLeyenda">
+    <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
+    <LeyendaControl
+      :estilo="estilo"
+      :etiqueta="nombre"
     />
 
-    <input
-      type="checkbox"
-      :id="idCheck"
-      v-model="capa.visible"
-    />
-    <label
-      :class="{ 'nombre-variable': capa.tipo !== tipoCapa.xyz }"
-      :for="idCheck"
+    <div
+      v-if="clases.length > 1"
+      class="m-l-1"
     >
-      {{ capa.nombre }}
-    </label>
+      <LeyendaControl
+        v-for="clase in clases"
+        :key="clase"
+        :estilo="clase.estilo"
+        :etiqueta="clase.etiqueta"
+      />
+    </div>
   </span>
 </template>

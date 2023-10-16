@@ -129,7 +129,7 @@ function sidebarComienza(path) {
         { text: 'WMS', link: `/${path}/capaWms` },
         { text: 'XYZ', link: `/${path}/capaXyz` },
         // { text: 'Globos de información', link: `/${path}/globos` },
-        // { text: 'Leyenda', link: `/${path}/leyenda` },
+        { text: 'Leyenda', link: `/${path}/leyenda` },
       ],
     },
 
