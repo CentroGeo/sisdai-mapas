@@ -21,6 +21,11 @@ const props = defineProps({
 
   tipoControl: {},
 
+  tipoCapa: {
+    typo: String,
+    required: true,
+  },
+
   modelValue: {
     type: Boolean,
     default: false,
@@ -41,6 +46,7 @@ defineEmits(['update:modelValue'])
       v-if="simbolo"
       :estilo="simbolo.estilo"
       :geometria="simbolo.geometria"
+      :tipoCapa="tipoCapa"
     />
 
     <input

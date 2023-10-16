@@ -1,6 +1,7 @@
 <script setup>
 import { ref, toRefs } from 'vue'
-import { tipoGeometria } from '../../valores/capa'
+import { traducirEstilo } from '../../utiles/estiloVectores'
+import { tipoGeometria, tiposCapa } from '../../valores/capa'
 
 const props = defineProps({
   estilo: {
@@ -12,9 +13,14 @@ const props = defineProps({
     typo: String,
     default: tipoGeometria.poligono,
   },
+
+  tipoCapa: {
+    typo: String,
+    required: true,
+  },
 })
 
-const { estilo, geometria } = toRefs(props)
+const { estilo, geometria, tipoCapa } = toRefs(props)
 
 const estiloSvg = ref('')
 
@@ -28,9 +34,15 @@ function asgignar(reglas) {
   // console.log(toRaw(reglas))
 
   estiloSvg.value = pasarObjetoATexto({
-    fill: reglas['fill'],
+    fill: reglas[
+      tipoCapa.value === tiposCapa.vectorial ? 'fill-color' : 'fill'
+    ],
     'fill-opacity': reglas['fill-opacity'],
-    stroke: reglas['stroke'],
+    // stroke: reglas['stroke'],
+    stroke:
+      reglas[
+        tipoCapa.value === tiposCapa.vectorial ? 'stroke-color' : 'stroke'
+      ],
     'stroke-linecap': reglas['stroke-linecap'],
     'stroke-linejoin': reglas['stroke-linejoin'],
     'stroke-opacity': reglas['stroke-opacity'],
@@ -38,10 +50,14 @@ function asgignar(reglas) {
   })
 }
 
-if (geometria.value === tipoGeometria.punto) {
-  asgignar(estilo.value.graphics[0])
+if (tipoCapa.value === tiposCapa.vectorial) {
+  asgignar(traducirEstilo(estilo.value))
 } else {
-  asgignar(estilo.value)
+  if (geometria.value === tipoGeometria.punto) {
+    asgignar(estilo.value.graphics[0])
+  } else {
+    asgignar(estilo.value)
+  }
 }
 
 const espacio = 18

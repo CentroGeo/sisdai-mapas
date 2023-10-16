@@ -8,7 +8,7 @@ import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 import { traducirEstilo } from './../utiles/estiloVectores'
-import { estiloVector, tipoCapa } from './../valores/capa'
+import { estiloVector, tiposCapa } from './../valores/capa'
 
 const props = defineProps({
   // datos: {
@@ -134,7 +134,7 @@ configurar(() => {
   return {
     olSource,
     olLayerClass: props.renderizarComoImagen ? VectorImageLayer : VectorLayer,
-    tipo: tipoCapa.vectorial,
+    tipo: tiposCapa.vectorial,
   }
 })
 

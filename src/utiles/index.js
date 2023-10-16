@@ -6,7 +6,7 @@ import ImageLayer from 'ol/layer/Image'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
-import { tipoCapa, tipoGeometria } from '../valores/capa'
+import { tipoGeometria, tiposCapa } from '../valores/capa'
 import { vista } from './../valores/mapa'
 
 /**
@@ -145,15 +145,15 @@ export function valorarTipoGeometriaTexo(valor) {
  */
 export function valorarTipoCapa(capa) {
   if (capa instanceof VectorLayer || capa instanceof VectorImageLayer) {
-    return tipoCapa.vectorial
+    return tiposCapa.vectorial
   }
 
   if (capa instanceof ImageLayer) {
-    return tipoCapa.wms
+    return tiposCapa.wms
   }
 
   if (capa instanceof TileLayer) {
-    return tipoCapa.xyz
+    return tiposCapa.xyz
   }
 }
 

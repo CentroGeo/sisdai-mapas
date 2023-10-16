@@ -5,7 +5,7 @@ export const tipoEstadoCarga = {
   fin: 'finalizada',
 }
 
-export const tipoCapa = {
+export const tiposCapa = {
   vectorial: 'vectorial',
   wms: 'wms',
   xyz: 'xyz',
