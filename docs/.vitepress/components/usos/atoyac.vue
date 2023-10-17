@@ -1,26 +1,22 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 
 const opciones = [
   {
-    estilo: 'hcti_snii_sexo_22_est_a_total',
+    estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc',
     nombre: 'Tasa de mortalidad en personas de todos los rangos de edad',
   },
   {
-    estilo: 'hcti_snii_sexo_22_est_a_investigadoras',
+    estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc1549',
     nombre: 'Tasa de mortalidad en personas de 15 a 49 años',
   },
   {
-    estilo: 'hcti_snii_sexo_22_est_a_investigadores',
+    estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc1549h',
     nombre: 'Tasa de mortalidad en hombres de 15 a 49 años',
   },
 ]
 
-const variable = ref('hcti_snii_sexo_22_est_a_total')
-
-watch(variable, nv => {
-  console.log('variable', nv)
-})
+const seleccion = ref(opciones[0])
 </script>
 
 <template>
@@ -36,10 +32,9 @@ watch(variable, nv => {
     <SisdaiCapaWms
       url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
       id="mortalidad"
-      nombre="Tasa de mortalidad en personas de todos los rangos de edad"
       :parametros="{
         LAYERS: 'caaresa_mortalidad_erc_10_19_reg_a',
-        // STYLES: variable,
+        STYLES: seleccion.estilo,
       }"
       posicion="2"
     />
@@ -52,23 +47,42 @@ watch(variable, nv => {
 
     <template #panel-izquierda-vis>
       <div>
-        <!-- <span v-for="(opcion, i) in opciones">
+        <span v-for="(opcion, i) in opciones">
           <input
-            :id="`radio_mortalida_${i}`"
+            :id="`radio_mortalidad_${i}`"
             type="radio"
-            :value="opcion.estilo"
-            v-model="variable"
+            :value="opcion"
+            v-model="seleccion"
           />
-          <label :for="`radio_mortalida_${i}`">
+          <label
+            class="etiqueta-radio"
+            :for="`radio_mortalidad_${i}`"
+          >
             {{ opcion.nombre }}
-          </label>
-        </span> -->
 
-        <SisdaiLeyenda
-          para="mortalidad"
-          :sinControl="true"
-        />
+            <SisdaiLeyenda
+              v-show="seleccion.estilo === opcion.estilo"
+              para="mortalidad"
+              :sinControl="true"
+            />
+          </label>
+        </span>
       </div>
     </template>
   </SisdaiMapa>
 </template>
+
+<style lang="scss">
+.etiqueta-radio {
+  display: flex;
+  flex-direction: column;
+
+  .sisdai-mapa-leyenda > .nombre-variable {
+    display: none;
+  }
+
+  .sisdai-mapa-leyenda > .sin-control .nombre-variable {
+    display: none;
+  }
+}
+</style>

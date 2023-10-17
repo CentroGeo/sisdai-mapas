@@ -158,7 +158,7 @@ agregada(capa => {
 })
 
 onMounted(() => {
-  console.log('sisdaiCapaVectorial', props.id)
+  // console.log('sisdaiCapaVectorial', props.id)
 })
 </script>
 

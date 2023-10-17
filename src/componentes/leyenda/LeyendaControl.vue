@@ -60,12 +60,11 @@ defineEmits(['alCambiar'])
       :id="idCheck"
       :checked="encendido"
       @input="$emit('alCambiar', $event.target.checked)"
-      :tabindex="undefined"
     />
 
     <label
       class="nombre-variable"
-      :for="idCheck"
+      :for="!sinControl ? idCheck : undefined"
     >
       {{ etiqueta }}
     </label>

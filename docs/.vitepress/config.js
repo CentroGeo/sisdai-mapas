@@ -102,7 +102,7 @@ function nav() {
     //   link: '/visualizaciones/',
     //   activeMatch: '/visualizaciones/',
     // },
-    // { text: 'Avanzado', link: '/avanzado/', activeMatch: '/avanzado/' },
+    // { text: 'Avanzado', link: '/solo', activeMatch: '/solo' },
     { text: `v${pkg.version}`, link: pkg.repository.url },
   ]
 }

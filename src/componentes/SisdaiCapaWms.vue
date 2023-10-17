@@ -64,7 +64,7 @@ const emits = defineEmits(Object.values(eventos))
 const sisdaiCapaWms = shallowRef()
 const { url, parametros } = toRefs(props)
 
-const { configurar } = usarCapa(sisdaiCapaWms, props)
+const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
 configurar(() => {
   const olSource = new ImageWMS({
@@ -74,7 +74,7 @@ configurar(() => {
     crossOrigin: 'Anonymous',
   })
 
-  watch(parametros, nv => olSource.updateParams(nv))
+  // watch(parametros, nv => olSource.updateParams(nv))
 
   olSource.on(ImageSourceEventType.IMAGELOADSTART, () => {
     emits(eventos.alIniciarCarga)
@@ -90,6 +90,14 @@ configurar(() => {
   })
 
   return { olSource, olLayerClass: ImageLayer, tipo: tiposCapa.wms }
+})
+
+agregada(capa => {
+  // console.log(capa.getSource())
+  capa.set('parametros', parametros.value)
+
+  watch(parametros, nv => capa.set('parametros', nv))
+  watch(parametros, nv => capa.getSource().updateParams(nv))
 })
 
 onMounted(() => {

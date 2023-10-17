@@ -47,12 +47,10 @@ function simboloDesdeWms(obj) {
  *
  * @param {import("ol/source/ImageLayer").default} _capa
  */
-function estiloWms(_capa) {
+function estiloWms(_url, params) {
   const url =
     //
-    `${_capa.getUrl()}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
-      _capa.getParams().LAYERS
-    }`
+    `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${params.LAYERS}&STYLE=${params.STYLES}`
   // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
   // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
   // 'https://dadsigvisgeo.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=vacunacion%3Abackground_limites_210521'
@@ -102,7 +100,12 @@ function vincularCapa(_capa) {
       break
     case tiposCapa.wms:
       capa.tipo = tiposCapa.wms
-      estiloWms(_capa.getSource())
+      estiloWms(_capa.getSource().getUrl(), _capa.getSource().getParams())
+      watch(
+        () => _capa.get('parametros'),
+        () =>
+          estiloWms(_capa.getSource().getUrl(), _capa.getSource().getParams())
+      )
       break
   }
 
@@ -143,7 +146,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <span
+  <div
     ref="sisdaiLeyenda"
     class="sisdai-mapa-leyenda"
   >
@@ -172,7 +175,7 @@ onMounted(() => {
         :tipoCapa="capa.tipo"
       />
     </div>
-  </span>
+  </div>
 </template>
 
 <style lang="scss">
