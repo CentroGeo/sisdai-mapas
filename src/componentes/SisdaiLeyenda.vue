@@ -163,7 +163,7 @@ onMounted(() => {
 
     <div
       v-if="capa.clases.length > 1"
-      class="m-l-1 lista"
+      class="m-l-1 lista-clases"
     >
       <LeyendaControl
         v-for="(clase, idx) in capa.clases"
@@ -179,7 +179,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.sisdai-mapa-leyenda .lista {
+.sisdai-mapa-leyenda .lista-clases {
   display: flex;
   flex-direction: column;
 }
