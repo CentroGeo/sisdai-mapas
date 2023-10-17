@@ -64,7 +64,10 @@ watch(variable, nv => {
           </label>
         </span> -->
 
-        <SisdaiLeyenda para="mortalidad" />
+        <SisdaiLeyenda
+          para="mortalidad"
+          :sinControl="true"
+        />
       </div>
     </template>
   </SisdaiMapa>

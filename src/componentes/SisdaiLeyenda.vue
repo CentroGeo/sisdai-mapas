@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, shallowRef, toRaw, watch } from 'vue'
+import { onMounted, reactive, shallowRef, toRaw, toRefs, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import {
   buscarIdContenedorHtmlSisdai,
@@ -18,6 +18,11 @@ const props = defineProps({
     type: String,
     require: true,
   },
+
+  sinControl: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const sisdaiLeyenda = shallowRef()
@@ -28,6 +33,8 @@ const capa = reactive({
   tipo: tiposCapa.vectorial,
   visible: false,
 })
+
+const { sinControl } = toRefs(props)
 
 function simboloDesdeWms(obj) {
   return {
@@ -146,7 +153,7 @@ onMounted(() => {
       :etiqueta="capa.nombre"
       :simbolo="capa.simbolo"
       :encendido="capa.visible"
-      :sinControl="true"
+      :sinControl="sinControl"
       :tipoCapa="capa.tipo"
       @alCambiar="valor => (capa.visible = valor)"
     />
