@@ -146,7 +146,8 @@ onMounted(() => {
       :etiqueta="capa.nombre"
       :simbolo="capa.simbolo"
       :tipoCapa="capa.tipo"
-      v-model="capa.visible"
+      :encendido="capa.visible"
+      @alCambiar="valor => (capa.visible = valor)"
     />
 
     <div

@@ -4,6 +4,11 @@ import { idAleatorio } from '../../utiles'
 import LeyendaSimbolo from './LeyendaSimbolo.vue'
 
 const props = defineProps({
+  encendido: {
+    type: Boolean,
+    default: false,
+  },
+
   etiqueta: {
     typo: String,
     default: 'Cargando...',
@@ -30,18 +35,13 @@ const props = defineProps({
     typo: String,
     required: true,
   },
-
-  modelValue: {
-    type: Boolean,
-    default: false,
-  },
 })
 
 const idCheck = `${props.id}-${idAleatorio()}`
 
-const { etiqueta, simbolo, sinControl, modelValue } = toRefs(props)
+const { etiqueta, simbolo, sinControl, encendido } = toRefs(props)
 
-defineEmits(['update:modelValue'])
+defineEmits(['alCambiar'])
 </script>
 
 <template>
@@ -58,8 +58,8 @@ defineEmits(['update:modelValue'])
       v-if="!sinControl"
       type="checkbox"
       :id="idCheck"
-      :checked="modelValue"
-      @input="$emit('update:modelValue', $event.target.checked)"
+      :checked="encendido"
+      @input="$emit('alCambiar', $event.target.checked)"
       :tabindex="undefined"
     />
 
