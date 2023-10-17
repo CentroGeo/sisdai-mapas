@@ -7,7 +7,6 @@ const atribuciones = [
 
 <template>
   <SisdaiMapa
-    class="sin-cargador"
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"

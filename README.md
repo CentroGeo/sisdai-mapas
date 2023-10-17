@@ -19,7 +19,7 @@ la Investigación ([Sisdai](https://sisdai.conahcyt.mx)).
 Instalación y descarga de la biblioteca desde GitHub:
 
 ```bash
-npm i github:codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
+npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
 ```
 
 ### Importación y registro

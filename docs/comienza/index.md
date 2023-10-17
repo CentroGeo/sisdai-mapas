@@ -8,10 +8,10 @@ import EjemploBasico from "./../.vitepress/components/basico.vue";
 
 ## Instalación
 
-Instalación y descarga de la biblioteca desde GitHub:
+Instalación y descarga de la biblioteca:
 
 ```sh
-npm i github:salsa-community/sisdai-mapas#version-a-instalar
+npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
 ```
 
 ## Importación y registro
@@ -43,7 +43,7 @@ Resultado:
 Para revisar la documentación en local primero clona este repositorio y accede a la carpeta del proyecto con:
 
 ```bash
-git clone https://github.com/salsa-community/sisdai-mapas
+git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git
 cd sisdai-mapas
 ```
 

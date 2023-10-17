@@ -3,6 +3,7 @@ import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
 import { onMounted, shallowRef, toRefs, watch } from 'vue'
+import { tiposCapa } from '../valores/capa'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 
@@ -88,11 +89,11 @@ configurar(() => {
     // estatusCarga.value = tiposEstatusCarga.fin
   })
 
-  return { olSource, olLayerClass: ImageLayer }
+  return { olSource, olLayerClass: ImageLayer, tipo: tiposCapa.wms }
 })
 
 onMounted(() => {
-  console.log('SisdaiCapaWms', props.id)
+  // console.log('SisdaiCapaWms', props.id)
 })
 </script>
 

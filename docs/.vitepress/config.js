@@ -129,7 +129,7 @@ function sidebarComienza(path) {
         { text: 'WMS', link: `/${path}/capaWms` },
         { text: 'XYZ', link: `/${path}/capaXyz` },
         // { text: 'Globos de información', link: `/${path}/globos` },
-        // { text: 'Leyenda', link: `/${path}/leyenda` },
+        { text: 'Leyenda', link: `/${path}/leyenda` },
       ],
     },
 
@@ -137,7 +137,7 @@ function sidebarComienza(path) {
       text: 'Estilos',
       // collapsed: false,
       items: [
-        { text: 'Puntos', link: `/${path}/estiloPuntos` },
+        { text: 'Vectores', link: `/${path}/estiloPuntos` },
         // { text: 'Líneas', link: `/${path}/estiloLineas` },
         // { text: 'Polígonos', link: `/${path}/estiloPoligono` },
       ],

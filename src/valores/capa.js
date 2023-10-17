@@ -5,11 +5,12 @@ export const tipoEstadoCarga = {
   fin: 'finalizada',
 }
 
-export const tipoCapa = {
+export const tiposCapa = {
   vectorial: 'vectorial',
   wms: 'wms',
   xyz: 'xyz',
 }
+
 export const tipoGeometria = {
   punto: 'punto',
   linea: 'linea',

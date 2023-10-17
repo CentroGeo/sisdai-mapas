@@ -1,5 +1,5 @@
 <template>
-  <SisdaiMapa class="sin-cargador">
+  <SisdaiMapa>
     <SisdaiCapaXyz />
   </SisdaiMapa>
 </template>

@@ -6,7 +6,7 @@ import ImageLayer from 'ol/layer/Image'
 import TileLayer from 'ol/layer/Tile'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
-import { tipoCapa } from '../valores/capa'
+import { tipoGeometria, tiposCapa } from '../valores/capa'
 import { vista } from './../valores/mapa'
 
 /**
@@ -125,21 +125,35 @@ export function valorarExtensionMargen(valor) {
 }
 
 /**
+ * @param {String} valor
+ * @returns
+ */
+export function valorarTipoGeometriaTexo(valor) {
+  const diccionario = {
+    Polygon: tipoGeometria.poligono,
+    Line: tipoGeometria.linea,
+    Point: tipoGeometria.punto,
+  }
+
+  return diccionario[valor]
+}
+
+/**
  *
  * @param {import("ol/layer/Layer").default} capa
  * @returns {String|undefined}
  */
 export function valorarTipoCapa(capa) {
   if (capa instanceof VectorLayer || capa instanceof VectorImageLayer) {
-    return tipoCapa.vectorial
+    return tiposCapa.vectorial
   }
 
   if (capa instanceof ImageLayer) {
-    return tipoCapa.wms
+    return tiposCapa.wms
   }
 
   if (capa instanceof TileLayer) {
-    return tipoCapa.xyz
+    return tiposCapa.xyz
   }
 }
 
