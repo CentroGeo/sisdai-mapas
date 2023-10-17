@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Mapas interactivos: Componentes de software libre para el Sistema de Diseño y Accesibilidad para la Investigación (Sisdai).",
   "main": "./src/index.js",
   "files": [
