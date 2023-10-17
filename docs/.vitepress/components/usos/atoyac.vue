@@ -41,12 +41,15 @@ const seleccion = ref(opciones[0])
 
     <SisdaiCapaWms
       id="estados"
+      nombre="División estatal 2020"
       :parametros="{ LAYERS: 'gref_division_estatal_20_est_a' }"
       posicion="3"
     />
 
     <template #panel-izquierda-vis>
       <div>
+        <SisdaiLeyenda para="estados" />
+
         <span v-for="(opcion, i) in opciones">
           <input
             :id="`radio_mortalidad_${i}`"
@@ -76,10 +79,6 @@ const seleccion = ref(opciones[0])
 .etiqueta-radio {
   display: flex;
   flex-direction: column;
-
-  .sisdai-mapa-leyenda > .nombre-variable {
-    display: none;
-  }
 
   .sisdai-mapa-leyenda > .sin-control .nombre-variable {
     display: none;
