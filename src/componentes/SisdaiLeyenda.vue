@@ -138,15 +138,16 @@ onMounted(() => {
 <template>
   <span
     ref="sisdaiLeyenda"
-    class="sisdai-leyenda"
+    class="sisdai-mapa-leyenda"
   >
     <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
     <LeyendaControl
       :id="`${para}-control`"
       :etiqueta="capa.nombre"
       :simbolo="capa.simbolo"
-      :tipoCapa="capa.tipo"
       :encendido="capa.visible"
+      :sinControl="true"
+      :tipoCapa="capa.tipo"
       @alCambiar="valor => (capa.visible = valor)"
     />
 
@@ -168,7 +169,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.sisdai-leyenda .lista {
+.sisdai-mapa-leyenda .lista {
   display: flex;
   flex-direction: column;
 }

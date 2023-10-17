@@ -64,7 +64,7 @@ defineEmits(['alCambiar'])
     />
 
     <label
-      :class="{ 'nombre-variable': simbolo }"
+      class="nombre-variable"
       :for="idCheck"
     >
       {{ etiqueta }}
@@ -73,19 +73,23 @@ defineEmits(['alCambiar'])
 </template>
 
 <style lang="scss">
-.controlador-vis.sin-control {
-  padding: 9px;
-
-  .figura-variable {
-    margin-left: 5px;
-    margin-top: 0;
+.sisdai-mapa-leyenda .sin-control {
+  .nombre-variable {
+    color: var(--tipografia-color);
   }
 
-  input + label,
-  .nombre-variable {
-    padding-left: 0px;
-    margin-left: 28px;
-    color: var(--tipografia-color);
+  &.controlador-vis {
+    padding: 9px;
+
+    .figura-variable {
+      margin-left: 5px;
+      margin-top: 0;
+    }
+
+    .nombre-variable {
+      padding-left: 0px;
+      margin-left: 28px;
+    }
   }
 }
 </style>
