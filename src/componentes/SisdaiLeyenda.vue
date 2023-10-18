@@ -58,8 +58,15 @@ function estiloWms(_url, params) {
   // 'https://dadsigvisgeo.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=vacunacion%3Abackground_limites_210521'
   // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=salu_egresos_plaguicidas_10_20_loc_p&style=salu_egresos_plaguicidas_10_20_loc_p'
 
-  fetch(url)
-    .then(r => r.json())
+  fetch(url, {})
+    .then(r => {
+      // Verificar el estado de la respuesta
+      if (!r.ok) {
+        throw new Error('La solicitud no pudo completarse con éxito')
+      }
+      // Analizar la respuesta como JSON
+      return r.json()
+    })
     .then(({ Legend }) => {
       // console.log(Legend[0].rules)
       const reglas = Legend[0].rules
@@ -76,6 +83,13 @@ function estiloWms(_url, params) {
           etiqueta: regla.title ? regla.title : regla.name,
         }))
       }
+    })
+    .catch(error => {
+      // Manejar errores de la solicitud
+      console.warn(
+        `Error en la solicitud de los datos remotos en la leyenda de la capa ${capa.tipo} ${props.para}:`,
+        error
+      )
     })
 }
 
