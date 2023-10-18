@@ -1,7 +1,7 @@
 <template>
   <div class="contenedor-vis-atribuciones">
     <a
-      class="logo-conacyt"
+      class="logo-conacyt atribucion-conahcyt"
       href="https://conahcyt.mx/"
       target="_blank"
     >
@@ -12,6 +12,7 @@
     </a>
 
     <a
+      class="atribucion-sisdai"
       href="https://sisdai.conahcyt.mx/"
       target="_blank"
       rel="noopener noreferrer"
