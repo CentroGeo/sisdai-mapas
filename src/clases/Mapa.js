@@ -1,6 +1,7 @@
 import olMap from 'ol/Map'
 
 import RenderEventType from 'ol/render/EventType'
+import { toRaw } from 'vue'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -44,12 +45,34 @@ export default class Mapa extends olMap {
   }
 
   /**
+   *
+   */
+  ajustarVista() {
+    const extension = this.getView().get('extension')
+
+    if (validaciones.extension(extension)) {
+      this.getView().fit(valorarArregloNumerico(extension), {
+        padding: valorarExtensionMargen(this.getView().get('extensionMargen')),
+      })
+    } else {
+      this.getView().setCenter(
+        valorarArregloNumerico(this.getView().get('centro'))
+      )
+      this.getView().setZoom(Number(this.getView().get('acercamiento')))
+    }
+
+    console.log(
+      toRaw(this.getView().getZoom()),
+      toRaw(this.getView().getCenter())
+    )
+  }
+
+  /**
    * Asigna el valor del centro en el mapa.
    * @param {Array<Number>|String} centro
    */
   asignarCentro(centro) {
     this.getView().set('centro', centro)
-    this.getView().setCenter(valorarArregloNumerico(centro))
   }
 
   /**
@@ -58,17 +81,8 @@ export default class Mapa extends olMap {
    * @param {Array<Number>|String} extensionMargen
    */
   asignarExtension(extension, extensionMargen) {
-    if (validaciones.extension(extension)) {
-      this.getView().set('extension', extension)
-      this.getView().set('extensionMargen', extensionMargen)
-
-      this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(extensionMargen),
-      })
-    } else {
-      this.getView().set('extension', undefined)
-      this.getView().set('extensionMargen', undefined)
-    }
+    this.getView().set('extension', extension)
+    this.getView().set('extensionMargen', extensionMargen)
   }
 
   /**
@@ -77,18 +91,17 @@ export default class Mapa extends olMap {
    */
   asignarVista({ extension, extensionMargen, centro, zoom }) {
     this.asignarCentro(centro)
-    this.asignarZoom(zoom)
-
+    this.asignarAcercamiento(zoom)
     this.asignarExtension(extension, extensionMargen)
+    this.ajustarVista()
   }
 
   /**
    * Asigna el valor del zoom en el mapa.
-   * @param {Number} zoom
+   * @param {Number} acercamiento
    */
-  asignarZoom(zoom) {
-    this.getView().set('acercamiento', zoom)
-    this.getView().setZoom(Number(zoom))
+  asignarAcercamiento(acercamiento) {
+    this.getView().set('acercamiento', acercamiento)
   }
 
   /**

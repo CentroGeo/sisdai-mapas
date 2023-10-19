@@ -114,6 +114,7 @@ const seleccion = ref(opciones[0].estilo)
 
       .panel-izquierda-vis {
         grid-row-end: span 2;
+        // overflow: hidden;
       }
       .panel-pie-vis {
         grid-column-start: 2;
