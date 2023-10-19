@@ -123,7 +123,7 @@ watch(vista, (nv, vv) => {
   }
 
   if (Number(_nv.zoom) !== vv.Zoom) {
-    mapa().asignarZoom(_nv.zoom)
+    mapa().asignarAcercamiento(_nv.zoom)
   }
 
   if (stringifyIguales(_nv.extension, vv.extension)) {

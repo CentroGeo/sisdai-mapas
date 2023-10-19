@@ -1,6 +1,7 @@
 import View from 'ol/View'
 // import PointerEventType from 'ol/pointer/EventType'
 import { reactive } from 'vue'
+import { vista as vistaDefautl } from '../valores/mapa'
 import Mapa from './../clases/Mapa'
 import RegistroObjetos from './../clases/ResgistroObjetos'
 import * as controles from './../controles'
@@ -68,7 +69,9 @@ function crearMapa(target, proyeccion, emits) {
       new controles.NavegacionTeclado(),
     ],
     view: new View({
+      center: vistaDefautl.centro,
       projection: proyeccion,
+      zoom: vistaDefautl.zoom,
     }),
   })
 }

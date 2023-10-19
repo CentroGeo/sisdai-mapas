@@ -4,7 +4,7 @@
 
 .sisdai-mapa.contenedor-vis {
   // $border-radius-canvas: 0px;
-  --alto-boton-conahcyt: 56px;
+  --alto-boton-conahcyt: calc(56px + 16px);
 
   .contenido-vis {
     // background: #e9e9e9;
