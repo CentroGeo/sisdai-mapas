@@ -83,6 +83,9 @@ function estiloWms(_url, params) {
           etiqueta: regla.title ? regla.title : regla.name,
         }))
       }
+
+      // console.log('leyenda cargada')
+      // console.log(toRaw(usarRegistroMapas().mapa(idMapa)))
     })
     .catch(error => {
       // Manejar errores de la solicitud
@@ -90,6 +93,8 @@ function estiloWms(_url, params) {
         `Error en la solicitud de los datos remotos en la leyenda de la capa ${capa.tipo} ${props.para}:`,
         error
       )
+
+      // console.log('leyenda cargada')
     })
 }
 

@@ -1,7 +1,6 @@
 import olMap from 'ol/Map'
 
 import RenderEventType from 'ol/render/EventType'
-import { toRaw } from 'vue'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -20,6 +19,9 @@ export default class Mapa extends olMap {
     this.globoInfo = new GloboInfo(this)
 
     this.navegacionTeclado = new NavegacionTeclado(this)
+
+    // this.hayElementosEnCarga = false
+    // this.hayLeyendasCargando = false
   }
 
   /**
@@ -61,10 +63,10 @@ export default class Mapa extends olMap {
       this.getView().setZoom(Number(this.getView().get('acercamiento')))
     }
 
-    console.log(
-      toRaw(this.getView().getZoom()),
-      toRaw(this.getView().getCenter())
-    )
+    // console.log(
+    //   toRaw(this.getView().getZoom()),
+    //   toRaw(this.getView().getCenter())
+    // )
   }
 
   /**

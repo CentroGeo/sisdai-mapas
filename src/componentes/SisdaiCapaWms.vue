@@ -74,8 +74,6 @@ configurar(() => {
     crossOrigin: 'Anonymous',
   })
 
-  // watch(parametros, nv => olSource.updateParams(nv))
-
   olSource.on(ImageSourceEventType.IMAGELOADSTART, () => {
     emits(eventos.alIniciarCarga)
     // estatusCarga.value = tiposEstatusCarga.ini
