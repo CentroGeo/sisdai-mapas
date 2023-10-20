@@ -2,12 +2,14 @@
 import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
 </script>
 
+<ResaAtoyac />
+
 # SisdaiLeyenda
 
 Uso:
 
 ```vue
-<SisdaiLeyenda para="<String(id de la capa)>" />
+<SisdaiLeyenda para="<String(id de la capa)>"></SisdaiLeyenda>
 ```
 
 Uso avanzado:
@@ -18,11 +20,9 @@ Uso avanzado:
   :para="capa.nombre"
   :tipo="capa.tipo"
   grupo="grupoParaRadios"
-/>
+></SisdaiLeyenda>
 ```
 
 ## Ejemplo
-
-<ResaAtoyac />
 
 <<< @/.vitepress/components/usos/atoyac.vue

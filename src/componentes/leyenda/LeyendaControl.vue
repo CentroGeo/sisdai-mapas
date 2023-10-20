@@ -42,10 +42,17 @@ const idCheck = `${props.id}-${idAleatorio()}`
 const { etiqueta, simbolo, sinControl, encendido } = toRefs(props)
 
 defineEmits(['alCambiar'])
+
+// const paddingLeftNombreVariable = computed(() =>
+//   simbolo.value ? '64px' : '40px'
+// )
 </script>
 
 <template>
-  <span :class="{ 'controlador-vis': simbolo, 'sin-control': sinControl }">
+  <span
+    class="controlador-vis"
+    :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }"
+  >
     <!-- <span class="figura-variable" /> -->
     <LeyendaSimbolo
       v-if="simbolo"
@@ -72,23 +79,29 @@ defineEmits(['alCambiar'])
 </template>
 
 <style lang="scss">
-.sisdai-mapa-leyenda .sin-control {
-  .nombre-variable {
-    color: var(--tipografia-color);
+.sisdai-mapa-leyenda {
+  .sin-control {
+    .nombre-variable {
+      color: var(--tipografia-color);
+    }
+
+    &.controlador-vis {
+      padding: 9px;
+
+      .figura-variable {
+        margin-left: 5px;
+        margin-top: 0;
+      }
+
+      .nombre-variable {
+        padding-left: 0px;
+        margin-left: 28px;
+      }
+    }
   }
 
-  &.controlador-vis {
-    padding: 9px;
-
-    .figura-variable {
-      margin-left: 5px;
-      margin-top: 0;
-    }
-
-    .nombre-variable {
-      padding-left: 0px;
-      margin-left: 28px;
-    }
+  .sin-simbolo .nombre-variable {
+    padding-left: 40px;
   }
 }
 </style>

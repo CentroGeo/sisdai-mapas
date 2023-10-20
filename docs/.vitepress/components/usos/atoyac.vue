@@ -68,6 +68,8 @@ const seleccion = ref(opciones[0].estilo)
         </label>
       </div>
 
+      <SisdaiLeyenda para="contaminacion" />
+      <SisdaiLeyenda para="categoria" />
       <SisdaiLeyenda para="cuenca" />
       <SisdaiLeyenda para="estados" />
     </template>
@@ -75,20 +77,42 @@ const seleccion = ref(opciones[0].estilo)
     <SisdaiCapaXyz posicion="0" />
 
     <SisdaiCapaWms
-      id="estados"
-      nombre="División estatal 2020"
-      :parametros="{ LAYERS: 'gref_division_estatal_20_est_a' }"
-      posicion="1"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
-    />
-
-    <SisdaiCapaWms
       id="mortalidad"
       :parametros="{
         LAYERS: 'caaresa_mortalidad_erc_10_19_reg_a',
         STYLES: seleccion,
       }"
+      posicion="1"
+      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
+    />
+
+    <SisdaiCapaWms
+      id="contaminacion"
+      nombre="Nivel de contaminación por posibles nefrotóxicos"
+      :parametros="{
+        LAYERS: 'caaresa_nivel_contaminacion_04_21_reg_a',
+        STYLES: 'caaresa_nivel_contaminacion_04_21_reg_a_estilo_c',
+      }"
       posicion="2"
+      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
+    />
+
+    <SisdaiCapaWms
+      id="categoria"
+      nombre="Categoría de clúster de acuerdo con la correlación entre la tasa de mortalidad por ERC en personas de 15 a 49 años (2010-2019) y el indicador de contaminación por posibles nefrotóxicos (2004-2021)"
+      :parametros="{
+        LAYERS: 'caaresa_corr_cont_mortalidad_00_21_reg_a',
+        STYLES: 'caaresa_corr_cont_mortalidad_00_21_reg_a_estilo_d',
+      }"
+      posicion="3"
+      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
+    />
+
+    <SisdaiCapaWms
+      id="estados"
+      nombre="División estatal 2020"
+      :parametros="{ LAYERS: 'gref_division_estatal_20_est_a' }"
+      posicion="4"
       url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
 
@@ -96,7 +120,7 @@ const seleccion = ref(opciones[0].estilo)
       id="cuenca"
       nombre="Cuenca del Alto Atoyac y su área de influencia 2021"
       :parametros="{ LAYERS: 'caaresa_cuenca_alto_atoyac_21_reg_a' }"
-      posicion="3"
+      posicion="5"
       url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
   </SisdaiMapa>
