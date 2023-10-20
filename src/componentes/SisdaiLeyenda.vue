@@ -171,20 +171,21 @@ onMounted(() => {
     ref="sisdaiLeyenda"
     class="sisdai-mapa-leyenda"
   >
-    <!-- <p v-if="clases.length === 1">{{ nombre }}</p> -->
-    <LeyendaControl
-      :id="`${para}-control`"
-      :etiqueta="capa.nombre"
-      :simbolo="capa.simbolo"
-      :encendido="capa.visible"
-      :sinControl="sinControl"
-      :tipoCapa="capa.tipo"
-      @alCambiar="valor => (capa.visible = valor)"
-    />
+    <div class="control-capa">
+      <LeyendaControl
+        :id="`${para}-control`"
+        :etiqueta="capa.nombre"
+        :simbolo="capa.simbolo"
+        :encendido="capa.visible"
+        :sinControl="sinControl"
+        :tipoCapa="capa.tipo"
+        @alCambiar="valor => (capa.visible = valor)"
+      />
+    </div>
 
     <div
       v-if="capa.clases.length > 1"
-      class="m-l-1 lista-clases"
+      class="m-l-1 controles-clases-capa"
     >
       <LeyendaControl
         v-for="(clase, idx) in capa.clases"

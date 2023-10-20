@@ -42,14 +42,10 @@ const idCheck = `${props.id}-${idAleatorio()}`
 const { etiqueta, simbolo, sinControl, encendido } = toRefs(props)
 
 defineEmits(['alCambiar'])
-
-// const paddingLeftNombreVariable = computed(() =>
-//   simbolo.value ? '64px' : '40px'
-// )
 </script>
 
 <template>
-  <span
+  <div
     class="controlador-vis"
     :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }"
   >
@@ -75,7 +71,7 @@ defineEmits(['alCambiar'])
     >
       {{ etiqueta }}
     </label>
-  </span>
+  </div>
 </template>
 
 <style lang="scss">
