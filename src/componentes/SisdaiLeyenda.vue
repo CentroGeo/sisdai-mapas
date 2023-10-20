@@ -201,7 +201,7 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-.sisdai-mapa-leyenda .lista-clases {
+.sisdai-mapa-leyenda .controles-clases-capa {
   display: flex;
   flex-direction: column;
 }
