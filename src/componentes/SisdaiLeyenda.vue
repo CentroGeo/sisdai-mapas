@@ -1,11 +1,20 @@
 <script setup>
-import { onMounted, reactive, shallowRef, toRaw, toRefs, watch } from 'vue'
+import {
+  onMounted,
+  onUnmounted,
+  reactive,
+  shallowRef,
+  toRaw,
+  toRefs,
+  watch,
+} from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import {
   buscarIdContenedorHtmlSisdai,
   valorarTipoGeometriaTexo,
 } from '../utiles'
 import { estiloVector, tiposCapa } from '../valores/capa'
+import eventos from './../eventos/leyenda'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
@@ -26,6 +35,9 @@ const props = defineProps({
 })
 
 const sisdaiLeyenda = shallowRef()
+const { sinControl } = toRefs(props)
+const emits = defineEmits(Object.values(eventos))
+
 const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
@@ -33,8 +45,6 @@ const capa = reactive({
   tipo: tiposCapa.vectorial,
   visible: false,
 })
-
-const { sinControl } = toRefs(props)
 
 function simboloDesdeWms(obj) {
   return {
@@ -48,6 +58,7 @@ function simboloDesdeWms(obj) {
  * @param {import("ol/source/ImageLayer").default} _capa
  */
 function estiloWms(_url, params) {
+  emits(eventos.alIniciarCargaSimbologia)
   const url =
     //
     `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
@@ -84,8 +95,7 @@ function estiloWms(_url, params) {
         }))
       }
 
-      // console.log('leyenda cargada')
-      // console.log(toRaw(usarRegistroMapas().mapa(idMapa)))
+      emits(eventos.alFinalizarCargaSimbologia, true)
     })
     .catch(error => {
       // Manejar errores de la solicitud
@@ -94,11 +104,12 @@ function estiloWms(_url, params) {
         error
       )
 
-      // console.log('leyenda cargada')
+      emits(eventos.alFinalizarCargaSimbologia, false)
     })
 }
 
 function _estiloVector(geometria) {
+  emits(eventos.alIniciarCargaSimbologia)
   // si hay reglas, añadirlas en las clases
   // si no:
   capa.clases = []
@@ -107,6 +118,8 @@ function _estiloVector(geometria) {
     estilo: estiloVector,
     geometria,
   }
+
+  emits(eventos.alFinalizarCargaSimbologia, true)
 }
 
 /**
@@ -123,9 +136,9 @@ function vincularCapa(_capa) {
       capa.tipo = tiposCapa.wms
       estiloWms(_capa.getSource().getUrl(), _capa.getSource().getParams())
       watch(
-        () => _capa.get('parametros'),
-        () =>
-          estiloWms(_capa.getSource().getUrl(), _capa.getSource().getParams())
+        () => _capa.getSource().getParams(),
+        nv => estiloWms(_capa.getSource().getUrl(), nv),
+        { deep: true }
       )
       break
   }
@@ -151,6 +164,8 @@ function vincularCapa(_capa) {
     () => capa.visible,
     nv => _capa.setVisible(nv)
   )
+
+  return 0, 1
 }
 
 onMounted(() => {
@@ -164,6 +179,8 @@ onMounted(() => {
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
+
+onUnmounted(() => {})
 </script>
 
 <template>

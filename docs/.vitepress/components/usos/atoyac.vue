@@ -83,7 +83,6 @@ const seleccion = ref(opciones[0].estilo)
         STYLES: seleccion,
       }"
       posicion="1"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
 
     <SisdaiCapaWms
@@ -94,7 +93,6 @@ const seleccion = ref(opciones[0].estilo)
         STYLES: 'caaresa_nivel_contaminacion_04_21_reg_a_estilo_c',
       }"
       posicion="2"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
 
     <SisdaiCapaWms
@@ -105,7 +103,6 @@ const seleccion = ref(opciones[0].estilo)
         STYLES: 'caaresa_corr_cont_mortalidad_00_21_reg_a_estilo_d',
       }"
       posicion="3"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
 
     <SisdaiCapaWms
@@ -113,7 +110,6 @@ const seleccion = ref(opciones[0].estilo)
       nombre="División estatal 2020"
       :parametros="{ LAYERS: 'gref_division_estatal_20_est_a' }"
       posicion="4"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
 
     <SisdaiCapaWms
@@ -121,7 +117,6 @@ const seleccion = ref(opciones[0].estilo)
       nombre="Cuenca del Alto Atoyac y su área de influencia 2021"
       :parametros="{ LAYERS: 'caaresa_cuenca_alto_atoyac_21_reg_a' }"
       posicion="5"
-      url="http://dev-dadsig-gema.crip.conacyt.mx/geoserver/wms"
     />
   </SisdaiMapa>
 </template>
