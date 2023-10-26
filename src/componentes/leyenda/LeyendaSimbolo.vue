@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, toRefs } from 'vue'
+import { reactive, ref, toRefs, watch } from 'vue'
 import { traducirEstilo } from '../../utiles/estiloVectores'
 import { tipoGeometria, tiposCapa } from '../../valores/capa'
 
@@ -69,6 +69,18 @@ if (tipoCapa.value === tiposCapa.vectorial) {
     asgignar(estilo.value)
   }
 }
+
+watch(estilo, newEstilo => {
+  if (tipoCapa.value === tiposCapa.vectorial) {
+    asgignar(traducirEstilo(newEstilo))
+  } else {
+    if (geometria.value === tipoGeometria.punto) {
+      asgignar(newEstilo.graphics[0])
+    } else {
+      asgignar(newEstilo)
+    }
+  }
+})
 </script>
 
 <template>

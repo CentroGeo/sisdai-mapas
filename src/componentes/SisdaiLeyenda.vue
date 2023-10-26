@@ -81,18 +81,18 @@ function estiloWms(_url, params) {
     .then(({ Legend }) => {
       // console.log(Legend[0].rules)
       const reglas = Legend[0].rules
+      capa.clases = []
+      capa.simbolo = undefined
 
       if (reglas.length === 1) {
-        capa.clases = []
-
         capa.simbolo = simboloDesdeWms(reglas[0].symbolizers[0])
       } else if (reglas.length > 1) {
-        capa.simbolo = undefined
-
         capa.clases = reglas.map(regla => ({
           simbolo: simboloDesdeWms(regla.symbolizers[0]),
           etiqueta: regla.title ? regla.title : regla.name,
         }))
+
+        // console.log(props.para, toRaw(capa.clases))
       }
 
       emits(eventos.alFinalizarCargaSimbologia, true)
