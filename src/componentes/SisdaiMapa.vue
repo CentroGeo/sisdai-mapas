@@ -275,7 +275,7 @@ function alTeclear({ key }) {
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
   >
     <div class="panel-encabezado-vis">
       <slot name="panel-encabezado-vis" />

@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor-vis-atribuciones">
-    <hr class="m-t-0 m-x-1" />
+    <hr class="m-t-0" />
     <div class="lista-atribuciones">
       <a
         class="logo-conacyt atribucion-conahcyt"
@@ -26,13 +26,13 @@
 </template>
 
 <style lang="scss">
-.contenedor-vis-atribuciones {
-  display: block !important; // quitar
-  justify-content: unset !important; // quitar
-  padding: 16px !important;
-  .lista-atribuciones {
-    display: flex;
-    justify-content: space-between;
-  }
-}
+// .contenedor-vis-atribuciones {
+//   // display: block !important; // quitar
+//   // justify-content: unset !important; // quitar
+//   // padding: 16px !important;
+//   .lista-atribuciones {
+//     display: flex;
+//     justify-content: space-between;
+//   }
+// }
 </style>
