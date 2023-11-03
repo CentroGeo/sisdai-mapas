@@ -1,21 +1,21 @@
 <script setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
-onMounted(() => {
-  if (window.location.search === '') {
-    window.location.search = '?capas=buscar'
-  }
-  if (window.location.hash === '') {
-    window.location.hash = '#map=10/19.6060/-98.7635'
-  }
-  procesarParametrosHash(window.location)
-})
+// onMounted(() => {
+//   if (window.location.search === '') {
+//     window.location.search = '?capas=buscar'
+//   }
+//   if (window.location.hash === '') {
+//     window.location.hash = '#map=10/19.6060/-98.7635'
+//   }
+//   procesarParametrosHash(window.location)
+// })
 
 const mapa = ref()
 
 const vistaMapa = reactive({
   extension: '-118.3651,14.5321,-86.7104,32.7187',
-  extensionMargen: [20, 320, 20, 20],
+  extensionMargen: 30,
   centro: [undefined, undefined],
   zoom: undefined,
 })
@@ -53,8 +53,10 @@ const verPanelDerecho = ref(false)
 watch(verPanelDerecho, nv => {
   if (nv) {
     vistaMapa.extensionMargen = [20, 320, 20, 20]
+    // console.log('vistaMapa.extensionMargen', toRaw(vistaMapa.extensionMargen))
   } else {
     vistaMapa.extensionMargen = 30
+    // console.log('vistaMapa.extensionMargen', vistaMapa.extensionMargen)
   }
 })
 </script>
@@ -162,10 +164,6 @@ div.contenedor-gema {
       .sisdai-mapa-control-ajuste-vista {
         right: calc(100vw / 4);
       }
-    }
-
-    .esconder-panel {
-      display: none;
     }
 
     @include mediaquery('esc') {

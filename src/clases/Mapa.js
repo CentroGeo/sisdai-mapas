@@ -53,6 +53,7 @@ export default class Mapa extends olMap {
     const extension = this.getView().get('extension')
 
     if (validaciones.extension(extension)) {
+      // console.log(this.getView().get('extensionMargen'))
       this.getView().fit(valorarArregloNumerico(extension), {
         padding: valorarExtensionMargen(this.getView().get('extensionMargen')),
       })
@@ -95,7 +96,7 @@ export default class Mapa extends olMap {
     this.asignarCentro(centro)
     this.asignarAcercamiento(zoom)
     this.asignarExtension(extension, extensionMargen)
-    this.ajustarVista()
+    // this.ajustarVista()
   }
 
   /**

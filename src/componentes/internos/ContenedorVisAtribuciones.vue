@@ -24,15 +24,3 @@
     </div>
   </div>
 </template>
-
-<style lang="scss">
-// .contenedor-vis-atribuciones {
-//   // display: block !important; // quitar
-//   // justify-content: unset !important; // quitar
-//   // padding: 16px !important;
-//   .lista-atribuciones {
-//     display: flex;
-//     justify-content: space-between;
-//   }
-// }
-</style>
