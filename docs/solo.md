@@ -13,3 +13,9 @@ import contenedor from "./.vitepress/components/usos/contenedor.vue";
 <hr />
 
 <contenedor />
+
+<style lang="scss">
+main > div.m-r-3 {
+  margin-right: 0;
+}
+</style>

@@ -24,7 +24,7 @@ const seleccion = ref(opciones[0].estilo)
 
 <template>
   <SisdaiMapa
-    class="mapa-mortaliada-enfermedad con-panel-encabezado-vis con-panel-izquierda-vis"
+    class="mapa-mortaliada-enfermedad con-panel-encabezado-vis con-panel-izquierda-vis con-panel-pie-vis"
     :vista="{
       // centro: [-98.3404, 19.2824],
       // zoom: 8.9,
@@ -43,6 +43,7 @@ const seleccion = ref(opciones[0].estilo)
 
     <template #panel-izquierda-vis>
       <div
+        class="radio-estilo-capa"
         v-for="opcion in opciones"
         :key="opcion.estilo"
       >
@@ -52,20 +53,17 @@ const seleccion = ref(opciones[0].estilo)
           :value="opcion.estilo"
           v-model="seleccion"
         />
-        <label
-          class="etiqueta-radio"
-          :for="opcion.estilo"
-        >
+        <label :for="opcion.estilo">
           {{ opcion.nombre }}
-          <SisdaiLeyenda
-            v-show="seleccion === opcion.estilo"
-            para="mortalidad"
-            :sinControl="true"
-          />
-          <span v-show="seleccion === opcion.estilo">
-            Media nacional: {{ opcion.media }}
-          </span>
         </label>
+        <SisdaiLeyenda
+          v-show="seleccion === opcion.estilo"
+          para="mortalidad"
+          :sinControl="true"
+        />
+        <span v-show="seleccion === opcion.estilo">
+          Media nacional: {{ opcion.media }}
+        </span>
       </div>
 
       <SisdaiLeyenda para="contaminacion" />
@@ -118,6 +116,18 @@ const seleccion = ref(opciones[0].estilo)
       :parametros="{ LAYERS: 'caaresa_cuenca_alto_atoyac_21_reg_a' }"
       posicion="5"
     />
+
+    <template #panel-pie-vis>
+      <a
+        class="boton boton-primario boton-chico m-t-2"
+        href="#"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Descargar datos
+        <span class="icono-archivo-descargar" />
+      </a>
+    </template>
   </SisdaiMapa>
 </template>
 
@@ -126,27 +136,23 @@ const seleccion = ref(opciones[0].estilo)
 @import 'sisdai-css/src/_mixins';
 
 .mapa-mortaliada-enfermedad {
-  &.sisdai-mapa.contenedor-vis {
+  .radio-estilo-capa .control-capa {
+    display: none;
+  }
+  &.sisdai-mapa {
     @include mediaquery('esc') {
-      max-height: calc(var(--alto-maximo-contenedor-vis) + 60px);
-      grid-template-rows: auto 1fr auto;
+      // // max-height: calc(var(--alto-maximo-contenedor-vis) + 60px);
+      // max-height: var(--alto-maximo-contenedor-vis);
+      grid-template-rows: auto 1fr auto !important;
 
       .panel-izquierda-vis {
-        grid-row-end: span 2;
-        // overflow: hidden;
+        grid-row-end: span 2; // para que el panel izquierdo use dos renglones
       }
       .panel-pie-vis {
-        grid-column-start: 2;
+        grid-column-start: 2; // para que el pie empiece en la segunda columna
+        grid-column-end: span 1;
+        text-align: end; // ajustar contenido a la derecha
       }
-    }
-  }
-
-  .etiqueta-radio {
-    display: flex;
-    flex-direction: column;
-
-    .sisdai-mapa-leyenda > .sin-control .nombre-variable {
-      display: none;
     }
   }
 }

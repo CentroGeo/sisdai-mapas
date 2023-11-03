@@ -1,6 +1,8 @@
 import olMap from 'ol/Map'
 
 import RenderEventType from 'ol/render/EventType'
+import { toRaw } from 'vue'
+import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -13,8 +15,10 @@ import NavegacionTeclado from './NavegacionTeclado'
  * propiedades que faciliten la manipulación del contenido de la propia instancia.
  */
 export default class Mapa extends olMap {
-  constructor(opcionesOlMap) {
+  constructor(opcionesOlMap, emits) {
     super(opcionesOlMap)
+
+    this.eventos = emits
 
     this.globoInfo = new GloboInfo(this)
 
@@ -53,6 +57,7 @@ export default class Mapa extends olMap {
     const extension = this.getView().get('extension')
 
     if (validaciones.extension(extension)) {
+      // console.log(this.getView().get('extensionMargen'))
       this.getView().fit(valorarArregloNumerico(extension), {
         padding: valorarExtensionMargen(this.getView().get('extensionMargen')),
       })
@@ -63,10 +68,15 @@ export default class Mapa extends olMap {
       this.getView().setZoom(Number(this.getView().get('acercamiento')))
     }
 
-    // console.log(
-    //   toRaw(this.getView().getZoom()),
-    //   toRaw(this.getView().getCenter())
-    // )
+    this.eventos(eventos.alAjustarVista, toRaw(this.getView()))
+  }
+
+  /**
+   * Asigna el valor del zoom en el mapa.
+   * @param {Number} acercamiento
+   */
+  asignarAcercamiento(acercamiento) {
+    this.getView().set('acercamiento', acercamiento)
   }
 
   /**
@@ -95,15 +105,7 @@ export default class Mapa extends olMap {
     this.asignarCentro(centro)
     this.asignarAcercamiento(zoom)
     this.asignarExtension(extension, extensionMargen)
-    this.ajustarVista()
-  }
-
-  /**
-   * Asigna el valor del zoom en el mapa.
-   * @param {Number} acercamiento
-   */
-  asignarAcercamiento(acercamiento) {
-    this.getView().set('acercamiento', acercamiento)
+    // this.ajustarVista()
   }
 
   /**
