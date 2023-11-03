@@ -3,8 +3,6 @@
  */
 
 import Control from 'ol/control/Control'
-import { toRaw } from 'vue'
-import eventos from '../eventos/mapa'
 import { crearBotonControl, crearContenedorControl } from './utiles'
 
 /**
@@ -17,7 +15,7 @@ const claseCss = 'ajuste-vista'
  * Emits del componente Sisdaimapa, en esta parte es usado para desencadenar el evento
  * alAjustarVista
  */
-let emits
+// let emits
 
 /**
  * @classdesc
@@ -39,8 +37,8 @@ export default class AjustarVista extends Control {
     return AjustarVista.nombre
   }
 
-  constructor(_emits) {
-    emits = _emits
+  constructor() {
+    // emits = _emits
 
     /**
      * Elemento contenedor del control
@@ -73,6 +71,6 @@ export default class AjustarVista extends Control {
    */
   ajustarVista() {
     this.getMap().ajustarVista()
-    emits(eventos.alAjustarVista, toRaw(this.getMap().getView()))
+    // emits(eventos.alAjustarVista, toRaw(this.getMap().getView()))
   }
 }

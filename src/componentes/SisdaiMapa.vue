@@ -206,7 +206,7 @@ defineExpose({
    * AjustarVista.
    */
   ajustarVista: () => {
-    mapa().buscarControl('AjustarVista').ajustarVista()
+    mapa().ajustarVista()
   },
 })
 

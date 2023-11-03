@@ -58,20 +58,23 @@ function idValido(id) {
  * @returns {import("./../clases/Mapa.js").default} Mapa
  */
 function crearMapa(target, proyeccion, emits) {
-  return new Mapa({
-    target,
-    layers: [],
-    controls: [
-      new controles.EscalaGrafica(),
-      new controles.AcercarAlejar(),
-      new controles.AjustarVista(emits),
-      new controles.EtiquetaAtribucion(),
-      new controles.NavegacionTeclado(),
-    ],
-    view: new View({
-      center: vistaDefautl.centro,
-      projection: proyeccion,
-      zoom: vistaDefautl.zoom,
-    }),
-  })
+  return new Mapa(
+    {
+      target,
+      layers: [],
+      controls: [
+        new controles.EscalaGrafica(),
+        new controles.AcercarAlejar(),
+        new controles.AjustarVista(),
+        new controles.EtiquetaAtribucion(),
+        new controles.NavegacionTeclado(),
+      ],
+      view: new View({
+        center: vistaDefautl.centro,
+        projection: proyeccion,
+        zoom: vistaDefautl.zoom,
+      }),
+    },
+    emits
+  )
 }

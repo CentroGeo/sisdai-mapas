@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.5.1",
-    "@testing-library/vue": "^7.0.0",
+    "@testing-library/vue": "^8.0.0",
     "@vitejs/plugin-vue": "^4.4.0",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/test-utils": "^2.4.1",
@@ -40,7 +40,7 @@
     "vite": "^4.5.0",
     "vitepress": "^1.0.0-rc.24",
     "vitest": "^0.34.6",
-    "volar-service-vetur": "^0.0.16",
+    "volar-service-vetur": "^0.0.17",
     "vue": "^3.3.7"
   },
   "gitHooks": {

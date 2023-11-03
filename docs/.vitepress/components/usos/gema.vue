@@ -63,9 +63,39 @@ watch(verPanelDerecho, nv => {
 
 <template>
   <div class="contenedor-gema">
-    <div class="contenedor-gema-izquierdo"></div>
+    <div class="contenedor-gema-izquierdo">
+      <button
+        class="boton-chico"
+        @click="mapa.exportarImagen('mapa-gema')"
+      >
+        Exportar imagen
+      </button>
+
+      <p
+        v-for="(capa, idx) in [
+          'hcti_centros_invest_conahcyt_0421_xy_p',
+          'hcti_lab_nacionales_conahcyt_190523_xy_p',
+          'gref_corredores_red_nac_caminos_21_nal_l',
+          'hcti_snii_sexo_22_est_a',
+        ]"
+        :key="`check-${idx}`"
+      >
+        <input
+          type="checkbox"
+          :id="`check-${idx}`"
+          :value="capa"
+          v-model="capasMapa"
+        />
+        <label :for="`check-${idx}`">{{ capa }}</label>
+      </p>
+
+      <button @click="verPanelDerecho = !verPanelDerecho">
+        {{ verPanelDerecho ? 'esconder' : 'mostrar' }} panel derecho
+      </button>
+    </div>
+
     <SisdaiMapa
-      class="con-panel-izquierda-vis sin-atribuciones"
+      class="gema con-panel-derecha-vis"
       :class="{ 'mostrar-panel-derecho': verPanelDerecho }"
       ref="mapa"
       :vista="vistaMapa"
@@ -96,40 +126,11 @@ watch(verPanelDerecho, nv => {
       />
 
       <template #panel-izquierda-vis>
-        <div>
-          <button
-            class="boton-chico"
-            @click="mapa.exportarImagen('mapa-gema')"
-          >
-            Exportar imagen
-          </button>
-
-          <p
-            v-for="(capa, idx) in [
-              'hcti_centros_invest_conahcyt_0421_xy_p',
-              'hcti_lab_nacionales_conahcyt_190523_xy_p',
-              'gref_corredores_red_nac_caminos_21_nal_l',
-              'hcti_snii_sexo_22_est_a',
-            ]"
-            :key="`check-${idx}`"
-          >
-            <input
-              type="checkbox"
-              :id="`check-${idx}`"
-              :value="capa"
-              v-model="capasMapa"
-            />
-            <label :for="`check-${idx}`">{{ capa }}</label>
-          </p>
-
-          <button @click="verPanelDerecho = !verPanelDerecho">
-            {{ verPanelDerecho ? 'esconder' : 'mostrar' }} panel derecho
-          </button>
-        </div>
+        <div></div>
       </template>
 
       <template #panel-derecha-vis>
-        <div>
+        <div class="panel-seleccion-capas">
           <SisdaiLeyenda
             v-for="capa in capasMapa"
             :key="`leyenda-${capa}`"
@@ -146,31 +147,19 @@ watch(verPanelDerecho, nv => {
 @import 'sisdai-css/src/_mixins';
 
 div.contenedor-gema {
-  height: 100vh;
+  height: 85vh;
+  display: grid;
+  grid-template-columns: 300px 1fr;
 
-  .sisdai-mapa {
-    height: 100%;
-    max-height: max-content;
-    padding: 0;
-    border-radius: 0;
-    grid-template-columns: 1fr 2fr 1fr;
+  .panel-seleccion-capas {
+    width: 300px;
+  }
 
-    &.mostrar-panel-derecho {
-      .panel-derecha-vis {
-        display: block;
-        grid-column-start: 3;
-      }
-      .sisdai-mapa-control-acercar-alejar,
-      .sisdai-mapa-control-ajuste-vista {
-        right: calc(100vw / 4);
-      }
-    }
-
-    @include mediaquery('esc') {
-      //   grid-template-rows: minmax(300px, 100%);
-      .contenido-vis {
-        grid-column-end: span 3;
-      }
+  .sisdai-mapa.mostrar-panel-derecho {
+    .sisdai-mapa-control-acercar-alejar,
+    .sisdai-mapa-control-ajuste-vista {
+      // right: calc(100vw / 4);
+      right: calc(var(--margen) + 300px);
     }
   }
 
