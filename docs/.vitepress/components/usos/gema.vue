@@ -77,6 +77,7 @@ watch(verPanelDerecho, nv => {
           'hcti_lab_nacionales_conahcyt_190523_xy_p',
           'gref_corredores_red_nac_caminos_21_nal_l',
           'hcti_snii_sexo_22_est_a',
+          'glifo_rendimiento_ha_4_cultivos_20_est_p',
         ]"
         :key="`check-${idx}`"
       >
