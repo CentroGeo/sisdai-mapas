@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, toRefs, watch } from 'vue'
+import { reactive, ref, toRaw, toRefs, watch } from 'vue'
 import { traducirEstilo } from '../../utiles/estiloVectores'
 import { tipoGeometria, tiposCapa } from '../../valores/capa'
 
@@ -37,7 +37,8 @@ function pasarObjetoATexto(obj) {
 
 function asgignar(reglas) {
   // console.log(toRaw(reglas))
-  dimensiones.margen = Number(reglas['stroke-width'])
+  dimensiones.margen =
+    Number(reglas['stroke-width']) > 0.5 ? Number(reglas['stroke-width']) : 0.5
   dimensiones.radio = dimensiones.espacio / 2 - dimensiones.margen
 
   estiloSvg.value = pasarObjetoATexto({
@@ -56,31 +57,26 @@ function asgignar(reglas) {
     'stroke-linecap': reglas['stroke-linecap'],
     'stroke-linejoin': reglas['stroke-linejoin'],
     'stroke-opacity': reglas['stroke-opacity'],
-    'stroke-width': reglas['stroke-width'],
+    'stroke-width': dimensiones.margen,
   })
 }
 
-if (tipoCapa.value === tiposCapa.vectorial) {
-  asgignar(traducirEstilo(estilo.value))
-} else {
-  if (geometria.value === tipoGeometria.punto) {
-    asgignar(estilo.value.graphics[0])
+function preAsignar(_estilo) {
+  if (tipoCapa.value === tiposCapa.vectorial) {
+    asgignar(traducirEstilo(_estilo))
   } else {
-    asgignar(estilo.value)
+    if (geometria.value === tipoGeometria.punto) {
+      console.log(toRaw(_estilo.size))
+      dimensiones.espacio = Number(_estilo.size) + 2
+      asgignar(_estilo.graphics[0])
+    } else {
+      asgignar(_estilo)
+    }
   }
 }
 
-watch(estilo, newEstilo => {
-  if (tipoCapa.value === tiposCapa.vectorial) {
-    asgignar(traducirEstilo(newEstilo))
-  } else {
-    if (geometria.value === tipoGeometria.punto) {
-      asgignar(newEstilo.graphics[0])
-    } else {
-      asgignar(newEstilo)
-    }
-  }
-})
+preAsignar(estilo.value)
+watch(estilo, preAsignar)
 </script>
 
 <template>
@@ -88,6 +84,7 @@ watch(estilo, newEstilo => {
     class="figura-variable"
     :width="dimensiones.espacio"
     :height="dimensiones.espacio"
+    :style="`--controlador-vis-figura-alto: ${dimensiones.espacio}px;`"
   >
     <circle
       v-if="geometria === tipoGeometria.punto"
@@ -120,9 +117,9 @@ watch(estilo, newEstilo => {
 </template>
 
 <style lang="scss">
-.figura-variable {
-  background: none !important;
-  border: none !important;
-  border-radius: 0 !important;
-}
+// .figura-variable {
+//   background: none !important;
+//   border: none !important;
+//   border-radius: 0 !important;
+// }
 </style>

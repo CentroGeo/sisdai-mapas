@@ -20,10 +20,10 @@
 
 .contenedor-vis2 {
   // Variables
-  --alto-menus: 120px;
-  --alto-atribuciones: 40px;
-  --alto-maximo-contenedor-vis: calc(100vh - var(--alto-menus) + 40px);
-  --alto-minimo-vis: 300px;
+  --contenedor-vis-alto-menus: 50px;
+  --contenedor-vis-alto-atribuciones: 72px;
+  --contenedor-vis-alto-maximo: calc(100vh - var(--contenedor-vis-alto-menus));
+  --contenedor-vis-alto-minimo-vis: 300px;
 
   padding: 24px;
   background: #dddddd4d;
@@ -32,20 +32,22 @@
   .contenido-vis {
     width: 100%;
     margin: 0;
+    min-height: var(--contenedor-vis-alto-minimo-vis);
   }
 
   // para que contenedor-vis-atribuciones simepre este pegado abajo
   position: relative;
-  padding-bottom: var(--alto-atribuciones);
+  padding-bottom: var(--contenedor-vis-alto-atribuciones);
   .contenedor-vis-atribuciones {
     position: absolute;
     bottom: 0;
     left: 0;
-    min-height: var(--alto-atribuciones);
-    max-height: var(--alto-atribuciones);
+    min-height: var(--contenedor-vis-alto-atribuciones);
+    max-height: var(--contenedor-vis-alto-atribuciones);
     display: block;
     width: 100%;
-    padding: 0 24px 24px 24px;
+    // padding: 0 24px 24px 24px;
+    padding: 16px 24px;
 
     .lista-atribuciones {
       display: flex;
@@ -153,10 +155,14 @@
   @include mediaquery('esc') {
     // reglas para escritorio
     max-height: var(
-      --alto-maximo-contenedor-vis
+      --contenedor-vis-alto-maximo
     ); // contenedor no sea más alto que la pantalla
     // grid-template-rows: auto 1fr auto; // los paneles en medio del encabezado y pie no se desborden
     grid-template-rows: 0 1fr 0;
+    min-height: calc(
+      var(--contenedor-vis-alto-minimo-vis) +
+        var(--contenedor-vis-alto-atribuciones) + 24px
+    );
 
     .panel-izquierda-vis,
     .contenido-vis,

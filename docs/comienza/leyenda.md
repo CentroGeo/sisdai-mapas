@@ -1,5 +1,6 @@
 <script setup>
 import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
+import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
 </script>
 
 # Leyendas
@@ -43,6 +44,8 @@ Uso avanzado:
 
 ## Ejemplo
 
-<ResaAtoyac />
+<Leyenda />
 
-<<< @/.vitepress/components/usos/atoyac.vue
+<!-- <ResaAtoyac /> -->
+
+<!-- <<< @/.vitepress/components/usos/atoyac.vue -->

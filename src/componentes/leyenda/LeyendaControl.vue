@@ -49,14 +49,6 @@ defineEmits(['alCambiar'])
     class="controlador-vis"
     :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }"
   >
-    <!-- <span class="figura-variable" /> -->
-    <LeyendaSimbolo
-      v-if="simbolo"
-      :estilo="simbolo.estilo"
-      :geometria="simbolo.geometria"
-      :tipoCapa="tipoCapa"
-    />
-
     <input
       v-if="!sinControl"
       type="checkbox"
@@ -69,35 +61,44 @@ defineEmits(['alCambiar'])
       class="nombre-variable"
       :for="!sinControl ? idCheck : undefined"
     >
-      {{ etiqueta }}
+      <!-- <span class="figura-variable" /> -->
+      <LeyendaSimbolo
+        v-if="simbolo"
+        :estilo="simbolo.estilo"
+        :geometria="simbolo.geometria"
+        :tipoCapa="tipoCapa"
+      />
+      <span class="nombre-variable">
+        {{ etiqueta }}
+      </span>
     </label>
   </div>
 </template>
 
 <style lang="scss">
-.sisdai-mapa-leyenda {
-  .sin-control {
-    .nombre-variable {
-      color: var(--tipografia-color);
-    }
+// .sisdai-mapa-leyenda {
+//   .sin-control {
+//     .nombre-variable {
+//       color: var(--tipografia-color);
+//     }
 
-    &.controlador-vis {
-      padding: 9px;
+//     &.controlador-vis {
+//       padding: 9px;
 
-      .figura-variable {
-        margin-left: 5px;
-        margin-top: 0;
-      }
+//       .figura-variable {
+//         margin-left: 5px;
+//         margin-top: 0;
+//       }
 
-      .nombre-variable {
-        padding-left: 0px;
-        margin-left: 28px;
-      }
-    }
-  }
+//       .nombre-variable {
+//         padding-left: 0px;
+//         margin-left: 28px;
+//       }
+//     }
+//   }
 
-  .sin-simbolo .nombre-variable {
-    padding-left: 40px;
-  }
-}
+//   .sin-simbolo .nombre-variable {
+//     padding-left: 40px;
+//   }
+// }
 </style>
