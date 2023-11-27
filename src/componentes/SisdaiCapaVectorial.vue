@@ -8,7 +8,7 @@ import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 import { traducirEstilo } from './../utiles/estiloVectores'
-import { estiloVector, tiposCapa } from './../valores/capa'
+import { DEFAULT_ESTILO_VECTOR, tiposCapa } from './../valores/capa'
 
 const props = defineProps({
   // datos: {
@@ -22,7 +22,7 @@ const props = defineProps({
    */
   estilo: {
     type: Object,
-    default: () => estiloVector,
+    default: () => DEFAULT_ESTILO_VECTOR,
   },
 
   /**
@@ -139,7 +139,7 @@ configurar(() => {
 })
 
 const estiloConbinado = computed(() =>
-  traducirEstilo({ ...estiloVector, ...estilo.value })
+  traducirEstilo({ ...DEFAULT_ESTILO_VECTOR, ...estilo.value })
 )
 
 agregada(capa => {

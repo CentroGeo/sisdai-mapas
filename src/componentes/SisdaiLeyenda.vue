@@ -4,30 +4,37 @@ import {
   onUnmounted,
   reactive,
   shallowRef,
-  toRaw,
   toRefs,
   watch,
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import {
-  buscarIdContenedorHtmlSisdai,
-  valorarTipoGeometriaTexo,
-} from '../utiles'
-import { estiloVector, tiposCapa } from '../valores/capa'
-import eventos from './../eventos/leyenda'
+import { buscarIdContenedorHtmlSisdai } from '../utiles'
+import { tiposCapa } from '../valores/capa'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
 
 const props = defineProps({
   /**
+   * Recibe el identificador de la capa con la que se quiere vincular la leyenda.
    *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: ✅
    */
   para: {
     type: String,
     require: true,
   },
 
+  /**
+   * Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula
+   * con la visibilidad de la capa.
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `false`
+   * - Reactivo: ✅
+   */
   sinControl: {
     type: Boolean,
     default: false,
@@ -36,91 +43,14 @@ const props = defineProps({
 
 const sisdaiLeyenda = shallowRef()
 const { sinControl } = toRefs(props)
-const emits = defineEmits(Object.values(eventos))
+// const emits = defineEmits(Object.values(eventos))
 
 const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
-  simbolo: undefined,
   tipo: tiposCapa.vectorial,
   visible: false,
 })
-
-function simboloDesdeWms(obj) {
-  return {
-    estilo: Object.values(obj)[0],
-    geometria: valorarTipoGeometriaTexo(Object.keys(obj)[0]),
-  }
-}
-
-/**
- *
- * @param {import("ol/source/ImageLayer").default} _capa
- */
-function estiloWms(_url, params) {
-  emits(eventos.alIniciarCargaSimbologia)
-  const url =
-    //
-    `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
-      params.LAYERS
-    }&STYLE=${params.STYLES ? params.STYLES : ''}`
-  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p'
-  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_corredores_red_nac_caminos_21_nal_l'
-  // 'https://dadsigvisgeo.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=vacunacion%3Abackground_limites_210521'
-  // 'https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=salu_egresos_plaguicidas_10_20_loc_p&style=salu_egresos_plaguicidas_10_20_loc_p'
-
-  fetch(url, {})
-    .then(r => {
-      // Verificar el estado de la respuesta
-      if (!r.ok) {
-        throw new Error('La solicitud no pudo completarse con éxito')
-      }
-      // Analizar la respuesta como JSON
-      return r.json()
-    })
-    .then(({ Legend }) => {
-      // console.log(Legend[0].rules)
-      const reglas = Legend[0].rules
-      capa.clases = []
-      capa.simbolo = undefined
-
-      if (reglas.length === 1) {
-        capa.simbolo = simboloDesdeWms(reglas[0].symbolizers[0])
-      } else if (reglas.length > 1) {
-        capa.clases = reglas.map(regla => ({
-          simbolo: simboloDesdeWms(regla.symbolizers[0]),
-          etiqueta: regla.title ? regla.title : regla.name,
-        }))
-
-        // console.log(props.para, toRaw(capa.clases))
-      }
-
-      emits(eventos.alFinalizarCargaSimbologia, true)
-    })
-    .catch(error => {
-      // Manejar errores de la solicitud
-      console.warn(
-        `Error en la solicitud de los datos remotos en la leyenda de la capa ${capa.tipo} ${props.para}:`,
-        error
-      )
-
-      emits(eventos.alFinalizarCargaSimbologia, false)
-    })
-}
-
-function _estiloVector(geometria) {
-  emits(eventos.alIniciarCargaSimbologia)
-  // si hay reglas, añadirlas en las clases
-  // si no:
-  capa.clases = []
-
-  capa.simbolo = {
-    estilo: estiloVector,
-    geometria,
-  }
-
-  emits(eventos.alFinalizarCargaSimbologia, true)
-}
 
 /**
  *
@@ -130,21 +60,14 @@ function vincularCapa(_capa) {
   switch (_capa.get('tipo')) {
     case tiposCapa.vectorial:
       capa.tipo = tiposCapa.vectorial
-      _estiloVector(_capa.get('geometria'), toRaw(_capa.get('estilo')))
       break
     case tiposCapa.wms:
       capa.tipo = tiposCapa.wms
-      estiloWms(_capa.getSource().getUrl(), _capa.getSource().getParams())
-      watch(
-        () => _capa.getSource().getParams(),
-        nv => estiloWms(_capa.getSource().getUrl(), nv),
-        { deep: true }
-      )
       break
   }
 
   /**
-   *
+   * Vinculación con el nombre de la capa.
    */
   capa.nombre = _capa.get('nombre')
   watch(
@@ -153,7 +76,7 @@ function vincularCapa(_capa) {
   )
 
   /**
-   *
+   * Vinculación con la visibilidad de la capa.
    */
   capa.visible = _capa.getVisible()
   watch(
@@ -164,13 +87,10 @@ function vincularCapa(_capa) {
     () => capa.visible,
     nv => _capa.setVisible(nv)
   )
-
-  return 0, 1
 }
 
 onMounted(() => {
   // console.log('SisdaiLeyenda', props.para)
-
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
   // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
@@ -192,26 +112,11 @@ onUnmounted(() => {})
       <LeyendaControl
         :id="`${para}-control`"
         :etiqueta="capa.nombre"
-        :simbolo="capa.simbolo"
+        :simbolo="{}"
         :encendido="capa.visible"
         :sinControl="sinControl"
         :tipoCapa="capa.tipo"
         @alCambiar="valor => (capa.visible = valor)"
-      />
-    </div>
-
-    <div
-      v-if="capa.clases.length > 1"
-      class="m-l-1 controles-clases-capa"
-    >
-      <LeyendaControl
-        v-for="(clase, idx) in capa.clases"
-        :key="`${para}-clase-control-${idx}`"
-        :id="`${para}-clase-control-${idx}`"
-        :etiqueta="clase.etiqueta"
-        :simbolo="clase.simbolo"
-        :sinControl="true"
-        :tipoCapa="capa.tipo"
       />
     </div>
   </div>

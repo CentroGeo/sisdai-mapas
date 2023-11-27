@@ -75,4 +75,30 @@ defineEmits(['alCambiar'])
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+// .sisdai-mapa-leyenda {
+//   .sin-control {
+//     .nombre-variable {
+//       color: var(--tipografia-color);
+//     }
+
+//     &.controlador-vis {
+//       padding: 9px;
+
+//       .figura-variable {
+//         margin-left: 5px;
+//         margin-top: 0;
+//       }
+
+//       .nombre-variable {
+//         padding-left: 0px;
+//         margin-left: 28px;
+//       }
+//     }
+//   }
+
+//   .sin-simbolo .nombre-variable {
+//     padding-left: 40px;
+//   }
+// }
+</style>
