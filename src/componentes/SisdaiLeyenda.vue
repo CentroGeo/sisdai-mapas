@@ -8,15 +8,17 @@ import {
   watch,
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai } from '../utiles'
+import { buscarIdContenedorHtmlSisdai, fetchJSON } from '../utiles'
 // import { ReglasVector } from './../clases/ReglaEstiloLeyenda'
 import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
 import {
   acomodarFormaDesdeVector,
   estiloContiene,
+  estiloParaSvg,
   estiloParaSvgPunto,
 } from '../utiles/estiloVectores'
 import { tiposCapa } from '../valores/capa'
+import { acomodarReglasWms } from './../utiles/leyenda'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
 var idMapa
@@ -71,11 +73,13 @@ function actualizarClaseVector(estilo, geometria) {
         puntosForma = acomodarFormaDesdeVector(_estilo)
         // puntosForma = undefined
         _estilo = estiloParaSvgPunto(_estilo, 'shape')
-        console.log(puntosForma)
+        // console.log(puntosForma)
       } else {
         _estilo = estiloParaSvgPunto(_estilo)
       }
     }
+  } else {
+    _estilo = estiloParaSvg(_estilo)
   }
 
   const simbolo = new SimboloSvgLeyenda({
@@ -92,6 +96,21 @@ function actualizarClaseVector(estilo, geometria) {
       simbolo,
     },
   ]
+}
+
+function actualizarClasesDesdeWms(_url, params) {
+  const url =
+    //
+    `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
+      params.LAYERS
+    }&STYLE=${params.STYLES ? params.STYLES : ''}`
+
+  fetchJSON(url).then(data => {
+    const clases = acomodarReglasWms(data)
+    // console.log(clases)
+
+    capa.clases = clases
+  })
 }
 
 /**
@@ -121,17 +140,21 @@ function vincularCapa(_capa) {
     nv => _capa.setVisible(nv)
   )
 
-  // capa.clases = new ReglasVector({
-  //   estilo: toRaw(_capa.get('estilo2')),
-  //   geometria: _capa.get('geometria'),
-  // })
-  // console.log(capa.clases.lista[0].simbolo.graficoSvg.xml)
-
   if (_capa.get('tipo') === tiposCapa.vectorial) {
     actualizarClaseVector(_capa.get('estilo2'), _capa.get('geometria'))
     watch(
       () => _capa.get('estilo2'),
       nv => actualizarClaseVector(nv, _capa.get('geometria')),
+      { deep: true }
+    )
+  }
+
+  if (_capa.get('tipo') === tiposCapa.wms) {
+    const fuente = _capa.getSource().getUrl()
+    actualizarClasesDesdeWms(fuente, _capa.getSource().getParams())
+    watch(
+      () => _capa.getSource().getParams(),
+      nv => actualizarClasesDesdeWms(fuente, nv),
       { deep: true }
     )
   }
@@ -164,6 +187,20 @@ onUnmounted(() => {})
         :encendido="capa.visible"
         :sinControl="sinControl"
         @alCambiar="valor => (capa.visible = valor)"
+      />
+    </div>
+
+    <div
+      v-if="capa.clases.length > 1"
+      class="m-l-1 controles-clases-capa"
+    >
+      <LeyendaControl
+        v-for="(clase, idx) in capa.clases"
+        :key="`${para}-clase-control-${idx}`"
+        :id="`${para}-clase-control-${idx}`"
+        :etiqueta="clase.titulo"
+        :simbolo="clase.simbolo"
+        :sinControl="false"
       />
     </div>
   </div>

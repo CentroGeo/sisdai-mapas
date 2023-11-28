@@ -51,9 +51,9 @@ const seleccion = ref('Por defecto')
         </select>
 
         <SisdaiLeyenda para="puntos" />
-        <!-- <SisdaiLeyenda para="lineas" />
+        <SisdaiLeyenda para="lineas" />
         <SisdaiLeyenda para="poligonos" />
-        <SisdaiLeyenda para="base" /> -->
+        <SisdaiLeyenda para="base" />
       </div>
     </template>
 
