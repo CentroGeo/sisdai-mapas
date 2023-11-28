@@ -29,12 +29,7 @@ const props = defineProps({
     default: undefined,
   },
 
-  tipoControl: {},
-
-  tipoCapa: {
-    typo: String,
-    required: true,
-  },
+  // tipoControl: {},
 })
 
 const idCheck = `${props.id}-${idAleatorio()}`
@@ -64,9 +59,7 @@ defineEmits(['alCambiar'])
       <!-- <span class="figura-variable" /> -->
       <LeyendaSimbolo
         v-if="simbolo"
-        :estilo="simbolo.estilo"
-        :geometria="simbolo.geometria"
-        :tipoCapa="tipoCapa"
+        :simbolo="simbolo"
       />
       <span class="nombre-variable">
         {{ etiqueta }}

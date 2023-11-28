@@ -1,3 +1,5 @@
+import { estiloParaSvg } from './../utiles/estiloVectores'
+
 export const tipoEstadoCarga = {
   no: 'indefinida',
   inicio: 'iniciada',
@@ -51,3 +53,5 @@ export const DEFAULT_ESTILO_VECTOR = {
   ...DEFAULT_ESTILO_POLIGONO,
   ...DEFAULT_ESTILO_LINEA,
 }
+
+export const DEFAULT_ESTILO_VECTOR_SVG = estiloParaSvg(DEFAULT_ESTILO_VECTOR)

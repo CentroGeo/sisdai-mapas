@@ -25,7 +25,7 @@ const estilos = {
   },
 }
 
-const seleccion = ref(undefined)
+const seleccion = ref('Por defecto')
 </script>
 
 <template>
@@ -43,37 +43,33 @@ const seleccion = ref(undefined)
           v-model="seleccion"
         >
           <option
-            v-for="(estilo, id) in estilos"
-            :value="estilo"
+            v-for="(_, nombre) in estilos"
+            :value="nombre"
           >
-            {{ id }}
+            {{ nombre }}
           </option>
         </select>
 
         <SisdaiLeyenda para="puntos" />
-
-        <h5 class="m-y-0">Líneas</h5>
-        <SisdaiLeyenda para="lineas" />
-
-        <h5 class="m-y-0">Polígonos</h5>
+        <!-- <SisdaiLeyenda para="lineas" />
         <SisdaiLeyenda para="poligonos" />
-
-        <h5 class="m-y-0">Base</h5>
-        <SisdaiLeyenda para="base" />
+        <SisdaiLeyenda para="base" /> -->
       </div>
     </template>
 
     <SisdaiCapaXyz
       id="base"
       :posicion="1"
+      nombre="Mapa base"
     />
 
     <SisdaiCapaVectorial
       id="puntos"
       :posicion="4"
       fuente="/assets/estados-centroides.geojson"
-      :estilo="seleccion"
       geometria="punto"
+      :nombre="seleccion"
+      :estilo="estilos[seleccion]"
     />
     <!-- 
      -->
@@ -83,6 +79,7 @@ const seleccion = ref(undefined)
       :posicion="3"
       fuente="https://gema.conahcyt.mx/geoserver/wms?service=wfs&version=1.3.0&request=GetFeature&typename=gref_corredores_red_nac_caminos_21_nal_l&outputFormat=application/json"
       geometria="linea"
+      nombre="Carreteras"
     />
     <!-- 
      -->
@@ -91,6 +88,7 @@ const seleccion = ref(undefined)
       id="poligonos"
       :posicion="2"
       fuente="/assets/estados-poligonos.geojson"
+      nombre="Estados"
     />
     <!-- 
       geometria="poligono"

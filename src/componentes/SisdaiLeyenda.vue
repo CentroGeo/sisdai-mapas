@@ -9,6 +9,13 @@ import {
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdai } from '../utiles'
+// import { ReglasVector } from './../clases/ReglaEstiloLeyenda'
+import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
+import {
+  acomodarFormaDesdeVector,
+  estiloContiene,
+  estiloParaSvgPunto,
+} from '../utiles/estiloVectores'
 import { tiposCapa } from '../valores/capa'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
@@ -43,29 +50,55 @@ const props = defineProps({
 
 const sisdaiLeyenda = shallowRef()
 const { sinControl } = toRefs(props)
-// const emits = defineEmits(Object.values(eventos))
 
 const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
-  tipo: tiposCapa.vectorial,
   visible: false,
 })
+
+function actualizarClaseVector(estilo, geometria) {
+  let _estilo = JSON.parse(estilo)
+  // console.log(_estilo)
+  let tamanio, icono, puntosForma
+
+  if (geometria === 'punto') {
+    if (estiloContiene(_estilo, 'icon')) {
+      icono = _estilo['icon-src']
+    } else {
+      tamanio = _estilo['circle-radius'] * 2
+      if (estiloContiene(_estilo, 'shape')) {
+        puntosForma = acomodarFormaDesdeVector(_estilo)
+        // puntosForma = undefined
+        _estilo = estiloParaSvgPunto(_estilo, 'shape')
+        console.log(puntosForma)
+      } else {
+        _estilo = estiloParaSvgPunto(_estilo)
+      }
+    }
+  }
+
+  const simbolo = new SimboloSvgLeyenda({
+    estilo: _estilo,
+    forma: puntosForma,
+    geometria,
+    icono,
+    tamanio,
+  })
+  // console.log(simbolo.xml)
+
+  capa.clases = [
+    {
+      simbolo,
+    },
+  ]
+}
 
 /**
  *
  * @param {import("ol/layer/Layer").default} capa
  */
 function vincularCapa(_capa) {
-  switch (_capa.get('tipo')) {
-    case tiposCapa.vectorial:
-      capa.tipo = tiposCapa.vectorial
-      break
-    case tiposCapa.wms:
-      capa.tipo = tiposCapa.wms
-      break
-  }
-
   /**
    * Vinculación con el nombre de la capa.
    */
@@ -87,6 +120,21 @@ function vincularCapa(_capa) {
     () => capa.visible,
     nv => _capa.setVisible(nv)
   )
+
+  // capa.clases = new ReglasVector({
+  //   estilo: toRaw(_capa.get('estilo2')),
+  //   geometria: _capa.get('geometria'),
+  // })
+  // console.log(capa.clases.lista[0].simbolo.graficoSvg.xml)
+
+  if (_capa.get('tipo') === tiposCapa.vectorial) {
+    actualizarClaseVector(_capa.get('estilo2'), _capa.get('geometria'))
+    watch(
+      () => _capa.get('estilo2'),
+      nv => actualizarClaseVector(nv, _capa.get('geometria')),
+      { deep: true }
+    )
+  }
 }
 
 onMounted(() => {
@@ -112,10 +160,9 @@ onUnmounted(() => {})
       <LeyendaControl
         :id="`${para}-control`"
         :etiqueta="capa.nombre"
-        :simbolo="{}"
+        :simbolo="capa.clases.length === 1 ? capa.clases[0].simbolo : undefined"
         :encendido="capa.visible"
         :sinControl="sinControl"
-        :tipoCapa="capa.tipo"
         @alCambiar="valor => (capa.visible = valor)"
       />
     </div>
