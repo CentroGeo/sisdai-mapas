@@ -48,10 +48,19 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+
+  /**
+   * Define si se agrega el control (input) en las clases de la leyenda. Cada control se vincula
+   * con la visibilidad los elementos que pertenezcan a la clase correspondiente de la capa.
+   */
+  sinControlClases: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const sisdaiLeyenda = shallowRef()
-const { sinControl } = toRefs(props)
+const { sinControl, sinControlClases } = toRefs(props)
 
 const capa = reactive({
   nombre: 'Cargando...',
@@ -200,7 +209,7 @@ onUnmounted(() => {})
         :id="`${para}-clase-control-${idx}`"
         :etiqueta="clase.titulo"
         :simbolo="clase.simbolo"
-        :sinControl="false"
+        :sinControl="sinControlClases"
       />
     </div>
   </div>
