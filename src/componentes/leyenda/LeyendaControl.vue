@@ -42,8 +42,11 @@ defineEmits(['alCambiar'])
 <template>
   <div
     class="controlador-vis"
-    :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }"
+    :style="{
+      '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
+    }"
   >
+    <!-- :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }" -->
     <input
       v-if="!sinControl"
       type="checkbox"

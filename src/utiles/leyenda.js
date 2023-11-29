@@ -29,8 +29,21 @@ function acomodarSimbolo(simbolo) {
 export function acomodarReglasWms({ Legend }) {
   // console.log(Legend[0].rules[0].symbolizers[0]);
 
-  return Legend[0].rules.map(({ name, symbolizers, title }) => ({
+  const clases = Legend[0].rules.map(({ name, symbolizers, title }) => ({
     titulo: title || name,
-    simbolo: new SimboloSvgLeyenda(acomodarSimbolo(symbolizers[0])),
+    simbolo: acomodarSimbolo(symbolizers[0]),
   }))
+
+  const tamanioSimboloMayor = Math.max(
+    ...clases.map(({ simbolo }) => simbolo.tamanio)
+  )
+
+  console.log(tamanioSimboloMayor)
+
+  return clases.map(({ titulo, simbolo }) => {
+    return {
+      titulo,
+      simbolo: new SimboloSvgLeyenda({ ...simbolo, tamanioSimboloMayor }),
+    }
+  })
 }

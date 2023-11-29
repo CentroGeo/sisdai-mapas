@@ -1,5 +1,5 @@
 <script setup>
-import { toRefs, watch } from 'vue'
+import { toRefs } from 'vue'
 import SimboloSvg from './../../clases/SimboloSvgLeyenda'
 
 const props = defineProps({
@@ -11,15 +11,16 @@ const props = defineProps({
 
 const { simbolo } = toRefs(props)
 
-// console.log(simbolo.value.xml)
-watch(simbolo, () => {
-  // console.log(nv)
-})
+// console.log(simbolo.value.tamanioSimboloMayorMinimo)
 </script>
 
 <template>
   <svg
     class="figura-variable nombre"
+    :style="{
+      '--controlador-vis-figura-alto': `${simbolo.tamanio}px`,
+      'min-width': `${simbolo.tamanioSimboloMayorMinimo}px`,
+    }"
     :width="simbolo.tamanioSimboloMayorMinimo"
     :height="simbolo.tamanio"
     v-html="simbolo.xml"
