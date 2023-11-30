@@ -2,7 +2,6 @@ import { createRequire } from 'module'
 // import { defineConfig } from 'vitepress'
 
 const require = createRequire(import.meta.url)
-
 const pkg = require('./../../package.json')
 
 // https://vitepress.dev/reference/site-config
@@ -102,7 +101,7 @@ function nav() {
     //   link: '/visualizaciones/',
     //   activeMatch: '/visualizaciones/',
     // },
-    // { text: 'Avanzado', link: '/solo', activeMatch: '/solo' },
+    { text: 'Avanzado', link: '/solo', activeMatch: '/solo' },
     { text: `v${pkg.version}`, link: pkg.repository.url },
   ]
 }

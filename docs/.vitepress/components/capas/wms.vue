@@ -8,8 +8,23 @@
 
     <SisdaiCapaWms
       url="https://dadsigvisgeo.conahcyt.mx/geoserver/wms"
-      :parametros="{ LAYERS: 'vacunacion:background_limites_210521' }"
-      :posicion="2"
+      :parametros="{
+        LAYERS: 'vacunacion:background_limites_210521',
+      }"
     />
+
+    <!-- 
+<SisdaiCapaWms
+  url="https://dadsigvisgeo.conahcyt.mx/geoserver/wms"
+  capa="vacunacion:background_limites_210521"
+  estilos="[{
+    nombre: 'estilo-geoserver'
+    titulo: 'Lo que representa (Ejemplo: Número de personas)',
+  },{
+    nombre: 'estilo-geoserver'
+    titulo: 'Lo que representa (Ejemplo: Número de hectáreas)',
+  }]"
+/>
+     -->
   </SisdaiMapa>
 </template>

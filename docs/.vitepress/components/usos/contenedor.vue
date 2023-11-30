@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-const clasesNoElementos = ['sin-cargador', 'sin-boton-conahcyt', 'sin-bordes']
+const clasesNoElementos = ['sin-cargador', 'sin-atribuciones']
 const clasesPaneles = [
   'panel-encabezado-vis',
   'panel-izquierda-vis',
@@ -50,10 +50,8 @@ setTimeout(() => {
       </span>
     </div>
 
-    <SisdaiMapa
-      class="dinamico"
-      :class="[...paneles.map(c => `con-${c}`), ...noElementos]"
-    >
+    <SisdaiMapa class="dinamico">
+      <!-- :class="[...paneles.map(c => `con-${c}`), ...noElementos]" -->
       <SisdaiCapaXyz />
 
       <template
@@ -61,13 +59,20 @@ setTimeout(() => {
         :key="`panel-${clase}`"
         #[clase]
       >
-        <div class="">
-          <h2>{{ clase }}</h2>
+        <div>
+          <h2 class="m-t-0">{{ clase }}</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
             similique tempora dicta delectus, assumenda officiis veritatis alias
             incidunt illo provident, laborum iure amet dolore error fugiat
-            ducimus, est corrupti recusandae!
+            ducimus, est corrupti recusandae! Lorem ipsum dolor sit amet
+            consectetur adipisicing elit. Blanditiis voluptatum quia sed atque
+            autem doloribus tempora, possimus officia odit, iure cupiditate
+            ullam corporis eos a vitae! Rerum atque maxime earum! Lorem ipsum
+            dolor sit amet consectetur adipisicing elit. Cum animi, natus
+            similique tempore nulla error, maiores itaque iste illum facere
+            consectetur consequatur atque minus cupiditate dignissimos.
+            Molestiae dolor officiis perferendis.
           </p>
           <button class="boton-primario boton-chico">clase</button>
         </div>
@@ -80,7 +85,7 @@ setTimeout(() => {
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 
-div.dinamico.contenedor-vis {
+div.dinamico.contenedor-vis2 {
   .panel-encabezado-vis {
     background: skyblue;
   }

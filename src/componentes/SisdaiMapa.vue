@@ -8,6 +8,7 @@ import {
   ref,
   shallowRef,
   toRefs,
+  useSlots,
   watch,
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
@@ -99,6 +100,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(Object.values(eventos))
+const slots = useSlots()
 const refMapa = shallowRef(null)
 const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 
@@ -115,21 +117,18 @@ function mapa() {
 /**
  * Actualizar vista en el mapa registrado.
  */
-watch(vista, (nv, vv) => {
-  const _nv = { ...valoresPorDefecto.vista, ...nv }
+watch(
+  vista,
+  nv => {
+    const _nv = { ...valoresPorDefecto.vista, ...nv }
+    mapa()?.asignarVista(_nv)
 
-  if (stringifyIguales(_nv.centro, vv.centro)) {
-    mapa().asignarCentro(_nv.centro)
-  }
-
-  if (Number(_nv.zoom) !== vv.Zoom) {
-    mapa().asignarZoom(_nv.zoom)
-  }
-
-  if (stringifyIguales(_nv.extension, vv.extension)) {
-    mapa().asignarExtension(_nv.extension, _nv.extensionMargen)
-  }
-})
+    if (_nv.ajustarVistaAlcambiarParametros) {
+      mapa().ajustarVista()
+    }
+  },
+  { deep: true }
+)
 
 /**
  * Objeto reactivo utilizado para evaluar en que momento el centro o zoom de la vista es diferente
@@ -181,6 +180,7 @@ onMounted(() => {
     emits
   )
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+  mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
 
   ariaCanvas(elementosDescriptivos.value)
@@ -208,7 +208,7 @@ defineExpose({
    * AjustarVista.
    */
   ajustarVista: () => {
-    mapa().buscarControl('AjustarVista').ajustarVista()
+    mapa().ajustarVista()
   },
 })
 
@@ -270,12 +270,21 @@ function alTeclear({ key }) {
       break
   }
 }
+
+const paneles = ['encabezado', 'izquierda', 'derecha', 'pie']
+function panelesEnUso() {
+  // return !!slots[name]
+  return paneles
+    .filter(panel => !!slots[`panel-${panel}-vis`])
+    .map(panel => `con-panel-${panel}-vis`)
+}
 </script>
 
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
+    :class="panelesEnUso()"
   >
     <div class="panel-encabezado-vis">
       <slot name="panel-encabezado-vis" />

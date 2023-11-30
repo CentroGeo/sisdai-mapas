@@ -1,6 +1,7 @@
 import View from 'ol/View'
 // import PointerEventType from 'ol/pointer/EventType'
 import { reactive } from 'vue'
+import { vista as vistaDefautl } from '../valores/mapa'
 import Mapa from './../clases/Mapa'
 import RegistroObjetos from './../clases/ResgistroObjetos'
 import * as controles from './../controles'
@@ -57,18 +58,23 @@ function idValido(id) {
  * @returns {import("./../clases/Mapa.js").default} Mapa
  */
 function crearMapa(target, proyeccion, emits) {
-  return new Mapa({
-    target,
-    layers: [],
-    controls: [
-      new controles.EscalaGrafica(),
-      new controles.AcercarAlejar(),
-      new controles.AjustarVista(emits),
-      new controles.EtiquetaAtribucion(),
-      new controles.NavegacionTeclado(),
-    ],
-    view: new View({
-      projection: proyeccion,
-    }),
-  })
+  return new Mapa(
+    {
+      target,
+      layers: [],
+      controls: [
+        new controles.EscalaGrafica(),
+        new controles.AcercarAlejar(),
+        new controles.AjustarVista(),
+        new controles.EtiquetaAtribucion(),
+        new controles.NavegacionTeclado(),
+      ],
+      view: new View({
+        center: vistaDefautl.centro,
+        projection: proyeccion,
+        zoom: vistaDefautl.zoom,
+      }),
+    },
+    emits
+  )
 }

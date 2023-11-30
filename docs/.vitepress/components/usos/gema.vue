@@ -1,15 +1,15 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
-onMounted(() => {
-  if (window.location.search === '') {
-    window.location.search = '?capas=buscar'
-  }
-  if (window.location.hash === '') {
-    window.location.hash = '#map=10/19.6060/-98.7635'
-  }
-  procesarParametrosHash(window.location)
-})
+// onMounted(() => {
+//   if (window.location.search === '') {
+//     window.location.search = '?capas=buscar'
+//   }
+//   if (window.location.hash === '') {
+//     window.location.hash = '#map=10/19.6060/-98.7635'
+//   }
+//   procesarParametrosHash(window.location)
+// })
 
 const mapa = ref()
 
@@ -48,86 +48,116 @@ function print(mgs) {
 }
 
 const capasMapa = ref([])
+
+const verPanelDerecho = ref(false)
+watch(verPanelDerecho, nv => {
+  if (nv) {
+    vistaMapa.extensionMargen = [20, 320, 20, 20]
+    // console.log('vistaMapa.extensionMargen', toRaw(vistaMapa.extensionMargen))
+  } else {
+    vistaMapa.extensionMargen = 30
+    // console.log('vistaMapa.extensionMargen', vistaMapa.extensionMargen)
+  }
+})
 </script>
 
 <template>
-  <SisdaiMapa
-    class="mapa-gema sin-cargador sin-bordes sin-boton-conahcyt con-panel-izquierda-vis con-panel-derecha-vis"
-    ref="mapa"
-    :vista="vistaMapa"
-    @alMoverVista="alMoverVista"
-  >
-    <SisdaiCapaXyz
-      @alIniciarCarga="() => print(`GEMA: xyz cargando...`)"
-      @alFinalizarCarga="
-        estado => print(`GEMA: xyz ${estado ? 'cargada' : 'error'}`)
-      "
-    />
+  <div class="contenedor-gema">
+    <div class="contenedor-gema-izquierdo">
+      <button
+        class="boton-chico"
+        @click="mapa.exportarImagen('mapa-gema')"
+      >
+        Exportar imagen
+      </button>
 
-    <SisdaiCapaWms
-      v-for="capa in capasMapa"
-      :key="`capa-${capa}`"
-      url="https://dev-dadsig-gema.crip.conahcyt.mx/geoserver/wms"
-      :id="capa"
-      :nombre="capa"
-      :parametros="{
-        LAYERS: capa,
-      }"
-      @alIniciarCarga="() => print(`${capa} cargando...`)"
-      @alFinalizarCarga="
-        estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
-      "
-    />
-
-    <template #panel-izquierda-vis>
-      <div class="p-1">
-        <button
-          class="boton-chico"
-          @click="mapa.exportarImagen('mapa-gema')"
-        >
-          Exportar imagen
-        </button>
-
-        <p
-          v-for="(capa, idx) in [
-            'contexto:gref_division_estatal_2020',
-            'contexto:gref_division_municipal_2020',
-            'contexto:gref_inst_educacion_sup_05_06_07_2021',
-            'contexto:gref_uneme_capa_ssa_2702202',
-          ]"
-          :key="`check-${idx}`"
-        >
-          <input
-            type="checkbox"
-            :id="`check-${idx}`"
-            :value="capa"
-            v-model="capasMapa"
-          />
-          <label :for="`check-${idx}`">{{ capa }}</label>
-        </p>
-      </div>
-    </template>
-
-    <template #panel-derecha-vis>
-      <div class="p-1">
-        <SisdaiLeyenda
-          v-for="capa in capasMapa"
-          :key="`leyenda-${capa}`"
-          :para="capa"
+      <p
+        v-for="(capa, idx) in [
+          'hcti_centros_invest_conahcyt_0421_xy_p',
+          'hcti_lab_nacionales_conahcyt_190523_xy_p',
+          'gref_corredores_red_nac_caminos_21_nal_l',
+          'hcti_snii_sexo_22_est_a',
+          'glifo_rendimiento_ha_4_cultivos_20_est_p',
+        ]"
+        :key="`check-${idx}`"
+      >
+        <input
+          type="checkbox"
+          :id="`check-${idx}`"
+          :value="capa"
+          v-model="capasMapa"
         />
-      </div>
-    </template>
-  </SisdaiMapa>
+        <label :for="`check-${idx}`">{{ capa }}</label>
+      </p>
+
+      <button @click="verPanelDerecho = !verPanelDerecho">
+        {{ verPanelDerecho ? 'esconder' : 'mostrar' }} panel derecho
+      </button>
+    </div>
+
+    <SisdaiMapa
+      class="gema"
+      :class="{ 'mostrar-panel-derecho': verPanelDerecho }"
+      ref="mapa"
+      :vista="vistaMapa"
+      @alMoverVista="alMoverVista"
+    >
+      <SisdaiCapaXyz
+        @alIniciarCarga="() => print(`GEMA: xyz cargando...`)"
+        @alFinalizarCarga="
+          estado => print(`GEMA: xyz ${estado ? 'cargada' : 'error'}`)
+        "
+      />
+
+      <!-- 
+        url="https://dev-dadsig-gema.crip.conahcyt.mx/geoserver/wms"
+      -->
+      <SisdaiCapaWms
+        v-for="capa in capasMapa"
+        :key="`capa-${capa}`"
+        :id="capa"
+        :nombre="capa"
+        :parametros="{
+          LAYERS: capa,
+        }"
+        @alIniciarCarga="() => print(`${capa} cargando...`)"
+        @alFinalizarCarga="
+          estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
+        "
+      />
+
+      <template #panel-derecha-vis>
+        <div class="panel-seleccion-capas">
+          <SisdaiLeyenda
+            v-for="capa in capasMapa"
+            :key="`leyenda-${capa}`"
+            :para="capa"
+          />
+        </div>
+      </template>
+    </SisdaiMapa>
+  </div>
 </template>
 
 <style lang="scss">
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 
-div.mapa-gema {
-  height: 100vh;
-  @include mediaquery('esc') {
-    grid-template-rows: minmax(300px, 100%);
+div.contenedor-gema {
+  height: 85vh;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+
+  .panel-seleccion-capas {
+    width: 300px;
+  }
+
+  .sisdai-mapa.mostrar-panel-derecho {
+    .sisdai-mapa-control-acercar-alejar,
+    .sisdai-mapa-control-ajuste-vista {
+      // right: calc(100vw / 4);
+      right: calc(var(--margen) + 300px);
+    }
   }
 
   label,

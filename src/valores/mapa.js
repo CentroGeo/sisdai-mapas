@@ -3,6 +3,8 @@
  */
 
 export const vista = {
+  ajustarVistaAlcambiarParametros: true,
+
   /**
    * Coordenadas `[x, y]` del centro inicial de la vista.
    *

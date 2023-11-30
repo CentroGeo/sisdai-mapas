@@ -3,10 +3,6 @@
  */
 
 import Control from 'ol/control/Control'
-import { toRaw } from 'vue'
-import eventos from '../eventos/mapa'
-import { valorarArregloNumerico, valorarExtensionMargen } from '../utiles'
-import * as validaciones from '../utiles/validaciones'
 import { crearBotonControl, crearContenedorControl } from './utiles'
 
 /**
@@ -19,7 +15,7 @@ const claseCss = 'ajuste-vista'
  * Emits del componente Sisdaimapa, en esta parte es usado para desencadenar el evento
  * alAjustarVista
  */
-let emits
+// let emits
 
 /**
  * @classdesc
@@ -41,8 +37,8 @@ export default class AjustarVista extends Control {
     return AjustarVista.nombre
   }
 
-  constructor(_emits) {
-    emits = _emits
+  constructor() {
+    // emits = _emits
 
     /**
      * Elemento contenedor del control
@@ -74,18 +70,7 @@ export default class AjustarVista extends Control {
    * Ajusta la vista del mapa a los valores iniciales de la propiedad vista.
    */
   ajustarVista() {
-    const view = this.getMap().getView()
-    const extension = view.get('extension')
-
-    if (validaciones.extension(extension)) {
-      view.fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(view.get('extensionMargen')),
-      })
-    } else {
-      view.setCenter(valorarArregloNumerico(view.get('centro')))
-      view.setZoom(Number(view.get('acercamiento')))
-    }
-
-    emits(eventos.alAjustarVista, toRaw(view))
+    this.getMap().ajustarVista()
+    // emits(eventos.alAjustarVista, toRaw(this.getMap().getView()))
   }
 }

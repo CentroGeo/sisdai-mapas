@@ -29,12 +29,7 @@ const props = defineProps({
     default: undefined,
   },
 
-  tipoControl: {},
-
-  tipoCapa: {
-    typo: String,
-    required: true,
-  },
+  // tipoControl: {},
 })
 
 const idCheck = `${props.id}-${idAleatorio()}`
@@ -45,15 +40,12 @@ defineEmits(['alCambiar'])
 </script>
 
 <template>
-  <span :class="{ 'controlador-vis': simbolo, 'sin-control': sinControl }">
-    <!-- <span class="figura-variable" /> -->
-    <LeyendaSimbolo
-      v-if="simbolo"
-      :estilo="simbolo.estilo"
-      :geometria="simbolo.geometria"
-      :tipoCapa="tipoCapa"
-    />
-
+  <div
+    class="controlador-vis"
+    :style="{
+      '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
+    }"
+  >
     <input
       v-if="!sinControl"
       type="checkbox"
@@ -62,33 +54,16 @@ defineEmits(['alCambiar'])
       @input="$emit('alCambiar', $event.target.checked)"
     />
 
-    <label
-      class="nombre-variable"
-      :for="!sinControl ? idCheck : undefined"
-    >
-      {{ etiqueta }}
+    <label :for="!sinControl ? idCheck : undefined">
+      <LeyendaSimbolo
+        v-if="simbolo"
+        :simbolo="simbolo"
+      />
+      <span class="nombre-variable">
+        {{ etiqueta }}
+      </span>
     </label>
-  </span>
+  </div>
 </template>
 
-<style lang="scss">
-.sisdai-mapa-leyenda .sin-control {
-  .nombre-variable {
-    color: var(--tipografia-color);
-  }
-
-  &.controlador-vis {
-    padding: 9px;
-
-    .figura-variable {
-      margin-left: 5px;
-      margin-top: 0;
-    }
-
-    .nombre-variable {
-      padding-left: 0px;
-      margin-left: 28px;
-    }
-  }
-}
-</style>
+<style lang="scss"></style>

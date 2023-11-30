@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.6.1",
+  "version": "1.8.0",
   "description": "Mapas interactivos: Componentes de software libre para el Sistema de Diseño y Accesibilidad para la Investigación (Sisdai).",
   "main": "./src/index.js",
   "files": [
@@ -20,28 +20,29 @@
     "test": "vitest"
   },
   "dependencies": {
-    "ol": "^8.1.0",
-    "ol-displaced-points": "^0.3.1"
+    "ol": "^8.2.0",
+    "ol-displaced-points": "^0.3.1",
+    "svgson": "^5.3.1"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.5.1",
-    "@testing-library/vue": "^7.0.0",
-    "@vitejs/plugin-vue": "^4.4.0",
+    "@rushstack/eslint-patch": "^1.6.0",
+    "@testing-library/vue": "^8.0.1",
+    "@vitejs/plugin-vue": "^4.5.0",
     "@vue/eslint-config-prettier": "^8.0.0",
-    "@vue/test-utils": "^2.4.1",
-    "eslint": "^8.51.0",
+    "@vue/test-utils": "^2.4.3",
+    "eslint": "^8.54.0",
     "eslint-plugin-html": "^7.1.0",
-    "eslint-plugin-vue": "^9.17.0",
-    "happy-dom": "^12.9.1",
-    "lint-staged": "^15.0.1",
-    "prettier": "^3.0.3",
+    "eslint-plugin-vue": "^9.18.1z",
+    "happy-dom": "^12.10.3",
+    "lint-staged": "^15.1.0",
+    "prettier": "^3.1.0",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
-    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#fix/cargando",
-    "vite": "^4.4.11",
-    "vitepress": "^1.0.0-rc.22",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.45.9",
+    "vite": "^5.0.4",
+    "vitepress": "^1.0.0-rc.31",
     "vitest": "^0.34.6",
-    "volar-service-vetur": "^0.0.14",
-    "vue": "^3.3.4"
+    "volar-service-vetur": "^0.0.17",
+    "vue": "^3.3.9"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
