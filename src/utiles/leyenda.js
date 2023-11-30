@@ -5,6 +5,8 @@ function acomodarEstilosSvg(obj) {
     obj['stroke-width'] = obj['stroke-width'] >= 1 ? obj['stroke-width'] : 1
   }
 
+  obj['fill'] = obj['fill'] ? obj['fill'] : 'transparent'
+
   return obj
 }
 
