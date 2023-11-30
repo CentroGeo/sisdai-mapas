@@ -45,6 +45,14 @@ const props = defineProps({
   },
 
   /**
+   *
+   */
+  tituloClases: {
+    type: String,
+    default: undefined,
+  },
+
+  /**
    * URL del servicio WMS.
    *
    * - Tipo: `String`
@@ -62,7 +70,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { url, parametros } = toRefs(props)
+const { url, parametros, tituloClases } = toRefs(props)
 
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
@@ -93,9 +101,11 @@ configurar(() => {
 agregada(capa => {
   // console.log(capa.getSource())
   capa.set('parametros', parametros.value)
+  capa.set('tituloClases', tituloClases.value)
 
   watch(parametros, nv => capa.set('parametros', nv))
   watch(parametros, nv => capa.getSource().updateParams(nv))
+  watch(tituloClases, nv => capa.set('tituloClases', nv))
 })
 
 onMounted(() => {

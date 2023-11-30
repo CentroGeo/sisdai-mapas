@@ -46,7 +46,6 @@ defineEmits(['alCambiar'])
       '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
     }"
   >
-    <!-- :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }" -->
     <input
       v-if="!sinControl"
       type="checkbox"
@@ -55,11 +54,7 @@ defineEmits(['alCambiar'])
       @input="$emit('alCambiar', $event.target.checked)"
     />
 
-    <label
-      class="nombre-variable"
-      :for="!sinControl ? idCheck : undefined"
-    >
-      <!-- <span class="figura-variable" /> -->
+    <label :for="!sinControl ? idCheck : undefined">
       <LeyendaSimbolo
         v-if="simbolo"
         :simbolo="simbolo"

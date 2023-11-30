@@ -19,6 +19,7 @@
       capa="agua_corrientes_agua_21_nal_l"
       nombre="Localidades en la Cuenca del Alto Atoyac y su área de influencia 2020"
       posicion="3"
+      tituloClases="Número de habitantes"
     />
 
     <SisdaiCapaWms

@@ -38,7 +38,7 @@ export function acomodarReglasWms({ Legend }) {
     ...clases.map(({ simbolo }) => simbolo.tamanio)
   )
 
-  console.log(tamanioSimboloMayor)
+  // console.log(tamanioSimboloMayor)
 
   return clases.map(({ titulo, simbolo }) => {
     return {

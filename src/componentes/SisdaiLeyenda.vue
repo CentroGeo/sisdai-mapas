@@ -1,16 +1,8 @@
 <script setup>
-import {
-  onMounted,
-  onUnmounted,
-  reactive,
-  shallowRef,
-  toRefs,
-  watch,
-} from 'vue'
+import { onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
+import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdai, fetchJSON } from '../utiles'
-// import { ReglasVector } from './../clases/ReglaEstiloLeyenda'
-import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
 import {
   acomodarFormaDesdeVector,
   estiloContiene,
@@ -65,6 +57,7 @@ const { sinControl, sinControlClases } = toRefs(props)
 const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
+  tituloClases: 'titulo-clases',
   visible: false,
 })
 
@@ -149,6 +142,12 @@ function vincularCapa(_capa) {
     nv => _capa.setVisible(nv)
   )
 
+  capa.tituloClases = _capa.get('tituloClases')
+  watch(
+    () => _capa.get('tituloClases'),
+    nv => (capa.tituloClases = nv)
+  )
+
   if (_capa.get('tipo') === tiposCapa.vectorial) {
     actualizarClaseVector(_capa.get('estilo2'), _capa.get('geometria'))
     watch(
@@ -180,7 +179,7 @@ onMounted(() => {
     .then(vincularCapa)
 })
 
-onUnmounted(() => {})
+// onUnmounted(() => {})
 </script>
 
 <template>
@@ -188,7 +187,7 @@ onUnmounted(() => {})
     ref="sisdaiLeyenda"
     class="sisdai-mapa-leyenda"
   >
-    <div class="control-capa">
+    <div class="leyenda-titulo">
       <LeyendaControl
         :id="`${para}-control`"
         :etiqueta="capa.nombre"
@@ -201,8 +200,21 @@ onUnmounted(() => {})
 
     <div
       v-if="capa.clases.length > 1"
-      class="m-l-1 controles-clases-capa"
+      class="leyenda-clases m-l-1"
     >
+      <p
+        class="titulo-clases m-y-1"
+        v-if="capa.tituloClases"
+      >
+        {{ capa.tituloClases }}
+      </p>
+      <!-- <select
+        class="m-y-1 titulo-clases"
+        name=""
+        id=""
+      >
+        <option value="">Número de habitantes</option>
+      </select> -->
       <LeyendaControl
         v-for="(clase, idx) in capa.clases"
         :key="`${para}-clase-control-${idx}`"
@@ -216,8 +228,23 @@ onUnmounted(() => {})
 </template>
 
 <style lang="scss">
-.sisdai-mapa-leyenda .controles-clases-capa {
-  display: flex;
-  flex-direction: column;
+.sisdai-mapa-leyenda .leyenda-clases .titulo-clases {
+  font-size: 1rem;
+  line-height: 1.125em;
+  font-weight: 380;
+}
+// .sisdai-mapa-leyenda .controles-clases-capa {
+//   display: flex;
+//   flex-direction: column;
+//   // .controlador-vis label {
+//   //   padding-top: 4px;
+//   //   padding-bottom: 4px;
+//   // }
+// }
+select {
+  width: auto;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  // #6f7271
 }
 </style>
