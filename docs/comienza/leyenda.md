@@ -1,5 +1,6 @@
 <script setup>
 import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
+import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
 </script>
 
 # Leyendas
@@ -13,6 +14,20 @@ Uso:
 ## Propiedades
 
 #### `para`
+
+Recibe el identificador de la capa con la que se quiere vincular la leyenda.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Reactivo: ✅
+
+#### `sinControl`
+
+Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula con la visibilidad de la capa.
+
+- Tipo: `Boolean`
+- Valor por defecto: `false`
+- Reactivo: ✅
 
 ## Eventos
 
@@ -43,6 +58,8 @@ Uso avanzado:
 
 ## Ejemplo
 
-<ResaAtoyac />
+<Leyenda />
 
-<<< @/.vitepress/components/usos/atoyac.vue
+<!-- <ResaAtoyac /> -->
+
+<!-- <<< @/.vitepress/components/usos/atoyac.vue -->

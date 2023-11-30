@@ -1,3 +1,5 @@
+import { estiloParaSvg } from './../utiles/estiloVectores'
+
 export const tipoEstadoCarga = {
   no: 'indefinida',
   inicio: 'iniciada',
@@ -24,25 +26,32 @@ export const DEFAULT_RELLENO_COLOR = 'rgba(255,255,255,0.4)'
 export const DEFAULT_CONTORNO_COLOR = '#3399CC'
 export const DEFAULT_CONTORNO_GROSOR = 1.25
 export const DEFAULT_CIRCULO_RADIO = 5
-export const linea = {
+export const DEFAULT_ESTILO_LINEA = {
   'contorno-color': DEFAULT_CONTORNO_COLOR,
   'contorno-grosor': DEFAULT_CONTORNO_GROSOR,
 }
-export const poligono = {
+export const DEFAULT_ESTILO_POLIGONO = {
   'relleno-color': DEFAULT_RELLENO_COLOR,
-  ...linea,
+  ...DEFAULT_ESTILO_LINEA,
 }
-export const circulo = {
+export const DEFAULT_ESTILO_CIRCULO = {
   'circulo-radio': DEFAULT_CIRCULO_RADIO,
   'circulo-relleno-color': DEFAULT_RELLENO_COLOR,
   'circulo-contorno-color': DEFAULT_CONTORNO_COLOR,
   'circulo-contorno-grosor': DEFAULT_CONTORNO_GROSOR,
 }
-export const forma = {
+export const DEFAULT_ESTILO_FORMA = {
   'forma-radio': DEFAULT_CIRCULO_RADIO,
   'forma-relleno-color': DEFAULT_RELLENO_COLOR,
   'forma-contorno-color': DEFAULT_CONTORNO_COLOR,
   'forma-contorno-grosor': DEFAULT_CONTORNO_GROSOR,
 }
 
-export const estiloVector = { ...forma, ...circulo, ...poligono, ...linea }
+export const DEFAULT_ESTILO_VECTOR = {
+  // ...DEFAULT_ESTILO_FORMA,
+  ...DEFAULT_ESTILO_CIRCULO,
+  ...DEFAULT_ESTILO_POLIGONO,
+  ...DEFAULT_ESTILO_LINEA,
+}
+
+export const DEFAULT_ESTILO_VECTOR_SVG = estiloParaSvg(DEFAULT_ESTILO_VECTOR)

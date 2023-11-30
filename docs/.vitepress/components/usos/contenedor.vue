@@ -50,10 +50,8 @@ setTimeout(() => {
       </span>
     </div>
 
-    <SisdaiMapa
-      class="dinamico"
-      :class="[...paneles.map(c => `con-${c}`), ...noElementos]"
-    >
+    <SisdaiMapa class="dinamico">
+      <!-- :class="[...paneles.map(c => `con-${c}`), ...noElementos]" -->
       <SisdaiCapaXyz />
 
       <template

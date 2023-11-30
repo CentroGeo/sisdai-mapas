@@ -44,6 +44,17 @@ export function buscarIdContenedorHtmlSisdai(tipo, { parentElement }) {
 }
 
 /**
+ * Ejecuta los metodos de un array en un objeto.
+ * @param {Object} obj
+ * @param {Function} funcion
+ * @param {String} metodo map | filter | find | some | every | etc
+ * @returns {Object}
+ */
+export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
+  return Object.fromEntries(Object.entries(obj)[metodo](funcion))
+}
+
+/**
  * Valida si un valor es de tipo número.
  * @param {any} valor a evaluar
  * @returns {Boolean} `ture` en caso de ser número.
@@ -70,6 +81,46 @@ export function esObjeto(valor) {
  */
 export function esTexto(valor) {
   return typeof valor === typeof String()
+}
+
+/**
+ * Devuelve una petición fetch con promesa de un JSON si la respuesta http es correcta, en caso
+ * contrario devolverá el objetoEsperado que se esperaba de la respuesta.
+ * @param {String} url
+ * @param {Object|Array} objetoEsperado
+ * @returns {Promise}
+ */
+export async function fetchJSON(url, objetoEsperado = {}) {
+  const response = await fetch(url)
+
+  if (response.ok) {
+    return response.json()
+  }
+
+  // eslint-disable-next-line
+  console.error(`no se pudieron cargar los datos de: ${url}`)
+  return objetoEsperado
+}
+
+/**
+ * Devuelve un objeto en texto con sintaxis de reglas css.
+ * @param {Object} obj
+ * @returns {String}
+ */
+export function objEnSintaxisCss(obj) {
+  return Object.entries(obj)
+    .map(([k, v]) => `${k}:${v};`)
+    .join('')
+}
+
+/**
+ * Compara si dos objetos son iguales utilisando la función `stringify` de la clase `JSON`.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {Boolean}
+ */
+export function stringifyIguales(a, b) {
+  return JSON.stringify(a) !== JSON.stringify(b)
 }
 
 /**
@@ -155,16 +206,6 @@ export function valorarTipoCapa(capa) {
   if (capa instanceof TileLayer) {
     return tiposCapa.xyz
   }
-}
-
-/**
- * Compara si dos objetos son iguales utilisando la función `stringify` de la clase `JSON`.
- * @param {Object} a
- * @param {Object} b
- * @returns {Boolean}
- */
-export function stringifyIguales(a, b) {
-  return JSON.stringify(a) !== JSON.stringify(b)
 }
 
 // * * * * * * * * * * * * * * * * * * //

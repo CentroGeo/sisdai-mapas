@@ -8,6 +8,7 @@ import {
   ref,
   shallowRef,
   toRefs,
+  useSlots,
   watch,
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
@@ -99,6 +100,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(Object.values(eventos))
+const slots = useSlots()
 const refMapa = shallowRef(null)
 const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 
@@ -268,12 +270,21 @@ function alTeclear({ key }) {
       break
   }
 }
+
+const paneles = ['encabezado', 'izquierda', 'derecha', 'pie']
+function panelesEnUso() {
+  // return !!slots[name]
+  return paneles
+    .filter(panel => !!slots[`panel-${panel}-vis`])
+    .map(panel => `con-panel-${panel}-vis`)
+}
 </script>
 
 <template>
   <div
     :sisdai-mapa="id"
     class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
+    :class="panelesEnUso()"
   >
     <div class="panel-encabezado-vis">
       <slot name="panel-encabezado-vis" />

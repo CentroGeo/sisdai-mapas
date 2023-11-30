@@ -8,7 +8,7 @@ import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 import { traducirEstilo } from './../utiles/estiloVectores'
-import { estiloVector, tiposCapa } from './../valores/capa'
+import { DEFAULT_ESTILO_VECTOR, tiposCapa } from './../valores/capa'
 
 const props = defineProps({
   // datos: {
@@ -22,7 +22,7 @@ const props = defineProps({
    */
   estilo: {
     type: Object,
-    default: () => estiloVector,
+    default: () => DEFAULT_ESTILO_VECTOR,
   },
 
   /**
@@ -139,12 +139,13 @@ configurar(() => {
 })
 
 const estiloConbinado = computed(() =>
-  traducirEstilo({ ...estiloVector, ...estilo.value })
+  traducirEstilo({ ...DEFAULT_ESTILO_VECTOR, ...estilo.value })
 )
 
 agregada(capa => {
   capa.setStyle(estiloConbinado.value)
   capa.set('estilo', estilo.value)
+  capa.set('estilo2', JSON.stringify(estiloConbinado.value))
   capa.set('globoInfo', globoInformativo.value)
   capa.set('geometria', geometria.value)
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
@@ -152,6 +153,7 @@ agregada(capa => {
   // reactivo
   watch(estiloConbinado, nv => capa.setStyle(nv))
   watch(estilo, nv => capa.set('estilo', nv))
+  watch(estiloConbinado, nv => capa.set('estilo2', JSON.stringify(nv)))
   watch(globoInformativo, nv => capa.set('globoInfo', nv))
   watch(geometria, nv => capa.set('geometria', nv))
   watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))

@@ -34,7 +34,7 @@ const props = defineProps({
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
    *
    * - Tipo: `String`
-   * - Valor por defecto: `geoserver`.
+   * - Valor por defecto: `'geoserver'`.
    * - Reactivo: ❌
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
@@ -42,6 +42,18 @@ const props = defineProps({
   tipoServidor: {
     type: String,
     default: 'geoserver',
+  },
+
+  /**
+   * Titulo de las clases de la leyenda, solo aplica si la capa cuenta con reglas de estilo de clasificación.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: ✅
+   */
+  tituloClases: {
+    type: String,
+    default: undefined,
   },
 
   /**
@@ -62,7 +74,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { url, parametros } = toRefs(props)
+const { url, parametros, tituloClases } = toRefs(props)
 
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
@@ -93,9 +105,11 @@ configurar(() => {
 agregada(capa => {
   // console.log(capa.getSource())
   capa.set('parametros', parametros.value)
+  capa.set('tituloClases', tituloClases.value)
 
   watch(parametros, nv => capa.set('parametros', nv))
   watch(parametros, nv => capa.getSource().updateParams(nv))
+  watch(tituloClases, nv => capa.set('tituloClases', nv))
 })
 
 onMounted(() => {

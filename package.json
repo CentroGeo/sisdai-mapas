@@ -21,14 +21,15 @@
   },
   "dependencies": {
     "ol": "^8.2.0",
-    "ol-displaced-points": "^0.3.1"
+    "ol-displaced-points": "^0.3.1",
+    "svgson": "^5.3.1"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.5.1",
+    "@rushstack/eslint-patch": "^1.6.0",
     "@testing-library/vue": "^8.0.1",
     "@vitejs/plugin-vue": "^4.5.0",
     "@vue/eslint-config-prettier": "^8.0.0",
-    "@vue/test-utils": "^2.4.2",
+    "@vue/test-utils": "^2.4.3",
     "eslint": "^8.54.0",
     "eslint-plugin-html": "^7.1.0",
     "eslint-plugin-vue": "^9.18.1z",
@@ -36,12 +37,12 @@
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
-    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.45.6",
-    "vite": "^5.0.2",
-    "vitepress": "^1.0.0-rc.29",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.45.9",
+    "vite": "^5.0.4",
+    "vitepress": "^1.0.0-rc.31",
     "vitest": "^0.34.6",
     "volar-service-vetur": "^0.0.17",
-    "vue": "^3.3.8"
+    "vue": "^3.3.9"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

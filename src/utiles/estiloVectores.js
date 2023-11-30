@@ -1,4 +1,4 @@
-import { esObjeto } from '.'
+import { ejecutarMetodoArrayEnObjeto, esObjeto } from '.'
 
 /**
  * @see https://openlayers.org/en/latest/examples/style-expressions.html
@@ -98,4 +98,65 @@ export function traducirEstilo(original) {
   })
 
   return traducido
+}
+
+export function estiloParaSvg(estilo) {
+  return ejecutarMetodoArrayEnObjeto(traducirEstilo(estilo), ([key, val]) => [
+    key.endsWith('-color') ? key.replace('-color', '') : key,
+    val,
+  ])
+}
+
+export function estiloParaSvgPunto(estilo, tipo = 'circle') {
+  const estiloSvg = estiloParaSvg(estilo)
+
+  const coincide = ejecutarMetodoArrayEnObjeto(
+    estiloSvg,
+    ([key]) => key.startsWith(tipo),
+    'filter'
+  )
+  const noCoincide = ejecutarMetodoArrayEnObjeto(
+    estiloSvg,
+    ([key]) => !key.startsWith(tipo),
+    'filter'
+  )
+  const remplazado = ejecutarMetodoArrayEnObjeto(coincide, ([key, val]) => [
+    key.replace(`${tipo}-`, ''),
+    val,
+  ])
+
+  return { ...noCoincide, ...remplazado }
+}
+
+export function estiloContiene(estilo, tipo) {
+  return Object.keys(estilo).some(key => key.startsWith(tipo))
+}
+
+export function acomodarFormaDesdeVector(estilo) {
+  // coordenadas de puntos
+  // console.log('coordenadas de puntos', estilo);
+
+  const puntos = estilo['shape-points']
+  // const angulo = estilo['shape-angle'];
+  const angulo = (2 * Math.PI) / Number(puntos)
+  // const margen = Number(estilo['shape-stroke-width']);
+  const radio = Number(estilo['shape-radius'])
+  const radio2 = estilo['shape-radius2']
+  console.log(
+    `puntos: ${puntos}; radio: ${radio}; radio2: ${radio2}; angulo: ${angulo};`
+  )
+  // console.log(diameterFromRadius(radio));
+
+  const coords = []
+
+  for (var i = 0; i < puntos; i++) {
+    coords.push([
+      radio + radio * Math.sin(i * angulo),
+      radio - radio * Math.cos(i * angulo),
+    ])
+  }
+
+  // console.log(coords, calcularLimites(coords));
+
+  return coords.toString()
 }
