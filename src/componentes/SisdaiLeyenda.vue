@@ -21,7 +21,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ✅
+   * - Reactivo: ❌
    */
   para: {
     type: String,

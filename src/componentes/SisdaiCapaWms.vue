@@ -34,7 +34,7 @@ const props = defineProps({
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
    *
    * - Tipo: `String`
-   * - Valor por defecto: `geoserver`.
+   * - Valor por defecto: `'geoserver'`.
    * - Reactivo: ❌
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
@@ -45,7 +45,11 @@ const props = defineProps({
   },
 
   /**
+   * Titulo de las clases de la leyenda, solo aplica si la capa cuenta con reglas de estilo de clasificación.
    *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: ✅
    */
   tituloClases: {
     type: String,
