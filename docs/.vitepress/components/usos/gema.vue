@@ -96,7 +96,7 @@ watch(verPanelDerecho, nv => {
     </div>
 
     <SisdaiMapa
-      class="gema con-panel-derecha-vis"
+      class="gema"
       :class="{ 'mostrar-panel-derecho': verPanelDerecho }"
       ref="mapa"
       :vista="vistaMapa"
@@ -125,10 +125,6 @@ watch(verPanelDerecho, nv => {
           estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
         "
       />
-
-      <template #panel-izquierda-vis>
-        <div></div>
-      </template>
 
       <template #panel-derecha-vis>
         <div class="panel-seleccion-capas">
