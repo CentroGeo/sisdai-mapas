@@ -6,7 +6,7 @@ function tooltipContenido(f) {
             Entidad: <b>${f.nom_edo}</b>
             <br /> 
             <a 
-              style="color: #fff;"
+              class="hipervinculo"
               href="https://codigo.conahcyt.mx/sisdai/sisdai-mapas" 
               target="_blank" 
               rel="noopener noreferrer">https://codigo.conahcyt.mx/sisdai/sisdai-mapas</a>
