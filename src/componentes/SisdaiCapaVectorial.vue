@@ -64,6 +64,19 @@ const props = defineProps({
   },
 
   /**
+   * Contenido del cuadro de información que aparecerá al pasar el cursor sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
+   *
+   * - Tipo: `String` o `Function`
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: ✅
+   */
+  cuadroInformativo: {
+    type: [String, Function],
+    default: undefined,
+  },
+
+  /**
    * Punto: Point y MultiPoint
    * Linea: LineString y MultiLineString
    * Poligono: Polygon y MultiPolygon
@@ -102,6 +115,7 @@ const {
   estilo,
   fuente,
   globoInformativo,
+  cuadroInformativo,
   geometria,
   nombreAccesiblePorElemento,
 } = toRefs(props)
@@ -146,6 +160,7 @@ agregada(capa => {
   capa.setStyle(estiloConbinado.value)
   capa.set('estilo', estilo.value)
   capa.set('globoInfo', globoInformativo.value)
+  capa.set('cuadroInfo', cuadroInformativo.value)
   capa.set('geometria', geometria.value)
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
@@ -153,6 +168,7 @@ agregada(capa => {
   watch(estiloConbinado, nv => capa.setStyle(nv))
   watch(estilo, nv => capa.set('estilo', nv))
   watch(globoInformativo, nv => capa.set('globoInfo', nv))
+  watch(cuadroInformativo, nv => capa.set('cuadroInfo', nv))
   watch(geometria, nv => capa.set('geometria', nv))
   watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
 })

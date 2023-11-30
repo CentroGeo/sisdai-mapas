@@ -2,6 +2,16 @@
 import { ref } from 'vue'
 
 const nombre = ref('Capa vectorial')
+function tooltipContenido(f) {
+  return `<p class="m-y-0">
+            Entidad: <b>${f.nom_edo}</b>
+            <br /> 
+            <a 
+              href="https://codigo.conahcyt.mx/sisdai/sisdai-mapas" 
+              target="_blank" 
+              rel="noopener noreferrer">https://codigo.conahcyt.mx/sisdai/sisdai-mapas</a>
+          <p>`
+}
 </script>
 
 <template>
@@ -26,9 +36,10 @@ const nombre = ref('Capa vectorial')
       :renderizarComoImagen="true"
       :visible="true"
       fuente="/assets/estados-poligonos.geojson"
-      :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
+      :cuadroInformativo="tooltipContenido"
     />
-
+    <!-- :cuadroInformativo="f => `Entidad: <b>${f.nom_edo}</b> <a href="#" target="_blank" rel="noopener noreferrer">Enlace</a>`" -->
+    <!-- :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`" -->
     <!-- :fuente="estados" -->
     <!-- fuente="https://cultura.conacyt.mx/pueblosindigenas-registro-api/media/capa_comunidades_indigenas/comunidades_localidad.geojson" -->
 
