@@ -19,7 +19,6 @@ export default class CuadroInfo {
      */
     this.contenedor_ = document.createElement('div')
     this.contenedor_.className = 'contenedor-globo-info-ext'
-    // this.contenedor_.className = 'contenedor-globo-info'
     this.contenedor_.setAttribute('aria-live', 'assertive')
 
     this.setVisibilidad(false, mapa)
@@ -37,12 +36,8 @@ export default class CuadroInfo {
     // Agrega el contenedor del globo al contenedor del mapa
     mapa.getViewport().appendChild(this.contenedor_)
 
-    // Agregando evento POINTERMOVE
-    // mapa.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent }) => {
-    // mapa.on(PointerEventType.POINTERDOWN, ({ dragging, originalEvent }) => {
-    // mapa.on(PointerEventType.POINTERUP, ({ dragging, originalEvent }) => {
-    // mapa.on('singleclick', ({ dragging, originalEvent }) => {
-    mapa.on('click', ({ dragging, originalEvent }) => {
+    // Agregando evento POINTERDOWN
+    mapa.on(PointerEventType.POINTERDOWN, ({ dragging, originalEvent }) => {
       // Verifica que el mapa no esté en acción de dibujo o que el cursor no esté sobre un botón
       if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
         const pixel = mapa.getEventPixel(originalEvent)
@@ -51,11 +46,11 @@ export default class CuadroInfo {
     })
 
     // Agregando el evendto POINTERLEAVE
-    mapa
-      .getTargetElement()
-      .addEventListener(PointerEventType.POINTERLEAVE, () =>
-        this.setVisibilidad(false, mapa)
-      )
+    // mapa
+    //   .getTargetElement()
+    //   .addEventListener(PointerEventType.POINTERLEAVE, () =>
+    //     this.setVisibilidad(false, mapa)
+    //   )
   }
 
   /**

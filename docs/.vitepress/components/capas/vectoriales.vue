@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue'
 
-const nombre = ref('Capa vectorial')
 function tooltipContenido(f) {
   return `<p class="m-y-0">
             Entidad: <b>${f.nom_edo}</b>
@@ -12,6 +11,22 @@ function tooltipContenido(f) {
               target="_blank" 
               rel="noopener noreferrer">https://codigo.conahcyt.mx/sisdai/sisdai-mapas</a>
           </p>`
+}
+
+const estadoCuadroInfo = ref(false)
+
+function globoInformativo(feature) {
+  if (Number(feature.cvegeo) >= 30) {
+    // console.log('abrir popup')
+    estadoCuadroInfo.value = true
+    // console.log(feature)
+    setTimeout(() => {
+      // console.log('cerrar popup')
+      estadoCuadroInfo.value = false
+    }, 2000)
+  }
+
+  return `Entidad: <b>${feature.nom_edo}</b>`
 }
 </script>
 
@@ -32,13 +47,17 @@ function tooltipContenido(f) {
 
     <SisdaiCapaVectorial
       id="idVectorial"
-      :nombre="nombre"
+      nombre="Capa vectorial"
       :posicion="2"
       :renderizarComoImagen="true"
       :visible="true"
       fuente="/assets/estados-poligonos.geojson"
-      :cuadroInformativo="tooltipContenido"
+      :globoInformativo="globoInformativo"
+      :popup="{ contenido: 'jejeje', abierto: false }"
+      :hover="f => f"
+      :click="f => f"
     />
+    <!-- :cuadroInformativo="tooltipContenido" -->
     <!-- :cuadroInformativo="f => `Entidad: <b>${f.nom_edo}</b> <a href="#" target="_blank" rel="noopener noreferrer">Enlace</a>`" -->
     <!-- :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`" -->
     <!-- :fuente="estados" -->
