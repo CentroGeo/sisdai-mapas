@@ -39,7 +39,13 @@ export default class CuadroInfo {
     // Agregando evento POINTERDOWN
     mapa.on(PointerEventType.POINTERDOWN, ({ dragging, originalEvent }) => {
       // Verifica que el mapa no esté en acción de dibujo o que el cursor no esté sobre un botón
-      if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+      if (
+        !(
+          dragging ||
+          originalEvent.target.closest('.sisdai-mapa-control') ||
+          originalEvent.target.closest('.contenedor-globo-info-ext')
+        )
+      ) {
         const pixel = mapa.getEventPixel(originalEvent)
         this.mostrar(this.buscarContenidoEnPixel(pixel, mapa), pixel, mapa)
       }
@@ -168,13 +174,13 @@ export default class CuadroInfo {
    * @param {import("ol/Map.js").default} mapa si este parámetro es definido cambiará el cursor a
    * `pointer` cuando la visibilidad del globo sea `true`.
    */
-  setVisibilidad(valor, mapa = undefined) {
+  setVisibilidad(valor) {
     this.contenedor_.style.display = valor ? 'block' : 'none'
 
-    if (mapa) {
-      /** REPENSAR */
-      mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
-    }
+    // if (mapa) {
+    //   /** REPENSAR */
+    //   mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
+    // }
   }
 }
 

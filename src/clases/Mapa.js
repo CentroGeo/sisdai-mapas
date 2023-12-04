@@ -21,8 +21,8 @@ export default class Mapa extends olMap {
 
     this.eventos = emits
 
+    this.cuadroInfo = new CuadroInfo(this, 0)
     this.globoInfo = new GloboInfo(this)
-    this.cuadroInfo = new CuadroInfo(this)
 
     this.navegacionTeclado = new NavegacionTeclado(this)
 

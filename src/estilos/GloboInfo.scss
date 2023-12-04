@@ -1,29 +1,33 @@
-.contenedor-globo-info,
-.contenedor-globo-info-ext {
-  position: absolute;
+.sisdai-mapa {
+  .contenedor-globo-info,
+  .contenedor-globo-info-ext {
+    position: absolute;
 
-  .cuerpo-globo-info {
-    font-size: 11px;
-    font-weight: 400;
+    .cuerpo-globo-info {
+      // font-size: 11px;
+      // font-weight: 400;
 
-    a,
-    .hipervinculo {
-      color: #668bff;
-      &:visited {
-        color: #cf99ff;
-      }
-      &:hover {
-        color: #8999cc;
-      }
-      &:focus-visible {
+      a,
+      .hipervinculo {
         color: #668bff;
-        outline: 2px dashed #668bff;
+        &:visited {
+          color: #cf99ff;
+        }
+        &:hover {
+          color: #8999cc;
+        }
+        &:focus-visible {
+          color: #668bff;
+          outline: 2px dashed #668bff;
+        }
       }
     }
   }
-}
 
-.contenedor-globo-info-ext {
-  min-height: 0;
-  padding: 0.5rem;
+  .contenedor-globo-info-ext {
+    min-height: 0;
+    // padding: 0.5rem;
+    // width: auto;
+    max-width: 322px;
+  }
 }

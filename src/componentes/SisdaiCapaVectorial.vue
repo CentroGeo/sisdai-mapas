@@ -4,7 +4,7 @@ import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
 import VectorEventType from 'ol/source/VectorEventType'
-import { computed, onMounted, shallowRef, toRefs, watch } from 'vue'
+import { computed, shallowRef, toRefs, watch } from 'vue'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 import { traducirEstilo } from './../utiles/estiloVectores'
@@ -59,7 +59,7 @@ const props = defineProps({
    * - Reactivo: ✅
    */
   globoInformativo: {
-    type: [String, Function],
+    type: [String, Function, Object],
     default: undefined,
   },
 
@@ -160,8 +160,8 @@ agregada(capa => {
   capa.setStyle(estiloConbinado.value)
   capa.set('estilo', estilo.value)
   capa.set('estilo2', JSON.stringify(estiloConbinado.value))
-  capa.set('globoInfo', globoInformativo.value)
   capa.set('cuadroInfo', cuadroInformativo.value)
+  capa.set('globoInfo', globoInformativo.value)
   capa.set('geometria', geometria.value)
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
@@ -169,15 +169,13 @@ agregada(capa => {
   watch(estiloConbinado, nv => capa.setStyle(nv))
   watch(estilo, nv => capa.set('estilo', nv))
   watch(estiloConbinado, nv => capa.set('estilo2', JSON.stringify(nv)))
-  watch(globoInformativo, nv => capa.set('globoInfo', nv))
   watch(cuadroInformativo, nv => capa.set('cuadroInfo', nv))
+  watch(globoInformativo, nv => capa.set('globoInfo', nv))
   watch(geometria, nv => capa.set('geometria', nv))
   watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
 })
 
-onMounted(() => {
-  // console.log('sisdaiCapaVectorial', props.id)
-})
+// onMounted(() => {})
 </script>
 
 <template>

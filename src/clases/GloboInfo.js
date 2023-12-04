@@ -39,9 +39,19 @@ export default class GloboInfo {
     // Agregando evento POINTERMOVE
     mapa.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent }) => {
       // Verifica que el mapa no esté en acción de dibujo o que el cursor no esté sobre un botón
-      if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+      // if (mapa.cuadroInfo.contenedor_.style.display === 'block') return
+      if (
+        !(
+          dragging ||
+          originalEvent.target.closest('.sisdai-mapa-control') ||
+          originalEvent.target.closest('.contenedor-globo-info-ext') ||
+          mapa.cuadroInfo.contenedor_.style.display === 'block'
+        )
+      ) {
         const pixel = mapa.getEventPixel(originalEvent)
         this.mostrar(this.buscarContenidoEnPixel(pixel, mapa), pixel, mapa)
+      } else {
+        this.setVisibilidad(false, mapa)
       }
     })
 
@@ -168,13 +178,16 @@ export default class GloboInfo {
    * @param {import("ol/Map.js").default} mapa si este parámetro es definido cambiará el cursor a
    * `pointer` cuando la visibilidad del globo sea `true`.
    */
-  setVisibilidad(valor, mapa = undefined) {
+  setVisibilidad(valor /* , mapa = undefined */) {
     this.contenedor_.style.display = valor ? 'block' : 'none'
 
-    if (mapa) {
-      /** REPENSAR */
-      mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
-    }
+    // if (mapa) {
+    //   /** REPENSAR
+    //    * quisá esto no dependa del tootipo, puede cambiarse el cursor solo si es un elemento
+    //    * interactuable al dar click, como un vector
+    //    */
+    //   mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
+    // }
   }
 }
 
