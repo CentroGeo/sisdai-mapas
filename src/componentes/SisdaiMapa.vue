@@ -304,7 +304,9 @@ function panelesEnUso() {
       @focusin="focoEnMapa = true"
       @focusout="focoEnMapa = false"
       @keydown="alTeclear"
-    />
+    >
+      <div>hola</div>
+    </div>
 
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />

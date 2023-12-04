@@ -93,7 +93,7 @@ function jardines(f) {
         'circulo-relleno-color': '#58ADA8',
       }"
       :cuadroInformativo="jardines"
-      :cuadroInformativo2="{ contenido: cuadroInformativo, abierto: false }"
+      :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }"
     />
 
     <template #panel-pie-vis>

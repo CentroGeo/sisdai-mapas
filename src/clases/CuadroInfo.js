@@ -30,7 +30,7 @@ export default class CuadroInfo {
      * @type {!HTMLElement}
      */
     this.boton_ = document.createElement('button')
-    this.boton_.className = 'boton-icono'
+    this.boton_.classList = 'boton-icono boton-secundario boton-chico'
     this.boton_.id = 'boton_cerrar'
     this.contenedor_.appendChild(this.boton_)
 
