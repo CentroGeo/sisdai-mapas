@@ -4,8 +4,9 @@
     position: absolute;
 
     .cuerpo-globo-info {
-      // font-size: 11px;
-      // font-weight: 400;
+      font-size: 11px;
+      font-weight: 400;
+      display: block;
 
       a,
       .hipervinculo {
@@ -26,8 +27,9 @@
 
   .contenedor-globo-info-ext {
     min-height: 0;
-    // padding: 0.5rem;
-    // width: auto;
     max-width: 322px;
+    .boton-icono {
+      float: right;
+    }
   }
 }

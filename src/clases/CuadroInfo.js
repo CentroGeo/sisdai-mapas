@@ -29,6 +29,23 @@ export default class CuadroInfo {
      * @private
      * @type {!HTMLElement}
      */
+    this.boton_ = document.createElement('button')
+    this.boton_.className = 'boton-icono'
+    this.boton_.id = 'boton_cerrar'
+    this.contenedor_.appendChild(this.boton_)
+
+    /**
+     * @private
+     * @type {!HTMLElement}
+     */
+    this.pictograma_ = document.createElement('span')
+    this.pictograma_.className = 'icono-cerrar'
+    this.boton_.appendChild(this.pictograma_)
+
+    /**
+     * @private
+     * @type {!HTMLElement}
+     */
     this.cuerpo_ = document.createElement('div')
     this.cuerpo_.className = 'cuerpo-globo-info'
     this.contenedor_.appendChild(this.cuerpo_)
@@ -57,6 +74,9 @@ export default class CuadroInfo {
     //   .addEventListener(PointerEventType.POINTERLEAVE, () =>
     //     this.setVisibilidad(false, mapa)
     //   )
+    document.getElementById('boton_cerrar').addEventListener('click', () => {
+      this.setVisibilidad(false, mapa)
+    })
   }
 
   /**
