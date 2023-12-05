@@ -98,8 +98,8 @@ export default class CuadroInfo {
 
   mostrar(contenido, pixel, mapa) {
     if (contenido !== undefined) {
-      this.setVisibilidad(true, mapa)
-      this.setContenido(contenido)
+      // this.setVisibilidad(true, mapa)
+      // this.setContenido(contenido)
       this.setPosicionDesdePixel(pixel, mapa.getViewport())
     } else {
       this.setVisibilidad(false, mapa)
@@ -229,4 +229,31 @@ export function buscarContenidoCapaEnPixel(pixel, mapa, atributo) {
       ? procesarContenido(contenido, feature)
       : undefined
   })
+}
+
+/**
+ *
+ * @param {Array<Number>} coordenadas
+ * @param {HTMLElement} contenedor
+ * @param {Number} margen
+ */
+export function calcularPosicionInfo(coordenadas, contenedor, margen = 8) {
+  var x = coordenadas[0],
+    y = coordenadas[1]
+
+  if (contenedor === undefined) return { x, y }
+
+  x =
+    x -
+    (x > contenedor.parentElement.clientWidth / 2
+      ? contenedor.clientWidth + margen
+      : -margen)
+
+  y =
+    y -
+    (y > contenedor.parentElement.clientHeight / 2
+      ? contenedor.clientHeight + margen
+      : -margen)
+
+  return { x, y }
 }

@@ -1,5 +1,6 @@
 <script setup>
-import { computed, toRefs } from 'vue'
+import { ref, toRefs, watch } from 'vue'
+import { calcularPosicionInfo } from './../../clases/CuadroInfo'
 
 const props = defineProps({
   contenido: {
@@ -8,7 +9,7 @@ const props = defineProps({
   },
   pixel: {
     type: Array,
-    default: undefined,
+    default: () => [0, 0],
   },
   visible: {
     type: Boolean,
@@ -16,33 +17,28 @@ const props = defineProps({
   },
 })
 
-const { contenido, pixel } = toRefs(props)
+const { contenido, pixel, visible } = toRefs(props)
+const sisdaiGloboInfo = ref()
+const posicion = ref(calcularPosicionInfo(pixel.value))
 
-const posicionCalculada = computed(() => {
-  if (pixel.value === undefined) {
-    return [undefined, undefined]
-  }
-
-  return pixel.value
-})
+function calcular() {
+  posicion.value = calcularPosicionInfo(pixel.value, sisdaiGloboInfo.value)
+}
+watch(pixel, calcular)
 </script>
 
 <template>
   <div
-    class="contenedor-globo-info"
+    ref="sisdaiGloboInfo"
+    class="ol-unselectable contenedor-globo-info"
     :class="{ esconder: !visible }"
-    :style="`left: ${posicionCalculada[0]}px; top: ${posicionCalculada[1]}px;`"
+    :style="`left: ${posicion.x}px; top: ${posicion.y}px;`"
     aria-live="assertive"
+    @mouseover="calcular"
   >
     <div
       class="cuerpo-globo-info"
       v-html="contenido"
     />
-    <!-- <div class="cuerpo-globo-info">
-      <b>Lorem ipsum dolor sit amet</b> consectetur adipisicing elit. Odio
-      omnis, quas sequi mollitia dolorem enim molestiae tempore temporibus
-      fugiat esse sed, voluptatem expedita porro cupiditate minima unde quaerat
-      corporis. Nihil.
-    </div> -->
   </div>
 </template>

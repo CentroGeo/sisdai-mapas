@@ -5,7 +5,8 @@ const eventos = {
 </script>
 
 <script setup>
-import { computed, toRefs } from 'vue'
+import { onUnmounted, ref, toRefs, watch } from 'vue'
+import { calcularPosicionInfo } from '../../clases/CuadroInfo'
 
 const props = defineProps({
   contenido: {
@@ -14,7 +15,7 @@ const props = defineProps({
   },
   pixel: {
     type: Array,
-    default: undefined,
+    default: () => [0, 0],
   },
   visible: {
     type: Boolean,
@@ -24,26 +25,35 @@ const props = defineProps({
 
 const emits = defineEmits(Object.values(eventos))
 
-const { contenido, pixel } = toRefs(props)
+const { contenido, pixel, visible } = toRefs(props)
+const sisdaiCuadroInfo = ref()
+const posicion = ref(calcularPosicionInfo(pixel.value))
 
-const posicionCalculada = computed(() => {
-  if (pixel.value === undefined) {
-    return [undefined, undefined]
+function calcular() {
+  posicion.value = calcularPosicionInfo(pixel.value, sisdaiCuadroInfo.value, 0)
+}
+
+var intervalo
+watch(visible, nv => {
+  if (nv) {
+    intervalo = setInterval(calcular, 100)
+  } else {
+    clearInterval(intervalo)
   }
-
-  return pixel.value
 })
+onUnmounted(() => clearInterval(intervalo))
 </script>
 
 <template>
   <div
+    ref="sisdaiCuadroInfo"
     class="contenedor-globo-info-ext"
     :class="{ esconder: !visible }"
-    :style="`left: ${posicionCalculada[0]}px; top: ${posicionCalculada[1]}px;`"
+    :style="`left: ${posicion.x}px; top: ${posicion.y}px;`"
     aria-live="assertive"
   >
     <button
-      class="boton-icono boton-chico"
+      class="boton-icono boton-chico z"
       @click="emits(eventos.alCerrar)"
     >
       <span class="icono-cerrar" />
@@ -52,11 +62,5 @@ const posicionCalculada = computed(() => {
       class="cuerpo-globo-info"
       v-html="contenido"
     />
-    <!-- <div class="cuerpo-globo-info">
-      <b>Lorem ipsum dolor sit amet</b> consectetur adipisicing elit. Odio
-      omnis, quas sequi mollitia dolorem enim molestiae tempore temporibus
-      fugiat esse sed, voluptatem expedita porro cupiditate minima unde quaerat
-      corporis. Nihil.
-    </div> -->
   </div>
 </template>

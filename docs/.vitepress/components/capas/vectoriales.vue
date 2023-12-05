@@ -1,6 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-
 function cuadroInformativo(f) {
   return `<p class="m-y-0">
             Entidad: <b>${f.nom_edo}</b>
@@ -13,33 +11,11 @@ function cuadroInformativo(f) {
           </p>`
 }
 
-const estadoCuadroInfo = ref(false)
-
-function globoInformativo(feature) {
-  if (Number(feature.cvegeo) >= 30) {
-    // console.log('abrir popup')
-    estadoCuadroInfo.value = true
-    // console.log(feature)
-    setTimeout(() => {
-      // console.log('cerrar popup')
-      estadoCuadroInfo.value = false
-    }, 2000)
-  }
-
-  return `Entidad: <b>${feature.nom_edo}</b>`
-}
-
-const mapa = ref()
-
 function jardines(f) {
   return `<p class="m-t-0 m-b--6"><b>${f.nom_jardin}</b><br />
     <a class="m-t-1" href="${f.www}" target="_blank" rel="noopener noreferrer">${f.www}</a>
     </p>`
 }
-
-// mapa.value.popup(() => {
-//   return { contenido: '', pixel: [] }
-// })
 </script>
 
 <template>
@@ -48,7 +24,6 @@ function jardines(f) {
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
-    ref="mapa"
   >
     <template #panel-encabezado-vis>
       <div>
@@ -71,12 +46,6 @@ function jardines(f) {
       }"
       :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
     />
-    <!-- :popup="{ contenido: 'jejeje', abierto: false }" -->
-    <!-- :cuadroInformativo="tooltipContenido" -->
-    <!-- :cuadroInformativo="f => `Entidad: <b>${f.nom_edo}</b> <a href="#" target="_blank" rel="noopener noreferrer">Enlace</a>`" -->
-    <!-- :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`" -->
-    <!-- :fuente="estados" -->
-    <!-- fuente="https://cultura.conacyt.mx/pueblosindigenas-registro-api/media/capa_comunidades_indigenas/comunidades_localidad.geojson" -->
 
     <SisdaiCapaVectorial
       id="jardines"
@@ -91,9 +60,6 @@ function jardines(f) {
       :cuadroInformativo="jardines"
       :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }"
     />
-    <!--
-      
-    -->
 
     <template #panel-pie-vis>
       <SisdaiLeyenda para="idVectorial" />
@@ -107,7 +73,9 @@ function jardines(f) {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
+  // width: 100%;
+  width: auto;
+  max-width: 100%;
 }
 
 .m-b--6 {

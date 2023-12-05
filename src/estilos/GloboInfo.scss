@@ -2,9 +2,14 @@
   .contenedor-globo-info,
   .contenedor-globo-info-ext {
     position: absolute;
+    visibility: visible;
 
     &.esconder {
       display: none;
+    }
+    &.invisible {
+      visibility: hidden;
+      z-index: 0;
     }
 
     .cuerpo-globo-info {

@@ -183,9 +183,9 @@ function abrirGloboInfo(map, originalEvent) {
   const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
 
   if (contenido !== undefined) {
-    globoInfo.pixel = pixel
-    globoInfo.contenido = contenido
     globoInfo.visible = true
+    globoInfo.contenido = contenido
+    globoInfo.pixel = pixel
   } else {
     globoInfo.visible = false
   }
@@ -195,10 +195,10 @@ function abrirCuadroInfo(map, originalEvent) {
   const contenido = buscarContenidoCapaEnPixel(pixel, map, 'cuadroInfo')
 
   if (contenido !== undefined) {
-    cuadroInfo.pixel = pixel
-    cuadroInfo.contenido = contenido
     cuadroInfo.visible = true
     globoInfo.visible = false
+    cuadroInfo.contenido = contenido
+    cuadroInfo.pixel = pixel
   } else {
     cuadroInfo.visible = false
   }
@@ -209,12 +209,18 @@ function olPointerMove({ dragging, originalEvent, map }) {
       abrirCuadroInfo(map, originalEvent)
     }
     abrirGloboInfo(map, originalEvent)
+  } else {
+    globoInfo.visible = false
   }
 }
 function olClick({ dragging, originalEvent, map }) {
   if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
     abrirCuadroInfo(map, originalEvent)
   }
+}
+function olPointerLeave() {
+  // console.log('salió')
+  globoInfo.visible = false
 }
 
 /**
@@ -243,6 +249,9 @@ onMounted(() => {
   mapa().on(MapEventType.MOVEEND, olMoveend)
   mapa().on(EventType.CLICK, olClick)
   mapa().on(PointerEventType.POINTERMOVE, olPointerMove)
+  mapa()
+    .getTargetElement()
+    .addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
 
   ariaCanvas(elementosDescriptivos.value)
   watch(elementosDescriptivos, ariaCanvas)
@@ -252,6 +261,10 @@ onUnmounted(() => {
   mapa().un(MapEventType.MOVEEND, olMoveend)
   mapa().un(EventType.CLICK, olClick)
   mapa().un(PointerEventType.POINTERMOVE, olPointerMove)
+
+  mapa()
+    .getTargetElement()
+    .removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
