@@ -70,10 +70,6 @@ function jardines(f) {
         'relleno-color': 'transparente',
       }"
       :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
-      :cuadroInformativo="cuadroInformativo"
-      :cuadroInformativo2="{ contenido: cuadroInformativo, abierto: false }"
-      :hover="f => f"
-      :click="f => f"
     />
     <!-- :popup="{ contenido: 'jejeje', abierto: false }" -->
     <!-- :cuadroInformativo="tooltipContenido" -->
@@ -95,6 +91,9 @@ function jardines(f) {
       :cuadroInformativo="jardines"
       :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }"
     />
+    <!--
+      
+    -->
 
     <template #panel-pie-vis>
       <SisdaiLeyenda para="idVectorial" />

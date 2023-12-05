@@ -214,3 +214,19 @@ export class Posicion {
     this.y = array[1] | 0
   }
 }
+
+export function procesarContenido(contenido, feature) {
+  return typeof contenido === 'function'
+    ? `${contenido(feature.getProperties())}`
+    : contenido
+}
+
+export function buscarContenidoCapaEnPixel(pixel, mapa, atributo) {
+  return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
+    const contenido = capa.get(atributo)
+
+    return contenido !== undefined
+      ? procesarContenido(contenido, feature)
+      : undefined
+  })
+}
