@@ -1,41 +1,63 @@
 <script setup>
-function cuadroInformativo(f) {
-  return `<p class="m-y-0">
-            Entidad: <b>${f.nom_edo}</b>
-            <br /> 
-            <a 
-              class="hipervinculo"
-              href="https://codigo.conahcyt.mx/sisdai/sisdai-mapas" 
-              target="_blank" 
-              rel="noopener noreferrer">https://codigo.conahcyt.mx/sisdai/sisdai-mapas</a>
-          </p>`
+function esURL(str) {
+  try {
+    new URL(str)
+    return true
+  } catch (error) {
+    return false
+  }
 }
 
-function jardines(f) {
-  return `<p class="m-t-0 m-b--6"><b>${f.nom_jardin}</b><br />
-    <a class="m-t-1" href="${f.www}" target="_blank" rel="noopener noreferrer">${f.www}</a>
-    </p>`
+function cuadrojardines(f) {
+  return `<p class="m-t-0 m-b--6"><b>${f.nom_jardin}</b><br />${
+    esURL(f.www)
+      ? `<a class="m-t-1" href="${f.www}" target="_blank" rel="noopener noreferrer">${f.www}</a>`
+      : `<i class="m-t-1">${f.www}</i>`
+  }</p>`
 }
 </script>
 
 <template>
   <SisdaiMapa
-    class="sin-cargador con-panel-encabezado-vis con-panel-pie-vis"
+    class="mapa-jardines"
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
   >
-    <template #panel-encabezado-vis>
-      <div>
-        <p class="m-t-0">Ejemplo del uso de capa vectorial.</p>
+    <template #panel-izquierda-vis>
+      <div class="m-r-2">
+        <h4 class="vis-titulo-visualizacion">
+          Red de Jardines Etnobiológicos Conahcyt
+        </h4>
+        <p class="vis-leyenda">
+          Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de
+          México apoyados por Consejo Nacional de Humanidades, Ciencias y
+          Tecnologías (Conahcyt).
+        </p>
+
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ipsam
+          facilis fugiat dignissimos iste non nulla distinctio aliquid, alias,
+          possimus ratione eius dicta excepturi est eum enim accusamus magnam
+          voluptatum.
+        </p>
+
+        <SisdaiLeyenda
+          para="entidades"
+          sinControl
+        />
+        <SisdaiLeyenda
+          para="jardines"
+          sinControl
+        />
       </div>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
 
     <SisdaiCapaVectorial
-      id="idVectorial"
-      nombre="Capa vectorial"
+      id="entidades"
+      nombre="Entidades"
       :posicion="2"
       :renderizarComoImagen="true"
       :visible="true"
@@ -57,28 +79,71 @@ function jardines(f) {
         'circulo-contorno-color': '#232323',
         'circulo-relleno-color': '#58ADA8',
       }"
-      :cuadroInformativo="jardines"
-      :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }"
+      :cuadroInformativo="cuadrojardines"
     />
+    <!-- :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }" -->
 
     <template #panel-pie-vis>
-      <SisdaiLeyenda para="idVectorial" />
-      <SisdaiLeyenda para="jardines" />
+      <p class="vis-fuente m-b-0">
+        Fuente: Datos de origen del Consejo Nacional de Humanidades, Ciencias y
+        Tecnologías (Conahcyt), con corte al 21 de septiembre de 2023.
+      </p>
+      <a
+        href="#"
+        class="boton boton-primario boton-chico m-t-2"
+      >
+        Descargar datos <span class="icono-archivo-descargar" />
+        <span class="a11y-solo-lectura">
+          Archivo descargable en formato: zip, peso: 30 kB
+        </span>
+      </a>
     </template>
   </SisdaiMapa>
 </template>
 
 <style lang="scss">
-.cuerpo-globo-info a {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  // width: 100%;
-  width: auto;
-  max-width: 100%;
-}
+@import 'sisdai-css/src/_variables';
+@import 'sisdai-css/src/_mixins';
 
-.m-b--6 {
-  margin-bottom: -6px;
+.sisdai-mapa.mapa-jardines {
+  .cuerpo-globo-info a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // width: 100%;
+    width: auto;
+    max-width: 100%;
+  }
+
+  .m-b--6 {
+    margin-bottom: -6px;
+  }
+
+  .panel-pie-vis {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @include mediaquery('esc') {
+    // max-height: none !important;
+    // grid-template-rows: auto 450px minmax(auto, 85px) !important; // los paneles en medio del encabezado y pie no se desborden
+    grid-template-rows: 0 1fr auto !important; // los paneles en medio del encabezado y pie no se desborden
+
+    .panel-izquierda-vis {
+      grid-row-end: span 2 !important; // para que el panel izquierdo use dos renglones
+    }
+    .panel-pie-vis {
+      grid-column-start: 2 !important; // para que el pie empiece en la segunda columna
+      flex-direction: row;
+      gap: 16px;
+      overflow: hidden;
+
+      a.boton {
+        white-space: nowrap;
+        height: fit-content;
+      }
+    }
+  }
 }
 </style>

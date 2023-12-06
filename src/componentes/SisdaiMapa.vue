@@ -13,10 +13,10 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import { buscarContenidoCapaEnPixel } from '../clases/CuadroInfo'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
+import { buscarContenidoCapaEnPixel } from './../utiles/globoInfo'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
 import CuadroInformativo from './info/InfoCuadro.vue'

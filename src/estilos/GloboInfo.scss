@@ -40,6 +40,9 @@
     min-width: 200px;
     width: auto;
     max-width: 322px;
+    transition:
+      top 0.1s linear,
+      left 0.1s linear;
 
     .boton-icono {
       float: right;

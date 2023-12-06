@@ -1,6 +1,6 @@
 <script setup>
 import { ref, toRefs, watch } from 'vue'
-import { calcularPosicionInfo } from './../../clases/CuadroInfo'
+import { calcularPosicionInfo } from './../../utiles/globoInfo'
 
 const props = defineProps({
   contenido: {
