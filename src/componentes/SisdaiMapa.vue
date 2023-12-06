@@ -1,5 +1,7 @@
 <script setup>
 import MapEventType from 'ol/MapEventType'
+import EventType from 'ol/events/EventType'
+import PointerEventType from 'ol/pointer/EventType'
 import {
   computed,
   onMounted,
@@ -14,8 +16,11 @@ import {
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
+import { buscarContenidoCapaEnPixel } from './../utiles/globoInfo'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
+import CuadroInformativo from './info/InfoCuadro.vue'
+import GloboInformativo from './info/InfoGlobo.vue'
 import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
 
 const props = defineProps({
@@ -158,6 +163,66 @@ function olMoveend({ map }) {
   }
 }
 
+const globoInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false,
+})
+const cuadroInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false,
+})
+
+function abrirGloboInfo(map, originalEvent) {
+  if (cuadroInfo.visible) {
+    globoInfo.visible = false
+    return
+  }
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
+
+  if (contenido !== undefined) {
+    globoInfo.visible = true
+    globoInfo.contenido = contenido
+    globoInfo.pixel = pixel
+  } else {
+    globoInfo.visible = false
+  }
+}
+function abrirCuadroInfo(map, originalEvent) {
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'cuadroInfo')
+
+  if (contenido !== undefined) {
+    cuadroInfo.visible = true
+    globoInfo.visible = false
+    cuadroInfo.contenido = contenido
+    cuadroInfo.pixel = pixel
+  } else {
+    cuadroInfo.visible = false
+  }
+}
+function olPointerMove({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    if (!cuadroInfo.visible) {
+      abrirCuadroInfo(map, originalEvent)
+    }
+    abrirGloboInfo(map, originalEvent)
+  } else {
+    globoInfo.visible = false
+  }
+}
+function olClick({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    abrirCuadroInfo(map, originalEvent)
+  }
+}
+function olPointerLeave() {
+  // console.log('salió')
+  globoInfo.visible = false
+}
+
 /**
  * Asigna al canvas valores de accesibilidad ARIA.
  * @param {String} describedby
@@ -182,6 +247,11 @@ onMounted(() => {
   mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
   mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
+  mapa().on(EventType.CLICK, olClick)
+  mapa().on(PointerEventType.POINTERMOVE, olPointerMove)
+  mapa()
+    .getTargetElement()
+    .addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
 
   ariaCanvas(elementosDescriptivos.value)
   watch(elementosDescriptivos, ariaCanvas)
@@ -189,6 +259,12 @@ onMounted(() => {
 
 onUnmounted(() => {
   mapa().un(MapEventType.MOVEEND, olMoveend)
+  mapa().un(EventType.CLICK, olClick)
+  mapa().un(PointerEventType.POINTERMOVE, olPointerMove)
+
+  mapa()
+    .getTargetElement()
+    .removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
@@ -304,7 +380,19 @@ function panelesEnUso() {
       @focusin="focoEnMapa = true"
       @focusout="focoEnMapa = false"
       @keydown="alTeclear"
-    />
+    >
+      <GloboInformativo
+        :pixel="globoInfo.pixel"
+        :contenido="globoInfo.contenido"
+        :visible="globoInfo.visible"
+      />
+      <CuadroInformativo
+        :pixel="cuadroInfo.pixel"
+        :contenido="cuadroInfo.contenido"
+        :visible="cuadroInfo.visible"
+        @alCerrar="cuadroInfo.visible = false"
+      />
+    </div>
 
     <div class="panel-derecha-vis">
       <slot name="panel-derecha-vis" />

@@ -16,7 +16,7 @@ const { simbolo } = toRefs(props)
 
 <template>
   <svg
-    class="figura-variable nombre"
+    class="figura-variable"
     :style="{
       '--controlador-vis-figura-alto': `${simbolo.tamanio}px`,
       'min-width': `${simbolo.tamanioSimboloMayorMinimo}px`,
@@ -26,5 +26,3 @@ const { simbolo } = toRefs(props)
     v-html="simbolo.xml"
   ></svg>
 </template>
-
-<style lang="scss"></style>

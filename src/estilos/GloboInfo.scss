@@ -1,3 +1,52 @@
-.contenedor-globo-info {
-  position: absolute;
+.sisdai-mapa {
+  .contenedor-globo-info,
+  .contenedor-globo-info-ext {
+    position: absolute;
+    visibility: visible;
+
+    &.esconder {
+      display: none;
+    }
+    &.invisible {
+      visibility: hidden;
+      z-index: 0;
+    }
+
+    .cuerpo-globo-info {
+      font-size: 11px;
+      font-weight: 400;
+      display: block;
+
+      a,
+      .hipervinculo {
+        color: #668bff;
+        &:visited {
+          color: #cf99ff;
+        }
+        &:hover {
+          color: #8999cc;
+        }
+        &:focus-visible {
+          color: #668bff;
+          outline: 2px dashed #668bff;
+        }
+      }
+    }
+  }
+
+  .contenedor-globo-info-ext {
+    // display: none;
+    min-height: 0;
+    min-width: 200px;
+    width: auto;
+    max-width: 322px;
+    transition:
+      top 0.1s linear,
+      left 0.1s linear;
+
+    .boton-icono {
+      float: right;
+      margin-right: 0;
+    }
+  }
 }

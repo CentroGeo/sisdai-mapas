@@ -6,7 +6,8 @@ import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
-import GloboInfo from './GloboInfo'
+// import CuadroInfo from './CuadroInfo'
+// import GloboInfo from './GloboInfo'
 import NavegacionTeclado from './NavegacionTeclado'
 
 /**
@@ -20,7 +21,8 @@ export default class Mapa extends olMap {
 
     this.eventos = emits
 
-    this.globoInfo = new GloboInfo(this)
+    // this.cuadroInfo = new CuadroInfo(this, 0)
+    // this.globoInfo = new GloboInfo(this)
 
     this.navegacionTeclado = new NavegacionTeclado(this)
 
