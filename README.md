@@ -18,7 +18,7 @@ la Investigación ([Sisdai](https://sisdai.conahcyt.mx)).
 
 Instalación y descarga de la biblioteca desde GitHub:
 
-```bash
+```sh
 npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
 ```
 
@@ -26,7 +26,7 @@ npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
 
 En el archivo que se desee utilizar el componente:
 
-```javascript
+```js
 import Vue from 'vue'
 import SisdaiMapas from 'sisdai-mapas'
 
@@ -55,14 +55,14 @@ Para un uso avanzado revisa la documentación.
 Para revisar la documentación en local primero clona este repositorio y accede a
 la carpeta del proyecto con:
 
-```bash
+```sh
 git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas
 cd sisdai-mapas
 ```
 
 Seguido de la instalación de las dependencias y ejecución de vitepress:
 
-```bash
+```sh
 npm install
 npm run docs
 ```
