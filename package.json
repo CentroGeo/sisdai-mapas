@@ -10,7 +10,7 @@
   "scripts": {
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:dev": "vitepress dev docs",
+    "docs:dev": "npm run reinstall && npm run docs",
     "docs:preview": "vitepress preview docs",
     "format": "prettier . --write",
     "format-lint": "npm run format && npm run lint",
@@ -27,22 +27,22 @@
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.6.0",
     "@testing-library/vue": "^8.0.1",
-    "@vitejs/plugin-vue": "^4.5.1",
+    "@vitejs/plugin-vue": "^4.5.2",
     "@vue/eslint-config-prettier": "^8.0.0",
     "@vue/test-utils": "^2.4.3",
     "eslint": "^8.55.0",
     "eslint-plugin-html": "^7.1.0",
-    "eslint-plugin-vue": "^9.18.1z",
+    "eslint-plugin-vue": "^9.18.1",
     "happy-dom": "^12.10.3",
     "lint-staged": "^15.2.0",
-    "prettier": "^3.1.0",
+    "prettier": "^3.1.1",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
     "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.45.9",
-    "vite": "^5.0.5",
+    "vite": "^5.0.7",
     "vitepress": "^1.0.0-rc.31",
-    "vitest": "^1.0.1",
+    "vitest": "^1.0.4",
     "volar-service-vetur": "^0.0.17",
-    "vue": "^3.3.10"
+    "vue": "^3.3.11"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

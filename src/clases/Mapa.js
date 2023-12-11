@@ -6,8 +6,6 @@ import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
-// import CuadroInfo from './CuadroInfo'
-// import GloboInfo from './GloboInfo'
 import NavegacionTeclado from './NavegacionTeclado'
 
 /**

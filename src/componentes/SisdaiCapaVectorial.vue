@@ -99,7 +99,7 @@ const props = defineProps({
    * ???
    *
    * - Tipo: `Boolean`
-   * - Valor por defecto: `false`.
+   * - Valor por defecto: `true`.
    * - Reactivo: ❌
    */
   renderizarComoImagen: {
