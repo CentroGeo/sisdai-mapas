@@ -16,6 +16,7 @@
     "deprecated:serve": "cd deprecated && vuepress dev docs"
   },
   "main": "./dist/sisdai-mapas.umd.js",
+  "license": "LGPL-3.0-only",
   "files": [
     "dist/*"
   ],
@@ -24,7 +25,7 @@
     "d3": "^7.8.0",
     "ol": "^7.3.0",
     "simple-statistics": "^7.8.3",
-    "sisdai-css": "github:salsa-community/sisdai-css#v0.31.2",
+    "sisdai-css": "git+https://codigo.conacyt/sisdai/sisdai-mapas#v0.31.2",
     "vue": "^2.7.14"
   },
   "devDependencies": {
@@ -51,6 +52,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/salsa-community/sisdai-mapas"
+    "url": "https://codigo.conahcyt.mx/sisdai/sisdai-mapas"
   }
 }
