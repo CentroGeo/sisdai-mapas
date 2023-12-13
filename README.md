@@ -107,7 +107,7 @@ npm run docs:serve
 
 **SOFTWARE LIBRE Y ESTÁNDARES ABIERTOS**
 
-Sisdai y sisdai-componentes están alineadas a las disposiciones establecidas por
+Sisdai y sisdai-mapas están alineadas a las disposiciones establecidas por
 la Coordinación de Estrategia Digital Nacional (
 DOF:06/09/2021) en donde se estipula que las "políticas y disposiciones tienen
 como objetivo fortalecer el uso del software
@@ -118,7 +118,7 @@ artículo 63 se explicita que "cuando se trate
 de desarrollos basados en software libre, se respetarán las condiciones de su
 licenciamiento original [...]".
 
-Considerando lo anterior sisdai-componentes se publica bajo la licencia
+Considerando lo anterior sisdai-mapas se publica bajo la licencia
 [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). Dicha licencia se puede
 consultar en el archivo _LICENSE_ de este repositorio.
 Esta licencia se encuentra disponible en inglés porque aunque el Sisdai privilegia
