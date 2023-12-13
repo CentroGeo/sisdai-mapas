@@ -25,7 +25,7 @@
     "d3": "^7.8.0",
     "ol": "^7.3.0",
     "simple-statistics": "^7.8.3",
-    "sisdai-css": "git+https://codigo.conacyt/sisdai/sisdai-mapas#v0.31.2",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.31.2",
     "vue": "^2.7.14"
   },
   "devDependencies": {
