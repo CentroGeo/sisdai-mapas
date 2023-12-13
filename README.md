@@ -119,7 +119,7 @@ de desarrollos basados en software libre, se respetarán las condiciones de su
 licenciamiento original [...]".
 
 Considerando lo anterior sisdai-componentes se publica bajo la licencia
-[GPL3](https://www.gnu.org/licenses/gpl-3.0.html). Dicha licencia se puede
+[LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). Dicha licencia se puede
 consultar en el archivo _LICENSE_ de este repositorio.
 Esta licencia se encuentra disponible en inglés porque aunque el Sisdai privilegia
 el idioma español se respeta la versión original de acuerdo al proyecto
