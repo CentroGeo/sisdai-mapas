@@ -3,28 +3,66 @@
 Componentes de software libre para el Sistema de Diseño y Accesibilidad para
 la Investigación ([Sisdai](https://sisdai.conahcyt.mx)).
 
-> **_Limitación de responsabilidad_**
->
-> El presente es un proyecto en construcción, por tanto el equipo del Sisdai
-> no es responsable del uso y contenido del presente recurso,
-> toda vez que se trata de una versión en su modalidad prueba, y no de una
-> versión liberada al público, por lo que una vez que sea lanzada la versión
-> final,
-> se invita a la persona usuaria a consultarla y validar sus requisitos.
+Cualquier persona puede hacer uso de esta biblioteca al clonarla e instalarla
+en su equipo a través del **protocolo HTTPS**.
 
-## Como empezar a usar el componente en un proyecto de Vue.js
+## Requerimientos
+
+### Pasos previos recomendados
+
+Para desarrollar este proyecto se usó [node.js](https://nodejs.org/en) como
+entorno de ejecución de JavaScript. La opción recomendada para instalarlo es
+[vía nvm](https://github.com/nvm-sh/nvm) que es el manejador de versiones de
+node. Siguiendo este camino, también se instalará el manejador de paquetes
+[npm](https://www.npmjs.com/). Dado lo anterior las instrucciones de instalación
+y dependencias del proyecto se muestran aquí usando tanto npm, como nvm.
+
+### Dependencias
+
+- [node.js (^18)](https://nodejs.org/en/download/)
+- [npm (^9)](https://www.npmjs.com/get-npm)
 
 ### Instalación
 
-Instalación y descarga de la biblioteca desde GitHub:
+Se puede clonar e instalar este proyecto en tu equipo
+utilizando **solo el protocolo HTTPS**, es decir:
 
 ```bash
-npm i github:codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
+git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git
 ```
+
+Establece la versión adecuada de npm y nvm (previamente instaladas).
+
+```bash
+nvm use 18
+```
+
+Instala las dependencias de la biblioteca.
+
+```bash
+npm install
+```
+
+En cambio si se quiere instalar esta biblioteca para su uso en otro proyecto se puede hacer:
+
+``` bash
+npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes
+```
+
+Dependiendo de la versión de la biblioteca a instalar, las instrucción anterior puede cambiar a:
+``` bash
+npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#vN.N.N
+```
+donde N.N.N indica el número de versión, por ejemplo v1.0.0
+
+Así mismo también se puede agregar la biblioteca en el archio `package.json` de otro 
+proyecto.
+
+## Uso de la biblioteca
 
 ### Importación y registro
 
-En el archivo que se desee utilizar el componente:
+En el archivo que se desee utilizar el componente se agrega:
 
 ```javascript
 import Vue from 'vue'
@@ -53,28 +91,23 @@ directivas que necesites:
 
 Para un uso avanzado revisa la documentación.
 
-## Documentación en local
+## Documentación
 
-Para revisar la documentación en local primero clona este repositorio y accede a
-la carpeta del proyecto con:
+Este proyecto cuenta con una documentación más extensa que aún está
+en proceso de desarrollo. Es posible levantarla en un ambiente local con la
+instrucción:
 
-```bash
-git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas
-cd sisdai-mapas
-```
-
-Seguido de la instalación de las dependencias y ejecución de vuepress:
 
 ```bash
-npm install
 npm run docs:serve
 ```
 
-Se habilitara en [localhost:8080](localhost:8080).
+
+## Licencia
 
 **SOFTWARE LIBRE Y ESTÁNDARES ABIERTOS**
 
-Sisdai y sisdai-mapas están alineadas a las disposiciones establecidas por
+Sisdai y sisdai-componentes están alineadas a las disposiciones establecidas por
 la Coordinación de Estrategia Digital Nacional (
 DOF:06/09/2021) en donde se estipula que las "políticas y disposiciones tienen
 como objetivo fortalecer el uso del software
@@ -85,9 +118,15 @@ artículo 63 se explicita que "cuando se trate
 de desarrollos basados en software libre, se respetarán las condiciones de su
 licenciamiento original [...]".
 
+Considerando lo anterior sisdai-componentes se publica bajo la licencia
+[GPL3](https://www.gnu.org/licenses/gpl-3.0.html). Dicha licencia se puede
+consultar en el archivo _LICENSE_ de este repositorio.
+Esta licencia se encuentra disponible en inglés porque aunque el Sisdai privilegia
+el idioma español se respeta la versión original de acuerdo al proyecto
+[GNU](https://www.gnu.org/licenses/licenses.html).
+
 ## Contribuir
 
-Para contribuir al proyecto, se pide que se haga tomando en cuenta la guía de
-contribución
-de [git](https://git-scm.com/book/es/v2/Git-en-entornos-distribuidos-Contribuyendo-a-un-Proyecto)
-.
+Por el momento sólo quienes sean
+parte de un equipo de investigación del capítulo de un [ENI](https://eni.conahcyt.mx)
+podrán levantar issues en este repositorio.
