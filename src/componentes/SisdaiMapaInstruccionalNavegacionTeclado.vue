@@ -5,7 +5,7 @@ const abierto = ref(false)
 </script>
 
 <template>
-  <div class="contenedor-instruccional-navegacion-teclado">
+  <div class="instruccional-navegacion-teclado">
     <button
       class="hipervinculo m-b-1"
       @click="abierto = !abierto"
@@ -45,7 +45,7 @@ const abierto = ref(false)
           <li><b>Tecla D</b> Rotar el mapa hacia la derecha.</li>
           <li><b>Tecla A</b> Rotar el mapa hacia la izquierda.</li>
           <li><b>Tecla N</b> Rotar el mapa hacia el norte.</li>
-          <li><b>Tecla H</b> Regresar a la ubicación inivial del mapa.</li>
+          <li><b>Tecla H</b> Regresar a la ubicación inicial del mapa.</li>
         </ul>
         <div class="derecha">
           <button
@@ -62,7 +62,7 @@ const abierto = ref(false)
 </template>
 
 <style lang="scss">
-.contenedor-instruccional-navegacion-teclado {
+.instruccional-navegacion-teclado {
   .contenido-colapsabel {
     max-height: 0;
     overflow-y: hidden;
@@ -77,6 +77,10 @@ const abierto = ref(false)
   }
   .alerta {
     width: auto;
+
+    ul li {
+      margin-top: 8px;
+    }
   }
   .derecha {
     display: flex;

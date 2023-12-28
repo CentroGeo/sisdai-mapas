@@ -8,7 +8,7 @@
     :navegacionTeclado="true"
   >
     <template #panel-encabezado-vis>
-      <h4 class="vis-titulo-visualizacion">
+      <h4 class="vis-titulo-visualizacion m-b-0">
         Mapa con funcionalidades de accesibilidad
       </h4>
       <div id="lista-teclado"></div>

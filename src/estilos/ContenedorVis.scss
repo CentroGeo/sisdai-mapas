@@ -21,34 +21,197 @@
 .contenedor-vis2 {
   // Variables
   --contenedor-vis-alto-menus: 50px;
-  --contenedor-vis-alto-atribuciones: 72px;
+  --contenedor-vis-alto-atribuciones: calc(72px - 16px);
   --contenedor-vis-alto-maximo: calc(100vh - var(--contenedor-vis-alto-menus));
   --contenedor-vis-alto-minimo-vis: 300px;
 
-  padding: 24px;
+  // padding: 24px;
   background: #dddddd4d;
   width: 100%;
 
-  .contenido-vis {
-    width: 100%;
-    margin: 0;
-    min-height: var(--contenedor-vis-alto-minimo-vis);
-    position: relative; // para los tooltips queden adentro de la visualización
+  .contenedor-vis2-paneles {
+    padding: 24px;
+    .contenido-vis {
+      width: 100%;
+      margin: 0;
+      min-height: var(--contenedor-vis-alto-minimo-vis);
+      // position: relative; // para los tooltips queden adentro de la visualización
+    }
+
+    // Scroll en los paneles
+    .panel-encabezado-vis,
+    .panel-izquierda-vis,
+    .panel-derecha-vis,
+    .panel-pie-vis {
+      overflow: auto;
+      scrollbar-width: thin;
+    }
+
+    /* * * * * Escodner elementos * * * * */
+    .panel-encabezado-vis,
+    .panel-izquierda-vis,
+    .panel-derecha-vis,
+    .panel-pie-vis {
+      display: none;
+    }
+    &.con-panel-encabezado-vis .panel-encabezado-vis {
+      display: block;
+    }
+    &.con-panel-izquierda-vis .panel-izquierda-vis {
+      display: block;
+    }
+    &.con-panel-derecha-vis .panel-derecha-vis {
+      display: block;
+    }
+    &.con-panel-pie-vis .panel-pie-vis {
+      display: block;
+    }
+    &.sin-atribuciones {
+      // padding-bottom: 24px;
+
+      .contenedor-vis-atribuciones {
+        display: none;
+      }
+    }
+    // &.sin-margenes {
+    //   padding: 0;
+    //   border-radius: 0;
+    // }
+    /* * * * * Escodner elementos * * * * */
+
+    /* * * * * Diosposicion * * * * */
+    display: grid;
+    grid-gap: 0;
+    grid-template-rows: auto auto auto auto auto;
+    grid-template-columns: 1;
+    // grid-area: grid-row-start / grid-column-start / grid-row-end / grid-column-end;
+
+    // Filas por defecto
+    .panel-encabezado-vis {
+      grid-row-start: 1;
+    }
+    .panel-izquierda-vis {
+      grid-row-start: 2;
+    }
+    .contenido-vis {
+      grid-row-start: 3;
+    }
+    .panel-derecha-vis {
+      grid-row-start: 4;
+    }
+    .panel-pie-vis {
+      grid-row-start: 5;
+    }
+    .panel-encabezado-vis,
+    .panel-izquierda-vis,
+    .contenido-vis,
+    .panel-derecha-vis,
+    .panel-pie-vis {
+      grid-column-start: 1;
+      grid-row-end: span 1;
+      grid-column-end: span 1;
+    }
+
+    @include mediaquery('esc') {
+      // reglas para escritorio
+      max-height: var(
+        --contenedor-vis-alto-maximo
+      ); // contenedor no sea más alto que la pantalla
+      // grid-template-rows: auto 1fr auto; // los paneles en medio del encabezado y pie no se desborden
+      grid-template-rows: 0 1fr 0;
+      min-height: calc(
+        var(--contenedor-vis-alto-minimo-vis) +
+          var(--contenedor-vis-alto-atribuciones) + 24px
+      );
+
+      .panel-izquierda-vis,
+      .contenido-vis,
+      .panel-derecha-vis {
+        grid-row-start: 2;
+      }
+      .panel-pie-vis {
+        grid-row-start: 3;
+      }
+      &.con-panel-encabezado-vis {
+        grid-template-rows: auto auto 0;
+
+        &.con-panel-izquierda-vis,
+        &.con-panel-derecha-vis {
+          grid-template-rows: auto 1fr 0;
+        }
+      }
+      &.con-panel-encabezado-vis,
+      &.con-panel-pie-vis {
+        &.con-panel-izquierda-vis,
+        &.con-panel-derecha-vis {
+          .panel-encabezado-vis,
+          .panel-pie-vis {
+            grid-column-end: span 2;
+          }
+        }
+      }
+      &.con-panel-encabezado-vis.con-panel-pie-vis {
+        grid-template-rows: auto auto auto;
+      }
+      &.con-panel-izquierda-vis {
+        grid-template-columns: 1fr 2fr;
+        .contenido-vis {
+          grid-column-start: 2;
+        }
+      }
+      &.con-panel-derecha-vis {
+        grid-template-columns: 2fr 1fr;
+        .contenido-vis {
+          grid-column-start: 1;
+        }
+        .panel-derecha-vis {
+          grid-column-start: 2;
+        }
+      }
+      &.con-panel-izquierda-vis.con-panel-derecha-vis {
+        grid-template-columns: 1fr 2fr 1fr;
+        .panel-encabezado-vis,
+        .panel-pie-vis {
+          grid-column-end: span 3;
+        }
+        .contenido-vis {
+          grid-column-start: 2;
+        }
+        .panel-derecha-vis {
+          grid-column-start: 3;
+        }
+      }
+      &.con-panel-pie-vis {
+        grid-template-rows: 0 auto auto;
+
+        &.con-panel-izquierda-vis,
+        &.con-panel-derecha-vis {
+          grid-template-rows: 0 1fr auto;
+        }
+        &.con-panel-encabezado-vis {
+          &.con-panel-izquierda-vis,
+          &.con-panel-derecha-vis {
+            grid-template-rows: auto 1fr auto;
+          }
+        }
+      }
+    }
+    /* * * * * Diosposicion * * * * */
   }
 
   // para que contenedor-vis-atribuciones simepre este pegado abajo
-  position: relative;
-  padding-bottom: var(--contenedor-vis-alto-atribuciones);
+  // position: relative;
+  // padding-bottom: var(--contenedor-vis-alto-atribuciones);
   .contenedor-vis-atribuciones {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    // position: absolute;
+    // bottom: 0;
+    // left: 0;
     min-height: var(--contenedor-vis-alto-atribuciones);
     max-height: var(--contenedor-vis-alto-atribuciones);
     display: block;
     width: 100%;
     // padding: 0 24px 24px 24px;
-    padding: 16px 24px;
+    padding: 0 16px 24px;
 
     .lista-atribuciones {
       display: flex;
@@ -78,164 +241,4 @@
       }
     }
   }
-
-  // Scroll en los paneles
-  .panel-encabezado-vis,
-  .panel-izquierda-vis,
-  .panel-derecha-vis,
-  .panel-pie-vis {
-    overflow: auto;
-    scrollbar-width: thin;
-  }
-
-  /* * * * * Escodner elementos * * * * */
-  .panel-encabezado-vis,
-  .panel-izquierda-vis,
-  .panel-derecha-vis,
-  .panel-pie-vis {
-    display: none;
-  }
-  &.con-panel-encabezado-vis .panel-encabezado-vis {
-    display: block;
-  }
-  &.con-panel-izquierda-vis .panel-izquierda-vis {
-    display: block;
-  }
-  &.con-panel-derecha-vis .panel-derecha-vis {
-    display: block;
-  }
-  &.con-panel-pie-vis .panel-pie-vis {
-    display: block;
-  }
-  &.sin-atribuciones {
-    padding-bottom: 24px;
-
-    .contenedor-vis-atribuciones {
-      display: none;
-    }
-  }
-  // &.sin-margenes {
-  //   padding: 0;
-  //   border-radius: 0;
-  // }
-  /* * * * * Escodner elementos * * * * */
-
-  /* * * * * Diosposicion * * * * */
-  display: grid;
-  grid-gap: 0;
-  grid-template-rows: auto auto auto auto auto;
-  grid-template-columns: 1;
-  // grid-area: grid-row-start / grid-column-start / grid-row-end / grid-column-end;
-
-  // Filas por defecto
-  .panel-encabezado-vis {
-    grid-row-start: 1;
-  }
-  .panel-izquierda-vis {
-    grid-row-start: 2;
-  }
-  .contenido-vis {
-    grid-row-start: 3;
-  }
-  .panel-derecha-vis {
-    grid-row-start: 4;
-  }
-  .panel-pie-vis {
-    grid-row-start: 5;
-  }
-  .panel-encabezado-vis,
-  .panel-izquierda-vis,
-  .contenido-vis,
-  .panel-derecha-vis,
-  .panel-pie-vis {
-    grid-column-start: 1;
-    grid-row-end: span 1;
-    grid-column-end: span 1;
-  }
-
-  @include mediaquery('esc') {
-    // reglas para escritorio
-    max-height: var(
-      --contenedor-vis-alto-maximo
-    ); // contenedor no sea más alto que la pantalla
-    // grid-template-rows: auto 1fr auto; // los paneles en medio del encabezado y pie no se desborden
-    grid-template-rows: 0 1fr 0;
-    min-height: calc(
-      var(--contenedor-vis-alto-minimo-vis) +
-        var(--contenedor-vis-alto-atribuciones) + 24px
-    );
-
-    .panel-izquierda-vis,
-    .contenido-vis,
-    .panel-derecha-vis {
-      grid-row-start: 2;
-    }
-    .panel-pie-vis {
-      grid-row-start: 3;
-    }
-    &.con-panel-encabezado-vis {
-      grid-template-rows: auto auto 0;
-
-      &.con-panel-izquierda-vis,
-      &.con-panel-derecha-vis {
-        grid-template-rows: auto 1fr 0;
-      }
-    }
-    &.con-panel-encabezado-vis,
-    &.con-panel-pie-vis {
-      &.con-panel-izquierda-vis,
-      &.con-panel-derecha-vis {
-        .panel-encabezado-vis,
-        .panel-pie-vis {
-          grid-column-end: span 2;
-        }
-      }
-    }
-    &.con-panel-encabezado-vis.con-panel-pie-vis {
-      grid-template-rows: auto auto auto;
-    }
-    &.con-panel-izquierda-vis {
-      grid-template-columns: 1fr 2fr;
-      .contenido-vis {
-        grid-column-start: 2;
-      }
-    }
-    &.con-panel-derecha-vis {
-      grid-template-columns: 2fr 1fr;
-      .contenido-vis {
-        grid-column-start: 1;
-      }
-      .panel-derecha-vis {
-        grid-column-start: 2;
-      }
-    }
-    &.con-panel-izquierda-vis.con-panel-derecha-vis {
-      grid-template-columns: 1fr 2fr 1fr;
-      .panel-encabezado-vis,
-      .panel-pie-vis {
-        grid-column-end: span 3;
-      }
-      .contenido-vis {
-        grid-column-start: 2;
-      }
-      .panel-derecha-vis {
-        grid-column-start: 3;
-      }
-    }
-    &.con-panel-pie-vis {
-      grid-template-rows: 0 auto auto;
-
-      &.con-panel-izquierda-vis,
-      &.con-panel-derecha-vis {
-        grid-template-rows: 0 1fr auto;
-      }
-      &.con-panel-encabezado-vis {
-        &.con-panel-izquierda-vis,
-        &.con-panel-derecha-vis {
-          grid-template-rows: auto 1fr auto;
-        }
-      }
-    }
-  }
-  /* * * * * Diosposicion * * * * */
 }
