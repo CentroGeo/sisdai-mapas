@@ -35,7 +35,7 @@
       width: 100%;
       margin: 0;
       min-height: var(--contenedor-vis-alto-minimo-vis);
-      // position: relative; // para los tooltips queden adentro de la visualización
+      position: relative; // para los tooltips queden adentro de la visualización
     }
 
     // Scroll en los paneles

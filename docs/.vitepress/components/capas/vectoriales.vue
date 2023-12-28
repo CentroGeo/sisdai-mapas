@@ -34,12 +34,7 @@ function cuadrojardines(f) {
         Tecnologías (Conahcyt).
       </p>
 
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ipsam
-        facilis fugiat dignissimos iste non nulla distinctio aliquid, alias,
-        possimus ratione eius dicta excepturi est eum enim accusamus magnam
-        voluptatum.
-      </p>
+      <SisdaiMapaInstruccionalNavegacionTeclado />
 
       <SisdaiLeyenda
         para="entidades"
@@ -126,7 +121,7 @@ function cuadrojardines(f) {
   @include mediaquery('esc') {
     // max-height: none !important;
     // grid-template-rows: auto 450px minmax(auto, 85px) !important; // los paneles en medio del encabezado y pie no se desborden
-    grid-template-rows: 0 1fr auto !important; // los paneles en medio del encabezado y pie no se desborden
+    // grid-template-rows: 0 1fr auto !important; // los paneles en medio del encabezado y pie no se desborden
 
     .panel-izquierda-vis {
       grid-row-end: span 2 !important; // para que el panel izquierdo use dos renglones
