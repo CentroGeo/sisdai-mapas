@@ -8,7 +8,14 @@
     :navegacionTeclado="true"
   >
     <template #panel-encabezado-vis>
+      <h4 class="vis-titulo-visualizacion">
+        Mapa con funcionalidades de accesibilidad
+      </h4>
       <div id="lista-teclado"></div>
+    </template>
+
+    <template #panel-izquierda-vis>
+      <SisdaiMapaInstruccionalNavegacionTeclado />
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
