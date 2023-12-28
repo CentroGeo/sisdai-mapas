@@ -89,7 +89,7 @@ const vistaActual = reactive({
             </button>
           </div>
           <div class="columna-8-esc">
-            <p class="m-t-0">
+            <p class="m-0">
               <b>Actual:</b> zoom:{{ vistaActual.zoom }} <br />
               centro: {{ vistaActual.centro?.toString() }}
             </p>

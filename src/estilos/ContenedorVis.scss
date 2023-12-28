@@ -208,10 +208,10 @@
     // left: 0;
     min-height: var(--contenedor-vis-alto-atribuciones);
     max-height: var(--contenedor-vis-alto-atribuciones);
-    display: block;
+    // display: block;
     width: 100%;
     // padding: 0 24px 24px 24px;
-    padding: 0 16px 24px;
+    padding: 0 16px 16px;
 
     .lista-atribuciones {
       display: flex;

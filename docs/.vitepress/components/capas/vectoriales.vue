@@ -25,32 +25,30 @@ function cuadrojardines(f) {
     }"
   >
     <template #panel-izquierda-vis>
-      <div class="m-r-2">
-        <h4 class="vis-titulo-visualizacion">
-          Red de Jardines Etnobiológicos Conahcyt
-        </h4>
-        <p class="vis-leyenda">
-          Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de
-          México apoyados por Consejo Nacional de Humanidades, Ciencias y
-          Tecnologías (Conahcyt).
-        </p>
+      <h4 class="vis-titulo-visualizacion">
+        Red de Jardines Etnobiológicos Conahcyt
+      </h4>
+      <p class="vis-leyenda">
+        Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de
+        México apoyados por Consejo Nacional de Humanidades, Ciencias y
+        Tecnologías (Conahcyt).
+      </p>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ipsam
-          facilis fugiat dignissimos iste non nulla distinctio aliquid, alias,
-          possimus ratione eius dicta excepturi est eum enim accusamus magnam
-          voluptatum.
-        </p>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure ipsam
+        facilis fugiat dignissimos iste non nulla distinctio aliquid, alias,
+        possimus ratione eius dicta excepturi est eum enim accusamus magnam
+        voluptatum.
+      </p>
 
-        <SisdaiLeyenda
-          para="entidades"
-          sinControl
-        />
-        <SisdaiLeyenda
-          para="jardines"
-          sinControl
-        />
-      </div>
+      <SisdaiLeyenda
+        para="entidades"
+        sinControl
+      />
+      <SisdaiLeyenda
+        para="jardines"
+        sinControl
+      />
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
@@ -84,7 +82,7 @@ function cuadrojardines(f) {
     <!-- :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }" -->
 
     <template #panel-pie-vis>
-      <p class="vis-fuente m-b-0">
+      <p class="vis-fuente m-0">
         Fuente: Datos de origen del Consejo Nacional de Humanidades, Ciencias y
         Tecnologías (Conahcyt), con corte al 21 de septiembre de 2023.
       </p>
