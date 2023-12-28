@@ -152,7 +152,7 @@ div.contenedor-gema {
     width: 300px;
   }
 
-  .sisdai-mapa.mostrar-panel-derecho {
+  .mostrar-panel-derecho {
     .sisdai-mapa-control-acercar-alejar,
     .sisdai-mapa-control-ajuste-vista {
       // right: calc(100vw / 4);

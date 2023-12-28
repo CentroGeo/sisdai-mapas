@@ -360,46 +360,50 @@ function panelesEnUso() {
   <div
     :sisdai-mapa="id"
     class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
-    :class="panelesEnUso()"
   >
-    <div class="panel-encabezado-vis">
-      <slot name="panel-encabezado-vis" />
-    </div>
-
-    <div class="panel-izquierda-vis">
-      <slot name="panel-izquierda-vis" />
-    </div>
-
-    <!-- slot para las capas -->
-    <slot />
-
     <div
-      class="contenido-vis"
-      ref="refMapa"
-      tabindex="0"
-      @focusin="focoEnMapa = true"
-      @focusout="focoEnMapa = false"
-      @keydown="alTeclear"
+      class="contenedor-vis2-paneles"
+      :class="panelesEnUso()"
     >
-      <GloboInformativo
-        :pixel="globoInfo.pixel"
-        :contenido="globoInfo.contenido"
-        :visible="globoInfo.visible"
-      />
-      <CuadroInformativo
-        :pixel="cuadroInfo.pixel"
-        :contenido="cuadroInfo.contenido"
-        :visible="cuadroInfo.visible"
-        @alCerrar="cuadroInfo.visible = false"
-      />
-    </div>
+      <div class="panel-encabezado-vis p-b-2">
+        <slot name="panel-encabezado-vis" />
+      </div>
 
-    <div class="panel-derecha-vis">
-      <slot name="panel-derecha-vis" />
-    </div>
+      <div class="panel-izquierda-vis p-r-2">
+        <slot name="panel-izquierda-vis" />
+      </div>
 
-    <div class="panel-pie-vis">
-      <slot name="panel-pie-vis" />
+      <!-- slot para las capas -->
+      <slot />
+
+      <div
+        class="contenido-vis"
+        ref="refMapa"
+        tabindex="0"
+        @focusin="focoEnMapa = true"
+        @focusout="focoEnMapa = false"
+        @keydown="alTeclear"
+      >
+        <GloboInformativo
+          :pixel="globoInfo.pixel"
+          :contenido="globoInfo.contenido"
+          :visible="globoInfo.visible"
+        />
+        <CuadroInformativo
+          :pixel="cuadroInfo.pixel"
+          :contenido="cuadroInfo.contenido"
+          :visible="cuadroInfo.visible"
+          @alCerrar="cuadroInfo.visible = false"
+        />
+      </div>
+
+      <div class="panel-derecha-vis p-l-2">
+        <slot name="panel-derecha-vis" />
+      </div>
+
+      <div class="panel-pie-vis p-t-2">
+        <slot name="panel-pie-vis" />
+      </div>
     </div>
 
     <!-- <SisdaiCargando /> -->
