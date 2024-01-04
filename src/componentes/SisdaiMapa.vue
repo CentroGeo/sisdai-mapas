@@ -362,14 +362,14 @@ function panelesEnUso() {
     class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
   >
     <div
-      class="contenedor-vis2-paneles"
+      class="contenedor-vis2-paneles p-2-mov p-3-esc"
       :class="panelesEnUso()"
     >
       <div class="panel-encabezado-vis p-b-2">
         <slot name="panel-encabezado-vis" />
       </div>
 
-      <div class="panel-izquierda-vis p-r-2-esc p-b-2-mov">
+      <div class="panel-izquierda-vis p-b-2-mov p-r-2-esc">
         <slot name="panel-izquierda-vis" />
       </div>
 
@@ -397,7 +397,7 @@ function panelesEnUso() {
         />
       </div>
 
-      <div class="panel-derecha-vis p-l-2-esc p-t-2-mov">
+      <div class="panel-derecha-vis p-t-2-mov p-l-2-esc">
         <slot name="panel-derecha-vis" />
       </div>
 
