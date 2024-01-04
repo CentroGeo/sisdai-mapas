@@ -369,7 +369,7 @@ function panelesEnUso() {
         <slot name="panel-encabezado-vis" />
       </div>
 
-      <div class="panel-izquierda-vis p-r-2">
+      <div class="panel-izquierda-vis p-r-2-esc p-b-2-mov">
         <slot name="panel-izquierda-vis" />
       </div>
 
@@ -397,7 +397,7 @@ function panelesEnUso() {
         />
       </div>
 
-      <div class="panel-derecha-vis p-l-2">
+      <div class="panel-derecha-vis p-l-2-esc p-t-2-mov">
         <slot name="panel-derecha-vis" />
       </div>
 
