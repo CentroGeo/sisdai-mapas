@@ -1,8 +1,5 @@
 <template>
-  <SisdaiMapa
-    class="con-panel-izquierda-vis"
-    :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }"
-  >
+  <SisdaiMapa :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }">
     <SisdaiCapaXyz posicion="1" />
 
     <SisdaiCapaWms

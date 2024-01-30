@@ -20,10 +20,7 @@ const mapa = ref()
           Ejemplo de la configuración del mapa.
         </h4>
 
-        <p
-          id="descripcion-corta-mapa"
-          class="m-b-0"
-        >
+        <p id="descripcion-corta-mapa">
           Este mapa es un ejemplo de como configurar el mapa para ajustarlo
           conforme a las necesidades de cada proyecto.
         </p>

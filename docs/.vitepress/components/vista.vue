@@ -38,12 +38,7 @@ const vistaActual = reactive({
   >
     <template #panel-encabezado-vis>
       <div>
-        <p
-          id="descripcion-mapa"
-          class="m-t-0"
-        >
-          Interación de la vista del mapa:
-        </p>
+        <p id="descripcion-mapa">Interación de la vista del mapa:</p>
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
             <label for="selector-centro-zoom">Vista con Centro y Zoom</label>
@@ -89,7 +84,7 @@ const vistaActual = reactive({
             </button>
           </div>
           <div class="columna-8-esc">
-            <p class="m-0">
+            <p>
               <b>Actual:</b> zoom:{{ vistaActual.zoom }} <br />
               centro: {{ vistaActual.centro?.toString() }}
             </p>
