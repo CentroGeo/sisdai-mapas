@@ -362,7 +362,7 @@ function panelesEnUso() {
     class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
     <div
-      class="contenedor-vis-paneles p-2-mov p-3-esc"
+      class="contenedor-vis-paneles p-x-2-mov p-t-2-mov p-x-3-esc p-t-3-esc p-b-2"
       :class="panelesEnUso()"
     >
       <div class="panel-encabezado-vis p-b-2">
