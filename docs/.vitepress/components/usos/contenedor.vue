@@ -85,7 +85,7 @@ setTimeout(() => {
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 
-div.dinamico.contenedor-vis2 {
+div.dinamico.contenedor-vis {
   .panel-encabezado-vis {
     background: skyblue;
   }
