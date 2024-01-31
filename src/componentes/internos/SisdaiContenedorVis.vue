@@ -1,5 +1,5 @@
 <script setup>
-import BotonConahcyt from './BotonConahcyt.vue'
+import ContenedorVisAtribuciones from './ContenedorVisAtribuciones.vue'
 import SisdaiCargando from './SisdaiCargando.vue'
 </script>
 
@@ -26,7 +26,7 @@ import SisdaiCargando from './SisdaiCargando.vue'
     </div>
 
     <SisdaiCargando />
-    <BotonConahcyt />
+    <ContenedorVisAtribuciones />
   </div>
 </template>
 
