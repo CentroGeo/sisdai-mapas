@@ -39,7 +39,7 @@
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
     "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#fix/contenedor-vis",
     "vite": "^5.0.10",
-    "vitepress": "^1.0.0-rc.35",
+    "vitepress": "^1.0.0-rc.41",
     "vitest": "^1.1.2",
     "volar-service-vetur": "^0.0.17",
     "vue": "^3.4.5"

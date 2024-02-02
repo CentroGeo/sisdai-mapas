@@ -35,8 +35,14 @@
     />
 
     <template #panel-izquierda-vis>
-      <SisdaiLeyenda para="corrientes" />
-      <SisdaiLeyenda para="localidades" />
+      <SisdaiLeyenda
+        para="corrientes"
+        :sinControlClases="true"
+      />
+      <SisdaiLeyenda
+        para="localidades"
+        :sinControlClases="false"
+      />
       <SisdaiLeyenda para="centros" />
       <SisdaiLeyenda para="division_estatal" />
     </template>
