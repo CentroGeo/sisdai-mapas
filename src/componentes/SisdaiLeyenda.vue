@@ -183,11 +183,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
+  <ul
     ref="sisdaiLeyenda"
-    class="sisdai-mapa-leyenda"
+    class="sisdai-mapa-leyenda casillas-anidadas"
   >
-    <div class="leyenda-titulo">
+    <li class="leyenda-titulo">
       <LeyendaControl
         :id="`${para}-control`"
         :etiqueta="capa.nombre"
@@ -196,11 +196,11 @@ onMounted(() => {
         :sinControl="sinControl"
         @alCambiar="valor => (capa.visible = valor)"
       />
-    </div>
+    </li>
 
-    <div
+    <ul
       v-if="capa.clases.length > 1"
-      class="leyenda-clases m-l-1"
+      class="leyenda-clases casillas-subseleccion"
     >
       <p
         class="titulo-clases m-y-1"
@@ -208,13 +208,6 @@ onMounted(() => {
       >
         {{ capa.tituloClases }}
       </p>
-      <!-- <select
-        class="m-y-1 titulo-clases"
-        name=""
-        id=""
-      >
-        <option value="">Número de habitantes</option>
-      </select> -->
       <LeyendaControl
         v-for="(clase, idx) in capa.clases"
         :key="`${para}-clase-control-${idx}`"
@@ -223,28 +216,14 @@ onMounted(() => {
         :simbolo="clase.simbolo"
         :sinControl="sinControlClases"
       />
-    </div>
-  </div>
+    </ul>
+  </ul>
 </template>
 
 <style lang="scss">
 .sisdai-mapa-leyenda .leyenda-clases .titulo-clases {
   font-size: 1rem;
-  line-height: 1.125em;
-  font-weight: 380;
-}
-// .sisdai-mapa-leyenda .controles-clases-capa {
-//   display: flex;
-//   flex-direction: column;
-//   // .controlador-vis label {
-//   //   padding-top: 4px;
-//   //   padding-bottom: 4px;
-//   // }
-// }
-select {
-  width: auto;
-  max-width: 100%;
-  text-overflow: ellipsis;
-  // #6f7271
+  line-height: 1.25em;
+  font-weight: 400;
 }
 </style>
