@@ -3,7 +3,21 @@
  */
 
 export const vista = {
-  ajustarVistaAlcambiarParametros: true,
+  /**
+   * Nivel de acercamiento utilizado para calcular la resolución inicial de la vista.
+   *
+   * - Tipo: `Number`
+   * - Valor por defecto: `1`
+   * - Reactivo: ✅
+   *
+   * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+   */
+  acercamiento: 1.5,
+
+  /**
+   *
+   */
+  // ajustarVistaAlcambiarParametros: true,
 
   /**
    * Coordenadas `[x, y]` del centro inicial de la vista.
@@ -44,17 +58,6 @@ export const vista = {
    * > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
   extensionMargen: 10,
-
-  /**
-   * Nivel de zoom utilizado para calcular la resolución inicial de la vista.
-   *
-   * - Tipo: `Number`
-   * - Valor por defecto: `1`
-   * - Reactivo: ✅
-   *
-   * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
-   */
-  zoom: 1.5,
 }
 
 /**

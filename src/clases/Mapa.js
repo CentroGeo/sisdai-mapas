@@ -1,11 +1,9 @@
 import olMap from 'ol/Map'
-
 import RenderEventType from 'ol/render/EventType'
-import { toRaw } from 'vue'
-import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
+import { vista as vistaPorDefecto } from './../valores/mapa'
 import NavegacionTeclado from './NavegacionTeclado'
 
 /**
@@ -51,28 +49,51 @@ export default class Mapa extends olMap {
   }
 
   /**
-   *
+   * Objeto vista: { acercamiento, centro, extencsion }
+   * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
+   * { acercamiento, centro } o { extension }
    */
-  ajustarVista() {
-    const extension = this.getView().get('extension')
+  ajustarVista(vista) {
+    const acercamiento =
+      vista?.acercamiento ||
+      this.getView().get('acercamiento') ||
+      vistaPorDefecto.acercamiento
+    const centro =
+      vista?.centro || this.getView().get('centro') || vistaPorDefecto.centro
+    const extension =
+      vista?.extension ||
+      this.getView().get('extension') ||
+      vistaPorDefecto.extension
+    const extensionMargen =
+      vista?.extensionMargen ||
+      this.getView().get('extensionMargen') ||
+      vistaPorDefecto.extensionMargen
+
+    // console.log(
+    //   'ajustar vista a',
+    //   acercamiento,
+    //   centro,
+    //   extension,
+    //   extensionMargen
+    // )
 
     if (validaciones.extension(extension)) {
       // console.log(this.getView().get('extensionMargen'))
       this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(this.getView().get('extensionMargen')),
+        padding: valorarExtensionMargen(extensionMargen),
       })
     } else {
       this.getView().setCenter(
-        valorarArregloNumerico(this.getView().get('centro'))
+        validaciones.centro(centro)
+          ? valorarArregloNumerico(centro)
+          : vistaPorDefecto.centro
       )
-      this.getView().setZoom(Number(this.getView().get('acercamiento')))
+      this.getView().setZoom(Number(acercamiento))
     }
-
-    this.eventos(eventos.alAjustarVista, toRaw(this.getView()))
   }
 
   /**
-   * Asigna el valor del zoom en el mapa.
+   * Asigna el valor del acercamiento en el mapa.
    * @param {Number} acercamiento
    */
   asignarAcercamiento(acercamiento) {
@@ -101,9 +122,9 @@ export default class Mapa extends olMap {
    * Asigna los valores de de la vista del mapa.
    * @param {Object} propiedades
    */
-  asignarVista({ extension, extensionMargen, centro, zoom }) {
+  asignarVista({ extension, extensionMargen, centro, acercamiento }) {
     this.asignarCentro(centro)
-    this.asignarAcercamiento(zoom)
+    this.asignarAcercamiento(acercamiento)
     this.asignarExtension(extension, extensionMargen)
     // this.ajustarVista()
   }

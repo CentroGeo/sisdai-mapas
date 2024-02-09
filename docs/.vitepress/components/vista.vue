@@ -9,8 +9,8 @@ const extensiones = {
 const extensionSeleccionada = ref(undefined)
 
 const centros = {
-  'República Mexicana': { centro: [-102, 24], zoom: 4.4 },
-  'Baja California': { centro: [-115.0969, 30.5499], zoom: 6.3 },
+  'República Mexicana': { centro: [-102, 24], acercamiento: 4.4 },
+  'Baja California': { centro: [-115.0969, 30.5499], acercamiento: 6.3 },
 }
 const centroSeleccionado = ref('República Mexicana')
 watch(centroSeleccionado, () => (extensionSeleccionada.value = undefined))
@@ -19,7 +19,7 @@ const mapa = ref(null)
 
 const vistaActual = reactive({
   centro: undefined,
-  zoom: undefined,
+  acercamiento: undefined,
 })
 </script>
 
@@ -30,20 +30,29 @@ const vistaActual = reactive({
     :vista="{
       centro: centros[centroSeleccionado].centro,
       extension: extensiones[extensionSeleccionada],
-      zoom: centros[centroSeleccionado].zoom,
+      acercamiento: centros[centroSeleccionado].acercamiento,
     }"
     @alCambiarCentro="nuevoCentro => (vistaActual.centro = nuevoCentro)"
-    @alCambiarZoom="nuevoZoom => (vistaActual.zoom = nuevoZoom)"
+    @alCambiarAcercamiento="
+      nuevoAcercamiento => (vistaActual.acercamiento = nuevoAcercamiento)
+    "
     elementosDescriptivos="descripcion-mapa"
   >
     <template #panel-encabezado-vis>
+      <p
+        id="descripcion-mapa"
+        class="vis-titulo-visualizacion"
+      >
+        Interación de la vista del mapa:
+      </p>
       <div>
-        <p id="descripcion-mapa">Interación de la vista del mapa:</p>
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
-            <label for="selector-centro-zoom">Vista con Centro y Zoom</label>
+            <label for="selector-centro-acercamiento">
+              Vista con Acercamiento y Centro
+            </label>
             <select
-              id="selector-centro-zoom"
+              id="selector-centro-acercamiento"
               v-model="centroSeleccionado"
             >
               <option
@@ -77,7 +86,7 @@ const vistaActual = reactive({
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
             <button
-              @click="mapa.ajustarVista()"
+              @click="ver"
               class="boton-primario boton-chico"
             >
               Ajustar vista con boton externo
@@ -85,7 +94,7 @@ const vistaActual = reactive({
           </div>
           <div class="columna-8-esc">
             <p>
-              <b>Actual:</b> zoom:{{ vistaActual.zoom }} <br />
+              <b>Actual:</b> acercamiento:{{ vistaActual.acercamiento }} <br />
               centro: {{ vistaActual.centro?.toString() }}
             </p>
           </div>

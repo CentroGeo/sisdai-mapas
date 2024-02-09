@@ -125,12 +125,8 @@ function mapa() {
 watch(
   vista,
   nv => {
-    const _nv = { ...valoresPorDefecto.vista, ...nv }
-    mapa()?.asignarVista(_nv)
-
-    if (_nv.ajustarVistaAlcambiarParametros) {
-      mapa().ajustarVista()
-    }
+    mapa()?.asignarVista(nv)
+    mapa()?.ajustarVista()
   },
   { deep: true }
 )
@@ -244,7 +240,7 @@ onMounted(() => {
     props.proyeccion,
     emits
   )
-  mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+  mapa().asignarVista(vista.value)
   mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
   mapa().on(EventType.CLICK, olClick)
@@ -283,8 +279,12 @@ defineExpose({
    * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
    * AjustarVista.
    */
-  ajustarVista: () => {
-    mapa().ajustarVista()
+  ajustarVista: params => {
+    mapa().ajustarVista(params)
+  },
+
+  mapa: () => {
+    return mapa()
   },
 })
 
