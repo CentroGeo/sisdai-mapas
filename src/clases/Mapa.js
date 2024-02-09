@@ -166,7 +166,7 @@ export default class Mapa extends olMap {
   }
 
   /**
-   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).

@@ -4,7 +4,7 @@ import CapasXyz from "./../.vitepress/components/capas/xyz.vue";
 
 # Capa XYZ
 
-La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel de zoom y la coordenada x/y de una imagen (mosaico), regularmente se usa para desplegar mapas base como los de OSM, Carto, etc.
+La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel de acercamiento y la coordenada x/y de una imagen (mosaico), regularmente se usa para desplegar mapas base como los de OSM, Carto, etc.
 
 **Uso:**
 

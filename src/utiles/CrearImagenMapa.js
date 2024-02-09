@@ -60,7 +60,7 @@ export default function crearImagen(mapa) {
 }
 
 /** D E P R E C A D O -> (import("clases/Mapa").default).exportarImagen
- * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+ * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
  * pantalla, sin controles. El formato de descargá es PNG.
  * @param {Object} mapa instancia del mapa.
  * @param {String} nombreCaptura nombre del archivo que se descargara del navegador (no debe

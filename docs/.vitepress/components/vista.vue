@@ -31,6 +31,7 @@ const vistaActual = reactive({
       centro: centros[centroSeleccionado].centro,
       extension: extensiones[extensionSeleccionada],
       acercamiento: centros[centroSeleccionado].acercamiento,
+      // ajustarVistaAlCambiarParametros: false,
     }"
     @alCambiarCentro="nuevoCentro => (vistaActual.centro = nuevoCentro)"
     @alCambiarAcercamiento="
@@ -86,7 +87,7 @@ const vistaActual = reactive({
         <div class="flex flex-contenido-centrado">
           <div class="columna-8-esc">
             <button
-              @click="ver"
+              @click="mapa.ajustarVista"
               class="boton-primario boton-chico"
             >
               Ajustar vista con boton externo
@@ -94,7 +95,8 @@ const vistaActual = reactive({
           </div>
           <div class="columna-8-esc">
             <p>
-              <b>Actual:</b> acercamiento:{{ vistaActual.acercamiento }} <br />
+              <b>Actual:</b>
+              acercamiento: {{ vistaActual.acercamiento }} <br />
               centro: {{ vistaActual.centro?.toString() }}
             </p>
           </div>

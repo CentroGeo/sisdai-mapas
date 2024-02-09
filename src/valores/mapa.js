@@ -17,7 +17,7 @@ export const vista = {
   /**
    *
    */
-  // ajustarVistaAlcambiarParametros: true,
+  ajustarVistaAlCambiarParametros: true,
 
   /**
    * Coordenadas `[x, y]` del centro inicial de la vista.
@@ -43,7 +43,7 @@ export const vista = {
    *
    * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
-   * > ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `zoom` serán ignoradas.
+   * > ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
    */
   extension: undefined,
 

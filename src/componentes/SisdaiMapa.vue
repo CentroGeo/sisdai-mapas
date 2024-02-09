@@ -78,7 +78,7 @@ const props = defineProps({
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
    *
    * - Tipo: `Object`
-   * - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
+   * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
    * - Reactivo: ✅
    */
   vista: {
@@ -126,18 +126,24 @@ watch(
   vista,
   nv => {
     mapa()?.asignarVista(nv)
-    mapa()?.ajustarVista()
+
+    if (
+      nv.ajustarVistaAlCambiarParametros === undefined ||
+      nv.ajustarVistaAlCambiarParametros
+    ) {
+      mapa()?.ajustarVista()
+    }
   },
   { deep: true }
 )
 
 /**
- * Objeto reactivo utilizado para evaluar en que momento el centro o zoom de la vista es diferente
+ * Objeto reactivo utilizado para evaluar en que momento el centro o acercamiento de la vista es diferente
  * a la anterior cada que se mueva el mapa.
  */
 const estadoVistaMovida = reactive({
   centro: undefined,
-  zoom: undefined,
+  acercamiento: undefined,
 })
 
 /**
@@ -152,10 +158,10 @@ function olMoveend({ map }) {
     emits(eventos.alCambiarCentro, estadoVistaMovida.centro)
   }
 
-  // const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
-  if (map.getView().getZoom() !== estadoVistaMovida.zoom) {
-    estadoVistaMovida.zoom = map.getView().getZoom()
-    emits(eventos.alCambiarZoom, estadoVistaMovida.zoom)
+  // const nuevoAcercamiento = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (map.getView().getZoom() !== estadoVistaMovida.acercamiento) {
+    estadoVistaMovida.acercamiento = map.getView().getZoom()
+    emits(eventos.alCambiarAcercamiento, estadoVistaMovida.acercamiento)
   }
 }
 
@@ -266,7 +272,7 @@ onUnmounted(() => {
 
 defineExpose({
   /**
-   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * Permite descargar la vista actual del mapa, con las capas visibles y Acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).

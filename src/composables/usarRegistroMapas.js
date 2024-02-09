@@ -72,7 +72,7 @@ function crearMapa(target, proyeccion, emits) {
       view: new View({
         center: vistaDefautl.centro,
         projection: proyeccion,
-        zoom: vistaDefautl.zoom,
+        zoom: vistaDefautl.Acercamiento,
       }),
     },
     emits
