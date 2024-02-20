@@ -58,7 +58,7 @@ sin necesidad de volver a importarlo en el script. Por ejemplo:
 </template>
 ```
 
-_Para un uso avanzado revisa la documentación._
+_Para un uso avanzado revisa la [documentación](#documentación)._
 
 ## Actualizarion de la biblioteca
 
@@ -78,8 +78,8 @@ El componente `SisdaiMapa` es un contenedor especial único que alberga todos lo
 | Elemento | Descripcion |
 | ---------- | ----------- |
 | SisdaiMapaEncabezado | Contenedor generalmente para título y descripción, se muestra siempre arriba en el contenedor |
-| SisdaiMapaIzquierda | Contenedor generalemente para leyendas, se muestra arriba en vista de celular y a la izquierda en vista de escritorio |
-| SisdaiMapaDerecha | Contenedor generalmente para leyendas, se muestra abajo en vista de celular y a la izquierda en vista de escritorio |
+| SisdaiMapaIzquierda | Contenedor generalmente para leyendas, se muestra arriba en vista de celular y a la izquierda en vista de escritorio |
+| SisdaiMapaDerecha | Contenedor generalmente para leyendas, se muestra abajo en vista de celular y a la derecha en vista de escritorio |
 | SisdaiMapaPie | Contenedor generalmente para notas y referencias, se muestra siempre abajo |
 | SisdaiMapaCapas | Contenedor para agrupar las capas que utiliza el mapa |
 | SisdaiCapaGeojson | Las capas vectoriales en geojson nos permiten manipular su información de forma local, esto nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos |
