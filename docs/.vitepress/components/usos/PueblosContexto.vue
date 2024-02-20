@@ -1,12 +1,14 @@
 <script setup>
 import axios from 'axios'
-import { ref, watch } from 'vue'
+import { ref, toRaw, watch } from 'vue'
 
 const cdnArchivos =
   'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas'
 const url_gema_geoserver = 'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
+const extensionInicial = [-118.3651, 14.5321, -86.7104, 32.7187]
 
 const mapaPueblosContexto = ref(null)
+const extensionInteractiva = ref(extensionInicial)
 const pueblos = ref({})
 const puebloSeleccionado = ref('')
 const estados = ref([])
@@ -49,9 +51,10 @@ function consultarMunicipios(cve_ent) {
       // console.log(status)
       if (status !== 200) return
       // bbox
-      municipios.value = data.features.map(({ properties }) => ({
+      municipios.value = data.features.map(({ bbox, properties }) => ({
         clave: properties.cve_mun,
         nombre: properties.nom_mun,
+        bbox: bbox,
       }))
     })
     .catch(() => {})
@@ -59,15 +62,27 @@ function consultarMunicipios(cve_ent) {
 
 watch(estadoSeleccionado, nv => {
   municipios.value = []
+  municipioSeleccionado.value = undefined
 
   if (nv === undefined) {
-    mapaPueblosContexto.value.ajustarVista()
+    // mapaPueblosContexto.value.ajustarVista()
+    extensionInteractiva.value = extensionInicial
   } else {
     consultarMunicipios(nv)
-    mapaPueblosContexto.value.ajustarVista({
-      extension: [nv.bbox[1], nv.bbox[0], nv.bbox[3], nv.bbox[2]],
-    })
+    // mapaPueblosContexto.value.ajustarVista({
+    //   extension: [nv.bbox[1], nv.bbox[0], nv.bbox[3], nv.bbox[2]],
+    // })
+    extensionInteractiva.value = [
+      nv.bbox[1],
+      nv.bbox[0],
+      nv.bbox[3],
+      nv.bbox[2],
+    ]
   }
+})
+
+watch(municipioSeleccionado, nv => {
+  console.log(toRaw(nv))
 })
 
 function msg(texto) {
@@ -79,10 +94,9 @@ function msg(texto) {
   <SisdaiMapa
     class="mapa-pueblos-contexto"
     elementosDescriptivos="titulo-mapa-pueblos-contexto"
-    :vista="{
-      extension: [-118.3651, 14.5321, -86.7104, 32.7187],
-    }"
+    :vista="{ extension: extensionInteractiva }"
     ref="mapaPueblosContexto"
+    @click=""
   >
     <template #panel-encabezado-vis>
       <p
@@ -138,7 +152,7 @@ function msg(texto) {
           <option
             v-for="municipio in municipios"
             :key="municipio.clave"
-            :value="municipio.clave"
+            :value="municipio"
           >
             {{ municipio.nombre }}
           </option>
@@ -148,13 +162,17 @@ function msg(texto) {
 
     <template #panel-izquierda-vis>
       <p class="vis-titulo-leyenda">Pueblos</p>
+      <SisdaiLeyendaExterna />
 
       <!-- <SisdaiLeyenda para="p_indigenas_comunidades_17122021" /> -->
-      <!-- <SisdaiLeyenda para="p_indigenas_asent_historicos_2020" />
+      <!-- <SisdaiLeyenda
+        para="p_indigenas_asent_historicos_2020"
+        :sinControlClases="false"
+      /> -->
       <SisdaiLeyenda
         para="p_indigenas_residentes_2020"
         :sinControlClases="false"
-      /> -->
+      />
       <!-- <SisdaiLeyenda para="p_indigenas_territorios_lenguas_2007" /> -->
     </template>
     <SisdaiCapaXyz posicion="1" />
@@ -191,8 +209,8 @@ function msg(texto) {
         LAYERS: 'p_indigenas_residentes_2020',
         // cve_ent,nom_ent,cve_mun,cvegeomun,nom_mun,cve_loc,cvegeoloc,nom_loc,cve_pueblo,nom_pueblo,pih
         cql_filter:
-          estadoSeleccionado !== ''
-            ? `cve_ent='${estadoSeleccionado}'`
+          estadoSeleccionado !== undefined
+            ? `cve_ent='${estadoSeleccionado.clave}'`
             : undefined,
       }"
       posicion="3"
@@ -206,8 +224,8 @@ function msg(texto) {
         LAYERS: 'p_indigenas_asent_historicos_2020',
         // cve_ent,nom_ent,cve_mun,cvegeomun,nom_mun,cve_loc,cvegeoloc,nom_loc,cve_pueblo,nom_pueblo,pih
         cql_filter:
-          estadoSeleccionado !== ''
-            ? `cve_ent='${estadoSeleccionado}'`
+          estadoSeleccionado !== undefined
+            ? `cve_ent='${estadoSeleccionado.clave}'`
             : undefined,
       }"
       posicion="4"
