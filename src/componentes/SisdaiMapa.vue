@@ -78,7 +78,7 @@ const props = defineProps({
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
    *
    * - Tipo: `Object`
-   * - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
+   * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
    * - Reactivo: ✅
    */
   vista: {
@@ -125,23 +125,25 @@ function mapa() {
 watch(
   vista,
   nv => {
-    const _nv = { ...valoresPorDefecto.vista, ...nv }
-    mapa()?.asignarVista(_nv)
+    mapa()?.asignarVista(nv)
 
-    if (_nv.ajustarVistaAlcambiarParametros) {
-      mapa().ajustarVista()
+    if (
+      nv.ajustarVistaAlCambiarParametros === undefined ||
+      nv.ajustarVistaAlCambiarParametros
+    ) {
+      mapa()?.ajustarVista()
     }
   },
   { deep: true }
 )
 
 /**
- * Objeto reactivo utilizado para evaluar en que momento el centro o zoom de la vista es diferente
+ * Objeto reactivo utilizado para evaluar en que momento el centro o acercamiento de la vista es diferente
  * a la anterior cada que se mueva el mapa.
  */
 const estadoVistaMovida = reactive({
   centro: undefined,
-  zoom: undefined,
+  acercamiento: undefined,
 })
 
 /**
@@ -156,10 +158,10 @@ function olMoveend({ map }) {
     emits(eventos.alCambiarCentro, estadoVistaMovida.centro)
   }
 
-  // const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
-  if (map.getView().getZoom() !== estadoVistaMovida.zoom) {
-    estadoVistaMovida.zoom = map.getView().getZoom()
-    emits(eventos.alCambiarZoom, estadoVistaMovida.zoom)
+  // const nuevoAcercamiento = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (map.getView().getZoom() !== estadoVistaMovida.acercamiento) {
+    estadoVistaMovida.acercamiento = map.getView().getZoom()
+    emits(eventos.alCambiarAcercamiento, estadoVistaMovida.acercamiento)
   }
 }
 
@@ -244,7 +246,7 @@ onMounted(() => {
     props.proyeccion,
     emits
   )
-  mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+  mapa().asignarVista(vista.value)
   mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
   mapa().on(EventType.CLICK, olClick)
@@ -270,7 +272,7 @@ onUnmounted(() => {
 
 defineExpose({
   /**
-   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * Permite descargar la vista actual del mapa, con las capas visibles y Acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).
@@ -283,8 +285,12 @@ defineExpose({
    * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
    * AjustarVista.
    */
-  ajustarVista: () => {
-    mapa().ajustarVista()
+  ajustarVista: params => {
+    mapa().ajustarVista(params)
+  },
+
+  mapa: () => {
+    return mapa()
   },
 })
 
@@ -359,17 +365,17 @@ function panelesEnUso() {
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
     <div
-      class="contenedor-vis2-paneles p-2-mov p-3-esc"
+      class="contenedor-vis-paneles"
       :class="panelesEnUso()"
     >
-      <div class="panel-encabezado-vis p-b-2">
+      <div class="panel-encabezado-vis">
         <slot name="panel-encabezado-vis" />
       </div>
 
-      <div class="panel-izquierda-vis p-b-2-mov p-r-2-esc">
+      <div class="panel-izquierda-vis">
         <slot name="panel-izquierda-vis" />
       </div>
 
@@ -397,11 +403,11 @@ function panelesEnUso() {
         />
       </div>
 
-      <div class="panel-derecha-vis p-t-2-mov p-l-2-esc">
+      <div class="panel-derecha-vis">
         <slot name="panel-derecha-vis" />
       </div>
 
-      <div class="panel-pie-vis p-t-2">
+      <div class="panel-pie-vis">
         <slot name="panel-pie-vis" />
       </div>
     </div>

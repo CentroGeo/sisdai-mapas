@@ -1,8 +1,5 @@
 <template>
-  <SisdaiMapa
-    class="con-panel-izquierda-vis"
-    :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }"
-  >
+  <SisdaiMapa :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }">
     <SisdaiCapaXyz posicion="1" />
 
     <SisdaiCapaWms
@@ -38,8 +35,14 @@
     />
 
     <template #panel-izquierda-vis>
-      <SisdaiLeyenda para="corrientes" />
-      <SisdaiLeyenda para="localidades" />
+      <SisdaiLeyenda
+        para="corrientes"
+        :sinControlClases="true"
+      />
+      <SisdaiLeyenda
+        para="localidades"
+        :sinControlClases="false"
+      />
       <SisdaiLeyenda para="centros" />
       <SisdaiLeyenda para="division_estatal" />
     </template>

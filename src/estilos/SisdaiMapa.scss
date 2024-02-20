@@ -1,10 +1,6 @@
-@import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
-@import './../estilos/ContenedorVis.scss';
-
-.sisdai-mapa.contenedor-vis2 {
+.sisdai-mapa.contenedor-vis {
   &.gema {
-    .contenedor-vis2-paneles {
+    .contenedor-vis-paneles {
       height: 100%;
       max-height: max-content;
       padding: 0;

@@ -103,6 +103,30 @@ export async function fetchJSON(url, objetoEsperado = {}) {
 }
 
 /**
+ * Devuelve una petición fetch con promesa de un JSON si la respuesta http es correcta, en caso
+ * contrario devolverá el objetoEsperado que se esperaba de la respuesta.
+ * @param {String} parametros
+ * @param {Object|Array} objetoEsperado
+ * @returns
+ */
+export async function consultarJSON(parametros, objetoEsperado = {}) {
+  try {
+    const r = await fetch(parametros)
+
+    if (r.ok) {
+      return r.json()
+    }
+
+    return {
+      error: `No se pudieron cargar los datos de: ${parametros}`,
+      resultado: objetoEsperado,
+    }
+  } catch (e) {
+    return { error: e.message, resultado: objetoEsperado }
+  }
+}
+
+/**
  * Devuelve un objeto en texto con sintaxis de reglas css.
  * @param {Object} obj
  * @returns {String}

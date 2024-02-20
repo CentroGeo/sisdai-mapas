@@ -40,30 +40,39 @@ defineEmits(['alCambiar'])
 </script>
 
 <template>
-  <div
+  <li
     class="controlador-vis"
     :style="{
       '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
     }"
   >
-    <input
-      v-if="!sinControl"
-      type="checkbox"
-      :id="idCheck"
-      :checked="encendido"
-      @input="$emit('alCambiar', $event.target.checked)"
-    />
-
-    <label :for="!sinControl ? idCheck : undefined">
-      <LeyendaSimbolo
-        v-if="simbolo"
-        :simbolo="simbolo"
+    <template v-if="sinControl">
+      <p class="lectura">
+        <LeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
+        <span class="nombre-variable">
+          {{ etiqueta }}
+        </span>
+      </p>
+    </template>
+    <template v-else>
+      <input
+        type="checkbox"
+        :id="idCheck"
+        :checked="encendido"
+        @input="$emit('alCambiar', $event.target.checked)"
       />
-      <span class="nombre-variable">
-        {{ etiqueta }}
-      </span>
-    </label>
-  </div>
+      <label :for="idCheck">
+        <LeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
+        <span class="nombre-variable">
+          {{ etiqueta }}
+        </span>
+      </label>
+    </template>
+  </li>
 </template>
-
-<style lang="scss"></style>

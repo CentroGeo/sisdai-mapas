@@ -83,7 +83,7 @@ function cuadrojardines(f) {
       </p>
       <a
         href="#"
-        class="boton boton-primario boton-chico m-t-2"
+        class="boton boton-primario boton-chico m-t-2-mov"
       >
         Descargar datos <span class="icono-archivo-descargar" />
         <span class="a11y-solo-lectura">
