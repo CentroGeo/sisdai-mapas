@@ -5,6 +5,7 @@ import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
 import SisdaiCapaWms from './componentes/SisdaiCapaWms.vue'
 import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
 import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
+import SisdaiLeyendaExterna from './componentes/SisdaiLeyendaExterna.vue'
 import SisdaiMapa from './componentes/SisdaiMapa.vue'
 import SisdaiMapaInstruccionalNavegacionTeclado from './componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
 
@@ -14,6 +15,7 @@ export default {
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiLeyenda', SisdaiLeyenda)
+    Vue.component('SisdaiLeyendaExterna', SisdaiLeyendaExterna)
     Vue.component('SisdaiMapa', SisdaiMapa)
     Vue.component(
       'SisdaiMapaInstruccionalNavegacionTeclado',
@@ -27,6 +29,7 @@ export {
   SisdaiCapaWms,
   SisdaiCapaXyz,
   SisdaiLeyenda,
+  SisdaiLeyendaExterna,
   SisdaiMapa,
   SisdaiMapaInstruccionalNavegacionTeclado,
 }
