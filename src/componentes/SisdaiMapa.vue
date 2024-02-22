@@ -421,7 +421,7 @@ function panelesEnUso() {
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
 @import './../estilos/GloboInfo.scss';
-@import './../estilos/SisdaiMapa.scss';
+// @import './../estilos/SisdaiMapa.scss';
 
 .sisdai-mapa-control {
   &-escala-grafica {
