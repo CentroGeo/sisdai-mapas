@@ -94,7 +94,7 @@ A continuación se describen las funciones que pueden modificar el estado de la 
 
 #### `ajustarVista()`
 
-Ajusta la vista del mapa a los valores definidos en la propiedad vista.
+Ajusta la vista del mapa a valores que llegen como parametro bajo la estructira de la propiedead vista (`{ acercamiento, centro, extension, extensionMargen }`), si este parámetro no es definido, la vista se ajustará a los valores definidos en el mapa al ejecutar esta función.
 
 **Uso:**
 
@@ -106,14 +106,20 @@ const mapa = ref()
 ```html
 <SisdaiMapa ref="mapa"> ... </SisdaiMapa>
 
-<button @click="mapa.ajustarVista()">Ajustar vista con boton externo</button>
+<button @click="mapa.ajustarVista({ centro: [-102, 24], ... })">
+  Ajustar vista diferente a la definida en el mapa con boton externo
+</button>
+
+<button @click="mapa.ajustarVista()">
+  Ajustar vista definida en el mapa con boton externo
+</button>
 ```
 
 ## Eventos
 
 A continuación se describen los eventos que desencadena el mapa relacionados con los cambios de la vista.
 
-#### `@alAjustarVista`
+<!-- #### `@alAjustarVista`
 
 Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores iniciales de la propiedad vista mediante el control AjustarVista.
 
@@ -127,7 +133,7 @@ Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores in
 <SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
   ...
 </SisdaiMapa>
-```
+``` -->
 
 #### `@alCambiarCentro`
 

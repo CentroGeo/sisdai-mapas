@@ -51,17 +51,33 @@ function tieneSidebar(theme, page) {
       >
         <template #contenido-menu-lateral>
           <ul>
-            <SisdaiColapsableNavegacion
-              v-for="sidebar in listaSidebar(theme, page)"
-              :titulo="sidebar.text"
-              :activo="true"
-            >
-              <template #listado-contenido>
-                <li v-for="item in sidebar.items">
-                  <a :href="item.link">{{ item.text }}</a>
-                </li>
-              </template>
-            </SisdaiColapsableNavegacion>
+            <li>
+              <SisdaiColapsableNavegacion
+                v-for="sidebar in listaSidebar(theme, page)"
+                :colapsado="true"
+              >
+                <template #encabezado>
+                  <span>{{ sidebar.text }}</span>
+                </template>
+                <template #contenido>
+                  <ul>
+                    <li v-for="item in sidebar.items">
+                      <a
+                        :href="item.link"
+                        class="p-x-6-esc p-x-4-mov p-y-1"
+                      >
+                        {{ item.text }}
+                      </a>
+                    </li>
+                  </ul>
+                </template>
+                <!-- <template #listado-contenido>
+                  <li v-for="item in sidebar.items">
+                    <a :href="item.link">{{ item.text }}</a>
+                  </li>
+                </template> -->
+              </SisdaiColapsableNavegacion>
+            </li>
           </ul>
         </template>
       </SisdaiMenuLateral>

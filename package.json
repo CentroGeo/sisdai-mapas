@@ -34,7 +34,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-vue": "^9.21.1",
-    "happy-dom": "^13.3.8",
+    "happy-dom": "^13.4.1",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
