@@ -1,5 +1,43 @@
+<script setup>
+import { reactive } from 'vue'
+
+const capasEncendidas = reactive({
+  estados: true,
+  centros: true,
+})
+</script>
+
 <template>
   <SisdaiMapa :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }">
+    <template #panel-izquierda-vis>
+      <SisdaiLeyendaExterna
+        fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
+        capa=""
+        estiloCapa=""
+        filtroCapa=""
+        tituloCapa="Leyenda externa de Centros"
+        urlCapa="https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=hcti_centros_invest_conahcyt_0421_xy_p&STYLE="
+        @alCambiarVisibilidad="valor => (capasEncendidas.centros = valor)"
+      />
+
+      <SisdaiLeyendaExterna
+        tituloCapa="Leyenda externa de Estados"
+        urlCapa="https://gema.conahcyt.mx/geoserver/wms?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_division_estatal_20_est_a&STYLE="
+        @alCambiarVisibilidad="valor => (capasEncendidas.estados = valor)"
+      />
+
+      <SisdaiLeyenda
+        para="corrientes"
+        :sinControlClases="true"
+      />
+      <SisdaiLeyenda
+        para="localidades"
+        :sinControlClases="false"
+      />
+      <SisdaiLeyenda para="centros" />
+      <SisdaiLeyenda para="division_estatal" />
+    </template>
+
     <SisdaiCapaXyz posicion="1" />
 
     <SisdaiCapaWms
@@ -8,6 +46,7 @@
       capa="gref_division_estatal_20_est_a"
       nombre="Division Estatal"
       posicion="2"
+      :visible="capasEncendidas.estados"
     />
 
     <SisdaiCapaWms
@@ -32,19 +71,7 @@
       :parametros="{ LAYERS: 'hcti_centros_invest_conahcyt_0421_xy_p' }"
       nombre="Centros de Investigación del Conahcyt a abril de 2021"
       posicion="5"
+      :visible="capasEncendidas.centros"
     />
-
-    <template #panel-izquierda-vis>
-      <SisdaiLeyenda
-        para="corrientes"
-        :sinControlClases="true"
-      />
-      <SisdaiLeyenda
-        para="localidades"
-        :sinControlClases="false"
-      />
-      <SisdaiLeyenda para="centros" />
-      <SisdaiLeyenda para="division_estatal" />
-    </template>
   </SisdaiMapa>
 </template>
