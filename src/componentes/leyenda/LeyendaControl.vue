@@ -40,7 +40,7 @@ defineEmits(['alCambiar'])
 </script>
 
 <template>
-  <li
+  <div
     class="controlador-vis"
     :style="{
       '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
@@ -74,5 +74,5 @@ defineEmits(['alCambiar'])
         </span>
       </label>
     </template>
-  </li>
+  </div>
 </template>
