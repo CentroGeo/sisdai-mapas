@@ -27,10 +27,10 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
-  filtroCapa: {
-    type: String,
-    default: undefined,
-  },
+  // filtroCapa: {
+  //   type: String,
+  //   default: undefined,
+  // },
   fuenteCapa: {
     type: String,
     default: undefined,
@@ -85,7 +85,7 @@ const {
 const clases = ref([])
 
 const capaEncendida = ref(visibilidadCapa.value)
-// watch(visibilidadCapa, encenderCapa) // cuidado al volver esta propiedad reactiva
+watch(visibilidadCapa, encenderCapa) // cuidado al volver esta propiedad reactiva
 watch(capaEncendida, nv => emits(eventos.alCambiarVisibilidad, nv))
 
 const filtroCQL = ref(undefined)
@@ -114,7 +114,7 @@ function urlGeoserver() {
       .map(([id, valor]) => `${id}=${encodeURIComponent(valor)}`)
       .join('&')
 
-  // console.log(url)
+  console.log(url)
 
   return url
 }
@@ -137,6 +137,7 @@ function actualizarClasesDesdeWms() {
 onMounted(() => {
   actualizarClasesDesdeWms()
 })
+watch([capa, estiloCapa, fuenteCapa], () => actualizarClasesDesdeWms())
 
 watch(
   () =>
