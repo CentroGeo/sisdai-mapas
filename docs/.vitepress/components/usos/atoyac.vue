@@ -27,7 +27,7 @@ const seleccion = ref(opciones[0].estilo)
     class="mapa-mortaliada-enfermedad con-panel-encabezado-vis con-panel-izquierda-vis con-panel-pie-vis"
     :vista="{
       // centro: [-98.3404, 19.2824],
-      // zoom: 8.9,
+      // acercamiento: 8.9,
       extension: '-98.6634,18.8368,-97.9408,19.7288',
     }"
   >

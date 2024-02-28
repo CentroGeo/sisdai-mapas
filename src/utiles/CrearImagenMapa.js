@@ -1,3 +1,19 @@
+// This file is part of sisdai-mapas.
+//
+//   sisdai-mapas is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU Lesser General Public License as published by the
+//   Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   sisdai-mapas is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General
+//   Public License for more details.
+//
+//   You should have received a copy of the GNU Lesser General Public License along
+//   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
+
+
 /**
  * @module scripts/mapa/ExportarImagen
  */
@@ -60,7 +76,7 @@ export default function crearImagen(mapa) {
 }
 
 /** D E P R E C A D O -> (import("clases/Mapa").default).exportarImagen
- * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+ * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
  * pantalla, sin controles. El formato de descargá es PNG.
  * @param {Object} mapa instancia del mapa.
  * @param {String} nombreCaptura nombre del archivo que se descargara del navegador (no debe

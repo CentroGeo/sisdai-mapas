@@ -42,6 +42,14 @@ URL del servicio WMS.
 - Valor por defecto: `undefined`.
 - Reactivo: ❌
 
+#### `tituloClases`
+
+Titulo de las clases de la leyenda, solo aplica si la capa cuenta con reglas de estilo de clasificación.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`.
+- Reactivo: ✅
+
 ## Ejemplo
 
 <CapasWms />

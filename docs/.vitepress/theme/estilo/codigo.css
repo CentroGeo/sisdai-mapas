@@ -1,12 +1,26 @@
-/* Las reglas de esta oja de estilos están basadas en las reglas para bloques de código de viteoress v1.0.0-rc.14 */
+/* Las reglas de esta oja de estilos están basadas en las reglas para bloques de código de viteoress v1.0.0-rc.35 */
 
-/* Fuente: vitepress/dist/client/theme-default/styles/vars.css */
+/* Fuente: vitepress/dist/client/theme-default/styles/vars.css#333 */
 
+/**
+ * Typography
+ * -------------------------------------------------------------------------- */
+:root {
+  /* --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace; */
+  --vp-font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular,
+    'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+    monospace;
+}
+
+/**
+ * Component: Code
+ * -------------------------------------------------------------------------- */
 :root {
   --vp-code-copy-copied-text-content: 'Copiado'; /* M O D I F I C A D O */
 }
 
-/* Fuente: vitepress/dist/client/theme-default/styles/base.css */
+/* Fuente: vitepress/dist/client/theme-default/styles/base.css#116 */
 
 pre,
 code,

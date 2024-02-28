@@ -90,7 +90,7 @@ Código de identificación SRS que define la proyección de la vista.
 Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
 
 - Tipo: `Object`
-- Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
+- Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
 - Reactivo: ✅
 
 ## Funciones ​
@@ -99,7 +99,7 @@ A continuación se describen las funciones que pueden modificar el estado del ma
 
 #### `exportarImagen`
 
-Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en pantalla, sin controles. El formato de descargá es PNG.
+Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en pantalla, sin controles. El formato de descargá es PNG.
 
 **Parametros:**
 

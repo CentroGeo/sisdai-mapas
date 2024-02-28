@@ -29,12 +29,7 @@ const props = defineProps({
     default: undefined,
   },
 
-  tipoControl: {},
-
-  tipoCapa: {
-    typo: String,
-    required: true,
-  },
+  // tipoControl: {},
 })
 
 const idCheck = `${props.id}-${idAleatorio()}`
@@ -47,57 +42,37 @@ defineEmits(['alCambiar'])
 <template>
   <div
     class="controlador-vis"
-    :class="{ 'sin-simbolo': simbolo === undefined, 'sin-control': sinControl }"
+    :style="{
+      '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
+    }"
   >
-    <!-- <span class="figura-variable" /> -->
-    <LeyendaSimbolo
-      v-if="simbolo"
-      :estilo="simbolo.estilo"
-      :geometria="simbolo.geometria"
-      :tipoCapa="tipoCapa"
-    />
-
-    <input
-      v-if="!sinControl"
-      type="checkbox"
-      :id="idCheck"
-      :checked="encendido"
-      @input="$emit('alCambiar', $event.target.checked)"
-    />
-
-    <label
-      class="nombre-variable"
-      :for="!sinControl ? idCheck : undefined"
-    >
-      {{ etiqueta }}
-    </label>
+    <template v-if="sinControl">
+      <p class="lectura">
+        <LeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
+        <span class="nombre-variable">
+          {{ etiqueta }}
+        </span>
+      </p>
+    </template>
+    <template v-else>
+      <input
+        type="checkbox"
+        :id="idCheck"
+        :checked="encendido"
+        @input="$emit('alCambiar', $event.target.checked)"
+      />
+      <label :for="idCheck">
+        <LeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
+        <span class="nombre-variable">
+          {{ etiqueta }}
+        </span>
+      </label>
+    </template>
   </div>
 </template>
-
-<style lang="scss">
-.sisdai-mapa-leyenda {
-  .sin-control {
-    .nombre-variable {
-      color: var(--tipografia-color);
-    }
-
-    &.controlador-vis {
-      padding: 9px;
-
-      .figura-variable {
-        margin-left: 5px;
-        margin-top: 0;
-      }
-
-      .nombre-variable {
-        padding-left: 0px;
-        margin-left: 28px;
-      }
-    }
-  }
-
-  .sin-simbolo .nombre-variable {
-    padding-left: 40px;
-  }
-}
-</style>

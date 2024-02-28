@@ -18,13 +18,13 @@ export default {
   alCambiarCentro: 'alCambiarCentro',
 
   /**
-   * Ejecutado cuando se detecta que el zoom de la vista del mapa ha cambiado.
+   * Ejecutado cuando se detecta que el Acercamiento de la vista del mapa ha cambiado.
    *
    * **Parámetros:**
    *
-   * - `Number`: Nuevo valor de zoom.
+   * - `Number`: Nuevo valor de Acercamiento.
    */
-  alCambiarZoom: 'alCambiarZoom',
+  alCambiarAcercamiento: 'alCambiarAcercamiento',
 
   /**
    * Ejecutado cuando se detecta que la vista del mapa ha cambiado.

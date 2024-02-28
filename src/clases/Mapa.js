@@ -1,12 +1,24 @@
-import olMap from 'ol/Map'
+// This file is part of sisdai-mapas.
+//
+//   sisdai-mapas is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU Lesser General Public License as published by the
+//   Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   sisdai-mapas is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General
+//   Public License for more details.
+//
+//   You should have received a copy of the GNU Lesser General Public License along
+//   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
+import olMap from 'ol/Map'
 import RenderEventType from 'ol/render/EventType'
-import { toRaw } from 'vue'
-import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
-import GloboInfo from './GloboInfo'
+import { vista as vistaPorDefecto } from './../valores/mapa'
 import NavegacionTeclado from './NavegacionTeclado'
 
 /**
@@ -20,7 +32,8 @@ export default class Mapa extends olMap {
 
     this.eventos = emits
 
-    this.globoInfo = new GloboInfo(this)
+    // this.cuadroInfo = new CuadroInfo(this, 0)
+    // this.globoInfo = new GloboInfo(this)
 
     this.navegacionTeclado = new NavegacionTeclado(this)
 
@@ -51,28 +64,51 @@ export default class Mapa extends olMap {
   }
 
   /**
-   *
+   * Objeto vista: { acercamiento, centro, extencsion }
+   * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
+   * { acercamiento, centro } o { extension }
    */
-  ajustarVista() {
-    const extension = this.getView().get('extension')
+  ajustarVista(vista) {
+    const acercamiento =
+      vista?.acercamiento ||
+      this.getView().get('acercamiento') ||
+      vistaPorDefecto.acercamiento
+    const centro =
+      vista?.centro || this.getView().get('centro') || vistaPorDefecto.centro
+    const extension =
+      vista?.extension ||
+      this.getView().get('extension') ||
+      vistaPorDefecto.extension
+    const extensionMargen =
+      vista?.extensionMargen ||
+      this.getView().get('extensionMargen') ||
+      vistaPorDefecto.extensionMargen
+
+    // console.log(
+    //   'ajustar vista a',
+    //   acercamiento,
+    //   centro,
+    //   extension,
+    //   extensionMargen
+    // )
 
     if (validaciones.extension(extension)) {
       // console.log(this.getView().get('extensionMargen'))
       this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(this.getView().get('extensionMargen')),
+        padding: valorarExtensionMargen(extensionMargen),
       })
     } else {
       this.getView().setCenter(
-        valorarArregloNumerico(this.getView().get('centro'))
+        validaciones.centro(centro)
+          ? valorarArregloNumerico(centro)
+          : vistaPorDefecto.centro
       )
-      this.getView().setZoom(Number(this.getView().get('acercamiento')))
+      this.getView().setZoom(Number(acercamiento))
     }
-
-    this.eventos(eventos.alAjustarVista, toRaw(this.getView()))
   }
 
   /**
-   * Asigna el valor del zoom en el mapa.
+   * Asigna el valor del acercamiento en el mapa.
    * @param {Number} acercamiento
    */
   asignarAcercamiento(acercamiento) {
@@ -101,9 +137,9 @@ export default class Mapa extends olMap {
    * Asigna los valores de de la vista del mapa.
    * @param {Object} propiedades
    */
-  asignarVista({ extension, extensionMargen, centro, zoom }) {
+  asignarVista({ extension, extensionMargen, centro, acercamiento }) {
     this.asignarCentro(centro)
-    this.asignarAcercamiento(zoom)
+    this.asignarAcercamiento(acercamiento)
     this.asignarExtension(extension, extensionMargen)
     // this.ajustarVista()
   }
@@ -145,7 +181,7 @@ export default class Mapa extends olMap {
   }
 
   /**
-   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).

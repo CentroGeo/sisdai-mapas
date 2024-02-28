@@ -1,5 +1,22 @@
+<!--This file is part of sisdai-mapas.-->
+
+<!--sisdai-mapas is free software: you can redistribute it and/or modify-->
+<!--it under the terms of the GNU Lesser General Public License as published by the-->
+<!--Free Software Foundation, either version 3 of the License, or-->
+<!--(at your option) any later version.-->
+
+<!--sisdai-mapas is distributed in the hope that it will be useful,-->
+<!--but WITHOUT ANY WARRANTY; without even the implied warranty of-->
+<!--MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General-->
+<!--Public License for more details.-->
+
+<!--You should have received a copy of the GNU Lesser General Public License along-->
+<!--with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.-->
+
 <script setup>
 import MapEventType from 'ol/MapEventType'
+import EventType from 'ol/events/EventType'
+import PointerEventType from 'ol/pointer/EventType'
 import {
   computed,
   onMounted,
@@ -8,13 +25,17 @@ import {
   ref,
   shallowRef,
   toRefs,
+  useSlots,
   watch,
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
 import { idAleatorio, stringifyIguales } from './../utiles'
+import { buscarContenidoCapaEnPixel } from './../utiles/globoInfo'
 import * as validaciones from './../utiles/validaciones'
 import * as valoresPorDefecto from './../valores/mapa'
+import CuadroInformativo from './info/InfoCuadro.vue'
+import GloboInformativo from './info/InfoGlobo.vue'
 import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
 
 const props = defineProps({
@@ -72,7 +93,7 @@ const props = defineProps({
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
    *
    * - Tipo: `Object`
-   * - Valor por defecto: `{ centro: [0, 0], zoom: 1.5 }`
+   * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
    * - Reactivo: ✅
    */
   vista: {
@@ -99,6 +120,7 @@ const props = defineProps({
 })
 
 const emits = defineEmits(Object.values(eventos))
+const slots = useSlots()
 const refMapa = shallowRef(null)
 const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
 
@@ -118,23 +140,25 @@ function mapa() {
 watch(
   vista,
   nv => {
-    const _nv = { ...valoresPorDefecto.vista, ...nv }
-    mapa()?.asignarVista(_nv)
+    mapa()?.asignarVista(nv)
 
-    if (_nv.ajustarVistaAlcambiarParametros) {
-      mapa().ajustarVista()
+    if (
+      nv.ajustarVistaAlCambiarParametros === undefined ||
+      nv.ajustarVistaAlCambiarParametros
+    ) {
+      mapa()?.ajustarVista()
     }
   },
   { deep: true }
 )
 
 /**
- * Objeto reactivo utilizado para evaluar en que momento el centro o zoom de la vista es diferente
+ * Objeto reactivo utilizado para evaluar en que momento el centro o acercamiento de la vista es diferente
  * a la anterior cada que se mueva el mapa.
  */
 const estadoVistaMovida = reactive({
   centro: undefined,
-  zoom: undefined,
+  acercamiento: undefined,
 })
 
 /**
@@ -149,11 +173,71 @@ function olMoveend({ map }) {
     emits(eventos.alCambiarCentro, estadoVistaMovida.centro)
   }
 
-  // const nuevoZoom = Math.round(e.map.getView().getZoom() * 100) / 100
-  if (map.getView().getZoom() !== estadoVistaMovida.zoom) {
-    estadoVistaMovida.zoom = map.getView().getZoom()
-    emits(eventos.alCambiarZoom, estadoVistaMovida.zoom)
+  // const nuevoAcercamiento = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (map.getView().getZoom() !== estadoVistaMovida.acercamiento) {
+    estadoVistaMovida.acercamiento = map.getView().getZoom()
+    emits(eventos.alCambiarAcercamiento, estadoVistaMovida.acercamiento)
   }
+}
+
+const globoInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false,
+})
+const cuadroInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false,
+})
+
+function abrirGloboInfo(map, originalEvent) {
+  if (cuadroInfo.visible) {
+    globoInfo.visible = false
+    return
+  }
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
+
+  if (contenido !== undefined) {
+    globoInfo.visible = true
+    globoInfo.contenido = contenido
+    globoInfo.pixel = pixel
+  } else {
+    globoInfo.visible = false
+  }
+}
+function abrirCuadroInfo(map, originalEvent) {
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'cuadroInfo')
+
+  if (contenido !== undefined) {
+    cuadroInfo.visible = true
+    globoInfo.visible = false
+    cuadroInfo.contenido = contenido
+    cuadroInfo.pixel = pixel
+  } else {
+    cuadroInfo.visible = false
+  }
+}
+function olPointerMove({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    if (!cuadroInfo.visible) {
+      abrirCuadroInfo(map, originalEvent)
+    }
+    abrirGloboInfo(map, originalEvent)
+  } else {
+    globoInfo.visible = false
+  }
+}
+function olClick({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    abrirCuadroInfo(map, originalEvent)
+  }
+}
+function olPointerLeave() {
+  // console.log('salió')
+  globoInfo.visible = false
 }
 
 /**
@@ -177,9 +261,14 @@ onMounted(() => {
     props.proyeccion,
     emits
   )
-  mapa().asignarVista({ ...valoresPorDefecto.vista, ...vista.value })
+  mapa().asignarVista(vista.value)
   mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
+  mapa().on(EventType.CLICK, olClick)
+  mapa().on(PointerEventType.POINTERMOVE, olPointerMove)
+  mapa()
+    .getTargetElement()
+    .addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
 
   ariaCanvas(elementosDescriptivos.value)
   watch(elementosDescriptivos, ariaCanvas)
@@ -187,12 +276,18 @@ onMounted(() => {
 
 onUnmounted(() => {
   mapa().un(MapEventType.MOVEEND, olMoveend)
+  mapa().un(EventType.CLICK, olClick)
+  mapa().un(PointerEventType.POINTERMOVE, olPointerMove)
+
+  mapa()
+    .getTargetElement()
+    .removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
 defineExpose({
   /**
-   * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
+   * Permite descargar la vista actual del mapa, con las capas visibles y Acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).
@@ -205,8 +300,12 @@ defineExpose({
    * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
    * AjustarVista.
    */
-  ajustarVista: () => {
-    mapa().ajustarVista()
+  ajustarVista: params => {
+    mapa().ajustarVista(params)
+  },
+
+  mapa: () => {
+    return mapa()
   },
 })
 
@@ -268,39 +367,64 @@ function alTeclear({ key }) {
       break
   }
 }
+
+const paneles = ['encabezado', 'izquierda', 'derecha', 'pie']
+function panelesEnUso() {
+  // return !!slots[name]
+  return paneles
+    .filter(panel => !!slots[`panel-${panel}-vis`])
+    .map(panel => `con-panel-${panel}-vis`)
+}
 </script>
 
 <template>
   <div
     :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis2 borde-redondeado-8"
+    class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
-    <div class="panel-encabezado-vis">
-      <slot name="panel-encabezado-vis" />
-    </div>
-
-    <div class="panel-izquierda-vis">
-      <slot name="panel-izquierda-vis" />
-    </div>
-
-    <!-- slot para las capas -->
-    <slot />
-
     <div
-      class="contenido-vis"
-      ref="refMapa"
-      tabindex="0"
-      @focusin="focoEnMapa = true"
-      @focusout="focoEnMapa = false"
-      @keydown="alTeclear"
-    />
+      class="contenedor-vis-paneles"
+      :class="panelesEnUso()"
+    >
+      <div class="panel-encabezado-vis">
+        <slot name="panel-encabezado-vis" />
+      </div>
 
-    <div class="panel-derecha-vis">
-      <slot name="panel-derecha-vis" />
-    </div>
+      <div class="panel-izquierda-vis">
+        <slot name="panel-izquierda-vis" />
+      </div>
 
-    <div class="panel-pie-vis">
-      <slot name="panel-pie-vis" />
+      <!-- slot para las capas -->
+      <slot />
+
+      <div
+        class="contenido-vis"
+        ref="refMapa"
+        tabindex="0"
+        @focusin="focoEnMapa = true"
+        @focusout="focoEnMapa = false"
+        @keydown="alTeclear"
+      >
+        <GloboInformativo
+          :pixel="globoInfo.pixel"
+          :contenido="globoInfo.contenido"
+          :visible="globoInfo.visible"
+        />
+        <CuadroInformativo
+          :pixel="cuadroInfo.pixel"
+          :contenido="cuadroInfo.contenido"
+          :visible="cuadroInfo.visible"
+          @alCerrar="cuadroInfo.visible = false"
+        />
+      </div>
+
+      <div class="panel-derecha-vis">
+        <slot name="panel-derecha-vis" />
+      </div>
+
+      <div class="panel-pie-vis">
+        <slot name="panel-pie-vis" />
+      </div>
     </div>
 
     <!-- <SisdaiCargando /> -->
@@ -312,7 +436,7 @@ function alTeclear({ key }) {
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
 @import './../estilos/GloboInfo.scss';
-@import './../estilos/SisdaiMapa.scss';
+// @import './../estilos/SisdaiMapa.scss';
 
 .sisdai-mapa-control {
   &-escala-grafica {

@@ -1,3 +1,19 @@
+// This file is part of sisdai-mapas.
+//
+//   sisdai-mapas is free software: you can redistribute it and/or modify
+//   it under the terms of the GNU Lesser General Public License as published by the
+//   Free Software Foundation, either version 3 of the License, or
+//   (at your option) any later version.
+//
+//   sisdai-mapas is distributed in the hope that it will be useful,
+//   but WITHOUT ANY WARRANTY; without even the implied warranty of
+//   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Lesser General
+//   Public License for more details.
+//
+//   You should have received a copy of the GNU Lesser General Public License along
+//   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
+
+
 /**
  * @module utiles/index
  */
@@ -44,6 +60,17 @@ export function buscarIdContenedorHtmlSisdai(tipo, { parentElement }) {
 }
 
 /**
+ * Ejecuta los metodos de un array en un objeto.
+ * @param {Object} obj
+ * @param {Function} funcion
+ * @param {String} metodo map | filter | find | some | every | etc
+ * @returns {Object}
+ */
+export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
+  return Object.fromEntries(Object.entries(obj)[metodo](funcion))
+}
+
+/**
  * Valida si un valor es de tipo número.
  * @param {any} valor a evaluar
  * @returns {Boolean} `ture` en caso de ser número.
@@ -70,6 +97,70 @@ export function esObjeto(valor) {
  */
 export function esTexto(valor) {
   return typeof valor === typeof String()
+}
+
+/**
+ * Devuelve una petición fetch con promesa de un JSON si la respuesta http es correcta, en caso
+ * contrario devolverá el objetoEsperado que se esperaba de la respuesta.
+ * @param {String} url
+ * @param {Object|Array} objetoEsperado
+ * @returns {Promise}
+ */
+export async function fetchJSON(url, objetoEsperado = {}) {
+  const response = await fetch(url)
+
+  if (response.ok) {
+    return response.json()
+  }
+
+  // eslint-disable-next-line
+  console.error(`no se pudieron cargar los datos de: ${url}`)
+  return objetoEsperado
+}
+
+/**
+ * Devuelve una petición fetch con promesa de un JSON si la respuesta http es correcta, en caso
+ * contrario devolverá el objetoEsperado que se esperaba de la respuesta.
+ * @param {String} parametros
+ * @param {Object|Array} objetoEsperado
+ * @returns
+ */
+export async function consultarJSON(parametros, objetoEsperado = {}) {
+  try {
+    const r = await fetch(parametros)
+
+    if (r.ok) {
+      return r.json()
+    }
+
+    return {
+      error: `No se pudieron cargar los datos de: ${parametros}`,
+      resultado: objetoEsperado,
+    }
+  } catch (e) {
+    return { error: e.message, resultado: objetoEsperado }
+  }
+}
+
+/**
+ * Devuelve un objeto en texto con sintaxis de reglas css.
+ * @param {Object} obj
+ * @returns {String}
+ */
+export function objEnSintaxisCss(obj) {
+  return Object.entries(obj)
+    .map(([k, v]) => `${k}:${v};`)
+    .join('')
+}
+
+/**
+ * Compara si dos objetos son iguales utilisando la función `stringify` de la clase `JSON`.
+ * @param {Object} a
+ * @param {Object} b
+ * @returns {Boolean}
+ */
+export function stringifyIguales(a, b) {
+  return JSON.stringify(a) !== JSON.stringify(b)
 }
 
 /**
@@ -155,16 +246,6 @@ export function valorarTipoCapa(capa) {
   if (capa instanceof TileLayer) {
     return tiposCapa.xyz
   }
-}
-
-/**
- * Compara si dos objetos son iguales utilisando la función `stringify` de la clase `JSON`.
- * @param {Object} a
- * @param {Object} b
- * @returns {Boolean}
- */
-export function stringifyIguales(a, b) {
-  return JSON.stringify(a) !== JSON.stringify(b)
 }
 
 // * * * * * * * * * * * * * * * * * * //

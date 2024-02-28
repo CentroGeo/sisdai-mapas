@@ -8,6 +8,23 @@ Los atributos de la vista del mapa manipulan el espacio interactivo visible del 
 
 ## Atributos
 
+#### `acercamiento`
+
+Nivel de acercamiento utilizado para calcular la resolución inicial de la vista.
+
+- Tipo: `Number`
+- Valor por defecto: `1.5`
+- Reactivo: ✅
+
+> ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+
+**Uso:**
+
+```html
+<!-- acercamiento de la República Mexicana -->
+<SisdaiMapa :vista="{ acercamiento: 4.4, ... }"> ... </SisdaiMapa>
+```
+
 #### `centro`
 
 Coordenadas `[x, y]` del centro inicial de la vista.
@@ -39,7 +56,7 @@ Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 
 > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
 
-> ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `zoom` serán ignoradas.
+> ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
 
 **Uso:**
 
@@ -71,30 +88,13 @@ Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores
 </SisdaiMapa>
 ```
 
-#### `zoom`
-
-Nivel de zoom utilizado para calcular la resolución inicial de la vista.
-
-- Tipo: `Number`
-- Valor por defecto: `1.5`
-- Reactivo: ✅
-
-> ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
-
-**Uso:**
-
-```html
-<!-- zoom de la República Mexicana -->
-<SisdaiMapa :vista="{ zoom: 4.4, ... }"> ... </SisdaiMapa>
-```
-
 ## Funciones
 
 A continuación se describen las funciones que pueden modificar el estado de la vista en el mapa.
 
 #### `ajustarVista()`
 
-Ajusta la vista del mapa a los valores definidos en la propiedad vista.
+Ajusta la vista del mapa a valores que llegen como parametro bajo la estructira de la propiedead vista (`{ acercamiento, centro, extension, extensionMargen }`), si este parámetro no es definido, la vista se ajustará a los valores definidos en el mapa al ejecutar esta función.
 
 **Uso:**
 
@@ -106,14 +106,20 @@ const mapa = ref()
 ```html
 <SisdaiMapa ref="mapa"> ... </SisdaiMapa>
 
-<button @click="mapa.ajustarVista()">Ajustar vista con boton externo</button>
+<button @click="mapa.ajustarVista({ centro: [-102, 24], ... })">
+  Ajustar vista diferente a la definida en el mapa con boton externo
+</button>
+
+<button @click="mapa.ajustarVista()">
+  Ajustar vista definida en el mapa con boton externo
+</button>
 ```
 
 ## Eventos
 
 A continuación se describen los eventos que desencadena el mapa relacionados con los cambios de la vista.
 
-#### `@alAjustarVista`
+<!-- #### `@alAjustarVista`
 
 Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores iniciales de la propiedad vista mediante el control AjustarVista.
 
@@ -127,7 +133,7 @@ Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores in
 <SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
   ...
 </SisdaiMapa>
-```
+``` -->
 
 #### `@alCambiarCentro`
 
@@ -145,18 +151,20 @@ Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
 </SisdaiMapa>
 ```
 
-#### `@alCambiarZoom`
+#### `@alCambiarAcercamiento`
 
-Ejecutado cuando se detecta que el zoom de la vista del mapa ha cambiado.
+Ejecutado cuando se detecta que el acercamiento de la vista del mapa ha cambiado.
 
 **Parámetros:**
 
-- `Number`: Nuevo valor de zoom.
+- `Number`: Nuevo valor del acercamiento.
 
 **Uso:**
 
 ```html
-<SisdaiMapa @alCambiarZoom="(nuevoZoom) => `ejecutar una funcion`">
+<SisdaiMapa
+  @alCambiarAcercamiento="(nuevoAcercamiento) => `ejecutar una funcion`"
+>
   ...
 </SisdaiMapa>
 ```

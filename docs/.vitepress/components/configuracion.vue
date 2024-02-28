@@ -13,12 +13,12 @@ const mapa = ref()
   >
     <template #panel-encabezado-vis>
       <div>
-        <p
+        <h4
           class="vis-titulo-visualizacion"
           id="titulo-mapa"
         >
           Ejemplo de la configuración del mapa.
-        </p>
+        </h4>
 
         <p id="descripcion-corta-mapa">
           Este mapa es un ejemplo de como configurar el mapa para ajustarlo
@@ -29,14 +29,12 @@ const mapa = ref()
     <SisdaiCapaXyz />
 
     <template #panel-pie-vis>
-      <div class="m-t-2">
-        <button
-          class="boton-primario boton-chico"
-          @click="mapa.exportarImagen('mapa-sisdai')"
-        >
-          Exportar mapa como imagen
-        </button>
-      </div>
+      <button
+        class="boton-primario boton-chico"
+        @click="mapa.exportarImagen('mapa-sisdai')"
+      >
+        Exportar mapa como imagen
+      </button>
     </template>
   </SisdaiMapa>
 </template>

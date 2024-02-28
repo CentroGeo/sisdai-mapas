@@ -17,24 +17,24 @@ const vistaMapa = reactive({
   extension: '-118.3651,14.5321,-86.7104,32.7187',
   extensionMargen: 30,
   centro: [undefined, undefined],
-  zoom: undefined,
+  acercamiento: undefined,
 })
 
 function procesarParametrosHash({ hash }) {
   const obtenerParametroHash = n =>
     hash !== '' ? parseFloat(hash.split('=')[1].split('/')[n]) : undefined
 
-  vistaMapa.zoom = obtenerParametroHash(0)
+  vistaMapa.acercamiento = obtenerParametroHash(0)
   vistaMapa.centro = `${obtenerParametroHash(2)},${obtenerParametroHash(1)}`
   vistaMapa.extension = undefined
   // console.log('vista', JSON.stringify(vistaMapa))
 }
 
 function alMoverVista(vista) {
-  let zoom = vista.getZoom()
+  let acercamiento = vista.getZoom()
   let centro = vista.getCenter()
 
-  let hash = `#map=${zoom.toFixed(0)}/${centro[1].toFixed(
+  let hash = `#map=${acercamiento.toFixed(0)}/${centro[1].toFixed(
     4
   )}/${centro[0].toFixed(4)}`
 
@@ -96,7 +96,7 @@ watch(verPanelDerecho, nv => {
     </div>
 
     <SisdaiMapa
-      class="gema con-panel-derecha-vis"
+      class="gema"
       :class="{ 'mostrar-panel-derecho': verPanelDerecho }"
       ref="mapa"
       :vista="vistaMapa"
@@ -126,10 +126,6 @@ watch(verPanelDerecho, nv => {
         "
       />
 
-      <template #panel-izquierda-vis>
-        <div></div>
-      </template>
-
       <template #panel-derecha-vis>
         <div class="panel-seleccion-capas">
           <SisdaiLeyenda
@@ -156,7 +152,7 @@ div.contenedor-gema {
     width: 300px;
   }
 
-  .sisdai-mapa.mostrar-panel-derecho {
+  .mostrar-panel-derecho {
     .sisdai-mapa-control-acercar-alejar,
     .sisdai-mapa-control-ajuste-vista {
       // right: calc(100vw / 4);

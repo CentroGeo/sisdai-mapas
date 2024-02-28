@@ -3,7 +3,7 @@ import PointerEventType from 'ol/pointer/EventType'
 /**
  * @classdesc
  */
-export default class GloboInfo {
+export default class CuadroInfo {
   constructor(mapa, margen = 8) {
     this.margen = margen
 
@@ -18,12 +18,29 @@ export default class GloboInfo {
      * @type {!HTMLElement}
      */
     this.contenedor_ = document.createElement('div')
-    this.contenedor_.className = 'contenedor-globo-info'
+    this.contenedor_.className = 'contenedor-globo-info-ext'
     this.contenedor_.setAttribute('aria-live', 'assertive')
 
     this.setVisibilidad(false, mapa)
 
     this.setPosicion(new Posicion())
+
+    /**
+     * @private
+     * @type {!HTMLElement}
+     */
+    this.boton_ = document.createElement('button')
+    this.boton_.classList = 'boton-icono boton-secundario boton-chico'
+    this.boton_.id = 'boton_cerrar'
+    this.contenedor_.appendChild(this.boton_)
+
+    /**
+     * @private
+     * @type {!HTMLElement}
+     */
+    this.pictograma_ = document.createElement('span')
+    this.pictograma_.className = 'icono-cerrar'
+    this.boton_.appendChild(this.pictograma_)
 
     /**
      * @private
@@ -36,31 +53,30 @@ export default class GloboInfo {
     // Agrega el contenedor del globo al contenedor del mapa
     mapa.getViewport().appendChild(this.contenedor_)
 
-    // Agregando evento POINTERMOVE
-    mapa.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent }) => {
+    // Agregando evento POINTERDOWN
+    mapa.on(PointerEventType.POINTERDOWN, ({ dragging, originalEvent }) => {
       // Verifica que el mapa no esté en acción de dibujo o que el cursor no esté sobre un botón
-      // if (mapa.cuadroInfo.contenedor_.style.display === 'block') return
       if (
         !(
           dragging ||
           originalEvent.target.closest('.sisdai-mapa-control') ||
-          originalEvent.target.closest('.contenedor-globo-info-ext') ||
-          mapa.cuadroInfo.contenedor_.style.display === 'block'
+          originalEvent.target.closest('.contenedor-globo-info-ext')
         )
       ) {
         const pixel = mapa.getEventPixel(originalEvent)
         this.mostrar(this.buscarContenidoEnPixel(pixel, mapa), pixel, mapa)
-      } else {
-        this.setVisibilidad(false, mapa)
       }
     })
 
     // Agregando el evendto POINTERLEAVE
-    mapa
-      .getTargetElement()
-      .addEventListener(PointerEventType.POINTERLEAVE, () =>
-        this.setVisibilidad(false, mapa)
-      )
+    // mapa
+    //   .getTargetElement()
+    //   .addEventListener(PointerEventType.POINTERLEAVE, () =>
+    //     this.setVisibilidad(false, mapa)
+    //   )
+    document.getElementById('boton_cerrar').addEventListener('click', () => {
+      this.setVisibilidad(false, mapa)
+    })
   }
 
   /**
@@ -72,7 +88,7 @@ export default class GloboInfo {
    */
   buscarContenidoEnPixel(pixel, mapa) {
     return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
-      const contenido = capa.get('globoInfo')
+      const contenido = capa.get('cuadroInfo')
 
       return contenido !== undefined
         ? this.procesarContenido(contenido, feature)
@@ -82,8 +98,8 @@ export default class GloboInfo {
 
   mostrar(contenido, pixel, mapa) {
     if (contenido !== undefined) {
-      this.setVisibilidad(true, mapa)
-      this.setContenido(contenido)
+      // this.setVisibilidad(true, mapa)
+      // this.setContenido(contenido)
       this.setPosicionDesdePixel(pixel, mapa.getViewport())
     } else {
       this.setVisibilidad(false, mapa)
@@ -145,7 +161,7 @@ export default class GloboInfo {
 
   /**
    * Calcula la posición que podría tomar el globo de información considerando el margen definido
-   * en el globo así como la pocisión del pixel original en relación con el mapa:
+   * en el globo así como la posición del pixel original en relación con el mapa:
    *
    * - Si la posición original está por debajo de la mitad del alto del mapa, la posición
    * calculada será considerada para mostrar el globo encima de la posicion original.
@@ -178,14 +194,11 @@ export default class GloboInfo {
    * @param {import("ol/Map.js").default} mapa si este parámetro es definido cambiará el cursor a
    * `pointer` cuando la visibilidad del globo sea `true`.
    */
-  setVisibilidad(valor /* , mapa = undefined */) {
+  setVisibilidad(valor) {
     this.contenedor_.style.display = valor ? 'block' : 'none'
 
     // if (mapa) {
-    //   /** REPENSAR
-    //    * quisá esto no dependa del tootipo, puede cambiarse el cursor solo si es un elemento
-    //    * interactuable al dar click, como un vector
-    //    */
+    //   /** REPENSAR */
     //   mapa.getTargetElement().style.cursor = valor ? 'pointer' : ''
     // }
   }
