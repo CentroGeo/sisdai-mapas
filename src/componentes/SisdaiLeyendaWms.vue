@@ -49,7 +49,16 @@ const props = defineProps({
    */
   sinControl: {
     type: Boolean,
-    default: false,
+    default: true,
+  },
+
+  /**
+   * Define si se agrega el control (input) en las clases de la leyenda. Cada control se vincula
+   * con la visibilidad los elementos que pertenezcan a la clase correspondiente de la capa.
+   */
+  sinControlClases: {
+    type: Boolean,
+    default: true,
   },
 
   tituloCapa: {
@@ -78,6 +87,7 @@ const {
   estiloCapa,
   fuenteCapa,
   sinControl,
+  sinControlClases,
   tituloCapa,
   visibilidadCapa,
 } = toRefs(props)
@@ -114,7 +124,7 @@ function urlGeoserver() {
       .map(([id, valor]) => `${id}=${encodeURIComponent(valor)}`)
       .join('&')
 
-  console.log(url)
+  // console.log(url)
 
   return url
 }
@@ -211,6 +221,7 @@ function encenderCapa(valor) {
             :encendido="clase.visible"
             :etiqueta="clase.titulo"
             :simbolo="clase.simbolo"
+            :sinControl="sinControlClases"
             @alCambiar="valor => (clase.visible = valor)"
           />
         </li>

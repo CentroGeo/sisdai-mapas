@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, reactive, shallowRef, watch } from 'vue'
+import { onMounted, reactive, ref, shallowRef, toRefs, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { buscarIdContenedorHtmlSisdai } from '../utiles'
 import { tiposCapa } from '../valores/capa'
@@ -17,10 +17,33 @@ const props = defineProps({
     type: String,
     require: true,
   },
+
+  /**
+   * Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula
+   * con la visibilidad de la capa.
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `false`
+   * - Reactivo: ✅
+   */
+  sinControl: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   * Define si se agrega el control (input) en las clases de la leyenda. Cada control se vincula
+   * con la visibilidad los elementos que pertenezcan a la clase correspondiente de la capa.
+   */
+  sinControlClases: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 var idMapa
 const sisdaiLeyendaNueva = shallowRef()
+const { sinControl, sinControlClases } = toRefs(props)
 
 const capa = reactive({
   nombre: 'Cargando...',
@@ -33,8 +56,10 @@ const wms = reactive({
   fuente: undefined,
   capa: undefined,
   estilo: undefined,
-  filtro: undefined,
+  // filtro: undefined,
 })
+
+const filtroLeyenda = ref(undefined)
 
 function actualizarParametros(params) {
   wms.capa = params.LAYERS
@@ -59,7 +84,6 @@ function vincularCapa(_capa) {
    * Vinculación con la visibilidad de la capa.
    */
   capa.visible = _capa.getVisible()
-  console.log(capa.visible)
   watch(
     () => _capa.getVisible(),
     nv => (capa.visible = nv)
@@ -75,6 +99,8 @@ function vincularCapa(_capa) {
     watch(() => _capa.getSource().getParams(), actualizarParametros, {
       deep: true,
     })
+
+    watch(filtroLeyenda, nv => _capa.set('filtroLeyenda', nv))
   }
 }
 
@@ -87,21 +113,19 @@ onMounted(() => {
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
-
-// function ver(params) {
-//   console.log('ver:', params)
-// }
 </script>
 
 <template>
   <div ref="sisdaiLeyendaNueva">
-    <!-- <p>hola</p> -->
     <SisdaiLeyendaWms
       :fuenteCapa="wms.fuente"
-      capa="gref_division_estatal_20_est_a"
+      :capa="wms.capa"
       :tituloCapa="capa.nombre"
       :visibilidadCapa="capa.visible"
+      :sinControl="sinControl"
+      :sinControlClases="sinControlClases"
       @alCambiarVisibilidad="valor => (capa.visible = valor)"
+      @alCambiarVisibilidadClases="valor => (filtroLeyenda = valor)"
     />
   </div>
 </template>

@@ -15,17 +15,11 @@ const filtros = reactive({
 
 <template>
   <div>
-    <SisdaiLeyendaExterna
-      fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
-      capa="agua_corrientes_agua_21_nal_l"
-      tituloCapa="Leyenda externa de Corrientes"
-      :visibilidadCapa="capasEncendidas.corrientes"
-      @alCambiarVisibilidad="valor => (capasEncendidas.corrientes = valor)"
-      @alCambiarVisibilidadClases="valor => (filtros.corrientes = valor)"
-    />
     <SisdaiMapa :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }">
       <template #panel-izquierda-vis>
         <SisdaiLeyendaNueva para="division_estatal" />
+        <SisdaiLeyendaNueva para="centros" />
+        <SisdaiLeyendaNueva para="localidades" />
 
         <SisdaiLeyendaExterna
           fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
@@ -87,10 +81,7 @@ const filtros = reactive({
 
       <SisdaiCapaWms
         id="localidades"
-        :parametros="{
-          LAYERS: 'caaresa_pob_localidades_20_loc_p',
-          cql_filter: filtros.localidades,
-        }"
+        capa="caaresa_pob_localidades_20_loc_p"
         nombre="Localidades en la Cuenca del Alto Atoyac y su área de influencia 2020"
         posicion="4"
         tituloClases="Número de habitantes"
@@ -105,5 +96,14 @@ const filtros = reactive({
         :visible="capasEncendidas.centros"
       />
     </SisdaiMapa>
+
+    <SisdaiLeyendaExterna
+      fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
+      capa="agua_corrientes_agua_21_nal_l"
+      tituloCapa="Leyenda externa de Corrientes"
+      :visibilidadCapa="capasEncendidas.corrientes"
+      @alCambiarVisibilidad="valor => (capasEncendidas.corrientes = valor)"
+      @alCambiarVisibilidadClases="valor => (filtros.corrientes = valor)"
+    />
   </div>
 </template>

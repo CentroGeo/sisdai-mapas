@@ -8,6 +8,18 @@ import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
 
 const props = defineProps({
+  capa: {
+    type: String,
+    default: undefined,
+  },
+  estilo: {
+    type: String,
+    default: undefined,
+  },
+  filtro: {
+    type: String,
+    default: undefined,
+  },
   /**
    * Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio.
    * Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
@@ -19,15 +31,15 @@ const props = defineProps({
   parametros: {
     type: Object,
     default: () => ({}),
-    validator({ LAYERS }) {
-      const validarLayer = LAYERS !== undefined && LAYERS !== null
+    // validator({ LAYERS }) {
+    //   const validarLayer = LAYERS !== undefined && LAYERS !== null
 
-      if (!validarLayer) {
-        console.warn('LAYERS no puede ser un parámetro indefinido o vacío')
-      }
+    //   if (!validarLayer) {
+    //     console.warn('LAYERS no puede ser un parámetro indefinido o vacío')
+    //   }
 
-      return validarLayer
-    },
+    //   return validarLayer
+    // },
   },
 
   /**
@@ -74,14 +86,17 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { url, parametros, tituloClases } = toRefs(props)
+const { capa, url, parametros, tituloClases } = toRefs(props)
 
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
 configurar(() => {
   const olSource = new ImageWMS({
     url: url.value,
-    params: parametros.value,
+    // params: parametros.value,
+    params: {
+      LAYERS: capa.value || parametros.value.LAYERS,
+    },
     serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
   })
@@ -102,14 +117,24 @@ configurar(() => {
   return { olSource, olLayerClass: ImageLayer, tipo: tiposCapa.wms }
 })
 
-agregada(capa => {
-  // console.log(capa.getSource())
-  capa.set('parametros', parametros.value)
-  capa.set('tituloClases', tituloClases.value)
+agregada(_capa => {
+  // console.log(_capa.getSource())
+  // _capa.set('parametros', parametros.value)
+  _capa.set('tituloClases', tituloClases.value)
 
-  watch(parametros, nv => capa.set('parametros', nv))
-  watch(parametros, nv => capa.getSource().updateParams(nv))
-  watch(tituloClases, nv => capa.set('tituloClases', nv))
+  // watch(parametros, nv => _capa.set('parametros', nv))
+  // watch(parametros, nv => _capa.getSource().updateParams(nv))
+  // watch(tituloClases, nv => _capa.set('tituloClases', nv))
+
+  watch(
+    () => _capa.get('filtroLeyenda'),
+    nv => {
+      _capa.getSource().updateParams({
+        LAYERS: capa.value || parametros.value.LAYERS,
+        CQL_FILTER: nv,
+      })
+    }
+  )
 })
 
 onMounted(() => {
