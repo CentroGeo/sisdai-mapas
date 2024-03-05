@@ -56,7 +56,6 @@ const wms = reactive({
   fuente: undefined,
   capa: undefined,
   estilo: undefined,
-  // filtro: undefined,
 })
 
 const filtroLeyenda = ref(undefined)
@@ -113,6 +112,14 @@ onMounted(() => {
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
+
+function actualiarVisibilidad(valor) {
+  // console.log(`${props.para}:`, valor)
+  if (Array.isArray(valor)) {
+    return (capa.visible = valor.some(v => v))
+  }
+  capa.visible = valor
+}
 </script>
 
 <template>
@@ -124,8 +131,10 @@ onMounted(() => {
       :visibilidadCapa="capa.visible"
       :sinControl="sinControl"
       :sinControlClases="sinControlClases"
-      @alCambiarVisibilidad="valor => (capa.visible = valor)"
-      @alCambiarVisibilidadClases="valor => (filtroLeyenda = valor)"
+      @alCambiarFiltroLeyenda="valor => (filtroLeyenda = valor)"
+      @alCambiarVisibilidad="actualiarVisibilidad"
     />
+    <!-- 
+     -->
   </div>
 </template>

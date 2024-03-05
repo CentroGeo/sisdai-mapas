@@ -20,15 +20,16 @@ const filtros = reactive({
         <SisdaiLeyendaNueva para="division_estatal" />
         <SisdaiLeyendaNueva para="centros" />
         <SisdaiLeyendaNueva para="localidades" />
+        <SisdaiLeyendaNueva para="corrientes" />
 
-        <SisdaiLeyendaExterna
+        <!-- <SisdaiLeyendaExterna
           fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
           capa="caaresa_pob_localidades_20_loc_p"
           tituloCapa="Leyenda externa de Localidadees"
           :visibilidadCapa="capasEncendidas.localidades"
           @alCambiarVisibilidad="valor => (capasEncendidas.localidades = valor)"
           @alCambiarVisibilidadClases="valor => (filtros.localidades = valor)"
-        />
+        /> -->
 
         <!-- <SisdaiLeyendaExterna
         fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
@@ -97,13 +98,13 @@ const filtros = reactive({
       />
     </SisdaiMapa>
 
-    <SisdaiLeyendaExterna
+    <!-- <SisdaiLeyendaExterna
       fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
       capa="agua_corrientes_agua_21_nal_l"
       tituloCapa="Leyenda externa de Corrientes"
       :visibilidadCapa="capasEncendidas.corrientes"
       @alCambiarVisibilidad="valor => (capasEncendidas.corrientes = valor)"
       @alCambiarVisibilidadClases="valor => (filtros.corrientes = valor)"
-    />
+    /> -->
   </div>
 </template>

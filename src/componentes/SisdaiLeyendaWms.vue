@@ -9,12 +9,17 @@ const eventos = {
    *
    */
   alCambiarVisibilidadClases: 'alCambiarVisibilidadClases',
+
+  /**
+   *
+   */
+  alCambiarFiltroLeyenda: 'alCambiarFiltroLeyenda',
 }
 </script>
 
 <script setup>
 import axios from 'axios'
-import { onMounted, ref, toRefs, watch } from 'vue'
+import { computed, onMounted, ref, toRefs, watch } from 'vue'
 import { acomodarReglasWms } from '../utiles/leyenda'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
@@ -67,17 +72,9 @@ const props = defineProps({
   },
 
   visibilidadCapa: {
-    type: Boolean,
+    type: [Boolean, Array],
     default: true,
   },
-
-  /**
-   *
-   */
-  // urlCapa: {
-  //   type: String,
-  //   default: undefined,
-  // },
 })
 
 const emits = defineEmits(Object.values(eventos))
@@ -93,16 +90,48 @@ const {
 } = toRefs(props)
 
 const clases = ref([])
+watch(
+  () => clases.value.map(({ visible }) => visible),
+  nv => {
+    // console.log(nv)
+    // No hay clases
+    if (nv.length < 1) return
+
+    if (nv.length === 1) {
+      // Si solo hay una clase, no hay clasificación de la capa
+      emits(eventos.alCambiarVisibilidad, nv[0])
+      return
+    }
+
+    if (nv.every(visible => visible)) {
+      // Todas las clases visibles
+      capaEncendida.value = true
+    }
+
+    if (nv.every(visible => !visible)) {
+      // Todas las clases apagadas
+      capaEncendida.value = false
+    }
+
+    emits(eventos.alCambiarVisibilidad, nv)
+  }
+)
+
+// const indeterminado = computed(
+//   () =>
+//     clases.value.some(({ visible }) => visible) &&
+//     !clases.value.every(({ visible }) => visible)
+// )
 
 const capaEncendida = ref(visibilidadCapa.value)
 watch(visibilidadCapa, encenderCapa) // cuidado al volver esta propiedad reactiva
-watch(capaEncendida, nv => emits(eventos.alCambiarVisibilidad, nv))
+// watch(capaEncendida, nv => emits(eventos.alCambiarVisibilidad, nv))
 
-const filtroCQL = ref(undefined)
-watch(filtroCQL, nv => {
-  // console.log('filtro:', nv)
-  emits(eventos.alCambiarVisibilidadClases, nv)
-})
+// const filtroCQL = ref(undefined)
+// watch(filtroCQL, nv => {
+//   // console.log('filtro:', nv)
+//   emits(eventos.alCambiarVisibilidadClases, nv)
+// })
 
 function urlGeoserver() {
   // ?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_division_estatal_20_est_a&STYLE=
@@ -149,45 +178,34 @@ onMounted(() => {
 })
 watch([capa, estiloCapa, fuenteCapa], () => actualizarClasesDesdeWms())
 
-watch(
-  () =>
-    clases.value.map(({ filtro, visible }) => ({
-      filtro,
-      visible,
-    })),
-  (nv, vv) => {
-    if (nv.length <= 1) return
+/**
+ * Filtro aplizable par las capas clasificadas
+ */
+const filtroLeyenda = computed(() => {
+  // if (clases.value.length <= 1) {
+  //   // Si solo hay una clase, no hay clasificación de la capa
+  //   return undefined
+  // }
 
-    // console.log(nv, vv)
-    if (vv.every(({ visible }) => !visible)) {
-      capaEncendida.value = true
-    }
-
-    if (nv.every(({ visible }) => visible)) {
-      // console.log('Sin filtro')
-      filtroCQL.value = undefined
-      return
-    }
-
-    if (nv.every(({ visible }) => !visible)) {
-      // console.log('Capa apagada')
-      capaEncendida.value = false
-      return
-    }
-
-    filtroCQL.value = clases.value
-      .filter(({ visible }) => visible)
-      .map(({ filtro }) => filtro)
-      .join(' OR ')
+  if (
+    clases.value.every(({ visible }) => visible) ||
+    clases.value.every(({ visible }) => !visible)
+  ) {
+    return undefined
   }
-)
+
+  return clases.value
+    .filter(({ visible }) => visible)
+    .map(({ filtro }) => filtro)
+    .join(' OR ')
+})
+watch(filtroLeyenda, nv => emits(eventos.alCambiarFiltroLeyenda, nv))
 
 function encenderCapa(valor) {
   // valor => (capaEncendida = valor)
   capaEncendida.value = valor
   clases.value.forEach((_, idx) => {
     clases.value[idx].visible = valor
-    // clase.visible = nv
   })
 }
 </script>
@@ -199,14 +217,18 @@ function encenderCapa(valor) {
   >
     <div class="leyenda-titulo">
       <LeyendaControl
-        :class="{ 'visible-parcial': clases.some(({ visible }) => !visible) }"
         :etiqueta="tituloCapa"
         :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
         :sinControl="sinControl"
         :encendido="capaEncendida"
+        :encendidoIndeterminado="
+          clases.some(({ visible }) => visible) &&
+          !clases.every(({ visible }) => visible)
+        "
         @alCambiar="encenderCapa"
       />
     </div>
+
     <div
       v-if="clases.length > 1"
       class="leyenda-clases casillas-subseleccion"
@@ -214,10 +236,10 @@ function encenderCapa(valor) {
       <ul class="casillas-anidadas">
         <li
           v-for="(clase, idx) in clases"
-          :key="`${''}-clase-control-${idx}`"
+          :key="`${capa}-clase-control-${idx}`"
         >
           <LeyendaControl
-            :id="`${''}-clase-control-${idx}`"
+            :id="`${capa}-clase-control-${idx}`"
             :encendido="clase.visible"
             :etiqueta="clase.titulo"
             :simbolo="clase.simbolo"
@@ -232,9 +254,9 @@ function encenderCapa(valor) {
 
 <style lang="scss">
 .sisdai-mapa-leyenda {
-  .leyenda-titulo .visible-parcial [type='checkbox']:checked + label::after {
-    content: '\2f';
-  }
+  // .leyenda-titulo .visible-parcial [type='checkbox']:checked + label::after {
+  //   content: '\2f';
+  // }
 
   .leyenda-clases {
     padding: 0 0 0 calc(1.25rem + 4px);
