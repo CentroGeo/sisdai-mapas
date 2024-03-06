@@ -20,9 +20,11 @@ import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
 import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
 import SisdaiMapa from './componentes/SisdaiMapa.vue'
 import SisdaiMapaInstruccionalNavegacionTeclado from './componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
+import SisdaiUtfGrid from './componentes/SisdaiUtfGrid.vue'
 
 export default {
   install: Vue => {
+    Vue.component('SisdaiUtfGrid', SisdaiUtfGrid)
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
@@ -42,4 +44,5 @@ export {
   SisdaiLeyenda,
   SisdaiMapa,
   SisdaiMapaInstruccionalNavegacionTeclado,
+  SisdaiUtfGrid,
 }

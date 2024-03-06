@@ -126,6 +126,7 @@ function sidebarComienza(path) {
         { text: 'Capas', link: `/${path}/capas` },
         { text: 'Vectorial', link: `/${path}/capaVectorial` },
         { text: 'WMS', link: `/${path}/capaWms` },
+        { text: 'UtfGrid', link: `/${path}/capaUtfGrid` },
         { text: 'XYZ', link: `/${path}/capaXyz` },
         // { text: 'Globos de información', link: `/${path}/globos` },
         { text: 'Leyenda', link: `/${path}/leyenda` },
