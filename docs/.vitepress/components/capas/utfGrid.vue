@@ -12,13 +12,16 @@
         LAYERS: 'hcti_snii_sexo_22_est_a',
       }"
     />
-    <SisdaiCapaWms
+    <!-- <SisdaiCapaWms
       :posicion="2"
       :parametros="{
         LAYERS: 'hcti_snii_sexo_22_est_a',
       }"
-    />
+    /> -->
 
-    <sisdaiUtfGrid capa="hcti_snii_sexo_22_est_a" />
+    <sisdaiUtfGrid
+      capa="hcti_snii_sexo_22_est_a"
+      :globoInformativo="f => `Entidad: <b>${f.nom_ent}</b>`"
+    />
   </SisdaiMapa>
 </template>

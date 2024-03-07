@@ -2,9 +2,20 @@
 import axios from 'axios'
 // import TileLayer from 'ol/layer/Tile'
 // import UTFGrid from 'ol/source/UTFGrid'
-import { onBeforeMount, onMounted, ref, shallowRef, toRaw, watch } from 'vue'
+import {
+  computed,
+  onBeforeMount,
+  onMounted,
+  reactive,
+  ref,
+  shallowRef,
+  toRaw,
+  toRefs,
+  watch,
+} from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from '../utiles'
+import { buscarIdContenedorHtmlSisdai } from '../utiles'
+import { props as propsCapa } from './../composables/usarCapa'
 
 // const urlPrueba =
 //   'https://gema.conahcyt.mx/geoserver/wms?LAYERS=hcti_snii_sexo_22_est_a&SERVICE=WMS&VERSION=1.3.0&REQUEST=GetMap&FORMAT=application/json;type=utfgrid&WIDTH=1002&HEIGHT=368&BBOX=-128.8452450867052,14.006475722543353,-76.2302549132948,33.24432427745664'
@@ -14,6 +25,11 @@ const defaultParametros = {
   VERSION: '1.3.0',
   REQUEST: 'GetMap',
   FORMAT: 'application/json;type=utfgrid',
+
+  BBOX: undefined,
+  WIDTH: undefined,
+  HEIGHT: undefined,
+  LAYERS: undefined,
 }
 
 var idMapa
@@ -29,13 +45,46 @@ const props = defineProps({
     default: 'https://gema.conahcyt.mx/geoserver/wms',
   },
 
-  id: {
-    type: String,
-    default: () => idAleatorio(),
+  /**
+   * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
+   *
+   * - Tipo: `String` o `Function`
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: ✅
+   */
+  globoInformativo: {
+    type: Function,
+    default: undefined,
   },
+
+  ...propsCapa,
 })
 
 const sisdaiCapaUtfGrid = shallowRef()
+const { globoInformativo, posicion, visible } = toRefs(props)
+const parametrosUtfgrid = reactive({
+  ...defaultParametros,
+  LAYERS: props.capa,
+})
+
+function actualizarParametrosUtfgrid({ target: mapa }) {
+  const size = mapa.getSize()
+  const extent = mapa.getView().calculateExtent(size)
+
+  parametrosUtfgrid.BBOX = extent.join(',')
+  parametrosUtfgrid.WIDTH =
+    size[0] % 4 === 0 ? size[0] : size[0] + (size[0] % 4)
+  parametrosUtfgrid.HEIGHT =
+    size[1] % 4 === 0 ? size[1] : size[1] + (size[1] % 4)
+
+  // console.log(toRaw(parametrosUtfgrid))
+}
+
+const urlUtfGrid = computed(() => {
+  return `${props.fuente}?${parametrosEnFormatoURL(parametrosUtfgrid)}`
+})
+
 const urlDinamica = ref('')
 // const gridSource = ref(undefined)
 // const gridLayer = ref(
@@ -103,15 +152,15 @@ function buscarDatos({ dragging, pixel }) {
   }
 }
 
-function configuracion(mapa) {
+function configuracion(/* mapa */) {
   // const gridLayer = new TileLayer({
   //   // source: gridSource
   //   source: undefined,
   // })
 
   // mapa.addLayer(gridLayer.value)
-  mapa.on('moveend', actualizarUrl)
-  mapa.on('pointermove', buscarDatos)
+  // mapa.on('moveend', actualizarUrl)
+  // mapa.on('pointermove', buscarDatos)
 
   watch(urlDinamica, nv => {
     axios(nv)
@@ -134,12 +183,39 @@ function configuracion(mapa) {
   })
 }
 
+function agregar() {
+  usarRegistroMapas()
+    .mapaPromesa(idMapa)
+    .then(mapa => {
+      mapa.rejillasUtf[props.id] = {
+        visible: visible.value,
+        posicion: posicion.value,
+        globoInfo: globoInformativo.value,
+      }
+
+      mapa.on('moveend', actualizarParametrosUtfgrid)
+      watch(urlUtfGrid, nv => {
+        // console.log(props.id, nv)
+        axios(nv)
+          .then(({ data }) => {
+            // console.log(data)
+            // mapa.rejillasUtf[props.id] = {
+            //   ...mapa.rejillasUtf[props.id],
+            //   ...data,
+            // }
+            mapa.rejillasUtf[props.id].rejilla = data
+          })
+          .catch(() => {})
+      })
+    })
+}
+
 onMounted(() => {
   console.log('sisdaiCapaUtfGrid')
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaUtfGrid.value)
 
   usarRegistroMapas().mapaPromesa(idMapa).then(configuracion)
-  console.log(idMapa)
+  agregar()
 })
 
 onBeforeMount(() => {
@@ -147,6 +223,7 @@ onBeforeMount(() => {
     .mapaPromesa(idMapa)
     .then(mapa => {
       mapa.un('moveend', actualizarUrl)
+      mapa.un('pointermove', buscarDatos)
     })
 })
 </script>
