@@ -11,7 +11,7 @@ export function procesarContenido(contenido, feature) {
     : contenido
 }
 
-function obtenerCodigoCaracterParaUtfGrid(code) {
+export function obtenerCodigoCaracterParaUtfGrid(code) {
   //hay caracteres que hay que escapar y aparte debemos empezar en 32
   let code2 = code
   if (code2 >= 93) {
@@ -24,26 +24,23 @@ function obtenerCodigoCaracterParaUtfGrid(code) {
 
   return code2
 }
-function buscarDatosUtfgrid(pixel, grid) {
-  // console.log(evt)
-  // if (dragging) return
 
-  const posicion = [parseInt(pixel[0] / 4), parseInt(pixel[1] / 4)]
-  // console.log(posicion)
-  const posicionGrid = grid.grid[posicion[1]].charCodeAt(posicion[0])
-  // console.log(posicionGrid)
-  const code = obtenerCodigoCaracterParaUtfGrid(posicionGrid)
-  // console.log(code)
+function buscarContenidoRejilla(pixel, mapa, atributo) {
+  return mapa.caracterDeRejillaEnPixel(pixel, (propiedades, rejilla) => {
+    const contenido = rejilla[atributo]
 
-  if (code > 0) {
-    const id = grid.keys[code]
-    // console.log(id)
-    const data = grid.data[id]
-    // console.log(data.nom_ent)
-    return data
-  }
+    return contenido !== undefined ? contenido(propiedades) : undefined
+  })
+}
 
-  return undefined
+function buscarContenidoVectores(pixel, mapa, atributo) {
+  return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
+    const contenido = capa.get(atributo)
+
+    return contenido !== undefined
+      ? procesarContenido(contenido, feature)
+      : undefined
+  })
 }
 
 /**
@@ -55,24 +52,10 @@ function buscarDatosUtfgrid(pixel, grid) {
  * encontro contenido del tooltip.
  */
 export function buscarContenidoCapaEnPixel(pixel, mapa, atributo) {
-  // Para capas utf
-  const rejilla = Object.values(mapa.rejillasUtf)[0]
-  // if (rejilla[atributo]) console.log(rejilla[atributo]({}))
-  const _propiedades = buscarDatosUtfgrid(pixel, rejilla.rejilla)
-  if (_propiedades !== undefined && rejilla[atributo]) {
-    // console.log(_propiedades, rejilla[atributo](_propiedades))
-    return rejilla[atributo](_propiedades)
-    // return `${rejilla[atributo](_propiedades)}`
-  }
-
-  // para capas vectoriales
-  return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
-    const contenido = capa.get(atributo)
-
-    return contenido !== undefined
-      ? procesarContenido(contenido, feature)
-      : undefined
-  })
+  return (
+    buscarContenidoRejilla(pixel, mapa, atributo) ||
+    buscarContenidoVectores(pixel, mapa, atributo)
+  )
 }
 
 /**

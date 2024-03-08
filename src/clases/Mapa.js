@@ -15,6 +15,7 @@
 
 import olMap from 'ol/Map'
 import RenderEventType from 'ol/render/EventType'
+import { obtenerCodigoCaracterParaUtfGrid } from '../utiles/globoInfo'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -28,6 +29,43 @@ import NavegacionTeclado from './NavegacionTeclado'
  */
 export default class Mapa extends olMap {
   rejillasUtf = {}
+
+  /**
+   *
+   * @param {*} pixel
+   * @param {*} funsion
+   */
+  caracterDeRejillaEnPixel(pixel, funsion) {
+    const posicion = [parseInt(pixel[0] / 4), parseInt(pixel[1] / 4)]
+
+    return (
+      Object.values(this.rejillasUtf)
+        // solo las visibles
+        .filter(({ visible }) => visible)
+        // búsqueda de atributos
+        .map(rejilla => {
+          let propiedades
+          const code = obtenerCodigoCaracterParaUtfGrid(
+            rejilla.rejilla.grid[posicion[1]].charCodeAt(posicion[0])
+          )
+
+          // no coincide con datos
+          if (code === 0) return { propiedades }
+
+          propiedades = rejilla.rejilla.data[rejilla.rejilla.keys[code]]
+
+          return { propiedades, rejilla }
+        })
+        // solo las regillas (capas utfgird) con atributos encontrados
+        .filter(({ propiedades }) => propiedades !== undefined)
+        // ordenar pio posicion
+        .sort((a, b) => b.posicion - a.posicion)
+        // ejecutar función de parámetro
+        .map(({ propiedades, rejilla }) => {
+          return funsion(propiedades, rejilla)
+        })[0]
+    )
+  }
 
   constructor(opcionesOlMap, emits) {
     super(opcionesOlMap)
