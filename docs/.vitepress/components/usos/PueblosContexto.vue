@@ -1,14 +1,32 @@
 <script setup>
 import axios from 'axios'
 import { ref, toRaw, watch } from 'vue'
+import { parametrosEnFormatoURL } from './../../../../src/utiles'
 
 const cdnArchivos =
   'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas'
 const url_gema_geoserver = 'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
+
+// VER DE QUE MANERA PODEMOS TRAER LOS FEATURES DESDE LA CAPA
+function urlFeatures(capa, atributos, filtro) {
+  const parametros = {
+    service: 'WFS',
+    version: '2.0.0',
+    request: 'GetFeature',
+    outputFormat: 'application/json',
+    typeName: capa,
+    propertyName: atributos,
+    cql_filter: filtro,
+  }
+
+  return `${url_gema_geoserver}/ows?${parametrosEnFormatoURL(parametros)}`
+}
+const consultar = (f, e = () => {}) => axios(f).catch(e)
+const ordenarBbox = bbox => [bbox[1], bbox[0], bbox[3], bbox[2]]
+
 const extensionInicial = [-118.3651, 14.5321, -86.7104, 32.7187]
 
 const mapaPueblosContexto = ref(null)
-const extensionInteractiva = ref(extensionInicial)
 const pueblos = ref({})
 const puebloSeleccionado = ref('')
 const estados = ref([])
@@ -16,48 +34,39 @@ const estadoSeleccionado = ref(undefined)
 const municipios = ref([])
 const municipioSeleccionado = ref(undefined)
 
-// VER DE QUE MANERA PODEMOS TRAER LOS FEATURES DESDE LA CAPA
-function urlFeatures(capa, atributos = '', filtro = '') {
-  const cql_filter = filtro !== '' ? `&cql_filter=${filtro}` : ''
-  return `${url_gema_geoserver}/ows?service=WFS&version=2.0.0&request=GetFeature&typeName=${capa}&propertyName=${atributos}${cql_filter}&outputFormat=application/json`
-}
-
 function consultarEstados() {
-  axios(urlFeatures('gref_division_estatal_20_est_a', 'cve_ent,nom_ent'))
-    .then(({ data, status }) => {
-      // console.log(status)
-      if (status !== 200) return
-      // bbox
+  consultar(
+    urlFeatures('gref_division_estatal_20_est_a', 'cve_ent,nom_ent')
+  ).then(({ data, status }) => {
+    // console.log(status)
+    if (status !== 200) return
 
-      estados.value = data.features.map(({ bbox, properties }) => ({
-        clave: properties.cve_ent,
-        nombre: properties.nom_ent,
-        bbox: bbox,
-      }))
-    })
-    .catch(() => {})
+    estados.value = data.features.map(({ bbox, properties }) => ({
+      clave: properties.cve_ent,
+      nombre: properties.nom_ent,
+      bbox: bbox,
+    }))
+  })
 }
 consultarEstados()
 
 function consultarMunicipios(cve_ent) {
-  axios(
+  consultar(
     urlFeatures(
       'gref_division_municipal_20_mun_a',
       'cve_mun,nom_mun',
       `cve_ent='${cve_ent.clave}'`
     )
-  )
-    .then(({ data, status }) => {
-      // console.log(status)
-      if (status !== 200) return
-      // bbox
-      municipios.value = data.features.map(({ bbox, properties }) => ({
-        clave: properties.cve_mun,
-        nombre: properties.nom_mun,
-        bbox: bbox,
-      }))
-    })
-    .catch(() => {})
+  ).then(({ data, status }) => {
+    // console.log(status)
+    if (status !== 200) return
+
+    municipios.value = data.features.map(({ bbox, properties }) => ({
+      clave: properties.cve_mun,
+      nombre: properties.nom_mun,
+      bbox: bbox,
+    }))
+  })
 }
 
 watch(estadoSeleccionado, nv => {
@@ -65,19 +74,12 @@ watch(estadoSeleccionado, nv => {
   municipioSeleccionado.value = undefined
 
   if (nv === undefined) {
-    // mapaPueblosContexto.value.ajustarVista()
-    extensionInteractiva.value = extensionInicial
+    mapaPueblosContexto.value.ajustarVista()
   } else {
     consultarMunicipios(nv)
-    // mapaPueblosContexto.value.ajustarVista({
-    //   extension: [nv.bbox[1], nv.bbox[0], nv.bbox[3], nv.bbox[2]],
-    // })
-    extensionInteractiva.value = [
-      nv.bbox[1],
-      nv.bbox[0],
-      nv.bbox[3],
-      nv.bbox[2],
-    ]
+    mapaPueblosContexto.value.ajustarVista({
+      extension: ordenarBbox(nv.bbox),
+    })
   }
 })
 
@@ -85,8 +87,13 @@ watch(municipioSeleccionado, nv => {
   console.log(toRaw(nv))
 })
 
-function msg(texto) {
-  console.log(texto)
+function reiniciarTodo() {
+  estadoSeleccionado.value = undefined
+  municipioSeleccionado.value = undefined
+}
+
+function alAjustarVista(valor) {
+  if (valor === undefined) reiniciarTodo()
 }
 </script>
 
@@ -94,9 +101,9 @@ function msg(texto) {
   <SisdaiMapa
     class="mapa-pueblos-contexto"
     elementosDescriptivos="titulo-mapa-pueblos-contexto"
-    :vista="{ extension: extensionInteractiva }"
+    :vista="{ extension: extensionInicial }"
     ref="mapaPueblosContexto"
-    @click=""
+    @alAjustarVista="alAjustarVista"
   >
     <template #panel-encabezado-vis>
       <p
@@ -162,75 +169,28 @@ function msg(texto) {
 
     <template #panel-izquierda-vis>
       <p class="vis-titulo-leyenda">Pueblos</p>
-      <SisdaiLeyendaExterna />
-
-      <!-- <SisdaiLeyenda para="p_indigenas_comunidades_17122021" /> -->
-      <!-- <SisdaiLeyenda
-        para="p_indigenas_asent_historicos_2020"
-        :sinControlClases="false"
-      /> -->
-      <SisdaiLeyenda
-        para="p_indigenas_residentes_2020"
-        :sinControlClases="false"
-      />
-      <!-- <SisdaiLeyenda para="p_indigenas_territorios_lenguas_2007" /> -->
     </template>
+
+    <!-- Capas Base -->
     <SisdaiCapaXyz posicion="1" />
 
     <SisdaiCapaWms
-      :parametros="{
-        LAYERS: 'gref_division_estatal_20_est_a',
-        cql_filter:
-          estadoSeleccionado !== undefined
-            ? `cve_ent='${estadoSeleccionado.clave}'`
-            : undefined,
-      }"
+      capa="gref_division_estatal_20_est_a"
+      :filtro="
+        estadoSeleccionado !== undefined
+          ? `cve_ent='${estadoSeleccionado.clave}'`
+          : undefined
+      "
       posicion="2"
       :url="`${url_gema_geoserver}/wms`"
     />
+    <!-- Capas Base -->
 
-    <SisdaiCapaWms
-      :parametros="{
-        LAYERS: 'gref_division_municipal_20_mun_a',
-        cql_filter:
-          estadoSeleccionado !== undefined
-            ? `cve_ent='${estadoSeleccionado.clave}'`
-            : undefined,
-      }"
-      posicion="3"
-      :url="`${url_gema_geoserver}/wms`"
-      :visible="estadoSeleccionado !== undefined"
-    />
+    <!-- Capas Pueblos -->
+    <!-- Capas Pueblos -->
 
-    <SisdaiCapaWms
-      id="p_indigenas_residentes_2020"
-      nombre="Población indígena residente"
-      :parametros="{
-        LAYERS: 'p_indigenas_residentes_2020',
-        // cve_ent,nom_ent,cve_mun,cvegeomun,nom_mun,cve_loc,cvegeoloc,nom_loc,cve_pueblo,nom_pueblo,pih
-        cql_filter:
-          estadoSeleccionado !== undefined
-            ? `cve_ent='${estadoSeleccionado.clave}'`
-            : undefined,
-      }"
-      posicion="3"
-      :url="`${url_gema_geoserver}/wms`"
-    />
-
-    <SisdaiCapaWms
-      id="p_indigenas_asent_historicos_2020"
-      nombre="Población indígena en asentamientos históricos"
-      :parametros="{
-        LAYERS: 'p_indigenas_asent_historicos_2020',
-        // cve_ent,nom_ent,cve_mun,cvegeomun,nom_mun,cve_loc,cvegeoloc,nom_loc,cve_pueblo,nom_pueblo,pih
-        cql_filter:
-          estadoSeleccionado !== undefined
-            ? `cve_ent='${estadoSeleccionado.clave}'`
-            : undefined,
-      }"
-      posicion="4"
-      :url="`${url_gema_geoserver}/wms`"
-    />
+    <!-- Capas Contexto -->
+    <!-- Capas Contexto -->
   </SisdaiMapa>
 </template>
 

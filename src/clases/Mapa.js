@@ -16,6 +16,7 @@
 import olMap from 'ol/Map'
 import RenderEventType from 'ol/render/EventType'
 import { obtenerCodigoCaracterParaUtfGrid } from '../utiles/globoInfo'
+import eventos from './../eventos/mapa'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../utiles'
 import crearImagenMapa from './../utiles/CrearImagenMapa'
 import * as validaciones from './../utiles/validaciones'
@@ -149,6 +150,8 @@ export default class Mapa extends olMap {
       )
       this.getView().setZoom(Number(acercamiento))
     }
+
+    this.eventos(eventos.alAjustarVista, vista)
   }
 
   /**

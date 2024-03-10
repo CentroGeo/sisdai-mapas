@@ -13,7 +13,6 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * @module utiles/index
  */
@@ -151,6 +150,18 @@ export function objEnSintaxisCss(obj) {
   return Object.entries(obj)
     .map(([k, v]) => `${k}:${v};`)
     .join('')
+}
+
+/**
+ *
+ * @param {*} parametros
+ * @returns
+ */
+export function parametrosEnFormatoURL(parametros) {
+  return Object.entries(parametros)
+    .filter(([, valor]) => valor !== undefined) // Filtrar valores con valor
+    .map(([id, valor]) => `${id}=${encodeURIComponent(valor)}`)
+    .join('&')
 }
 
 /**

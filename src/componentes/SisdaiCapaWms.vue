@@ -12,10 +12,12 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+
   estilo: {
     type: String,
     default: undefined,
   },
+
   filtro: {
     type: String,
     default: undefined,
@@ -86,7 +88,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { capa, url, parametros, tituloClases } = toRefs(props)
+const { capa, estilo, filtro, url, parametros, tituloClases } = toRefs(props)
 
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
@@ -96,6 +98,8 @@ configurar(() => {
     // params: parametros.value,
     params: {
       LAYERS: capa.value || parametros.value.LAYERS,
+      CQL_FILTER: filtro.value || parametros.value.CQL_FILTER,
+      STYLE: estilo.value || parametros.value.STYLE,
     },
     serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
