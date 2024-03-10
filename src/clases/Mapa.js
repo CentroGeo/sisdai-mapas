@@ -45,14 +45,18 @@ export default class Mapa extends olMap {
         // búsqueda de atributos
         .map(rejilla => {
           let propiedades
+          const resultado = rejilla.resultado
+
+          if (resultado === undefined) return { propiedades }
+
           const code = obtenerCodigoCaracterParaUtfGrid(
-            rejilla.rejilla.grid[posicion[1]].charCodeAt(posicion[0])
+            resultado.grid[posicion[1]].charCodeAt(posicion[0])
           )
 
           // no coincide con datos
           if (code === 0) return { propiedades }
 
-          propiedades = rejilla.rejilla.data[rejilla.rejilla.keys[code]]
+          propiedades = resultado.data[resultado.keys[code]]
 
           return { propiedades, rejilla }
         })

@@ -28,6 +28,7 @@ const defaultParametros = {
   WIDTH: undefined,
   HEIGHT: undefined,
   LAYERS: undefined,
+  CQL_FILTER: undefined,
   // PROPERTYNAME: undefined,
 }
 
@@ -37,6 +38,11 @@ const props = defineProps({
   capa: {
     typo: String,
     required: true,
+  },
+
+  filtro: {
+    typo: String,
+    required: undefined,
   },
 
   fuente: {
@@ -61,10 +67,11 @@ const props = defineProps({
 })
 
 const sisdaiCapaUtfGrid = shallowRef()
-const { globoInformativo, posicion, visible } = toRefs(props)
+const { globoInformativo, posicion, visible, filtro } = toRefs(props)
 const parametrosUtfgrid = reactive({
   ...defaultParametros,
   LAYERS: props.capa,
+  CQL_FILTER: filtro.value,
 })
 
 function actualizarParametrosUtfgrid({ target: mapa }) {
@@ -111,7 +118,7 @@ function agregar() {
             //   ...mapa.rejillasUtf[props.id],
             //   ...data,
             // }
-            mapa.rejillasUtf[props.id].rejilla = data
+            mapa.rejillasUtf[props.id].resultado = data
           })
           .catch(() => {})
       })
