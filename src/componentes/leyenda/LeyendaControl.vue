@@ -1,10 +1,15 @@
 <script setup>
-import { toRefs } from 'vue'
+import { reactive, toRefs, watch } from 'vue'
 import { idAleatorio } from '../../utiles'
 import LeyendaSimbolo from './LeyendaSimbolo.vue'
 
 const props = defineProps({
   encendido: {
+    type: Boolean,
+    default: false,
+  },
+
+  encendidoIndeterminado: {
     type: Boolean,
     default: false,
   },
@@ -34,13 +39,34 @@ const props = defineProps({
 
 const idCheck = `${props.id}-${idAleatorio()}`
 
-const { etiqueta, simbolo, sinControl, encendido } = toRefs(props)
+const { encendido, encendidoIndeterminado, etiqueta, simbolo, sinControl } =
+  toRefs(props)
 
-defineEmits(['alCambiar'])
+const estadoCheck = reactive({
+  encendido: encendido.value,
+  indeterminado: encendidoIndeterminado.value,
+})
+
+watch(encendidoIndeterminado, nv => {
+  // console.log('encendidoIndeterminado', nv)
+  estadoCheck.indeterminado = nv
+  if (nv) {
+    // Cuando indeterminado cambie a verdadero, el encendido debe cambiar a verdadero
+    estadoCheck.encendido = true
+  }
+})
+
+watch(encendido, nv => {
+  estadoCheck.encendido = nv
+  // Cuando encendido cambie a verdadero o falso, el indeterminado debe cambiar a falso
+  estadoCheck.indeterminado = false
+})
+
+const emits = defineEmits(['alCambiar'])
 </script>
 
 <template>
-  <li
+  <div
     class="controlador-vis"
     :style="{
       '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
@@ -61,8 +87,9 @@ defineEmits(['alCambiar'])
       <input
         type="checkbox"
         :id="idCheck"
-        :checked="encendido"
-        @input="$emit('alCambiar', $event.target.checked)"
+        :checked="estadoCheck.encendido"
+        :indeterminate="estadoCheck.indeterminado"
+        @input="emits('alCambiar', $event.target.checked)"
       />
       <label :for="idCheck">
         <LeyendaSimbolo
@@ -74,5 +101,5 @@ defineEmits(['alCambiar'])
         </span>
       </label>
     </template>
-  </li>
+  </div>
 </template>
