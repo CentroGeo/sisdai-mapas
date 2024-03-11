@@ -104,19 +104,21 @@ function agregar() {
       watch(visible, nv => (mapa.rejillasUtf[props.id].visible = nv))
 
       mapa.on('moveend', actualizarParametrosUtfgrid)
-      watch(urlUtfGrid, nv => {
+      watch([urlUtfGrid, visible], () => {
         // console.log(props.capa, nv)
         mapa.rejillasUtf[props.id].resultado = undefined
-        axios(nv)
-          .then(({ data }) => {
-            // console.log(data)
-            // mapa.rejillasUtf[props.id] = {
-            //   ...mapa.rejillasUtf[props.id],
-            //   ...data,
-            // }
-            mapa.rejillasUtf[props.id].resultado = data
-          })
-          .catch(() => {})
+        if (visible.value) {
+          axios(urlUtfGrid.value)
+            .then(({ data }) => {
+              // console.log(data)
+              // mapa.rejillasUtf[props.id] = {
+              //   ...mapa.rejillasUtf[props.id],
+              //   ...data,
+              // }
+              mapa.rejillasUtf[props.id].resultado = data
+            })
+            .catch(() => {})
+        }
       })
     })
 }

@@ -5,6 +5,8 @@ import { parametrosEnFormatoURL } from './../../../../src/utiles'
 
 const cdnArchivos =
   'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas'
+const urlApi =
+  'https://dev-dadsig-cultura.crip.conahcyt.mx/pueblosindigenas-registro-api/'
 const url_gema_geoserver = 'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
 
 // VER DE QUE MANERA PODEMOS TRAER LOS FEATURES DESDE LA CAPA
@@ -110,27 +112,37 @@ const filtroEdo = computed(() =>
     ? `cve_ent='${estadoSeleccionado.value.clave}'`
     : undefined
 )
-
 const filtroEdoMun = computed(() =>
   municipioSeleccionado.value !== undefined
     ? `cvegeomun='${estadoSeleccionado.value.clave}${municipioSeleccionado.value.clave}'`
     : filtroEdo.value
 )
 
-const infoTerritorios = f =>
-  `<p class="m-t-0">Territorio del pueblo: <b>${f.pueblo}</b></p><p class="m-b-0">${[
-    // `Superficie: <b>${f.}</b>`,
-    `Lengua: <b>${f.lengua}</b>`,
-    `Fuente del dato: <b>${f.fuente}</b>`,
+const filtroEdo2 = computed(() =>
+  estadoSeleccionado.value !== undefined
+    ? `cve_entidad='${estadoSeleccionado.value.clave}'`
+    : undefined
+)
+const filtroEdoMun2 = computed(() =>
+  municipioSeleccionado.value !== undefined
+    ? `${filtroEdo2.value} AND cve_municipio='${estadoSeleccionado.value.clave}'`
+    : filtroEdo2.value
+)
+
+const infoTerritorios = p =>
+  `<p class="m-t-0">Territorio del pueblo: <b>${p.pueblo}</b></p><p class="m-b-0">${[
+    // `Superficie: <b>${p.}</b>`,
+    `Lengua: <b>${p.lengua}</b>`,
+    `Fuente del dato: <b>${p.fuente}</b>`,
   ].join('<br />')}</p>`
 
-const infoPueblos = (f, pueblo) =>
+const infoPueblos = (p, pueblo) =>
   `<p class="m-t-0">Población indígena ${pueblo}</p><p class="m-b-0">${[
-    `Pueblo: <b>${f.nombre_pueblo}</b>`,
-    `Población: <b>${f.pihogares}</b>`,
-    `Estado: <b>${f.nom_ent}</b>`,
-    `Municipio: <b>${f.nom_mun}</b>`,
-    `Localidad: <b>${f.nom_loc}</b>`,
+    `Pueblo: <b>${p.nombre_pueblo}</b>`,
+    `Población: <b>${p.pihogares}</b>`,
+    `Estado: <b>${p.nom_ent}</b>`,
+    `Municipio: <b>${p.nom_mun}</b>`,
+    `Localidad: <b>${p.nom_loc}</b>`,
   ].join('<br />')}</p>`
 
 const infoNucleo = p =>
@@ -138,8 +150,6 @@ const infoNucleo = p =>
     `Población indígena: <b>${p.pi_hogares}</b>`,
     `Tipo: <b>${p.tipo_propie}</b>`,
     `Programa: <b>${p.programa}</b>`,
-    // `Municipio: <b>${f.nom_mun}</b>`,
-    // `Localidad: <b>${f.nom_loc}</b>`,
   ].join('<br />')}</p>`
 </script>
 
@@ -287,14 +297,99 @@ const infoNucleo = p =>
     <!-- Capas Pueblos -->
 
     <!-- Capas Contexto -->
-
     <SisdaiCapaWms
       capa="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       id="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
-      :filtro="filtroEdoMun"
+      :filtro="filtroEdoMun2"
       :globoInformativo="infoNucleo"
       nombre="Población indígena en asentamientos históricos (selecciona un estado para ver esta capa)"
       posicion="8"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+
+    <SisdaiCapaWms
+      capa="gref_corredores_red_nac_caminos_21_nal_l"
+      id="gref_corredores_red_nac_caminos_21_nal_l"
+      nombre="Red Nacional de Caminos"
+      posicion="9"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+
+    <SisdaiCapaWms
+      capa="educ_establecimientos_escolares_15_xy_p"
+      id="educ_establecimientos_escolares_15_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Establecimientos escolares"
+      posicion="10"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+
+    <!-- - Hospitales -->
+    <SisdaiCapaWms
+      capa="salu_unidades_medicas_1n_clues_21_xy_p"
+      id="salu_unidades_medicas_1n_clues_21_xy_p"
+      :filtro="filtroEdoMun2"
+      nombre="Primer nivel"
+      posicion="11"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <SisdaiCapaWms
+      capa="salu_unidades_medicas_2n_clues_21_xy_p"
+      id="salu_unidades_medicas_2n_clues_21_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Segundo nivel"
+      posicion="12"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <SisdaiCapaWms
+      capa="salu_unidades_medicas_3n_clues_21_xy_p"
+      id="salu_unidades_medicas_3n_clues_21_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Tercer nivel"
+      posicion="13"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <!-- - Hospitalas -->
+
+    <SisdaiCapaWms
+      capa="pciaf_casas_comedores_ninez_ind_21_xy_p"
+      id="pciaf_casas_comedores_ninez_ind_21_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Casas y Comedores del PAEI"
+      posicion="14"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <SisdaiCapaWms
+      capa="pciaf_radiodifusoras_ind_160124_xy_p"
+      id="pciaf_radiodifusoras_ind_160124_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Radiodifusoras del INPI"
+      posicion="15"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <SisdaiCapaWms
+      capa="pciaf_oficinas_repre_inpi_160124_xy_p"
+      id="pciaf_oficinas_repre_inpi_160124_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Oficinas de representación"
+      posicion="16"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
+    <SisdaiCapaWms
+      capa="pciaf_centros_coord_pue_ind_160124_xy_p"
+      id="pciaf_centros_coord_pue_ind_160124_xy_p"
+      :filtro="filtroEdoMun"
+      nombre="Centros Coordinadores de Pueblos Indígenas"
+      posicion="17"
       :url="`${url_gema_geoserver}/wms`"
       :visible="false"
     />
@@ -302,17 +397,59 @@ const infoNucleo = p =>
     <template #panel-derecha-vis>
       <p class="vis-titulo-leyenda">Contexto</p>
 
-      <!-- <SisdaiLeyenda
-        para="p_indigenas_ccpi_28102021"
-        v-globo-informacion:izquierda="'jeje'"
+      <SisdaiLeyenda para="pciaf_centros_coord_pue_ind_160124_xy_p" />
+      <SisdaiLeyenda para="pciaf_oficinas_repre_inpi_160124_xy_p" />
+      <SisdaiLeyenda para="pciaf_radiodifusoras_ind_160124_xy_p" />
+      <SisdaiLeyenda
+        para="pciaf_casas_comedores_ninez_ind_21_xy_p"
+        v-globo-informacion:izquierda="
+          'Programa de Apoyo a la Educación Indígena'
+        "
       />
-      <SisdaiLeyenda para="p_indigenas_ofnas_representa_28102021" />
-      <SisdaiLeyenda para="p_indigenas_radiodifusoras_28102021" />
-      <SisdaiLeyenda para="p_indigenas_casas_comedores_2021" />
-      <SisdaiLeyenda para="salu_hospitales_generales_pub_1122_xy_p" />
-      <SisdaiLeyenda para="gref_escuelas_sep_2015" />
-      <SisdaiLeyenda para="gref_corredores_red_nac_caminos_21_nal_l" /> -->
+
+      <p>Hospitales</p>
+      <SisdaiLeyenda
+        para="salu_unidades_medicas_1n_clues_21_xy_p"
+        v-globo-informacion:izquierda="
+          'Forma la estructura básica de la atención médica ambulatoria en el Sistema de Salud, se prestan servicios de prevención de enfermedades (educación y vigilancia epidemológica), saneamiento básico y protección.' +
+          '<b>La capa fue estructurada con base en la metodología ETEC; las ubicaciones originales de las unidades se mantienen por lo que es posible que existan errores en la localización.</b>'
+        "
+      />
+      <SisdaiLeyenda
+        para="salu_unidades_medicas_2n_clues_21_xy_p"
+        v-globo-informacion:izquierda="
+          'Generalmente se proporciona consulta externa y/o hospitalización en las 4 necesidades básicas de la medicina (cirugía general, medicina interna, gineco-obstetricia y pediatría)' +
+          '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
+        "
+      />
+      <SisdaiLeyenda
+        para="salu_unidades_medicas_3n_clues_21_xy_p"
+        v-globo-informacion:izquierda="
+          'Son las unidades médicas con mayor capacidad resolutiva del sistema de salud, el personal es especializado y los procedimientos realizados son de alta complejidad.' +
+          '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
+        "
+      />
+      <SisdaiLeyenda
+        para="educ_establecimientos_escolares_15_xy_p"
+        v-globo-informacion:izquierda="
+          'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre del establecimiento escolar y su Clave de Centro de Trabajo).'
+        "
+      />
+      <SisdaiLeyenda para="gref_corredores_red_nac_caminos_21_nal_l" />
       <SisdaiLeyenda para="pciaf_pob_ind_nucleos_agrarios_21_nal_a" />
+    </template>
+
+    <template #panel-pie-vis>
+      <a
+        :href="`${urlApi}media/capa_comunidades_indigenas/capas_pueblos_indigenas.zip`"
+        class="boton boton-primario boton-chico"
+        target="_blank"
+        rel="noopener noreferrer"
+        download="capas_pueblos_indigenas.zip"
+      >
+        Descargar datos
+        <span class="icono-archivo-descargar" />
+      </a>
     </template>
   </SisdaiMapa>
 </template>
@@ -322,18 +459,9 @@ const infoNucleo = p =>
 @import 'sisdai-css/src/_mixins';
 
 .sisdai-mapa.mapa-pueblos-contexto {
-  .contenedor-selectores {
-    column-gap: 16px;
-    .buscador-comunidad {
-      margin-bottom: 0 !important;
-    }
+  .contenedor-selectores select {
+    text-overflow: ellipsis;
   }
-
-  // .leyenda-clases {
-  //   display: flex;
-  //   flex-direction: column;
-  // }
-
   .panel-pie-vis {
     text-align: center;
   }

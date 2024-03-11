@@ -100,6 +100,7 @@ const {
   estilo,
   filtro,
   globoInformativo,
+  id,
   parametros,
   posicion,
   tituloClases,
@@ -156,7 +157,6 @@ agregada(_capa => {
   _capa.set('tituloClases', tituloClases.value)
 
   watch([estilo, filtroCompleto], () => {
-    // console.log(nv)
     _capa.getSource().updateParams({
       LAYERS: capa.value || parametros.value.LAYERS,
       CQL_FILTER: filtroCompleto.value,
@@ -196,6 +196,7 @@ onMounted(() => {
     :capa="capa"
     :estilo="estilo"
     :globoInformativo="globoInformativo"
+    :id="id"
     :posicion="posicion"
     :filtro="filtroCompleto"
     :fuente="props.url"
