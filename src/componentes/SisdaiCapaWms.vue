@@ -190,16 +190,17 @@ onMounted(() => {
   <span
     ref="sisdaiCapaWms"
     :sisdai-capa="id"
-  />
-  <SisdaiUtfGrid
-    v-if="globoInformativo !== undefined"
-    :capa="capa"
-    :estilo="estilo"
-    :globoInformativo="globoInformativo"
-    :id="id"
-    :posicion="posicion"
-    :filtro="filtroCompleto"
-    :fuente="props.url"
-    :visible="utfgridVisible"
-  />
+  >
+    <SisdaiUtfGrid
+      v-if="globoInformativo !== undefined"
+      :capa="capa"
+      :estilo="estilo"
+      :globoInformativo="globoInformativo"
+      :id="id"
+      :posicion="posicion"
+      :filtro="filtroCompleto"
+      :fuente="props.url"
+      :visible="utfgridVisible"
+    />
+  </span>
 </template>
