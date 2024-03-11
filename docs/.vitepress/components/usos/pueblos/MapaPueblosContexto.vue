@@ -1,40 +1,39 @@
 <script setup>
-import axios from 'axios'
 import { computed, ref, watch } from 'vue'
-import { parametrosEnFormatoURL } from './../../../../src/utiles'
-
-const cdnArchivos =
-  'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas'
-const urlApi =
-  'https://dev-dadsig-cultura.crip.conahcyt.mx/pueblosindigenas-registro-api/'
-const url_gema_geoserver = 'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
-
-// VER DE QUE MANERA PODEMOS TRAER LOS FEATURES DESDE LA CAPA
-function urlFeatures(capa, atributos, filtro) {
-  const parametros = {
-    service: 'WFS',
-    version: '2.0.0',
-    request: 'GetFeature',
-    outputFormat: 'application/json',
-    typeName: capa,
-    propertyName: atributos,
-    cql_filter: filtro,
-  }
-
-  return `${url_gema_geoserver}/ows?${parametrosEnFormatoURL(parametros)}`
-}
-const consultar = (f, e = () => {}) => axios(f).catch(e)
-const ordenarBbox = bbox => [bbox[1], bbox[0], bbox[3], bbox[2]]
-
-const extensionInicial = [-118.3651, 14.5321, -86.7104, 32.7187]
+import BuscadorComunidades from './BuscadorComunidades.vue'
+import {
+  cdnArchivos,
+  consultar,
+  extensionInicial,
+  infoNucleo,
+  infoPueblos,
+  infoTerritorios,
+  ordenarBbox,
+  urlApi,
+  urlFeatures,
+  url_gema_geoserver,
+} from './utiles'
 
 const mapaPueblosContexto = ref(null)
+const buscadorComunidades = ref(null)
 const pueblos = ref({})
 const puebloSeleccionado = ref('')
 const estados = ref([])
 const estadoSeleccionado = ref(undefined)
 const municipios = ref([])
 const municipioSeleccionado = ref(undefined)
+
+function consultarDatosPueblos() {
+  consultar(`${cdnArchivos}/mapas/diccionarioPueblos.json`).then(({ data }) => {
+    pueblos.value = Object.entries(data)
+      .map(i => ({ clave: i[0], nom_com: i[1] }))
+      .sort((a, b) => {
+        return a.nom_com < b.nom_com ? -1 : a.nom_com > b.nom_com ? 1 : 0
+      })
+    // console.log(pueblos.value)
+  })
+}
+consultarDatosPueblos()
 
 function consultarEstados() {
   consultar(
@@ -101,6 +100,8 @@ watch(municipioSeleccionado, nv => {
 function reiniciarTodo() {
   estadoSeleccionado.value = undefined
   municipioSeleccionado.value = undefined
+  puebloSeleccionado.value = ''
+  buscadorComunidades.value.busqueda = ''
 }
 
 function alAjustarVista(valor) {
@@ -117,6 +118,15 @@ const filtroEdoMun = computed(() =>
     ? `cvegeomun='${estadoSeleccionado.value.clave}${municipioSeleccionado.value.clave}'`
     : filtroEdo.value
 )
+const filtroPueblosEdoMun = computed(() => {
+  if (puebloSeleccionado.value !== '') {
+    if (filtroEdoMun.value !== undefined && puebloSeleccionado.value !== '') {
+      return `${filtroEdoMun.value} AND clave_pueblo='${puebloSeleccionado.value}'`
+    }
+    return `clave_pueblo='${puebloSeleccionado.value}'`
+  }
+  return filtroEdoMun.value
+})
 
 const filtroEdo2 = computed(() =>
   estadoSeleccionado.value !== undefined
@@ -128,29 +138,6 @@ const filtroEdoMun2 = computed(() =>
     ? `${filtroEdo2.value} AND cve_municipio='${estadoSeleccionado.value.clave}'`
     : filtroEdo2.value
 )
-
-const infoTerritorios = p =>
-  `<p class="m-t-0">Territorio del pueblo: <b>${p.pueblo}</b></p><p class="m-b-0">${[
-    // `Superficie: <b>${p.}</b>`,
-    `Lengua: <b>${p.lengua}</b>`,
-    `Fuente del dato: <b>${p.fuente}</b>`,
-  ].join('<br />')}</p>`
-
-const infoPueblos = (p, pueblo) =>
-  `<p class="m-t-0">Población indígena ${pueblo}</p><p class="m-b-0">${[
-    `Pueblo: <b>${p.nombre_pueblo}</b>`,
-    `Población: <b>${p.pihogares}</b>`,
-    `Estado: <b>${p.nom_ent}</b>`,
-    `Municipio: <b>${p.nom_mun}</b>`,
-    `Localidad: <b>${p.nom_loc}</b>`,
-  ].join('<br />')}</p>`
-
-const infoNucleo = p =>
-  `<p class="m-t-0">Núcleo agrario: <b>${p.nom_nucleo}</b></p><p class="m-b-0">${[
-    `Población indígena: <b>${p.pi_hogares}</b>`,
-    `Tipo: <b>${p.tipo_propie}</b>`,
-    `Programa: <b>${p.programa}</b>`,
-  ].join('<br />')}</p>`
 </script>
 
 <template>
@@ -170,24 +157,26 @@ const infoNucleo = p =>
       </p>
 
       <div class="contenedor-selectores grid">
-        <input
-          class="buscador-comunidad columna-7-esc m-b-0"
-          type="text"
-          placeholder="Explora por comunidad"
-        />
+        <div class="columna-7-esc">
+          <BuscadorComunidades
+            ref="buscadorComunidades"
+            @alSeleccionarComunidad="valor => (puebloSeleccionado = valor)"
+          />
+        </div>
 
         <select
           class="columna-3-esc m-b-0"
           v-model="puebloSeleccionado"
           :disabled="pueblos.length === 0"
+          @change="buscadorComunidades.busqueda = ''"
         >
           <option value="">Explora por pueblo</option>
           <option
             v-for="(pueblo, idx) in pueblos"
             :key="idx"
-            :value="idx"
+            :value="pueblo.clave"
           >
-            {{ pueblo }}
+            {{ pueblo.nom_com }}
           </option>
         </select>
 
@@ -278,7 +267,7 @@ const infoNucleo = p =>
     <SisdaiCapaWms
       capa="pciaf_pob_indigena_residentes_20_loc_p"
       id="pciaf_pob_indigena_residentes_20_loc_p"
-      :filtro="filtroEdoMun"
+      :filtro="filtroPueblosEdoMun"
       :globoInformativo="p => infoPueblos(p, 'residente')"
       nombre="Población indígena residente"
       posicion="5"
@@ -288,7 +277,7 @@ const infoNucleo = p =>
     <SisdaiCapaWms
       capa="pciaf_pob_indigena_asent_hist_20_loc_p"
       id="pciaf_pob_indigena_asent_hist_20_loc_p"
-      :filtro="filtroEdoMun"
+      :filtro="filtroPueblosEdoMun"
       :globoInformativo="p => infoPueblos(p, 'en asentamientos históricos')"
       nombre="Población indígena en asentamientos históricos"
       posicion="6"
@@ -394,6 +383,7 @@ const infoNucleo = p =>
       :visible="false"
     />
     <!-- Capas Contexto -->
+
     <template #panel-derecha-vis>
       <p class="vis-titulo-leyenda">Contexto</p>
 
