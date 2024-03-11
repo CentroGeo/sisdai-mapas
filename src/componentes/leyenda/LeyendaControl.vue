@@ -83,6 +83,7 @@ const emits = defineEmits(['alCambiar'])
         </span>
       </p>
     </template>
+
     <template v-else>
       <input
         type="checkbox"
@@ -99,6 +100,12 @@ const emits = defineEmits(['alCambiar'])
         <span class="nombre-variable">
           {{ etiqueta }}
         </span>
+        <!-- <button
+          class="boton-icono boton-sin-borde boton-chico"
+          v-globo-informacion-extendido:derecha.interactivo="'jeje'"
+        >
+          <span class="icono-informacion icono-3" />
+        </button> -->
       </label>
     </template>
   </div>

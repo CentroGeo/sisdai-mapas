@@ -1,6 +1,6 @@
 <script setup>
 import axios from 'axios'
-import { ref, toRaw, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { parametrosEnFormatoURL } from './../../../../src/utiles'
 
 const cdnArchivos =
@@ -69,6 +69,12 @@ function consultarMunicipios(cve_ent) {
   })
 }
 
+function ajustarVista(bbox) {
+  mapaPueblosContexto.value.ajustarVista({
+    extension: ordenarBbox(bbox),
+  })
+}
+
 watch(estadoSeleccionado, nv => {
   municipios.value = []
   municipioSeleccionado.value = undefined
@@ -77,14 +83,17 @@ watch(estadoSeleccionado, nv => {
     mapaPueblosContexto.value.ajustarVista()
   } else {
     consultarMunicipios(nv)
-    mapaPueblosContexto.value.ajustarVista({
-      extension: ordenarBbox(nv.bbox),
-    })
+    ajustarVista(nv.bbox)
   }
 })
 
 watch(municipioSeleccionado, nv => {
-  console.log(toRaw(nv))
+  if (nv === undefined) {
+    if (estadoSeleccionado.value !== undefined)
+      ajustarVista(estadoSeleccionado.value.bbox)
+  } else {
+    ajustarVista(nv.bbox)
+  }
 })
 
 function reiniciarTodo() {
@@ -95,6 +104,25 @@ function reiniciarTodo() {
 function alAjustarVista(valor) {
   if (valor === undefined) reiniciarTodo()
 }
+
+const filtroEdo = computed(() =>
+  estadoSeleccionado.value !== undefined
+    ? `cve_ent='${estadoSeleccionado.value.clave}'`
+    : undefined
+)
+
+const filtroEdoMun = computed(() =>
+  municipioSeleccionado.value !== undefined
+    ? `cvegeomun='${estadoSeleccionado.value.clave}${municipioSeleccionado.value.clave}'`
+    : filtroEdo.value
+)
+
+const infoTerritorios = f =>
+  `<p class="m-t-0">Territorio del pueblo: <b>${f.pueblo}</b></p><p class="m-b-0">${[
+    // `Superficie: <b>${f.}</b>`,
+    `Lengua: <b>${f.lengua}</b>`,
+    `Fuente del dato: <b>${f.fuente}</b>`,
+  ].join('<br />')}</p>`
 </script>
 
 <template>
@@ -169,6 +197,13 @@ function alAjustarVista(valor) {
 
     <template #panel-izquierda-vis>
       <p class="vis-titulo-leyenda">Pueblos</p>
+
+      <SisdaiLeyenda
+        para="pciaf_territorios_pueb_indig_07_nal_a"
+        v-globo-informacion="
+          'Aproximación a los territorios de los pueblos indígenas a partir de la propuesta elaborada por Eckart Boege en 2008 e INPI 2021.'
+        "
+      />
     </template>
 
     <!-- Capas Base -->
@@ -176,17 +211,29 @@ function alAjustarVista(valor) {
 
     <SisdaiCapaWms
       capa="gref_division_estatal_20_est_a"
-      :filtro="
-        estadoSeleccionado !== undefined
-          ? `cve_ent='${estadoSeleccionado.clave}'`
-          : undefined
-      "
+      :filtro="filtroEdo"
       posicion="2"
       :url="`${url_gema_geoserver}/wms`"
+    />
+
+    <SisdaiCapaWms
+      capa="gref_division_municipal_20_mun_a"
+      :filtro="filtroEdoMun"
+      posicion="3"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="estadoSeleccionado !== undefined"
     />
     <!-- Capas Base -->
 
     <!-- Capas Pueblos -->
+    <SisdaiCapaWms
+      capa="pciaf_territorios_pueb_indig_07_nal_a"
+      id="pciaf_territorios_pueb_indig_07_nal_a"
+      :globoInformativo="infoTerritorios"
+      nombre="Territorios"
+      posicion="4"
+      :url="`${url_gema_geoserver}/wms`"
+    />
     <!-- Capas Pueblos -->
 
     <!-- Capas Contexto -->

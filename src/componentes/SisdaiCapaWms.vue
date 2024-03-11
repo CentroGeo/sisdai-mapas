@@ -6,6 +6,7 @@ import { onMounted, shallowRef, toRefs, watch } from 'vue'
 import { tiposCapa } from '../valores/capa'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
+import SisdaiUtfGrid from './SisdaiUtfGrid.vue'
 
 const props = defineProps({
   capa: {
@@ -22,6 +23,12 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+
+  globoInformativo: {
+    type: Function,
+    default: undefined,
+  },
+
   /**
    * Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio.
    * Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
@@ -88,7 +95,16 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { capa, estilo, filtro, url, parametros, tituloClases } = toRefs(props)
+const {
+  capa,
+  estilo,
+  filtro,
+  globoInformativo,
+  url,
+  parametros,
+  posicion,
+  tituloClases,
+} = toRefs(props)
 
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
@@ -126,6 +142,15 @@ agregada(_capa => {
   // _capa.set('parametros', parametros.value)
   _capa.set('tituloClases', tituloClases.value)
 
+  watch([estilo, filtro], () => {
+    // console.log(nv)
+    _capa.getSource().updateParams({
+      LAYERS: capa.value || parametros.value.LAYERS,
+      CQL_FILTER: filtro.value || parametros.value.CQL_FILTER,
+      STYLE: estilo.value || parametros.value.STYLE,
+    })
+  })
+
   // watch(parametros, nv => _capa.set('parametros', nv))
   // watch(parametros, nv => _capa.getSource().updateParams(nv))
   // watch(tituloClases, nv => _capa.set('tituloClases', nv))
@@ -150,5 +175,13 @@ onMounted(() => {
   <span
     ref="sisdaiCapaWms"
     :sisdai-capa="id"
+  />
+  <SisdaiUtfGrid
+    v-if="globoInformativo !== undefined"
+    :capa="capa"
+    :estilo="estilo"
+    :globoInformativo="globoInformativo"
+    :posicion="posicion"
+    :fuente="props.url"
   />
 </template>

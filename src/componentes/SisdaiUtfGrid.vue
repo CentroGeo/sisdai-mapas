@@ -110,7 +110,7 @@ function agregar() {
 
       mapa.on('moveend', actualizarParametrosUtfgrid)
       watch(urlUtfGrid, nv => {
-        // console.log(props.id, nv)
+        // console.log(props.capa, nv)
         axios(nv)
           .then(({ data }) => {
             // console.log(data)

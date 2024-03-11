@@ -1,4 +1,5 @@
 //import SisdaiComponentes from 'sisdai-componentes/src/index.js'
+import GlobosInformacion from 'sisdai-componentes/src/directivas/tooltips'
 import 'sisdai-css'
 import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
 import 'vitepress/dist/client/theme-default/styles/icons.css'
@@ -11,7 +12,8 @@ import Layout from './Layout.vue'
 
 export default {
   Layout,
-  async enhanceApp({ app, router, siteData }) {
+  async enhanceApp({ app /*, router, siteData*/ }) {
+    app.use(GlobosInformacion)
     if (!import.meta.env.SSR) {
       const SisdaiMapas = await import('./../../../src/index.js')
       app.use(SisdaiMapas.default)
