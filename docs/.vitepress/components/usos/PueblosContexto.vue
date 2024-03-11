@@ -124,13 +124,22 @@ const infoTerritorios = f =>
     `Fuente del dato: <b>${f.fuente}</b>`,
   ].join('<br />')}</p>`
 
-const infoResidentes = f =>
-  `<p class="m-t-0">Población indígena residente</p><p class="m-b-0">${[
+const infoPueblos = (f, pueblo) =>
+  `<p class="m-t-0">Población indígena ${pueblo}</p><p class="m-b-0">${[
     `Pueblo: <b>${f.nombre_pueblo}</b>`,
     `Población: <b>${f.pihogares}</b>`,
     `Estado: <b>${f.nom_ent}</b>`,
     `Municipio: <b>${f.nom_mun}</b>`,
     `Localidad: <b>${f.nom_loc}</b>`,
+  ].join('<br />')}</p>`
+
+const infoNucleo = p =>
+  `<p class="m-t-0">Núcleo agrario: <b>${p.nom_nucleo}</b></p><p class="m-b-0">${[
+    `Población indígena: <b>${p.pi_hogares}</b>`,
+    `Tipo: <b>${p.tipo_propie}</b>`,
+    `Programa: <b>${p.programa}</b>`,
+    // `Municipio: <b>${f.nom_mun}</b>`,
+    // `Localidad: <b>${f.nom_loc}</b>`,
   ].join('<br />')}</p>`
 </script>
 
@@ -207,7 +216,18 @@ const infoResidentes = f =>
     <template #panel-izquierda-vis>
       <p class="vis-titulo-leyenda">Pueblos</p>
 
-      <SisdaiLeyenda para="pciaf_pob_indigena_residentes_20_loc_p" />
+      <SisdaiLeyenda
+        para="pciaf_pob_indigena_asent_hist_20_loc_p"
+        v-globo-informacion="
+          'Territorio donde históricamente se han asentado los pueblos originarios. (INALI, 2009).'
+        "
+      />
+      <SisdaiLeyenda
+        para="pciaf_pob_indigena_residentes_20_loc_p"
+        v-globo-informacion="
+          'Localidad no identificada como asentamiento histórico del pueblo de referencia según el Catálogo de Lenguas Indígenas Nacionales del INALI.'
+        "
+      />
       <SisdaiLeyenda
         para="pciaf_territorios_pueb_indig_07_nal_a"
         v-globo-informacion="
@@ -249,15 +269,51 @@ const infoResidentes = f =>
       capa="pciaf_pob_indigena_residentes_20_loc_p"
       id="pciaf_pob_indigena_residentes_20_loc_p"
       :filtro="filtroEdoMun"
-      :globoInformativo="infoResidentes"
+      :globoInformativo="p => infoPueblos(p, 'residente')"
       nombre="Población indígena residente"
       posicion="5"
+      :url="`${url_gema_geoserver}/wms`"
+    />
+
+    <SisdaiCapaWms
+      capa="pciaf_pob_indigena_asent_hist_20_loc_p"
+      id="pciaf_pob_indigena_asent_hist_20_loc_p"
+      :filtro="filtroEdoMun"
+      :globoInformativo="p => infoPueblos(p, 'en asentamientos históricos')"
+      nombre="Población indígena en asentamientos históricos"
+      posicion="6"
       :url="`${url_gema_geoserver}/wms`"
     />
     <!-- Capas Pueblos -->
 
     <!-- Capas Contexto -->
+
+    <SisdaiCapaWms
+      capa="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
+      id="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
+      :filtro="filtroEdoMun"
+      :globoInformativo="infoNucleo"
+      nombre="Población indígena en asentamientos históricos (selecciona un estado para ver esta capa)"
+      posicion="8"
+      :url="`${url_gema_geoserver}/wms`"
+      :visible="false"
+    />
     <!-- Capas Contexto -->
+    <template #panel-derecha-vis>
+      <p class="vis-titulo-leyenda">Contexto</p>
+
+      <!-- <SisdaiLeyenda
+        para="p_indigenas_ccpi_28102021"
+        v-globo-informacion:izquierda="'jeje'"
+      />
+      <SisdaiLeyenda para="p_indigenas_ofnas_representa_28102021" />
+      <SisdaiLeyenda para="p_indigenas_radiodifusoras_28102021" />
+      <SisdaiLeyenda para="p_indigenas_casas_comedores_2021" />
+      <SisdaiLeyenda para="salu_hospitales_generales_pub_1122_xy_p" />
+      <SisdaiLeyenda para="gref_escuelas_sep_2015" />
+      <SisdaiLeyenda para="gref_corredores_red_nac_caminos_21_nal_l" /> -->
+      <SisdaiLeyenda para="pciaf_pob_ind_nucleos_agrarios_21_nal_a" />
+    </template>
   </SisdaiMapa>
 </template>
 

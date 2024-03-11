@@ -39,7 +39,7 @@ function acomodarFiltro(filtro) {
   return filtro
 }
 
-export function acomodarReglasWms({ Legend }) {
+export function acomodarReglasWms({ Legend }, visibilidad) {
   // console.log(Legend[0].rules[0].symbolizers[0]);
 
   const clases = Legend[0].rules.map(
@@ -61,7 +61,7 @@ export function acomodarReglasWms({ Legend }) {
       filtro,
       titulo,
       simbolo: new SimboloSvgLeyenda({ ...simbolo, tamanioSimboloMayor }),
-      visible: true,
+      visible: visibilidad,
     }
   })
 }

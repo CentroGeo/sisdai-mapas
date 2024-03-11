@@ -51,7 +51,7 @@ export default class Mapa extends olMap {
           if (resultado === undefined) return { propiedades, rejilla }
 
           const code = obtenerCodigoCaracterParaUtfGrid(
-            resultado.grid[posicion[1]].charCodeAt(posicion[0])
+            resultado.grid[posicion[1]]?.charCodeAt(posicion[0])
           )
 
           // no coincide con datos

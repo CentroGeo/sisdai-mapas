@@ -8,11 +8,6 @@ const eventos = {
   /**
    *
    */
-  alCambiarVisibilidadClases: 'alCambiarVisibilidadClases',
-
-  /**
-   *
-   */
   alCambiarFiltroLeyenda: 'alCambiarFiltroLeyenda',
 }
 </script>
@@ -108,7 +103,12 @@ function actualizarClasesDesdeWms() {
     .then(({ data, status }) => {
       if (status !== 200) return
 
-      clases.value = acomodarReglasWms(data)
+      clases.value = acomodarReglasWms(
+        data,
+        Array.isArray(visibilidadCapa.value)
+          ? visibilidadCapa.value.some(v => v)
+          : visibilidadCapa.value
+      )
 
       // if (clases.value.length > 1) {
       //   // console.log(clases.value.map(({ filtro }) => filtro).join(' AND '))
