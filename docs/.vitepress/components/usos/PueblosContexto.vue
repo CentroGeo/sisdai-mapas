@@ -123,6 +123,15 @@ const infoTerritorios = f =>
     `Lengua: <b>${f.lengua}</b>`,
     `Fuente del dato: <b>${f.fuente}</b>`,
   ].join('<br />')}</p>`
+
+const infoResidentes = f =>
+  `<p class="m-t-0">Población indígena residente</p><p class="m-b-0">${[
+    `Pueblo: <b>${f.nombre_pueblo}</b>`,
+    `Población: <b>${f.pihogares}</b>`,
+    `Estado: <b>${f.nom_ent}</b>`,
+    `Municipio: <b>${f.nom_mun}</b>`,
+    `Localidad: <b>${f.nom_loc}</b>`,
+  ].join('<br />')}</p>`
 </script>
 
 <template>
@@ -198,6 +207,7 @@ const infoTerritorios = f =>
     <template #panel-izquierda-vis>
       <p class="vis-titulo-leyenda">Pueblos</p>
 
+      <SisdaiLeyenda para="pciaf_pob_indigena_residentes_20_loc_p" />
       <SisdaiLeyenda
         para="pciaf_territorios_pueb_indig_07_nal_a"
         v-globo-informacion="
@@ -232,6 +242,16 @@ const infoTerritorios = f =>
       :globoInformativo="infoTerritorios"
       nombre="Territorios"
       posicion="4"
+      :url="`${url_gema_geoserver}/wms`"
+    />
+
+    <SisdaiCapaWms
+      capa="pciaf_pob_indigena_residentes_20_loc_p"
+      id="pciaf_pob_indigena_residentes_20_loc_p"
+      :filtro="filtroEdoMun"
+      :globoInformativo="infoResidentes"
+      nombre="Población indígena residente"
+      posicion="5"
       :url="`${url_gema_geoserver}/wms`"
     />
     <!-- Capas Pueblos -->

@@ -2,7 +2,7 @@
 import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onMounted, shallowRef, toRefs, watch } from 'vue'
+import { computed, onMounted, ref, shallowRef, toRefs, watch } from 'vue'
 import { tiposCapa } from '../valores/capa'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
@@ -106,6 +106,18 @@ const {
   tituloClases,
 } = toRefs(props)
 
+const filtroLeyenda = ref(undefined)
+const filtroCompleto = computed(() => {
+  if (filtro.value === undefined && filtroLeyenda.value === undefined) {
+    return undefined
+  }
+
+  return [filtro.value, filtroLeyenda.value]
+    .filter(f => f !== undefined)
+    .map(f => `(${f})`)
+    .join(' AND ')
+})
+
 const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
 
 configurar(() => {
@@ -114,7 +126,7 @@ configurar(() => {
     // params: parametros.value,
     params: {
       LAYERS: capa.value || parametros.value.LAYERS,
-      CQL_FILTER: filtro.value || parametros.value.CQL_FILTER,
+      CQL_FILTER: filtroCompleto.value,
       STYLE: estilo.value || parametros.value.STYLE,
     },
     serverType: props.tipoServidor,
@@ -142,11 +154,11 @@ agregada(_capa => {
   // _capa.set('parametros', parametros.value)
   _capa.set('tituloClases', tituloClases.value)
 
-  watch([estilo, filtro], () => {
+  watch([estilo, filtroCompleto], () => {
     // console.log(nv)
     _capa.getSource().updateParams({
       LAYERS: capa.value || parametros.value.LAYERS,
-      CQL_FILTER: filtro.value || parametros.value.CQL_FILTER,
+      CQL_FILTER: filtroCompleto.value,
       STYLE: estilo.value || parametros.value.STYLE,
     })
   })
@@ -157,12 +169,7 @@ agregada(_capa => {
 
   watch(
     () => _capa.get('filtroLeyenda'),
-    nv => {
-      _capa.getSource().updateParams({
-        LAYERS: capa.value || parametros.value.LAYERS,
-        CQL_FILTER: nv,
-      })
-    }
+    nv => (filtroLeyenda.value = nv)
   )
 })
 
@@ -182,6 +189,7 @@ onMounted(() => {
     :estilo="estilo"
     :globoInformativo="globoInformativo"
     :posicion="posicion"
+    :filtro="filtroCompleto"
     :fuente="props.url"
   />
 </template>

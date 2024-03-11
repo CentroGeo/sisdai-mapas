@@ -12,7 +12,7 @@ import {
   watch,
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai } from '../utiles'
+import { buscarIdContenedorHtmlSisdai, parametrosEnFormatoURL } from '../utiles'
 import { props as propsCapa } from './../composables/usarCapa'
 
 // const urlPrueba =
@@ -71,7 +71,6 @@ const { globoInformativo, posicion, visible, filtro } = toRefs(props)
 const parametrosUtfgrid = reactive({
   ...defaultParametros,
   LAYERS: props.capa,
-  CQL_FILTER: filtro.value,
 })
 
 function actualizarParametrosUtfgrid({ target: mapa }) {
@@ -88,15 +87,8 @@ function actualizarParametrosUtfgrid({ target: mapa }) {
 }
 
 const urlUtfGrid = computed(() => {
-  return `${props.fuente}?${parametrosEnFormatoURL(parametrosUtfgrid)}`
+  return `${props.fuente}?${parametrosEnFormatoURL({ ...parametrosUtfgrid, CQL_FILTER: filtro.value })}`
 })
-
-function parametrosEnFormatoURL(parametros) {
-  return Object.entries(parametros)
-    .filter(([, valor]) => valor !== undefined) // Filtrar valores con valor
-    .map(([id, valor]) => `${id}=${encodeURIComponent(valor)}`)
-    .join('&')
-}
 
 function agregar() {
   usarRegistroMapas()
@@ -106,11 +98,13 @@ function agregar() {
         visible: visible.value,
         posicion: Number(posicion.value),
         globoInfo: globoInformativo.value,
+        resultado: undefined,
       }
 
       mapa.on('moveend', actualizarParametrosUtfgrid)
       watch(urlUtfGrid, nv => {
         // console.log(props.capa, nv)
+        mapa.rejillasUtf[props.id].resultado = undefined
         axios(nv)
           .then(({ data }) => {
             // console.log(data)
@@ -126,7 +120,7 @@ function agregar() {
 }
 
 onMounted(() => {
-  console.log('sisdaiCapaUtfGrid')
+  // console.log('sisdaiCapaUtfGrid')
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaUtfGrid.value)
 
   // usarRegistroMapas().mapaPromesa(idMapa).then(configuracion)

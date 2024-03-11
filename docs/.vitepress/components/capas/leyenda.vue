@@ -17,10 +17,10 @@ const filtros = reactive({
   <div>
     <SisdaiMapa :vista="{ extension: '-98.6634,18.8368,-97.9408,19.7288' }">
       <template #panel-izquierda-vis>
-        <SisdaiLeyendaNueva para="division_estatal" />
-        <SisdaiLeyendaNueva para="centros" />
-        <SisdaiLeyendaNueva para="localidades" />
-        <SisdaiLeyendaNueva para="corrientes" />
+        <SisdaiLeyenda para="division_estatal" />
+        <SisdaiLeyenda para="centros" />
+        <SisdaiLeyenda para="localidades" />
+        <SisdaiLeyenda para="corrientes" />
 
         <!-- <SisdaiLeyendaExterna
           fuenteCapa="https://gema.conahcyt.mx/geoserver/wms"
