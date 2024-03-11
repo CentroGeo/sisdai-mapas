@@ -20,6 +20,7 @@ const eventos = {
 <script setup>
 import axios from 'axios'
 import { computed, onMounted, ref, toRefs, watch } from 'vue'
+import { parametrosEnFormatoURL } from '../utiles'
 import { acomodarReglasWms } from '../utiles/leyenda'
 import LeyendaControl from './leyenda/LeyendaControl.vue'
 
@@ -28,21 +29,16 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+
   estiloCapa: {
     type: String,
     default: undefined,
   },
-  // filtroCapa: {
-  //   type: String,
-  //   default: undefined,
-  // },
+
   fuenteCapa: {
     type: String,
     default: undefined,
   },
-
-  // idCapa: {},
-  // idMapa: {},
 
   /**
    * Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula
@@ -76,7 +72,6 @@ const props = defineProps({
     default: true,
   },
 })
-
 const emits = defineEmits(Object.values(eventos))
 
 const {
@@ -92,50 +87,10 @@ const {
 const clases = ref([])
 watch(
   () => clases.value.map(({ visible }) => visible),
-  nv => {
-    // console.log(nv)
-    // No hay clases
-    if (nv.length < 1) return
-
-    if (nv.length === 1) {
-      // Si solo hay una clase, no hay clasificación de la capa
-      emits(eventos.alCambiarVisibilidad, nv[0])
-      return
-    }
-
-    if (nv.every(visible => visible)) {
-      // Todas las clases visibles
-      capaEncendida.value = true
-    }
-
-    if (nv.every(visible => !visible)) {
-      // Todas las clases apagadas
-      capaEncendida.value = false
-    }
-
-    emits(eventos.alCambiarVisibilidad, nv)
-  }
+  nv => emits(eventos.alCambiarVisibilidad, nv)
 )
 
-// const indeterminado = computed(
-//   () =>
-//     clases.value.some(({ visible }) => visible) &&
-//     !clases.value.every(({ visible }) => visible)
-// )
-
-const capaEncendida = ref(visibilidadCapa.value)
-watch(visibilidadCapa, encenderCapa) // cuidado al volver esta propiedad reactiva
-// watch(capaEncendida, nv => emits(eventos.alCambiarVisibilidad, nv))
-
-// const filtroCQL = ref(undefined)
-// watch(filtroCQL, nv => {
-//   // console.log('filtro:', nv)
-//   emits(eventos.alCambiarVisibilidadClases, nv)
-// })
-
 function urlGeoserver() {
-  // ?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=gref_division_estatal_20_est_a&STYLE=
-
   const parametros = {
     service: 'wms',
     version: '1.3.0',
@@ -145,17 +100,7 @@ function urlGeoserver() {
     style: estiloCapa.value,
   }
 
-  const url =
-    fuenteCapa.value +
-    '?' +
-    Object.entries(parametros)
-      .filter(([, valor]) => valor !== undefined) // Filtrar valores con valor
-      .map(([id, valor]) => `${id}=${encodeURIComponent(valor)}`)
-      .join('&')
-
-  // console.log(url)
-
-  return url
+  return fuenteCapa.value + '?' + parametrosEnFormatoURL(parametros)
 }
 
 function actualizarClasesDesdeWms() {
@@ -165,49 +110,57 @@ function actualizarClasesDesdeWms() {
 
       clases.value = acomodarReglasWms(data)
 
-      if (clases.value.length > 1) {
-        // console.log(clases.value.map(({ filtro }) => filtro).join(' AND '))
-        // console.log(clases.value.map(({ visible }) => visible).join())
-      }
+      // if (clases.value.length > 1) {
+      //   // console.log(clases.value.map(({ filtro }) => filtro).join(' AND '))
+      //   // console.log(clases.value.map(({ visible }) => visible).join())
+      // }
     })
     .catch(() => {})
 }
-
-onMounted(() => {
-  actualizarClasesDesdeWms()
-})
-watch([capa, estiloCapa, fuenteCapa], () => actualizarClasesDesdeWms())
+onMounted(actualizarClasesDesdeWms)
+watch([capa, estiloCapa, fuenteCapa], actualizarClasesDesdeWms)
 
 /**
  * Filtro aplizable par las capas clasificadas
  */
-const filtroLeyenda = computed(() => {
-  // if (clases.value.length <= 1) {
-  //   // Si solo hay una clase, no hay clasificación de la capa
-  //   return undefined
-  // }
+watch(
+  () => {
+    // if (clases.value.length <= 1) {
+    //   // Si solo hay una clase, no hay clasificación de la capa
+    //   return undefined
+    // }
 
-  if (
-    clases.value.every(({ visible }) => visible) ||
-    clases.value.every(({ visible }) => !visible)
-  ) {
-    return undefined
-  }
+    if (
+      clases.value.every(({ visible }) => visible) ||
+      clases.value.every(({ visible }) => !visible)
+    ) {
+      return undefined
+    }
 
-  return clases.value
-    .filter(({ visible }) => visible)
-    .map(({ filtro }) => filtro)
-    .join(' OR ')
+    return clases.value
+      .filter(({ visible }) => visible)
+      .map(({ filtro }) => filtro)
+      .join(' OR ')
+  },
+  nv => emits(eventos.alCambiarFiltroLeyenda, nv)
+)
+
+const capaEncendida = computed({
+  // getter
+  get() {
+    return Array.isArray(visibilidadCapa.value)
+      ? visibilidadCapa.value.some(v => v)
+      : visibilidadCapa.value
+  },
+  // setter
+  set(valor) {
+    // Note: we are using destructuring assignment syntax here.
+    // console.log('cambiar', valor)
+    clases.value.forEach((_, idx) => {
+      clases.value[idx].visible = valor
+    })
+  },
 })
-watch(filtroLeyenda, nv => emits(eventos.alCambiarFiltroLeyenda, nv))
-
-function encenderCapa(valor) {
-  // valor => (capaEncendida = valor)
-  capaEncendida.value = valor
-  clases.value.forEach((_, idx) => {
-    clases.value[idx].visible = valor
-  })
-}
 </script>
 
 <template>
@@ -225,7 +178,7 @@ function encenderCapa(valor) {
           clases.some(({ visible }) => visible) &&
           !clases.every(({ visible }) => visible)
         "
-        @alCambiar="encenderCapa"
+        @alCambiar="valor => (capaEncendida = valor)"
       />
     </div>
 

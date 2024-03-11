@@ -89,7 +89,7 @@ function vincularCapa(_capa) {
   )
   watch(
     () => capa.visible,
-    nv => _capa.setVisible(nv)
+    nv => _capa.setVisible(Array.isArray(nv) ? nv.some(v => v) : nv)
   )
 
   if (_capa.get('tipo') === tiposCapa.wms) {
@@ -112,14 +112,6 @@ onMounted(() => {
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
-
-function actualiarVisibilidad(valor) {
-  // console.log(`${props.para}:`, valor)
-  if (Array.isArray(valor)) {
-    return (capa.visible = valor.some(v => v))
-  }
-  capa.visible = valor
-}
 </script>
 
 <template>
@@ -132,9 +124,7 @@ function actualiarVisibilidad(valor) {
       :sinControl="sinControl"
       :sinControlClases="sinControlClases"
       @alCambiarFiltroLeyenda="valor => (filtroLeyenda = valor)"
-      @alCambiarVisibilidad="actualiarVisibilidad"
+      @alCambiarVisibilidad="valor => (capa.visible = valor)"
     />
-    <!-- 
-     -->
   </div>
 </template>
