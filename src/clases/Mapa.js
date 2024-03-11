@@ -48,14 +48,14 @@ export default class Mapa extends olMap {
           let propiedades
           const resultado = rejilla.resultado
 
-          if (resultado === undefined) return { propiedades }
+          if (resultado === undefined) return { propiedades, rejilla }
 
           const code = obtenerCodigoCaracterParaUtfGrid(
             resultado.grid[posicion[1]].charCodeAt(posicion[0])
           )
 
           // no coincide con datos
-          if (code === 0) return { propiedades }
+          if (code === 0) return { propiedades, rejilla }
 
           propiedades = resultado.data[resultado.keys[code]]
 
@@ -64,7 +64,7 @@ export default class Mapa extends olMap {
         // solo las regillas (capas utfgird) con atributos encontrados
         .filter(({ propiedades }) => propiedades !== undefined)
         // ordenar pio posicion
-        .sort((a, b) => b.posicion - a.posicion)
+        .sort((a, b) => b.rejilla.posicion - a.rejilla.posicion)
         // ejecutar función de parámetro
         .map(({ propiedades, rejilla }) => {
           return funsion(propiedades, rejilla)

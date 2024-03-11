@@ -101,6 +101,8 @@ function agregar() {
         resultado: undefined,
       }
 
+      watch(visible, nv => (mapa.rejillasUtf[props.id].visible = nv))
+
       mapa.on('moveend', actualizarParametrosUtfgrid)
       watch(urlUtfGrid, nv => {
         // console.log(props.capa, nv)

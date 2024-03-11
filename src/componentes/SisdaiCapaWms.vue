@@ -100,10 +100,11 @@ const {
   estilo,
   filtro,
   globoInformativo,
-  url,
   parametros,
   posicion,
   tituloClases,
+  url,
+  visible,
 } = toRefs(props)
 
 const filtroLeyenda = ref(undefined)
@@ -171,7 +172,14 @@ agregada(_capa => {
     () => _capa.get('filtroLeyenda'),
     nv => (filtroLeyenda.value = nv)
   )
+
+  watch(
+    () => _capa.getVisible(),
+    nv => (utfgridVisible.value = nv)
+  )
 })
+
+const utfgridVisible = ref(visible.value)
 
 onMounted(() => {
   // console.log('SisdaiCapaWms', props.id)
@@ -191,5 +199,6 @@ onMounted(() => {
     :posicion="posicion"
     :filtro="filtroCompleto"
     :fuente="props.url"
+    :visible="utfgridVisible"
   />
 </template>
