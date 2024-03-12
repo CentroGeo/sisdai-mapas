@@ -11,6 +11,38 @@ export function procesarContenido(contenido, feature) {
     : contenido
 }
 
+export function obtenerCodigoCaracterParaUtfGrid(code) {
+  //hay caracteres que hay que escapar y aparte debemos empezar en 32
+  let code2 = code
+  if (code2 >= 93) {
+    code2--
+  }
+  if (code2 >= 35) {
+    code2--
+  }
+  code2 -= 32
+
+  return code2
+}
+
+function buscarContenidoRejilla(pixel, mapa, atributo) {
+  return mapa.caracterDeRejillaEnPixel(pixel, (propiedades, rejilla) => {
+    const contenido = rejilla[atributo]
+
+    return contenido !== undefined ? contenido(propiedades) : undefined
+  })
+}
+
+function buscarContenidoVectores(pixel, mapa, atributo) {
+  return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
+    const contenido = capa.get(atributo)
+
+    return contenido !== undefined
+      ? procesarContenido(contenido, feature)
+      : undefined
+  })
+}
+
 /**
  * Busca si hay contenido del globo de información en un pixel determinado del mapa.
  * @param {Array<Number>} pixel
@@ -20,13 +52,10 @@ export function procesarContenido(contenido, feature) {
  * encontro contenido del tooltip.
  */
 export function buscarContenidoCapaEnPixel(pixel, mapa, atributo) {
-  return mapa.forEachFeatureAtPixel(pixel, (feature, capa) => {
-    const contenido = capa.get(atributo)
-
-    return contenido !== undefined
-      ? procesarContenido(contenido, feature)
-      : undefined
-  })
+  return (
+    buscarContenidoRejilla(pixel, mapa, atributo) ||
+    buscarContenidoVectores(pixel, mapa, atributo)
+  )
 }
 
 /**
