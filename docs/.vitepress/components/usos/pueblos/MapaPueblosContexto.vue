@@ -138,6 +138,8 @@ const filtroEdoMun2 = computed(() =>
     ? `${filtroEdo2.value} AND cve_municipio='${estadoSeleccionado.value.clave}'`
     : filtroEdo2.value
 )
+
+const visibilidadHospitales = ref([false, false, false])
 </script>
 
 <template>
@@ -216,6 +218,13 @@ const filtroEdoMun2 = computed(() =>
       <p class="vis-titulo-leyenda">Pueblos</p>
 
       <SisdaiLeyenda
+        para="p_indigenas_comunidades_17122021"
+        v-globo-informacion="
+          '<p>Son comunidades integrantes de un pueblo indígena, aquellas que formen una unidad social, económica y cultural, asentadas en un territorio y que reconocen autoridades propias de acuerdo con sus usos y costumbres.</p>' +
+          '<p>Última actualización de la capa comunidades indígenas: 17/12/2021</p>'
+        "
+      />
+      <SisdaiLeyenda
         para="pciaf_pob_indigena_asent_hist_20_loc_p"
         v-globo-informacion="
           'Territorio donde históricamente se han asentado los pueblos originarios. (INALI, 2009).'
@@ -283,6 +292,19 @@ const filtroEdoMun2 = computed(() =>
       posicion="6"
       :url="`${url_gema_geoserver}/wms`"
     />
+
+    <SisdaiCapaWms
+      capa="p_indigenas_comunidades_17122021"
+      id="p_indigenas_comunidades_17122021"
+      :filtro="
+        filtroPueblosEdoMun !== undefined
+          ? filtroPueblosEdoMun.replace('cve_pueblo', 'cve_pueblo1')
+          : undefined
+      "
+      nombre="Comunidades indígenas"
+      posicion="7"
+      :url="`${url_gema_geoserver}/wms`"
+    />
     <!-- Capas Pueblos -->
 
     <!-- Capas Contexto -->
@@ -324,7 +346,8 @@ const filtroEdoMun2 = computed(() =>
       nombre="Primer nivel"
       posicion="11"
       :url="`${url_gema_geoserver}/wms`"
-      :visible="false"
+      :visible="visibilidadHospitales[0]"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales[0] = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_2n_clues_21_xy_p"
@@ -333,7 +356,8 @@ const filtroEdoMun2 = computed(() =>
       nombre="Segundo nivel"
       posicion="12"
       :url="`${url_gema_geoserver}/wms`"
-      :visible="false"
+      :visible="visibilidadHospitales[1]"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales[1] = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_3n_clues_21_xy_p"
@@ -342,7 +366,8 @@ const filtroEdoMun2 = computed(() =>
       nombre="Tercer nivel"
       posicion="13"
       :url="`${url_gema_geoserver}/wms`"
-      :visible="false"
+      :visible="visibilidadHospitales[2]"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales[2] = valor)"
     />
     <!-- - Hospitalas -->
 
@@ -397,25 +422,40 @@ const filtroEdoMun2 = computed(() =>
         "
       />
 
-      <p>Hospitales</p>
+      <SisdaiLeyendaControl
+        etiqueta="Hospitales"
+        :encendido="visibilidadHospitales.some(v => v)"
+        :encendidoIndeterminado="
+          visibilidadHospitales.some(v => v) &&
+          !visibilidadHospitales.every(v => v)
+        "
+        @alCambiar="valor => visibilidadHospitales.fill(valor)"
+        v-globo-informacion:izquierda="
+          'El Sistema de Salud en México está estructurado en diferentes niveles de atención, las cuales se diferencian por el grado de especialización de los servicios médicos ofrecidos.<br />' +
+          'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre de la unidad y su institución).'
+        "
+      />
       <SisdaiLeyenda
+        class="p-l-3"
         para="salu_unidades_medicas_1n_clues_21_xy_p"
         v-globo-informacion:izquierda="
-          'Forma la estructura básica de la atención médica ambulatoria en el Sistema de Salud, se prestan servicios de prevención de enfermedades (educación y vigilancia epidemológica), saneamiento básico y protección.' +
+          'Forma la estructura básica de la atención médica ambulatoria en el Sistema de Salud, se prestan servicios de prevención de enfermedades (educación y vigilancia epidemológica), saneamiento básico y protección.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC; las ubicaciones originales de las unidades se mantienen por lo que es posible que existan errores en la localización.</b>'
         "
       />
       <SisdaiLeyenda
+        class="p-l-3"
         para="salu_unidades_medicas_2n_clues_21_xy_p"
         v-globo-informacion:izquierda="
-          'Generalmente se proporciona consulta externa y/o hospitalización en las 4 necesidades básicas de la medicina (cirugía general, medicina interna, gineco-obstetricia y pediatría)' +
+          'Generalmente se proporciona consulta externa y/o hospitalización en las 4 necesidades básicas de la medicina (cirugía general, medicina interna, gineco-obstetricia y pediatría).<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
         "
       />
       <SisdaiLeyenda
+        class="p-l-3"
         para="salu_unidades_medicas_3n_clues_21_xy_p"
         v-globo-informacion:izquierda="
-          'Son las unidades médicas con mayor capacidad resolutiva del sistema de salud, el personal es especializado y los procedimientos realizados son de alta complejidad.' +
+          'Son las unidades médicas con mayor capacidad resolutiva del sistema de salud, el personal es especializado y los procedimientos realizados son de alta complejidad.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
         "
       />

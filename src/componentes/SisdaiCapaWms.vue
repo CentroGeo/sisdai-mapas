@@ -120,7 +120,7 @@ const filtroCompleto = computed(() => {
     .join(' AND ')
 })
 
-const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
+const { agregada, configurar } = usarCapa(sisdaiCapaWms, props, emits)
 
 configurar(() => {
   const olSource = new ImageWMS({
