@@ -19,6 +19,11 @@ const props = defineProps({
     default: 'Cargando...',
   },
 
+  globoInformativo: {
+    typo: String,
+    default: undefined,
+  },
+
   id: {
     type: String,
     default: () => idAleatorio(),
@@ -39,8 +44,14 @@ const props = defineProps({
 
 const idCheck = `${props.id}-${idAleatorio()}`
 
-const { encendido, encendidoIndeterminado, etiqueta, simbolo, sinControl } =
-  toRefs(props)
+const {
+  encendido,
+  encendidoIndeterminado,
+  etiqueta,
+  globoInformativo,
+  simbolo,
+  sinControl,
+} = toRefs(props)
 
 const estadoCheck = reactive({
   encendido: encendido.value,
@@ -63,6 +74,11 @@ watch(encendido, nv => {
 })
 
 const emits = defineEmits(['alCambiar'])
+
+function ver({ target, x, y }) {
+  // console.log(target, x, y)
+  return { target, x, y }
+}
 </script>
 
 <template>
@@ -78,9 +94,10 @@ const emits = defineEmits(['alCambiar'])
           v-if="simbolo"
           :simbolo="simbolo"
         />
-        <span class="nombre-variable">
-          {{ etiqueta }}
-        </span>
+        <span
+          class="nombre-variable"
+          v-html="etiqueta"
+        />
       </p>
     </template>
 
@@ -97,16 +114,28 @@ const emits = defineEmits(['alCambiar'])
           v-if="simbolo"
           :simbolo="simbolo"
         />
-        <span class="nombre-variable">
-          {{ etiqueta }}
-        </span>
+        <span
+          class="nombre-variable"
+          v-html="etiqueta"
+        />
         <!-- <button
-          class="boton-icono boton-sin-borde boton-chico"
-          v-globo-informacion-extendido:derecha.interactivo="'jeje'"
-        >
-          <span class="icono-informacion icono-3" />
+          class="boton-icono boton-sin-borde boton-chico boton-secundario"
+        > -->
+        <span
+          v-if="globoInformativo !== undefined"
+          class="icono-informacion icono-3 m-l-1"
+          @mouseover="ver"
+          @mouseleave="ver"
+        />
+        <!-- <span class="a11y-solo-lectura"></span>
         </button> -->
       </label>
     </template>
   </div>
 </template>
+
+<style lang="scss">
+span.icono-informacion.icono-3 {
+  height: fit-content;
+}
+</style>

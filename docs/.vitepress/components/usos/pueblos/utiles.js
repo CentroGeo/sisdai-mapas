@@ -1,28 +1,28 @@
 import axios from 'axios'
 import { parametrosEnFormatoURL } from './../../../../../src/utiles'
 
-export const cdnArchivos =
-  'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas'
-export const urlApi =
-  'https://dev-dadsig-cultura.crip.conahcyt.mx/pueblosindigenas-registro-api/'
-export const url_gema_geoserver =
-  'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
+const geoserver = 'https://dev-dadsig-gema.crip.conahcyt.mx/geoserver'
+export const urls = {
+  cdn: 'https://dev-dadsig-cdn.crip.conahcyt.mx/enis/cultura/pueblosindigenas',
+  api: 'https://dev-dadsig-cultura.crip.conahcyt.mx/pueblosindigenas-registro-api/',
+  wms: `${geoserver}/wms`,
+}
 
 // VER DE QUE MANERA PODEMOS TRAER LOS FEATURES DESDE LA CAPA
-export function urlFeatures(capa, atributos, filtro) {
+export function urlFeatures(params) {
   const parametros = {
     service: 'WFS',
     version: '2.0.0',
     request: 'GetFeature',
     outputFormat: 'application/json',
-    typeName: capa,
-    propertyName: atributos,
-    cql_filter: filtro,
+    typeName: undefined,
+    propertyName: undefined,
+    cql_filter: undefined,
   }
 
-  return `${url_gema_geoserver}/ows?${parametrosEnFormatoURL(parametros)}`
+  return `${geoserver}/ows?${parametrosEnFormatoURL({ ...parametros, ...params })}`
 }
-export const consultar = (f, e = () => {}) => axios(f).catch(e)
+export const consultar = (url, f, e = () => {}) => axios(url).then(f).catch(e)
 export const ordenarBbox = bbox => [bbox[1], bbox[0], bbox[3], bbox[2]]
 export const extensionInicial = [-118.3651, 14.5321, -86.7104, 32.7187]
 
