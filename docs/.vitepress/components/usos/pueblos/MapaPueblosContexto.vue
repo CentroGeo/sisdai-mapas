@@ -107,10 +107,6 @@ function reiniciarTodo() {
   buscadorComunidades.value.busqueda = ''
 }
 
-function alAjustarVista(valor) {
-  if (valor === undefined) reiniciarTodo()
-}
-
 const filtroEdo = computed(() =>
   estadoSeleccionado.value !== undefined
     ? `cve_ent='${estadoSeleccionado.value.clave}'`
@@ -151,7 +147,7 @@ const visibilidadHospitales = ref([false, false, false])
     elementosDescriptivos="titulo-mapa-pueblos-contexto"
     :vista="{ extension: extensionInicial }"
     ref="mapaPueblosContexto"
-    @alAjustarVista="alAjustarVista"
+    @clickAjustarVista="reiniciarTodo"
   >
     <template #panel-encabezado-vis>
       <p
@@ -305,7 +301,7 @@ const visibilidadHospitales = ref([false, false, false])
       id="p_indigenas_comunidades_17122021"
       :filtro="
         filtroPueblosEdoMun !== undefined
-          ? filtroPueblosEdoMun.replace('cve_pueblo', 'cve_pueblo1')
+          ? filtroPueblosEdoMun.replace('clave_pueblo', 'cve_pueblo1')
           : undefined
       "
       nombre="Comunidades indígenas"

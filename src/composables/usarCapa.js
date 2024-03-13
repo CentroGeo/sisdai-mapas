@@ -140,7 +140,7 @@ export default function usarCapa(refVar, props, emits = () => {}) {
 
         // alCambiarVisibilidad
         watch(
-          () => mapa.buscarCapa(props.id).getVisible(),
+          () => mapa.buscarCapa(props.id)?.getVisible(),
           nv => emits(eventos.alCambiarVisibilidad, nv)
         )
 
