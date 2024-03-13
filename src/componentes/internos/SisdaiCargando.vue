@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @charset 'UTF-8';
 @import 'sisdai-css/src/auxiliares/vista-cargando';
 @import 'sisdai-css/src/auxiliares/animaciones';

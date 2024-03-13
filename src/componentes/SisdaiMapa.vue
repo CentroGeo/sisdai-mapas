@@ -432,7 +432,7 @@ function panelesEnUso() {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './../estilos/Accesibilidad.scss';
 @import './../estilos/Controles.scss';
 @import './../estilos/GloboInfo.scss';

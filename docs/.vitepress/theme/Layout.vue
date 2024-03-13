@@ -108,7 +108,7 @@ function tieneSidebar(theme, page) {
     />
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/navegacion/menu-lateral';
 @import 'sisdai-css/src/navegacion/colapsable-navegacion';

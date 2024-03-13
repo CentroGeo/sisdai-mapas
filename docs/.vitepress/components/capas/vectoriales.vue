@@ -94,7 +94,7 @@ function cuadrojardines(f) {
   </SisdaiMapa>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 

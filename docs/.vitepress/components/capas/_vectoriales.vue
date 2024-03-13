@@ -43,7 +43,7 @@ const nombre = ref('Capa vectorial')
   </SisdaiMapa>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 input.m-0 {
   margin: 0 !important;
 }

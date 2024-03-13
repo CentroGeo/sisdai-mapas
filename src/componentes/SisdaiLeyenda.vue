@@ -220,7 +220,7 @@ onMounted(() => {
   </ul>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sisdai-mapa-leyenda .leyenda-clases .titulo-clases {
   font-size: 1rem;
   line-height: 1.25em;
