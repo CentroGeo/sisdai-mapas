@@ -182,7 +182,10 @@ agregada(_capa => {
 
   watch(
     () => _capa.getVisible(),
-    nv => (utfgridVisible.value = nv)
+    nv => {
+      utfgridVisible.value = nv
+      emits(eventos.alCambiarVisibilidad, nv)
+    }
   )
 })
 

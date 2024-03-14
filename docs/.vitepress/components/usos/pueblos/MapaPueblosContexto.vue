@@ -4,9 +4,7 @@ import BuscadorComunidades from './BuscadorComunidades.vue'
 import {
   consultar,
   extensionInicial,
-  infoNucleo,
-  infoPueblos,
-  infoTerritorios,
+  info,
   ordenarBbox,
   urlFeatures,
   urls,
@@ -270,7 +268,7 @@ const visibilidadHospitales = ref([false, false, false])
     <SisdaiCapaWms
       capa="pciaf_territorios_pueb_indig_07_nal_a"
       id="pciaf_territorios_pueb_indig_07_nal_a"
-      :globoInformativo="infoTerritorios"
+      :globoInformativo="info.territorio"
       nombre="Territorios"
       posicion="4"
       :url="urls.wms"
@@ -280,7 +278,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_pob_indigena_residentes_20_loc_p"
       id="pciaf_pob_indigena_residentes_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => infoPueblos(p, 'residente')"
+      :globoInformativo="p => info.pueblo(p, 'residente')"
       nombre="Población indígena residente"
       posicion="5"
       :url="urls.wms"
@@ -290,7 +288,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_pob_indigena_asent_hist_20_loc_p"
       id="pciaf_pob_indigena_asent_hist_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => infoPueblos(p, 'en asentamientos históricos')"
+      :globoInformativo="p => info.pueblo(p, 'en asentamientos históricos')"
       nombre="Población indígena en asentamientos históricos"
       posicion="6"
       :url="urls.wms"
@@ -304,6 +302,7 @@ const visibilidadHospitales = ref([false, false, false])
           ? filtroPueblosEdoMun.replace('clave_pueblo', 'cve_pueblo1')
           : undefined
       "
+      :globoInformativo="info.comunidad"
       nombre="Comunidades indígenas"
       posicion="7"
       :url="urls.wms"
@@ -315,7 +314,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       id="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       :filtro="filtroEdoMun2"
-      :globoInformativo="infoNucleo"
+      :globoInformativo="info.nucleo"
       nombre="Núcleos agrarios (selecciona un estado para ver esta capa)"
       posicion="8"
       :url="urls.wms"
@@ -335,6 +334,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="educ_establecimientos_escolares_15_xy_p"
       id="educ_establecimientos_escolares_15_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.escuela"
       nombre="Establecimientos escolares"
       posicion="10"
       :url="urls.wms"
@@ -346,6 +346,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_1n_clues_21_xy_p"
       id="salu_unidades_medicas_1n_clues_21_xy_p"
       :filtro="filtroEdoMun2"
+      :globoInformativo="info.hospitalN1"
       nombre="Primer nivel"
       posicion="11"
       :url="urls.wms"
@@ -356,6 +357,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_2n_clues_21_xy_p"
       id="salu_unidades_medicas_2n_clues_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.hospital"
       nombre="Segundo nivel"
       posicion="12"
       :url="urls.wms"
@@ -366,6 +368,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_3n_clues_21_xy_p"
       id="salu_unidades_medicas_3n_clues_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.hospital"
       nombre="Tercer nivel"
       posicion="13"
       :url="urls.wms"
@@ -378,6 +381,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_casas_comedores_ninez_ind_21_xy_p"
       id="pciaf_casas_comedores_ninez_ind_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.casaComedor"
       nombre="Casas y Comedores del PAEI"
       posicion="14"
       :url="urls.wms"
@@ -387,6 +391,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_radiodifusoras_ind_160124_xy_p"
       id="pciaf_radiodifusoras_ind_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.radiodifusora"
       nombre="Radiodifusoras del INPI"
       posicion="15"
       :url="urls.wms"
@@ -396,6 +401,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_oficinas_repre_inpi_160124_xy_p"
       id="pciaf_oficinas_repre_inpi_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.oficinaRepre"
       nombre="Oficinas de representación"
       posicion="16"
       :url="urls.wms"
@@ -405,6 +411,7 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_centros_coord_pue_ind_160124_xy_p"
       id="pciaf_centros_coord_pue_ind_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.centroCoordinador"
       nombre="Centros Coordinadores de Pueblos Indígenas"
       posicion="17"
       :url="urls.wms"
