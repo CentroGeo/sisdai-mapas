@@ -35,6 +35,11 @@ const props = defineProps({
     default: undefined,
   },
 
+  globoInformativo: {
+    type: String,
+    default: undefined,
+  },
+
   /**
    * Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula
    * con la visibilidad de la capa.
@@ -171,13 +176,14 @@ const capaEncendida = computed({
     <div class="leyenda-titulo">
       <LeyendaControl
         :etiqueta="tituloCapa"
-        :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
-        :sinControl="sinControl"
         :encendido="capaEncendida"
         :encendidoIndeterminado="
           clases.some(({ visible }) => visible) &&
           !clases.every(({ visible }) => visible)
         "
+        :globoInformativo="globoInformativo"
+        :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
+        :sinControl="sinControl"
         @alCambiar="valor => (capaEncendida = valor)"
       />
     </div>

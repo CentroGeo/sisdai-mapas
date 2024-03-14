@@ -2,16 +2,12 @@
 import { computed, ref, watch } from 'vue'
 import BuscadorComunidades from './BuscadorComunidades.vue'
 import {
-  cdnArchivos,
   consultar,
   extensionInicial,
-  infoNucleo,
-  infoPueblos,
-  infoTerritorios,
+  info,
   ordenarBbox,
-  urlApi,
   urlFeatures,
-  url_gema_geoserver,
+  urls,
 } from './utiles'
 
 const mapaPueblosContexto = ref(null)
@@ -24,7 +20,7 @@ const municipios = ref([])
 const municipioSeleccionado = ref(undefined)
 
 function consultarDatosPueblos() {
-  consultar(`${cdnArchivos}/mapas/diccionarioPueblos.json`).then(({ data }) => {
+  consultar(`${urls.cdn}/mapas/diccionarioPueblos.json`, ({ data }) => {
     pueblos.value = Object.entries(data)
       .map(i => ({ clave: i[0], nom_com: i[1] }))
       .sort((a, b) => {
@@ -37,37 +33,42 @@ consultarDatosPueblos()
 
 function consultarEstados() {
   consultar(
-    urlFeatures('gref_division_estatal_20_est_a', 'cve_ent,nom_ent')
-  ).then(({ data, status }) => {
-    // console.log(status)
-    if (status !== 200) return
+    urlFeatures({
+      typeName: 'gref_division_estatal_20_est_a',
+      propertyName: 'cve_ent,nom_ent',
+    }),
+    ({ data, status }) => {
+      // console.log(status)
+      if (status !== 200) return
 
-    estados.value = data.features.map(({ bbox, properties }) => ({
-      clave: properties.cve_ent,
-      nombre: properties.nom_ent,
-      bbox: bbox,
-    }))
-  })
+      estados.value = data.features.map(({ bbox, properties }) => ({
+        clave: properties.cve_ent,
+        nombre: properties.nom_ent,
+        bbox: bbox,
+      }))
+    }
+  )
 }
 consultarEstados()
 
 function consultarMunicipios(cve_ent) {
   consultar(
-    urlFeatures(
-      'gref_division_municipal_20_mun_a',
-      'cve_mun,nom_mun',
-      `cve_ent='${cve_ent.clave}'`
-    )
-  ).then(({ data, status }) => {
-    // console.log(status)
-    if (status !== 200) return
+    urlFeatures({
+      typeName: 'gref_division_municipal_20_mun_a',
+      propertyName: 'cve_mun,nom_mun',
+      cql_filter: `cve_ent='${cve_ent.clave}'`,
+    }),
+    ({ data, status }) => {
+      // console.log(status)
+      if (status !== 200) return
 
-    municipios.value = data.features.map(({ bbox, properties }) => ({
-      clave: properties.cve_mun,
-      nombre: properties.nom_mun,
-      bbox: bbox,
-    }))
-  })
+      municipios.value = data.features.map(({ bbox, properties }) => ({
+        clave: properties.cve_mun,
+        nombre: properties.nom_mun,
+        bbox: bbox,
+      }))
+    }
+  )
 }
 
 function ajustarVista(bbox) {
@@ -102,10 +103,6 @@ function reiniciarTodo() {
   municipioSeleccionado.value = undefined
   puebloSeleccionado.value = ''
   buscadorComunidades.value.busqueda = ''
-}
-
-function alAjustarVista(valor) {
-  if (valor === undefined) reiniciarTodo()
 }
 
 const filtroEdo = computed(() =>
@@ -148,7 +145,7 @@ const visibilidadHospitales = ref([false, false, false])
     elementosDescriptivos="titulo-mapa-pueblos-contexto"
     :vista="{ extension: extensionInicial }"
     ref="mapaPueblosContexto"
-    @alAjustarVista="alAjustarVista"
+    @clickAjustarVista="reiniciarTodo"
   >
     <template #panel-encabezado-vis>
       <p
@@ -219,6 +216,7 @@ const visibilidadHospitales = ref([false, false, false])
 
       <SisdaiLeyenda
         para="p_indigenas_comunidades_17122021"
+        globoInformativo=""
         v-globo-informacion="
           '<p>Son comunidades integrantes de un pueblo indígena, aquellas que formen una unidad social, económica y cultural, asentadas en un territorio y que reconocen autoridades propias de acuerdo con sus usos y costumbres.</p>' +
           '<p>Última actualización de la capa comunidades indígenas: 17/12/2021</p>'
@@ -226,18 +224,21 @@ const visibilidadHospitales = ref([false, false, false])
       />
       <SisdaiLeyenda
         para="pciaf_pob_indigena_asent_hist_20_loc_p"
+        globoInformativo=""
         v-globo-informacion="
           'Territorio donde históricamente se han asentado los pueblos originarios. (INALI, 2009).'
         "
       />
       <SisdaiLeyenda
         para="pciaf_pob_indigena_residentes_20_loc_p"
+        globoInformativo=""
         v-globo-informacion="
           'Localidad no identificada como asentamiento histórico del pueblo de referencia según el Catálogo de Lenguas Indígenas Nacionales del INALI.'
         "
       />
       <SisdaiLeyenda
         para="pciaf_territorios_pueb_indig_07_nal_a"
+        globoInformativo=""
         v-globo-informacion="
           'Aproximación a los territorios de los pueblos indígenas a partir de la propuesta elaborada por Eckart Boege en 2008 e INPI 2021.'
         "
@@ -251,14 +252,14 @@ const visibilidadHospitales = ref([false, false, false])
       capa="gref_division_estatal_20_est_a"
       :filtro="filtroEdo"
       posicion="2"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
     />
 
     <SisdaiCapaWms
       capa="gref_division_municipal_20_mun_a"
       :filtro="filtroEdoMun"
       posicion="3"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="estadoSeleccionado !== undefined"
     />
     <!-- Capas Base -->
@@ -267,30 +268,30 @@ const visibilidadHospitales = ref([false, false, false])
     <SisdaiCapaWms
       capa="pciaf_territorios_pueb_indig_07_nal_a"
       id="pciaf_territorios_pueb_indig_07_nal_a"
-      :globoInformativo="infoTerritorios"
+      :globoInformativo="info.territorio"
       nombre="Territorios"
       posicion="4"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
     />
 
     <SisdaiCapaWms
       capa="pciaf_pob_indigena_residentes_20_loc_p"
       id="pciaf_pob_indigena_residentes_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => infoPueblos(p, 'residente')"
+      :globoInformativo="p => info.pueblo(p, 'residente')"
       nombre="Población indígena residente"
       posicion="5"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
     />
 
     <SisdaiCapaWms
       capa="pciaf_pob_indigena_asent_hist_20_loc_p"
       id="pciaf_pob_indigena_asent_hist_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => infoPueblos(p, 'en asentamientos históricos')"
+      :globoInformativo="p => info.pueblo(p, 'en asentamientos históricos')"
       nombre="Población indígena en asentamientos históricos"
       posicion="6"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
     />
 
     <SisdaiCapaWms
@@ -298,12 +299,13 @@ const visibilidadHospitales = ref([false, false, false])
       id="p_indigenas_comunidades_17122021"
       :filtro="
         filtroPueblosEdoMun !== undefined
-          ? filtroPueblosEdoMun.replace('cve_pueblo', 'cve_pueblo1')
+          ? filtroPueblosEdoMun.replace('clave_pueblo', 'cve_pueblo1')
           : undefined
       "
+      :globoInformativo="info.comunidad"
       nombre="Comunidades indígenas"
       posicion="7"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
     />
     <!-- Capas Pueblos -->
 
@@ -312,10 +314,10 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       id="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       :filtro="filtroEdoMun2"
-      :globoInformativo="infoNucleo"
-      nombre="Población indígena en asentamientos históricos (selecciona un estado para ver esta capa)"
+      :globoInformativo="info.nucleo"
+      nombre="Núcleos agrarios (selecciona un estado para ver esta capa)"
       posicion="8"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
 
@@ -324,7 +326,7 @@ const visibilidadHospitales = ref([false, false, false])
       id="gref_corredores_red_nac_caminos_21_nal_l"
       nombre="Red Nacional de Caminos"
       posicion="9"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
 
@@ -332,9 +334,10 @@ const visibilidadHospitales = ref([false, false, false])
       capa="educ_establecimientos_escolares_15_xy_p"
       id="educ_establecimientos_escolares_15_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.escuela"
       nombre="Establecimientos escolares"
       posicion="10"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
 
@@ -343,9 +346,10 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_1n_clues_21_xy_p"
       id="salu_unidades_medicas_1n_clues_21_xy_p"
       :filtro="filtroEdoMun2"
+      :globoInformativo="info.hospitalN1"
       nombre="Primer nivel"
       posicion="11"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="visibilidadHospitales[0]"
       @alCambiarVisibilidad="valor => (visibilidadHospitales[0] = valor)"
     />
@@ -353,9 +357,10 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_2n_clues_21_xy_p"
       id="salu_unidades_medicas_2n_clues_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.hospital"
       nombre="Segundo nivel"
       posicion="12"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="visibilidadHospitales[1]"
       @alCambiarVisibilidad="valor => (visibilidadHospitales[1] = valor)"
     />
@@ -363,9 +368,10 @@ const visibilidadHospitales = ref([false, false, false])
       capa="salu_unidades_medicas_3n_clues_21_xy_p"
       id="salu_unidades_medicas_3n_clues_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.hospital"
       nombre="Tercer nivel"
       posicion="13"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="visibilidadHospitales[2]"
       @alCambiarVisibilidad="valor => (visibilidadHospitales[2] = valor)"
     />
@@ -375,36 +381,40 @@ const visibilidadHospitales = ref([false, false, false])
       capa="pciaf_casas_comedores_ninez_ind_21_xy_p"
       id="pciaf_casas_comedores_ninez_ind_21_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.casaComedor"
       nombre="Casas y Comedores del PAEI"
       posicion="14"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
     <SisdaiCapaWms
       capa="pciaf_radiodifusoras_ind_160124_xy_p"
       id="pciaf_radiodifusoras_ind_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.radiodifusora"
       nombre="Radiodifusoras del INPI"
       posicion="15"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
     <SisdaiCapaWms
       capa="pciaf_oficinas_repre_inpi_160124_xy_p"
       id="pciaf_oficinas_repre_inpi_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.oficinaRepre"
       nombre="Oficinas de representación"
       posicion="16"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
     <SisdaiCapaWms
       capa="pciaf_centros_coord_pue_ind_160124_xy_p"
       id="pciaf_centros_coord_pue_ind_160124_xy_p"
       :filtro="filtroEdoMun"
+      :globoInformativo="info.centroCoordinador"
       nombre="Centros Coordinadores de Pueblos Indígenas"
       posicion="17"
-      :url="`${url_gema_geoserver}/wms`"
+      :url="urls.wms"
       :visible="false"
     />
     <!-- Capas Contexto -->
@@ -417,6 +427,7 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda para="pciaf_radiodifusoras_ind_160124_xy_p" />
       <SisdaiLeyenda
         para="pciaf_casas_comedores_ninez_ind_21_xy_p"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'Programa de Apoyo a la Educación Indígena'
         "
@@ -430,6 +441,7 @@ const visibilidadHospitales = ref([false, false, false])
           !visibilidadHospitales.every(v => v)
         "
         @alCambiar="valor => visibilidadHospitales.fill(valor)"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'El Sistema de Salud en México está estructurado en diferentes niveles de atención, las cuales se diferencian por el grado de especialización de los servicios médicos ofrecidos.<br />' +
           'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre de la unidad y su institución).'
@@ -438,6 +450,7 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         class="p-l-3"
         para="salu_unidades_medicas_1n_clues_21_xy_p"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'Forma la estructura básica de la atención médica ambulatoria en el Sistema de Salud, se prestan servicios de prevención de enfermedades (educación y vigilancia epidemológica), saneamiento básico y protección.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC; las ubicaciones originales de las unidades se mantienen por lo que es posible que existan errores en la localización.</b>'
@@ -446,6 +459,7 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         class="p-l-3"
         para="salu_unidades_medicas_2n_clues_21_xy_p"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'Generalmente se proporciona consulta externa y/o hospitalización en las 4 necesidades básicas de la medicina (cirugía general, medicina interna, gineco-obstetricia y pediatría).<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
@@ -454,6 +468,7 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         class="p-l-3"
         para="salu_unidades_medicas_3n_clues_21_xy_p"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'Son las unidades médicas con mayor capacidad resolutiva del sistema de salud, el personal es especializado y los procedimientos realizados son de alta complejidad.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
@@ -461,6 +476,7 @@ const visibilidadHospitales = ref([false, false, false])
       />
       <SisdaiLeyenda
         para="educ_establecimientos_escolares_15_xy_p"
+        globoInformativo=""
         v-globo-informacion:izquierda="
           'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre del establecimiento escolar y su Clave de Centro de Trabajo).'
         "
@@ -471,7 +487,7 @@ const visibilidadHospitales = ref([false, false, false])
 
     <template #panel-pie-vis>
       <a
-        :href="`${urlApi}media/capa_comunidades_indigenas/capas_pueblos_indigenas.zip`"
+        :href="`${urls.api}media/capa_comunidades_indigenas/capas_pueblos_indigenas.zip`"
         class="boton boton-primario boton-chico"
         target="_blank"
         rel="noopener noreferrer"

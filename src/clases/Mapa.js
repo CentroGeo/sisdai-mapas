@@ -29,7 +29,7 @@ import NavegacionTeclado from './NavegacionTeclado'
  * propiedades que faciliten la manipulación del contenido de la propia instancia.
  */
 export default class Mapa extends olMap {
-  rejillasUtf = {}
+  rejillasUtf = []
 
   /**
    *

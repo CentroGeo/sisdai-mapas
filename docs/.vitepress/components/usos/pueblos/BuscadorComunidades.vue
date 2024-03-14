@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import { cdnArchivos, consultar } from './utiles'
+import { consultar, urls } from './utiles'
 
 const emits = defineEmits(['alSeleccionarComunidad'])
 
@@ -8,7 +8,8 @@ const comunidades = ref([])
 const comunidadesFiltradas = ref([])
 
 function consultarDatosComunidades() {
-  consultar(`${cdnArchivos}/mapas/diccionaraioComunidades-17122021.json`).then(
+  consultar(
+    `${urls.cdn}/mapas/diccionaraioComunidades-17122021.json`,
     ({ status, data }) => {
       if (status !== 200) return
 

@@ -142,12 +142,12 @@ watch(
   nv => {
     mapa()?.asignarVista(nv)
 
-    if (
-      nv.ajustarVistaAlCambiarParametros === undefined ||
-      nv.ajustarVistaAlCambiarParametros
-    ) {
-      mapa()?.ajustarVista()
-    }
+    // if (
+    //   nv.ajustarVistaAlCambiarParametros === undefined ||
+    //   nv.ajustarVistaAlCambiarParametros
+    // ) {
+    //   mapa()?.ajustarVista()
+    // }
   },
   { deep: true }
 )

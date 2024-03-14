@@ -18,7 +18,6 @@
  */
 
 import { onBeforeUnmount, onMounted, toRefs, watch } from 'vue'
-import eventos from './../eventos/capa'
 import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
 import usarRegistroMapas from './usarRegistroMapas'
 
@@ -99,7 +98,7 @@ export const props = {
   },
 }
 
-export default function usarCapa(refVar, props, emits = () => {}) {
+export default function usarCapa(refVar, props /*, emits = () => {}*/) {
   var idMapa
   const { nombre, opacidad, posicion, visible } = toRefs(props)
 
@@ -138,12 +137,8 @@ export default function usarCapa(refVar, props, emits = () => {}) {
         watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(Number(nv)))
         watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
 
-        // alCambiarVisibilidad
-        watch(
-          () => mapa.buscarCapa(props.id).getVisible(),
-          nv => emits(eventos.alCambiarVisibilidad, nv)
-        )
-
+        // En la siguiente clase pueden aplicarse emits para todas las capas como el cambio de visibilidad
+        // fnAgregadaParaTodas(mapa.buscarCapa(props.id))
         fnAgregada(mapa.buscarCapa(props.id))
       })
   }

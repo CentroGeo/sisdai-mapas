@@ -6,6 +6,11 @@ import { tiposCapa } from '../valores/capa'
 import SisdaiLeyendaWms from './SisdaiLeyendaWms.vue'
 
 const props = defineProps({
+  globoInformativo: {
+    type: String,
+    default: undefined,
+  },
+
   /**
    * Recibe el identificador de la capa con la que se quiere vincular la leyenda.
    *
@@ -117,8 +122,9 @@ onMounted(() => {
 <template>
   <div ref="sisdaiLeyendaNueva">
     <SisdaiLeyendaWms
-      :fuenteCapa="wms.fuente"
       :capa="wms.capa"
+      :fuenteCapa="wms.fuente"
+      :globoInformativo="globoInformativo"
       :tituloCapa="capa.nombre"
       :visibilidadCapa="capa.visible"
       :sinControl="sinControl"

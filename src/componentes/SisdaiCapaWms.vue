@@ -172,10 +172,20 @@ agregada(_capa => {
     () => _capa.get('filtroLeyenda'),
     nv => (filtroLeyenda.value = nv)
   )
+  function watchVue2() {
+    setTimeout(() => {
+      filtroLeyenda.value = _capa.get('filtroLeyenda')
+      watchVue2()
+    }, 1000)
+  }
+  watchVue2()
 
   watch(
     () => _capa.getVisible(),
-    nv => (utfgridVisible.value = nv)
+    nv => {
+      utfgridVisible.value = nv
+      emits(eventos.alCambiarVisibilidad, nv)
+    }
   )
 })
 
