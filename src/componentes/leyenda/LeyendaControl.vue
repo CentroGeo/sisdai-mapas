@@ -4,6 +4,11 @@ import { idAleatorio } from '../../utiles'
 import LeyendaSimbolo from './LeyendaSimbolo.vue'
 
 const props = defineProps({
+  deshabilitado: {
+    type: Boolean,
+    default: false,
+  },
+
   encendido: {
     type: Boolean,
     default: false,
@@ -45,6 +50,7 @@ const props = defineProps({
 const idCheck = `${props.id}-${idAleatorio()}`
 
 const {
+  deshabilitado,
   encendido,
   encendidoIndeterminado,
   etiqueta,
@@ -103,11 +109,12 @@ function ver({ target, x, y }) {
 
     <template v-else>
       <input
-        type="checkbox"
-        :id="idCheck"
         :checked="estadoCheck.encendido"
+        :disabled="deshabilitado"
         :indeterminate="estadoCheck.indeterminado"
+        :id="idCheck"
         @input="emits('alCambiar', $event.target.checked)"
+        type="checkbox"
       />
       <label :for="idCheck">
         <LeyendaSimbolo

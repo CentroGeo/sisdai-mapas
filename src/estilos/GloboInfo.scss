@@ -4,6 +4,11 @@
     position: absolute;
     visibility: visible;
 
+    // observaciones
+    padding: 0.75rem;
+    line-height: 1rem;
+    background: #141414e6;
+
     &.esconder {
       display: none;
     }

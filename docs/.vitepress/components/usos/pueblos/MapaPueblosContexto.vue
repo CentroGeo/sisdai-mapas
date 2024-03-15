@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, watch } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import BuscadorComunidades from './BuscadorComunidades.vue'
 import {
   consultar,
@@ -20,13 +20,14 @@ const municipios = ref([])
 const municipioSeleccionado = ref(undefined)
 
 function consultarDatosPueblos() {
-  consultar(`${urls.cdn}/mapas/diccionarioPueblos.json`, ({ data }) => {
+  consultar(`${urls.cdn}/mapas/diccionarioPueblos.json`, ({ data, status }) => {
+    if (status !== 200) return
+
     pueblos.value = Object.entries(data)
       .map(i => ({ clave: i[0], nom_com: i[1] }))
       .sort((a, b) => {
         return a.nom_com < b.nom_com ? -1 : a.nom_com > b.nom_com ? 1 : 0
       })
-    // console.log(pueblos.value)
   })
 }
 consultarDatosPueblos()
@@ -38,7 +39,6 @@ function consultarEstados() {
       propertyName: 'cve_ent,nom_ent',
     }),
     ({ data, status }) => {
-      // console.log(status)
       if (status !== 200) return
 
       estados.value = data.features.map(({ bbox, properties }) => ({
@@ -59,7 +59,6 @@ function consultarMunicipios(cve_ent) {
       cql_filter: `cve_ent='${cve_ent.clave}'`,
     }),
     ({ data, status }) => {
-      // console.log(status)
       if (status !== 200) return
 
       municipios.value = data.features.map(({ bbox, properties }) => ({
@@ -82,6 +81,7 @@ watch(estadoSeleccionado, nv => {
   municipioSeleccionado.value = undefined
 
   if (nv === undefined) {
+    visibilidadNucleos.value = false
     mapaPueblosContexto.value.ajustarVista()
   } else {
     consultarMunicipios(nv)
@@ -136,7 +136,15 @@ const filtroEdoMun2 = computed(() =>
     : filtroEdo2.value
 )
 
-const visibilidadHospitales = ref([false, false, false])
+const visibilidadHospitales = reactive({
+  n1: false,
+  n2: false,
+  n3: false,
+})
+const grupoHospitalesVisible = computed(() =>
+  Object.values(visibilidadHospitales).some(v => v)
+)
+const visibilidadNucleos = ref(false)
 </script>
 
 <template>
@@ -217,7 +225,7 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         para="p_indigenas_comunidades_17122021"
         globoInformativo=""
-        v-globo-informacion="
+        v-globo-informacion-extendido="
           '<p>Son comunidades integrantes de un pueblo indígena, aquellas que formen una unidad social, económica y cultural, asentadas en un territorio y que reconocen autoridades propias de acuerdo con sus usos y costumbres.</p>' +
           '<p>Última actualización de la capa comunidades indígenas: 17/12/2021</p>'
         "
@@ -225,21 +233,21 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         para="pciaf_pob_indigena_asent_hist_20_loc_p"
         globoInformativo=""
-        v-globo-informacion="
+        v-globo-informacion-extendido="
           'Territorio donde históricamente se han asentado los pueblos originarios. (INALI, 2009).'
         "
       />
       <SisdaiLeyenda
         para="pciaf_pob_indigena_residentes_20_loc_p"
         globoInformativo=""
-        v-globo-informacion="
+        v-globo-informacion-extendido="
           'Localidad no identificada como asentamiento histórico del pueblo de referencia según el Catálogo de Lenguas Indígenas Nacionales del INALI.'
         "
       />
       <SisdaiLeyenda
         para="pciaf_territorios_pueb_indig_07_nal_a"
         globoInformativo=""
-        v-globo-informacion="
+        v-globo-informacion-extendido="
           'Aproximación a los territorios de los pueblos indígenas a partir de la propuesta elaborada por Eckart Boege en 2008 e INPI 2021.'
         "
       />
@@ -315,10 +323,11 @@ const visibilidadHospitales = ref([false, false, false])
       id="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
       :filtro="filtroEdoMun2"
       :globoInformativo="info.nucleo"
-      nombre="Núcleos agrarios (selecciona un estado para ver esta capa)"
+      :nombre="`Núcleos agrarios${estadoSeleccionado === undefined ? ' (selecciona un estado para ver esta capa)' : ''}`"
       posicion="8"
       :url="urls.wms"
-      :visible="false"
+      :visible="visibilidadNucleos"
+      @alCambiarVisibilidad="valor => (visibilidadNucleos = valor)"
     />
 
     <SisdaiCapaWms
@@ -350,8 +359,8 @@ const visibilidadHospitales = ref([false, false, false])
       nombre="Primer nivel"
       posicion="11"
       :url="urls.wms"
-      :visible="visibilidadHospitales[0]"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales[0] = valor)"
+      :visible="visibilidadHospitales.n1"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales.n1 = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_2n_clues_21_xy_p"
@@ -361,8 +370,8 @@ const visibilidadHospitales = ref([false, false, false])
       nombre="Segundo nivel"
       posicion="12"
       :url="urls.wms"
-      :visible="visibilidadHospitales[1]"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales[1] = valor)"
+      :visible="visibilidadHospitales.n2"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales.n2 = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_3n_clues_21_xy_p"
@@ -372,8 +381,8 @@ const visibilidadHospitales = ref([false, false, false])
       nombre="Tercer nivel"
       posicion="13"
       :url="urls.wms"
-      :visible="visibilidadHospitales[2]"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales[2] = valor)"
+      :visible="visibilidadHospitales.n3"
+      @alCambiarVisibilidad="valor => (visibilidadHospitales.n3 = valor)"
     />
     <!-- - Hospitalas -->
 
@@ -428,21 +437,27 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         para="pciaf_casas_comedores_ninez_ind_21_xy_p"
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'Programa de Apoyo a la Educación Indígena'
         "
       />
 
       <SisdaiLeyendaControl
         etiqueta="Hospitales"
-        :encendido="visibilidadHospitales.some(v => v)"
+        :encendido="grupoHospitalesVisible"
         :encendidoIndeterminado="
-          visibilidadHospitales.some(v => v) &&
-          !visibilidadHospitales.every(v => v)
+          grupoHospitalesVisible &&
+          !Object.values(visibilidadHospitales).every(v => v)
         "
-        @alCambiar="valor => visibilidadHospitales.fill(valor)"
+        @alCambiar="
+          valor => {
+            visibilidadHospitales.n1 = valor
+            visibilidadHospitales.n2 = valor
+            visibilidadHospitales.n3 = valor
+          }
+        "
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'El Sistema de Salud en México está estructurado en diferentes niveles de atención, las cuales se diferencian por el grado de especialización de los servicios médicos ofrecidos.<br />' +
           'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre de la unidad y su institución).'
         "
@@ -451,7 +466,7 @@ const visibilidadHospitales = ref([false, false, false])
         class="p-l-3"
         para="salu_unidades_medicas_1n_clues_21_xy_p"
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'Forma la estructura básica de la atención médica ambulatoria en el Sistema de Salud, se prestan servicios de prevención de enfermedades (educación y vigilancia epidemológica), saneamiento básico y protección.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC; las ubicaciones originales de las unidades se mantienen por lo que es posible que existan errores en la localización.</b>'
         "
@@ -460,7 +475,7 @@ const visibilidadHospitales = ref([false, false, false])
         class="p-l-3"
         para="salu_unidades_medicas_2n_clues_21_xy_p"
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'Generalmente se proporciona consulta externa y/o hospitalización en las 4 necesidades básicas de la medicina (cirugía general, medicina interna, gineco-obstetricia y pediatría).<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
         "
@@ -469,7 +484,7 @@ const visibilidadHospitales = ref([false, false, false])
         class="p-l-3"
         para="salu_unidades_medicas_3n_clues_21_xy_p"
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'Son las unidades médicas con mayor capacidad resolutiva del sistema de salud, el personal es especializado y los procedimientos realizados son de alta complejidad.<br />' +
           '<b>La capa fue estructurada con base en la metodología ETEC, se detectaron inconsistencias sobre las ubicaciones por lo que fueron revisadas y corregidas.</b>'
         "
@@ -477,12 +492,15 @@ const visibilidadHospitales = ref([false, false, false])
       <SisdaiLeyenda
         para="educ_establecimientos_escolares_15_xy_p"
         globoInformativo=""
-        v-globo-informacion:izquierda="
+        v-globo-informacion-extendido:izquierda="
           'Para ver más información sobre estos puntos selecciónalos a nivel estatal (se desplegará el nombre del establecimiento escolar y su Clave de Centro de Trabajo).'
         "
       />
       <SisdaiLeyenda para="gref_corredores_red_nac_caminos_21_nal_l" />
-      <SisdaiLeyenda para="pciaf_pob_ind_nucleos_agrarios_21_nal_a" />
+      <SisdaiLeyenda
+        :deshabilitado="estadoSeleccionado === undefined"
+        para="pciaf_pob_ind_nucleos_agrarios_21_nal_a"
+      />
     </template>
 
     <template #panel-pie-vis>
