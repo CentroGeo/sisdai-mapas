@@ -5,9 +5,9 @@
     visibility: visible;
 
     // observaciones
-    padding: 0.75rem;
-    line-height: 1rem;
-    background: #141414e6;
+    // padding: 0.75rem;
+    // line-height: 1rem;
+    // background: #141414e6;
 
     &.esconder {
       display: none;
@@ -18,24 +18,24 @@
     }
 
     .cuerpo-globo-info {
-      font-size: 11px;
-      font-weight: 400;
+      // font-size: 11px;
+      // font-weight: 400;
       display: block;
 
-      a,
-      .hipervinculo {
-        color: #668bff;
-        &:visited {
-          color: #cf99ff;
-        }
-        &:hover {
-          color: #8999cc;
-        }
-        &:focus-visible {
-          color: #668bff;
-          outline: 2px dashed #668bff;
-        }
-      }
+      // a,
+      // .hipervinculo {
+      //   color: #668bff;
+      //   &:visited {
+      //     color: #cf99ff;
+      //   }
+      //   &:hover {
+      //     color: #8999cc;
+      //   }
+      //   &:focus-visible {
+      //     color: #668bff;
+      //     outline: 2px dashed #668bff;
+      //   }
+      // }
     }
   }
 
@@ -49,9 +49,9 @@
       top 0.1s linear,
       left 0.1s linear;
 
-    .boton-icono {
-      float: right;
-      margin-right: 0;
-    }
+    // .boton-icono {
+    //   float: right;
+    //   margin-right: 0;
+    // }
   }
 }
