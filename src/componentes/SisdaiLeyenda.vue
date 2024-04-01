@@ -1,8 +1,8 @@
 <script setup>
-import { onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
+import { inject, onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
 import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, fetchJSON } from '../utiles'
+import { fetchJSON } from '../utiles'
 import {
   acomodarFormaDesdeVector,
   estiloContiene,
@@ -170,7 +170,8 @@ function vincularCapa(_capa) {
 
 onMounted(() => {
   // console.log('SisdaiLeyenda', props.para)
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
+  //idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
+  idMapa = inject('idMapa', 'no se encontró el id del mapa')
 
   // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
   usarRegistroMapas()

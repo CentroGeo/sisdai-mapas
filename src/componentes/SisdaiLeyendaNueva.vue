@@ -1,7 +1,14 @@
 <script setup>
-import { onMounted, reactive, ref, shallowRef, toRefs, watch } from 'vue'
+import {
+  inject,
+  onMounted,
+  reactive,
+  ref,
+  shallowRef,
+  toRefs,
+  watch,
+} from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai } from '../utiles'
 import { tiposCapa } from '../valores/capa'
 import SisdaiLeyendaWms from './SisdaiLeyendaWms.vue'
 
@@ -115,7 +122,8 @@ function vincularCapa(_capa) {
 
 onMounted(() => {
   // console.log('SisdaiLeyendaNueva', props.para)
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyendaNueva.value)
+  //idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyendaNueva.value)
+  idMapa = inject('idMapa', 'no se encontró el id del mapa')
 
   usarRegistroMapas()
     .mapaPromesa(idMapa)

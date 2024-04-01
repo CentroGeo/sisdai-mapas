@@ -4,6 +4,7 @@ import axios from 'axios'
 // import UTFGrid from 'ol/source/UTFGrid'
 import {
   computed,
+  inject,
   onBeforeMount,
   onMounted,
   reactive,
@@ -12,7 +13,7 @@ import {
   watch,
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, parametrosEnFormatoURL } from '../utiles'
+import { parametrosEnFormatoURL } from '../utiles'
 import { props as propsCapa } from './../composables/usarCapa'
 
 // const urlPrueba =
@@ -87,7 +88,10 @@ function actualizarParametrosUtfgrid({ target: mapa }) {
 }
 
 const urlUtfGrid = computed(() => {
-  return `${props.fuente}?${parametrosEnFormatoURL({ ...parametrosUtfgrid, CQL_FILTER: filtro.value })}`
+  return `${props.fuente}?${parametrosEnFormatoURL({
+    ...parametrosUtfgrid,
+    CQL_FILTER: filtro.value,
+  })}`
 })
 
 function agregar() {
@@ -125,7 +129,8 @@ function agregar() {
 
 onMounted(() => {
   // console.log('sisdaiCapaUtfGrid')
-  idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaUtfGrid.value)
+  //idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiCapaUtfGrid.value)
+  idMapa = inject('idMapa', 'no se encontró el id del mapa')
 
   // usarRegistroMapas().mapaPromesa(idMapa).then(configuracion)
   agregar()

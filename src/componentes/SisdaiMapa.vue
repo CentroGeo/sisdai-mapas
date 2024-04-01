@@ -21,6 +21,7 @@ import {
   computed,
   onMounted,
   onUnmounted,
+  provide,
   reactive,
   ref,
   shallowRef,
@@ -118,6 +119,8 @@ const props = defineProps({
     default: valoresPorDefecto.proyeccion,
   },
 })
+
+provide('idMapa', props.id)
 
 const emits = defineEmits(Object.values(eventos))
 const slots = useSlots()
