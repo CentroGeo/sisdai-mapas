@@ -27,7 +27,7 @@
     "svgson": "^5.3.1"
   },
   "devDependencies": {
-    "@rushstack/eslint-patch": "^1.8.0",
+    "@rushstack/eslint-patch": "^1.10.1",
     "@testing-library/vue": "^8.0.3",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-prettier": "^9.0.0",
@@ -35,13 +35,13 @@
     "eslint": "^8.57.0",
     "eslint-plugin-html": "^8.0.0",
     "eslint-plugin-vue": "^9.24.0",
-    "happy-dom": "^14.3.9",
+    "happy-dom": "^14.3.10",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
-    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#test/install-for-vue3",
-    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.47.0",
-    "vite": "^5.2.6",
-    "vitepress": "^1.0.1",
+    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v2.10.1",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.47.1",
+    "vite": "^5.2.8",
+    "vitepress": "^1.0.2",
     "vitest": "^1.4.0",
     "volar-service-vetur": "^0.0.34",
     "vue": "^3.4.21"
