@@ -34,4 +34,6 @@ export default {
    * - `Object`: Nuevo valor de la vista de OpenLayers.
    */
   alMoverVista: 'alMoverVista',
+
+  clickAjustarVista: 'clickAjustarVista',
 }

@@ -2,12 +2,33 @@
 import ImageLayer from 'ol/layer/Image'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
-import { onMounted, shallowRef, toRefs, watch } from 'vue'
+import { computed, onMounted, ref, shallowRef, toRefs, watch } from 'vue'
 import { tiposCapa } from '../valores/capa'
 import usarCapa, { props as propsCapa } from './../composables/usarCapa'
 import eventos from './../eventos/capa'
+import SisdaiUtfGrid from './SisdaiUtfGrid.vue'
 
 const props = defineProps({
+  capa: {
+    type: String,
+    default: undefined,
+  },
+
+  estilo: {
+    type: String,
+    default: undefined,
+  },
+
+  filtro: {
+    type: String,
+    default: undefined,
+  },
+
+  globoInformativo: {
+    type: Function,
+    default: undefined,
+  },
+
   /**
    * Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio.
    * Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
@@ -19,15 +40,15 @@ const props = defineProps({
   parametros: {
     type: Object,
     default: () => ({}),
-    validator({ LAYERS }) {
-      const validarLayer = LAYERS !== undefined && LAYERS !== null
+    // validator({ LAYERS }) {
+    //   const validarLayer = LAYERS !== undefined && LAYERS !== null
 
-      if (!validarLayer) {
-        console.warn('LAYERS no puede ser un parámetro indefinido o vacío')
-      }
+    //   if (!validarLayer) {
+    //     console.warn('LAYERS no puede ser un parámetro indefinido o vacío')
+    //   }
 
-      return validarLayer
-    },
+    //   return validarLayer
+    // },
   },
 
   /**
@@ -74,14 +95,42 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const sisdaiCapaWms = shallowRef()
-const { url, parametros, tituloClases } = toRefs(props)
+const {
+  capa,
+  estilo,
+  filtro,
+  globoInformativo,
+  id,
+  parametros,
+  posicion,
+  tituloClases,
+  url,
+  visible,
+} = toRefs(props)
 
-const { agregada, configurar } = usarCapa(sisdaiCapaWms, props)
+const filtroLeyenda = ref(undefined)
+const filtroCompleto = computed(() => {
+  if (filtro.value === undefined && filtroLeyenda.value === undefined) {
+    return undefined
+  }
+
+  return [filtro.value, filtroLeyenda.value]
+    .filter(f => f !== undefined)
+    .map(f => `(${f})`)
+    .join(' AND ')
+})
+
+const { agregada, configurar } = usarCapa(sisdaiCapaWms, props, emits)
 
 configurar(() => {
   const olSource = new ImageWMS({
     url: url.value,
-    params: parametros.value,
+    // params: parametros.value,
+    params: {
+      LAYERS: capa.value || parametros.value.LAYERS,
+      CQL_FILTER: filtroCompleto.value,
+      STYLE: estilo.value || parametros.value.STYLE,
+    },
     serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
   })
@@ -102,15 +151,45 @@ configurar(() => {
   return { olSource, olLayerClass: ImageLayer, tipo: tiposCapa.wms }
 })
 
-agregada(capa => {
-  // console.log(capa.getSource())
-  capa.set('parametros', parametros.value)
-  capa.set('tituloClases', tituloClases.value)
+agregada(_capa => {
+  // console.log(_capa.getSource())
+  // _capa.set('parametros', parametros.value)
+  _capa.set('tituloClases', tituloClases.value)
 
-  watch(parametros, nv => capa.set('parametros', nv))
-  watch(parametros, nv => capa.getSource().updateParams(nv))
-  watch(tituloClases, nv => capa.set('tituloClases', nv))
+  watch([estilo, filtroCompleto], () => {
+    _capa.getSource().updateParams({
+      LAYERS: capa.value || parametros.value.LAYERS,
+      CQL_FILTER: filtroCompleto.value,
+      STYLE: estilo.value || parametros.value.STYLE,
+    })
+  })
+
+  // watch(parametros, nv => _capa.set('parametros', nv))
+  // watch(parametros, nv => _capa.getSource().updateParams(nv))
+  // watch(tituloClases, nv => _capa.set('tituloClases', nv))
+
+  watch(
+    () => _capa.get('filtroLeyenda'),
+    nv => (filtroLeyenda.value = nv)
+  )
+  function watchVue2() {
+    setTimeout(() => {
+      filtroLeyenda.value = _capa.get('filtroLeyenda')
+      watchVue2()
+    }, 1000)
+  }
+  watchVue2()
+
+  watch(
+    () => _capa.getVisible(),
+    nv => {
+      utfgridVisible.value = nv
+      emits(eventos.alCambiarVisibilidad, nv)
+    }
+  )
 })
+
+const utfgridVisible = ref(visible.value)
 
 onMounted(() => {
   // console.log('SisdaiCapaWms', props.id)
@@ -121,5 +200,17 @@ onMounted(() => {
   <span
     ref="sisdaiCapaWms"
     :sisdai-capa="id"
-  />
+  >
+    <SisdaiUtfGrid
+      v-if="globoInformativo !== undefined"
+      :capa="capa"
+      :estilo="estilo"
+      :globoInformativo="globoInformativo"
+      :id="id"
+      :posicion="posicion"
+      :filtro="filtroCompleto"
+      :fuente="props.url"
+      :visible="utfgridVisible"
+    />
+  </span>
 </template>

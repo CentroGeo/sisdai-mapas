@@ -28,13 +28,27 @@ function acomodarSimbolo(simbolo) {
   }
 }
 
-export function acomodarReglasWms({ Legend }) {
+function acomodarFiltro(filtro) {
+  if (filtro === undefined) return
+
+  filtro = filtro.startsWith('[') ? filtro.substring(1) : filtro
+  filtro = filtro.endsWith(']')
+    ? filtro.substring(0, filtro.length - 1)
+    : filtro
+
+  return filtro
+}
+
+export function acomodarReglasWms({ Legend }, visibilidad) {
   // console.log(Legend[0].rules[0].symbolizers[0]);
 
-  const clases = Legend[0].rules.map(({ name, symbolizers, title }) => ({
-    titulo: title || name,
-    simbolo: acomodarSimbolo(symbolizers[0]),
-  }))
+  const clases = Legend[0].rules.map(
+    ({ filter, name, symbolizers, title }) => ({
+      filtro: acomodarFiltro(filter),
+      titulo: title || name,
+      simbolo: acomodarSimbolo(symbolizers[0]),
+    })
+  )
 
   const tamanioSimboloMayor = Math.max(
     ...clases.map(({ simbolo }) => simbolo.tamanio)
@@ -42,10 +56,12 @@ export function acomodarReglasWms({ Legend }) {
 
   // console.log(tamanioSimboloMayor)
 
-  return clases.map(({ titulo, simbolo }) => {
+  return clases.map(({ filtro, titulo, simbolo }) => {
     return {
+      filtro,
       titulo,
       simbolo: new SimboloSvgLeyenda({ ...simbolo, tamanioSimboloMayor }),
+      visible: visibilidad,
     }
   })
 }
