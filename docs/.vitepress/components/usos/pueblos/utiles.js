@@ -54,14 +54,16 @@ export const info = {
   escuela: p =>
     `<p class="m-t-0">Establecimiento escolar</p><p class="m-b-0">${[
       `Nombre: <b>${p.nom_centro}</b>`,
+      `Nivel: <b>${p.niv_edu}</b>`,
       `CCT: <b>${p.cv_centro}</b>`,
-      `Estado: <b>${p.nom_edo}</b>`,
+      `Estado: <b>${p.nom_ent}</b>`,
       `Municipio: <b>${p.nom_mun}</b>`,
       // `Localidad: <b>${p.nom_loc}</b>`,
     ].join('<br />')}</p>`,
   hospital: p =>
     `<p class="m-t-0">Hospital</p><p class="m-b-0">${[
       `Nombre: <b>${p.nom_unidad}</b>`,
+      `Nivel de atención: <b>${p.nivel_atencion}</b>`,
       `Institución: <b>${p.nom_inst}</b>`,
       `Estado: <b>${p.nom_ent}</b>`,
       `Municipio: <b>${p.nom_mun}</b>`,
@@ -70,6 +72,7 @@ export const info = {
   hospitalN1: p =>
     `<p class="m-t-0">Hospital</p><p class="m-b-0">${[
       `Nombre: <b>${p.nom_unidad}</b>`,
+      `Nivel de atención: <b>${p.nivel_atencion}</b>`,
       `Institución: <b>${p.nom_inst}</b>`,
       `Estado: <b>${p.nom_entidad}</b>`,
       `Municipio: <b>${p.nom_municipio}</b>`,

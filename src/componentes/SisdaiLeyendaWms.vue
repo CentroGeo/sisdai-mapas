@@ -25,6 +25,11 @@ const props = defineProps({
     default: undefined,
   },
 
+  deshabilitado: {
+    type: Boolean,
+    default: false,
+  },
+
   estiloCapa: {
     type: String,
     default: undefined,
@@ -75,6 +80,7 @@ const props = defineProps({
 const emits = defineEmits(Object.values(eventos))
 
 const {
+  deshabilitado,
   capa,
   estiloCapa,
   fuenteCapa,
@@ -175,6 +181,7 @@ const capaEncendida = computed({
   >
     <div class="leyenda-titulo">
       <LeyendaControl
+        :deshabilitado="deshabilitado"
         :etiqueta="tituloCapa"
         :encendido="capaEncendida"
         :encendidoIndeterminado="

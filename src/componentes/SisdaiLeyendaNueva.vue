@@ -6,6 +6,11 @@ import { tiposCapa } from '../valores/capa'
 import SisdaiLeyendaWms from './SisdaiLeyendaWms.vue'
 
 const props = defineProps({
+  deshabilitado: {
+    type: Boolean,
+    default: false,
+  },
+
   globoInformativo: {
     type: String,
     default: undefined,
@@ -48,7 +53,7 @@ const props = defineProps({
 
 var idMapa
 const sisdaiLeyendaNueva = shallowRef()
-const { sinControl, sinControlClases } = toRefs(props)
+const { deshabilitado, sinControl, sinControlClases } = toRefs(props)
 
 const capa = reactive({
   nombre: 'Cargando...',
@@ -122,6 +127,7 @@ onMounted(() => {
 <template>
   <div ref="sisdaiLeyendaNueva">
     <SisdaiLeyendaWms
+      :deshabilitado="deshabilitado"
       :capa="wms.capa"
       :fuenteCapa="wms.fuente"
       :globoInformativo="globoInformativo"

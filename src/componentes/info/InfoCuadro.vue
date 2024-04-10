@@ -53,10 +53,11 @@ onUnmounted(() => clearInterval(intervalo))
     aria-live="assertive"
   >
     <button
-      class="boton-icono boton-chico z"
+      class="boton-icono boton-primario boton-chico boton-cerrar"
       @click="emits(eventos.alCerrar)"
     >
       <span class="icono-cerrar" />
+      <span class="a11y-solo-lectura">Cerrar.</span>
     </button>
     <div
       class="cuerpo-globo-info"
