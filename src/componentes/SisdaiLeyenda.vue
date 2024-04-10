@@ -1,21 +1,21 @@
 <script setup>
-import { onMounted, reactive, shallowRef, toRefs, watch } from 'vue'
-import SimboloSvgLeyenda from '../clases/SimboloSvgLeyenda'
+import { onMounted, reactive, ref, shallowRef, toRefs, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
-import { buscarIdContenedorHtmlSisdai, fetchJSON } from '../utiles'
-import {
-  acomodarFormaDesdeVector,
-  estiloContiene,
-  estiloParaSvg,
-  estiloParaSvgPunto,
-} from '../utiles/estiloVectores'
+import { buscarIdContenedorHtmlSisdai } from '../utiles'
 import { tiposCapa } from '../valores/capa'
-import { acomodarReglasWms } from './../utiles/leyenda'
-import LeyendaControl from './leyenda/LeyendaControl.vue'
-
-var idMapa
+import SisdaiLeyendaWmsExterna from './SisdaiLeyendaWmsExterna.vue'
 
 const props = defineProps({
+  deshabilitado: {
+    type: Boolean,
+    default: false,
+  },
+
+  globoInformativo: {
+    type: String,
+    default: undefined,
+  },
+
   /**
    * Recibe el identificador de la capa con la que se quiere vincular la leyenda.
    *
@@ -47,12 +47,13 @@ const props = defineProps({
    */
   sinControlClases: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 })
 
+var idMapa
 const sisdaiLeyenda = shallowRef()
-const { sinControl, sinControlClases } = toRefs(props)
+const { deshabilitado, sinControl, sinControlClases } = toRefs(props)
 
 const capa = reactive({
   nombre: 'Cargando...',
@@ -61,58 +62,17 @@ const capa = reactive({
   visible: false,
 })
 
-function actualizarClaseVector(estilo, geometria) {
-  let _estilo = JSON.parse(estilo)
-  // console.log(_estilo)
-  let tamanio, icono, puntosForma
+const wms = reactive({
+  fuente: undefined,
+  capa: undefined,
+  estilo: undefined,
+})
 
-  if (geometria === 'punto') {
-    if (estiloContiene(_estilo, 'icon')) {
-      icono = _estilo['icon-src']
-    } else {
-      tamanio = _estilo['circle-radius'] * 2
-      if (estiloContiene(_estilo, 'shape')) {
-        puntosForma = acomodarFormaDesdeVector(_estilo)
-        // puntosForma = undefined
-        _estilo = estiloParaSvgPunto(_estilo, 'shape')
-        // console.log(puntosForma)
-      } else {
-        _estilo = estiloParaSvgPunto(_estilo)
-      }
-    }
-  } else {
-    _estilo = estiloParaSvg(_estilo)
-  }
+const filtroLeyenda = ref(undefined)
 
-  const simbolo = new SimboloSvgLeyenda({
-    estilo: _estilo,
-    forma: puntosForma,
-    geometria,
-    icono,
-    tamanio,
-  })
-  // console.log(simbolo.xml)
-
-  capa.clases = [
-    {
-      simbolo,
-    },
-  ]
-}
-
-function actualizarClasesDesdeWms(_url, params) {
-  const url =
-    //
-    `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
-      params.LAYERS
-    }&STYLE=${params.STYLES ? params.STYLES : ''}`
-
-  fetchJSON(url).then(data => {
-    const clases = acomodarReglasWms(data)
-    // console.log(clases)
-
-    capa.clases = clases
-  })
+function actualizarParametros(params) {
+  wms.capa = params.LAYERS
+  wms.estilo = params.STYLES
 }
 
 /**
@@ -139,32 +99,17 @@ function vincularCapa(_capa) {
   )
   watch(
     () => capa.visible,
-    nv => _capa.setVisible(nv)
+    nv => _capa.setVisible(Array.isArray(nv) ? nv.some(v => v) : nv)
   )
-
-  capa.tituloClases = _capa.get('tituloClases')
-  watch(
-    () => _capa.get('tituloClases'),
-    nv => (capa.tituloClases = nv)
-  )
-
-  if (_capa.get('tipo') === tiposCapa.vectorial) {
-    actualizarClaseVector(_capa.get('estilo2'), _capa.get('geometria'))
-    watch(
-      () => _capa.get('estilo2'),
-      nv => actualizarClaseVector(nv, _capa.get('geometria')),
-      { deep: true }
-    )
-  }
 
   if (_capa.get('tipo') === tiposCapa.wms) {
-    const fuente = _capa.getSource().getUrl()
-    actualizarClasesDesdeWms(fuente, _capa.getSource().getParams())
-    watch(
-      () => _capa.getSource().getParams(),
-      nv => actualizarClasesDesdeWms(fuente, nv),
-      { deep: true }
-    )
+    wms.fuente = _capa.getSource().getUrl()
+    actualizarParametros(_capa.getSource().getParams())
+    watch(() => _capa.getSource().getParams(), actualizarParametros, {
+      deep: true,
+    })
+
+    watch(filtroLeyenda, nv => _capa.set('filtroLeyenda', nv))
   }
 }
 
@@ -172,58 +117,26 @@ onMounted(() => {
   // console.log('SisdaiLeyenda', props.para)
   idMapa = buscarIdContenedorHtmlSisdai('mapa', sisdaiLeyenda.value)
 
-  // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
   usarRegistroMapas()
     .mapaPromesa(idMapa)
     .then(mapa => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
-
-// onUnmounted(() => {})
 </script>
 
 <template>
-  <ul
-    ref="sisdaiLeyenda"
-    class="sisdai-mapa-leyenda casillas-anidadas"
-  >
-    <li class="leyenda-titulo">
-      <LeyendaControl
-        :id="`${para}-control`"
-        :etiqueta="capa.nombre"
-        :simbolo="capa.clases.length === 1 ? capa.clases[0].simbolo : undefined"
-        :encendido="capa.visible"
-        :sinControl="sinControl"
-        @alCambiar="valor => (capa.visible = valor)"
-      />
-    </li>
-
-    <ul
-      v-if="capa.clases.length > 1"
-      class="leyenda-clases casillas-subseleccion"
-    >
-      <p
-        class="titulo-clases m-y-1"
-        v-if="capa.tituloClases"
-      >
-        {{ capa.tituloClases }}
-      </p>
-      <LeyendaControl
-        v-for="(clase, idx) in capa.clases"
-        :key="`${para}-clase-control-${idx}`"
-        :id="`${para}-clase-control-${idx}`"
-        :etiqueta="clase.titulo"
-        :simbolo="clase.simbolo"
-        :sinControl="sinControlClases"
-      />
-    </ul>
-  </ul>
+  <div ref="sisdaiLeyenda">
+    <SisdaiLeyendaWmsExterna
+      :deshabilitado="deshabilitado"
+      :capa="wms.capa"
+      :fuenteCapa="wms.fuente"
+      :globoInformativo="globoInformativo"
+      :tituloCapa="capa.nombre"
+      :visibilidadCapa="capa.visible"
+      :sinControl="sinControl"
+      :sinControlClases="sinControlClases"
+      @alCambiarFiltroLeyenda="valor => (filtroLeyenda = valor)"
+      @alCambiarVisibilidad="valor => (capa.visible = valor)"
+    />
+  </div>
 </template>
-
-<style lang="scss" scoped>
-.sisdai-mapa-leyenda .leyenda-clases .titulo-clases {
-  font-size: 1rem;
-  line-height: 1.25em;
-  font-weight: 400;
-}
-</style>

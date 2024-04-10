@@ -37,11 +37,11 @@ const vistaActual = reactive({
     @alCambiarAcercamiento="
       nuevoAcercamiento => (vistaActual.acercamiento = nuevoAcercamiento)
     "
-    elementosDescriptivos="descripcion-mapa"
+    elementosDescriptivos="titulo-mapa"
   >
     <template #panel-encabezado-vis>
       <p
-        id="descripcion-mapa"
+        id="titulo-mapa"
         class="vis-titulo-visualizacion"
       >
         Interación de la vista del mapa:
@@ -107,10 +107,3 @@ const vistaActual = reactive({
     <SisdaiCapaXyz />
   </SisdaiMapa>
 </template>
-
-<style lang="scss" scoped>
-.flex {
-  margin-left: 0;
-  margin-right: 0;
-}
-</style>

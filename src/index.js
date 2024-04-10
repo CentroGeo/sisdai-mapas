@@ -17,8 +17,8 @@ import 'ol/ol.css'
 import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
 import SisdaiCapaWms from './componentes/SisdaiCapaWms.vue'
 import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
-import SisdaiLeyenda from './componentes/SisdaiLeyendaNueva.vue'
-import SisdaiLeyendaExterna from './componentes/SisdaiLeyendaWms.vue'
+import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
+import SisdaiLeyendaWmsExterna from './componentes/SisdaiLeyendaWmsExterna.vue'
 import SisdaiMapa from './componentes/SisdaiMapa.vue'
 import SisdaiMapaInstruccionalNavegacionTeclado from './componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
 import SisdaiUtfGrid from './componentes/SisdaiUtfGrid.vue'
@@ -32,7 +32,7 @@ export default {
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiLeyenda', SisdaiLeyenda)
-    Vue.component('SisdaiLeyendaExterna', SisdaiLeyendaExterna)
+    Vue.component('SisdaiLeyendaWmsExterna', SisdaiLeyendaWmsExterna)
     Vue.component('SisdaiMapa', SisdaiMapa)
     Vue.component(
       'SisdaiMapaInstruccionalNavegacionTeclado',
@@ -47,7 +47,7 @@ export {
   SisdaiCapaXyz,
   SisdaiLeyenda,
   SisdaiLeyendaControl,
-  SisdaiLeyendaExterna,
+  SisdaiLeyendaWmsExterna,
   SisdaiMapa,
   SisdaiMapaInstruccionalNavegacionTeclado,
   SisdaiUtfGrid,

@@ -23,11 +23,15 @@ function cuadrojardines(f) {
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
+    elementosDescriptivos="titulo-mapa"
   >
     <template #panel-izquierda-vis>
-      <h4 class="vis-titulo-visualizacion">
+      <p
+        class="vis-titulo-visualizacion"
+        id="titulo-mapa"
+      >
         Red de Jardines Etnobiológicos Conahcyt
-      </h4>
+      </p>
       <p class="vis-leyenda">
         Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de
         México apoyados por Consejo Nacional de Humanidades, Ciencias y
@@ -94,7 +98,7 @@ function cuadrojardines(f) {
   </SisdaiMapa>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 
