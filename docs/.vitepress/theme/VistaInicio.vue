@@ -22,7 +22,7 @@ const { site, frontmatter } = useData()
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .vista-inicio {
   text-align: center;
 

@@ -129,7 +129,7 @@ configurar(() => {
     params: {
       LAYERS: capa.value || parametros.value.LAYERS,
       CQL_FILTER: filtroCompleto.value,
-      STYLE: estilo.value || parametros.value.STYLE,
+      STYLES: estilo.value || parametros.value.STYLES,
     },
     serverType: props.tipoServidor,
     crossOrigin: 'Anonymous',
@@ -160,7 +160,7 @@ agregada(_capa => {
     _capa.getSource().updateParams({
       LAYERS: capa.value || parametros.value.LAYERS,
       CQL_FILTER: filtroCompleto.value,
-      STYLE: estilo.value || parametros.value.STYLE,
+      STYLES: estilo.value || parametros.value.STYLES,
     })
   })
 

@@ -10,12 +10,23 @@ const atribuciones = [
     :vista="{
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
+    elementosDescriptivos="titulo-mapa"
   >
+    <template #panel-encabezado-vis>
+      <p
+        id="titulo-mapa"
+        class="vis-titulo-visualizacion"
+      >
+        Ejemplo simple de una capa xyz
+      </p>
+    </template>
+
     <SisdaiCapaXyz
-      url="https://{a-c}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
       :acercamientoMaximo="20"
       :acercamientoMinimo="0"
       :atribuciones="atribuciones"
+      id="capa_xyz"
+      url="https://{a-c}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
     />
   </SisdaiMapa>
 </template>

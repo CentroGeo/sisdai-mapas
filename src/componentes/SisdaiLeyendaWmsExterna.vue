@@ -218,7 +218,7 @@ const capaEncendida = computed({
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sisdai-mapa-leyenda {
   // .leyenda-titulo .visible-parcial [type='checkbox']:checked + label::after {
   //   content: '\2f';
