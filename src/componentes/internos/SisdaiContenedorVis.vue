@@ -30,6 +30,6 @@ import SisdaiCargando from './SisdaiCargando.vue'
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import './../estilos/ContenedorVis';
 </style>

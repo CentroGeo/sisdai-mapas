@@ -61,7 +61,7 @@ const abierto = ref(false)
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .instruccional-navegacion-teclado {
   .contenido-colapsabel {
     max-height: 0;

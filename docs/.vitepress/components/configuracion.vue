@@ -12,19 +12,17 @@ const mapa = ref()
     proyeccion="EPSG:3857"
   >
     <template #panel-encabezado-vis>
-      <div>
-        <h4
-          class="vis-titulo-visualizacion"
-          id="titulo-mapa"
-        >
-          Ejemplo de la configuración del mapa.
-        </h4>
+      <p
+        class="vis-titulo-visualizacion"
+        id="titulo-mapa"
+      >
+        Ejemplo de la configuración del mapa.
+      </p>
 
-        <p id="descripcion-corta-mapa">
-          Este mapa es un ejemplo de como configurar el mapa para ajustarlo
-          conforme a las necesidades de cada proyecto.
-        </p>
-      </div>
+      <p id="descripcion-corta-mapa">
+        Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo
+        conforme a las necesidades de cada proyecto.
+      </p>
     </template>
     <SisdaiCapaXyz />
 

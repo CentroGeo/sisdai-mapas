@@ -1,11 +1,4 @@
 <script setup>
-import { useData } from 'vitepress'
-import { isActive } from 'vitepress/dist/client/shared'
-import { ref } from 'vue'
-import NavegacionPrincipal from './NavegacionPrincipal.vue'
-import PiePagina from './PiePagina.vue'
-import VistaInicio from './VistaInicio.vue'
-
 import SisdaiColapsableNavegacion from 'sisdai-componentes/src/componentes/colapsable-navegacion/SisdaiColapsableNavegacion.vue'
 import SisdaiInfoDeDespliegue from 'sisdai-componentes/src/componentes/info-de-despliegue/SisdaiInfoDeDespliegue.vue'
 import SisdaiMenuAccesibilidad from 'sisdai-componentes/src/componentes/menu-accesibilidad/SisdaiMenuAccesibilidad.vue'
@@ -13,6 +6,12 @@ import SisdaiMenuLateral from 'sisdai-componentes/src/componentes/menu-lateral/S
 import SisdaiNavegacionGobMx from 'sisdai-componentes/src/componentes/navegacion-gob-mx/SisdaiNavegacionGobMx.vue'
 import SisdaiPiePaginaConahcyt from 'sisdai-componentes/src/componentes/pie-pagina-conahcyt/SisdaiPiePaginaConahcyt.vue'
 import SisdaiPiePaginaGobMx from 'sisdai-componentes/src/componentes/pie-pagina-gob-mx/SisdaiPiePaginaGobMx.vue'
+import { useData } from 'vitepress'
+import { isActive } from 'vitepress/dist/client/shared'
+import { ref } from 'vue'
+import NavegacionPrincipal from './NavegacionPrincipal.vue'
+import PiePagina from './PiePagina.vue'
+import VistaInicio from './VistaInicio.vue'
 // import {
 //   SisdaiColapsableNavegacion,
 //   SisdaiInfoDeDespliegue,

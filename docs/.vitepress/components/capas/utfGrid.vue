@@ -15,33 +15,29 @@ const infoAsentamientos = f =>
       extension: '-118.3651,14.5321,-86.7104,32.7187',
     }"
   >
-    <!-- <SisdaiCapaXyz :posicion="1" /> -->
+    <SisdaiCapaXyz :posicion="1" />
 
     <SisdaiCapaWms
-      posicion="1"
-      :parametros="{
-        LAYERS: 'hcti_snii_sexo_22_est_a',
-      }"
+      posicion="2"
+      capa="hcti_snii_sexo_22_est_a"
     />
 
     <SisdaiCapaWms
       url="https://dev-dadsig-gema.crip.conahcyt.mx/geoserver/wms"
-      posicion="2"
-      :parametros="{
-        LAYERS: 'pciaf_pob_indigena_asent_hist_20_loc_p',
-      }"
+      posicion="3"
+      capa="pciaf_pob_indigena_asent_hist_20_loc_p"
     />
 
     <SisdaiUtfGrid
       capa="pciaf_pob_indigena_asent_hist_20_loc_p"
       fuente="https://dev-dadsig-gema.crip.conahcyt.mx/geoserver/wms"
       :globoInformativo="infoAsentamientos"
-      posicion="2"
+      posicion="3"
     />
     <SisdaiUtfGrid
       capa="hcti_snii_sexo_22_est_a"
       :globoInformativo="f => `Entidad: <b>${f.nom_ent}</b>`"
-      posicion="1"
+      posicion="2"
     />
   </SisdaiMapa>
 </template>
