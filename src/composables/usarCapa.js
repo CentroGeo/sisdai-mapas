@@ -98,7 +98,7 @@ export const props = {
   },
 }
 
-export default function usarCapa(refVar, props /*, emits = () => {}*/) {
+export default function usarCapa(_, props /*, emits = () => {}*/) {
   var idMapa
   const { nombre, opacidad, posicion, visible } = toRefs(props)
 

@@ -1,13 +1,5 @@
 <script setup>
-import {
-  inject,
-  onMounted,
-  reactive,
-  ref,
-  shallowRef,
-  toRefs,
-  watch,
-} from 'vue'
+import { inject, onMounted, reactive, ref, toRefs, watch } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { tiposCapa } from '../valores/capa'
 import SisdaiLeyendaWmsExterna from './SisdaiLeyendaWmsExterna.vue'
@@ -59,7 +51,7 @@ const props = defineProps({
 })
 
 var idMapa
-const sisdaiLeyenda = shallowRef()
+// const sisdaiLeyenda = shallowRef()
 const { deshabilitado, sinControl, sinControlClases } = toRefs(props)
 
 const capa = reactive({
