@@ -17,8 +17,8 @@
  * @module composables/usarCapa
  */
 
-import { onBeforeUnmount, onMounted, toRefs, watch } from 'vue'
-import { buscarIdContenedorHtmlSisdai, idAleatorio } from './../utiles'
+import { inject, onBeforeUnmount, onMounted, toRefs, watch } from 'vue'
+import { idAleatorio } from './../utiles'
 import usarRegistroMapas from './usarRegistroMapas'
 
 export const props = {
@@ -98,7 +98,7 @@ export const props = {
   },
 }
 
-export default function usarCapa(refVar, props /*, emits = () => {}*/) {
+export default function usarCapa(_, props /*, emits = () => {}*/) {
   var idMapa
   const { nombre, opacidad, posicion, visible } = toRefs(props)
 
@@ -146,7 +146,8 @@ export default function usarCapa(refVar, props /*, emits = () => {}*/) {
   onMounted(() => {
     // console.log('onMounted composable capa')
 
-    idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
+    //idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
+    idMapa = inject('idMapa', 'no se encontró el id del mapa')
 
     agregar()
   })
