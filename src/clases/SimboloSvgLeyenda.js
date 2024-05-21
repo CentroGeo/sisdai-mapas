@@ -1,4 +1,5 @@
-import { stringify as objToSvg } from 'svgson'
+import { toRaw } from 'vue'
+import { create } from 'xmlbuilder'
 import { objEnSintaxisCss } from './../utiles'
 import { DEFAULT_ESTILO_VECTOR_SVG } from './../valores/capa'
 
@@ -111,9 +112,11 @@ export default class {
   }
 
   get xml() {
-    return objToSvg({
-      name: this.tipoGrafico,
-      attributes: this.atributosConEstilo,
+    return create(this.tipoGrafico, {
+      version: '1.0',
+      encoding: 'UTF-8',
     })
+      .att(toRaw(this.atributosConEstilo))
+      .end({ pretty: true })
   }
 }
