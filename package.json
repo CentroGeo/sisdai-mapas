@@ -23,8 +23,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "ol": "^9.2.2",
-    "ol-displaced-points": "^0.3.1",
-    "xmlbuilder": "^15.1.1"
+    "ol-displaced-points": "^0.3.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.3",
@@ -45,9 +44,6 @@
     "vitest": "^1.6.0",
     "volar-service-vetur": "^0.0.46",
     "vue": "^3.4.27"
-  },
-  "peerDependencies": {
-    "xml-reader": "^2.4.3"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
