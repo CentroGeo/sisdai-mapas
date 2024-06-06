@@ -1,5 +1,6 @@
 <script setup>
-import GeoJSON from 'ol/format/GeoJSON.js'
+import GeoJSON from 'ol/format/GeoJSON'
+import TopoJSON from 'ol/format/TopoJSON'
 import VectorLayer from 'ol/layer/Vector'
 import VectorImageLayer from 'ol/layer/VectorImage'
 import VectorSource from 'ol/source/Vector'
@@ -118,6 +119,7 @@ const {
   cuadroInformativo,
   geometria,
   nombreAccesiblePorElemento,
+  formato,
 } = toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
@@ -126,11 +128,20 @@ const { configurar, agregada } = usarCapa(sisdaiCapaVectorial, props)
 configurar(() => {
   const opcionesSource = {}
 
-  if (typeof fuente.value === typeof String()) {
-    opcionesSource.url = fuente.value
-    opcionesSource.format = new GeoJSON()
+  if (formato.value.toLowerCase() === 'topojson') {
+    if (typeof fuente.value === typeof String()) {
+      opcionesSource.url = fuente.value
+      opcionesSource.format = new TopoJSON()
+    } else {
+      opcionesSource.features = new TopoJSON().readFeatures(fuente.value)
+    }
   } else {
-    opcionesSource.features = new GeoJSON().readFeatures(fuente.value)
+    if (typeof fuente.value === typeof String()) {
+      opcionesSource.url = fuente.value
+      opcionesSource.format = new GeoJSON()
+    } else {
+      opcionesSource.features = new GeoJSON().readFeatures(fuente.value)
+    }
   }
 
   const olSource = new VectorSource(opcionesSource)

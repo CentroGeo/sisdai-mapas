@@ -80,6 +80,15 @@ function cuadrojardines(f) {
     />
     <!-- :cuadroInformativo2="{ contenido: cuadroInformativo, abreCon: 'hover' }" -->
 
+    <SisdaiCapaVectorial
+      id="topojson"
+      :posicion="4"
+      :renderizarComoImagen="true"
+      fuente="/assets/belgium.json"
+      formato="topojson"
+      :globoInformativo="f => f.name_nl"
+    />
+
     <template #panel-pie-vis>
       <p class="vis-fuente m-0">
         Fuente: Datos de origen del Consejo Nacional de Humanidades, Ciencias y
