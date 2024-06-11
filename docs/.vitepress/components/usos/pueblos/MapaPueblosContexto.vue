@@ -518,7 +518,7 @@ const visibilidadNucleos = ref(false)
   </SisdaiMapa>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
 

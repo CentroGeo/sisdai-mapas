@@ -36,13 +36,13 @@
     "eslint-plugin-vue": "^9.26.0",
     "happy-dom": "^14.11.0",
     "lint-staged": "^15.2.4",
-    "prettier": "^3.2.5",
-    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v2.11.0",
-    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v0.47.3",
+    "prettier": "^3.3.2",
+    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#refactorizacion/css",
+    "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#refactorizacion",
     "vite": "^5.2.11",
     "vitepress": "^1.2.2",
     "vitest": "^1.6.0",
-    "volar-service-vetur": "^0.0.46",
+    "volar-service-vetur": "^0.0.51",
     "vue": "^3.4.27"
   },
   "gitHooks": {

@@ -13,7 +13,6 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * @module controles/utiles
  */
@@ -45,8 +44,8 @@ export function crearBotonControl(ariaLabel, claseCss, icono, accion) {
   const boton = document.createElement('button')
 
   // boton.ariaLabel = ariaLabel
-  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-icono boton-secundario`
-  boton.innerHTML = `<span class="icono-${icono}" aria-hidden="true"></span>`
+  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-pictograma boton-con-contenedor-secundario`
+  boton.innerHTML = `<span class="pictograma-${icono}" aria-hidden="true"></span>`
   boton.setAttribute('role', 'button')
   boton.setAttribute('aria-label', ariaLabel)
 
