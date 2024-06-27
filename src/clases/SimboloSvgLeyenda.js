@@ -1,4 +1,4 @@
-import { stringify as objToSvg } from 'svgson'
+import { toRaw } from 'vue'
 import { objEnSintaxisCss } from './../utiles'
 import { DEFAULT_ESTILO_VECTOR_SVG } from './../valores/capa'
 
@@ -111,9 +111,10 @@ export default class {
   }
 
   get xml() {
-    return objToSvg({
-      name: this.tipoGrafico,
-      attributes: this.atributosConEstilo,
-    })
+    const atributos = Object.entries(toRaw(this.atributosConEstilo))
+      .map(([key, val]) => `${key}="${val}"`)
+      .join(' ')
+
+    return `<${this.tipoGrafico} ${atributos} />`
   }
 }

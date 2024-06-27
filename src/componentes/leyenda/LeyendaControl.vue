@@ -130,7 +130,7 @@ function ver({ target, x, y }) {
         > -->
         <span
           v-if="globoInformativo !== undefined"
-          class="icono-informacion icono-3 m-l-1"
+          class="pictograma-informacion pictograma-32 m-l-1"
           @mouseover="ver"
           @mouseleave="ver"
         />
