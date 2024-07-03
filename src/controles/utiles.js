@@ -44,7 +44,8 @@ export function crearBotonControl(ariaLabel, claseCss, icono, accion) {
   const boton = document.createElement('button')
 
   // boton.ariaLabel = ariaLabel
-  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-pictograma boton-con-contenedor-secundario`
+  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-pictograma boton-primario`
+  boton.type = 'button'
   boton.innerHTML = `<span class="pictograma-${icono}" aria-hidden="true"></span>`
   boton.setAttribute('role', 'button')
   boton.setAttribute('aria-label', ariaLabel)
