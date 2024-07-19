@@ -127,14 +127,15 @@ onMounted(() => {
 <template>
   <div ref="sisdaiLeyenda">
     <SisdaiLeyendaWmsExterna
-      :deshabilitado="deshabilitado"
       :capa="wms.capa"
+      :deshabilitado="deshabilitado"
+      :estiloCapa="wms.estilo"
       :fuenteCapa="wms.fuente"
       :globoInformativo="globoInformativo"
-      :tituloCapa="capa.nombre"
-      :visibilidadCapa="capa.visible"
       :sinControl="sinControl"
       :sinControlClases="sinControlClases"
+      :tituloCapa="capa.nombre"
+      :visibilidadCapa="capa.visible"
       @alCambiarFiltroLeyenda="valor => (filtroLeyenda = valor)"
       @alCambiarVisibilidad="valor => (capa.visible = valor)"
     />

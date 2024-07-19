@@ -139,6 +139,26 @@ watch(verPanelDerecho, nv => {
   </div>
 </template>
 
+<style lang="scss">
+.contenedor-gema {
+  .panel-derecha-vis {
+    display: none !important;
+  }
+
+  .mostrar-panel-derecho {
+    .panel-derecha-vis {
+      display: block !important;
+    }
+
+    .sisdai-mapa-control-acercar-alejar,
+    .sisdai-mapa-control-ajuste-vista {
+      // right: calc(100vw / 4);
+      right: calc(var(--margen) + 300px);
+    }
+  }
+}
+</style>
+
 <style lang="scss" scoped>
 @import 'sisdai-css/src/_variables';
 @import 'sisdai-css/src/_mixins';
@@ -150,14 +170,7 @@ div.contenedor-gema {
 
   .panel-seleccion-capas {
     width: 300px;
-  }
-
-  .mostrar-panel-derecho {
-    .sisdai-mapa-control-acercar-alejar,
-    .sisdai-mapa-control-ajuste-vista {
-      // right: calc(100vw / 4);
-      right: calc(var(--margen) + 300px);
-    }
+    // background-color: bisque;
   }
 
   label,
