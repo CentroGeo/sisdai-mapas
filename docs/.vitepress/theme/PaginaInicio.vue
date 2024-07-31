@@ -60,3 +60,7 @@ const { site } = useData()
     </div>
   </main>
 </template>
+
+<style lang="scss">
+@import 'sisdai-css';
+</style>

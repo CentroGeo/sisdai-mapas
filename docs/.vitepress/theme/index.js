@@ -1,10 +1,13 @@
-import 'sisdai-css'
+import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
+import 'vitepress/dist/client/theme-default/styles/icons.css'
+import 'vitepress/dist/client/theme-default/styles/vars.css'
+
+import './estilos/codigo.css'
+
 // https://vitepress.dev/guide/custom-theme
 import DisposicionPrincipal from './DisposicionPrincipal.vue'
-import DefaultTheme from 'vitepress/theme-without-fonts'
 
 export default {
-  extends: DefaultTheme,
   Layout: DisposicionPrincipal,
   async enhanceApp({ app, router, siteData }) {
     if (!import.meta.env.SSR) {

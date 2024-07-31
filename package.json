@@ -11,7 +11,7 @@
   "scripts": {
     "docs": "vitepress dev docs",
     "docs:dev": "npm run docs",
-    "docs:build": "npm run reinstall && vitepress build docs",
+    "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "test:unit": "vitest",
     "coverage": "vitest run --coverage",
