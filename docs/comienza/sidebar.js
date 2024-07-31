@@ -1,7 +1,7 @@
 export const ruta = '/comienza/'
 
 export const nav = {
-  text: 'AccComienzaesibilidad',
+  text: 'Comienza',
   link: ruta,
   activeMatch: ruta
 }
