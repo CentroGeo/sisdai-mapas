@@ -15,10 +15,12 @@
 
 import SisdaiMapa from './componentes/mapa'
 import SisdaiCapaVectorial from './componentes/capa/vectorial'
+import SisdaiCapaXyz from './componentes/capa/xyz'
 
 export default {
   install: (Vue) => {
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
+    Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiMapa', SisdaiMapa)
   }
 }
