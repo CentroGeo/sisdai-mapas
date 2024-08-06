@@ -1,8 +1,19 @@
 <script setup>
-import { inject } from 'vue'
+import { inject, toRaw, watch } from 'vue'
+import OSM from 'ol/source/OSM.js'
+import TileLayer from 'ol/layer/Tile.js'
 
-const message = inject('message')
-console.log(message)
+const mapa = inject('mapa')
+
+const xyz = new TileLayer({
+  source: new OSM()
+})
+
+watch(mapa, (nv) => {
+  nv.addLayer(xyz)
+
+  console.log(nv.getAllLayers().length)
+})
 </script>
 
 <template>

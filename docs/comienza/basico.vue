@@ -1,5 +1,5 @@
 <template>
   <SisdaiMapa>
-    <SisdaiCapaXyz />
+    <!-- <SisdaiCapaXyz /> -->
   </SisdaiMapa>
 </template>

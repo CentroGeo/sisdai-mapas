@@ -1,14 +1,28 @@
 <script setup>
-import { toRefs, useSlots } from 'vue'
+import { toRefs, useSlots, onMounted, shallowRef, ref } from 'vue'
 import { panelesEnUso } from './utiles'
 import _props from './props'
 import ContenedorVisAtribuciones from './../otros/ContenedorVisAtribuciones.vue'
 import { provide } from 'vue'
-
-provide('message', 'hello!')
+import Map from 'ol/Map.js'
+import View from 'ol/View.js'
 
 const props = defineProps(_props)
 const { id } = toRefs(props)
+
+const mapa = ref(null)
+provide('mapa', mapa)
+
+const refMapa = shallowRef(null)
+onMounted(() => {
+  mapa.value = new Map({
+    target: refMapa.value,
+    view: new View({
+      center: [0, 0],
+      zoom: 2
+    })
+  })
+})
 </script>
 
 <template>
@@ -41,4 +55,6 @@ const { id } = toRefs(props)
   </div>
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import 'ol/ol.css';
+</style>

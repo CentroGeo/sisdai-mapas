@@ -40,7 +40,7 @@
     "eslint-plugin-vue": "^9.23.0",
     "jsdom": "^24.1.1",
     "lint-staged": "^15.2.7",
-    "pinia": "^2.2.0",
+    "pinia": "^2.2.1",
     "prettier": "^3.3.3",
     "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.0.0-beta.6",
     "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.0.13",
