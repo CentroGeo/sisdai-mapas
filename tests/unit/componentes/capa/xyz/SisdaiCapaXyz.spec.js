@@ -1,9 +1,9 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import SisdaiCapaXyz from '@/componentes/capa/xyz'
+import Mapa from '@/componentes/mapa/Mapa'
 import { addResizeObserver } from '../../../utils'
 import { ref } from 'vue'
-import { Map } from 'ol'
 
 describe('SisdaiCapaXyz', () => {
   addResizeObserver()
@@ -11,7 +11,7 @@ describe('SisdaiCapaXyz', () => {
   it('Integración de una capa xyz en una insrtancia del mapa', () => {
     const mapa = ref(null)
 
-    shallowMount(SisdaiCapaXyz, {
+    const wrapper = shallowMount(SisdaiCapaXyz, {
       global: {
         provide: {
           mapa
@@ -19,9 +19,9 @@ describe('SisdaiCapaXyz', () => {
       }
     })
 
-    mapa.value = new Map()
+    mapa.value = new Mapa()
 
-    console.log(mapa.value.getAllLayers())
+    expect(wrapper.attributes()['sisdai-capa']).toBe(wrapper.props().id)
   })
 
   // it('Integración de una capa xyz en una insrtancia del mapa', () => {

@@ -1,21 +1,20 @@
 <script setup>
-import { toRefs, useSlots, onMounted, shallowRef, ref } from 'vue'
+import { useSlots, onMounted, shallowRef, ref } from 'vue'
 import { panelesEnUso } from './utiles'
 import _props from './props'
 import ContenedorVisAtribuciones from './../otros/ContenedorVisAtribuciones.vue'
 import { provide } from 'vue'
-import Map from 'ol/Map.js'
-import View from 'ol/View.js'
+import Mapa from './Mapa'
+import View from 'ol/View'
 
 const props = defineProps(_props)
-const { id } = toRefs(props)
 
 const mapa = ref(null)
 provide('mapa', mapa)
 
 const refMapa = shallowRef(null)
 onMounted(() => {
-  mapa.value = new Map({
+  mapa.value = new Mapa({
     target: refMapa.value,
     view: new View({
       center: [0, 0],
