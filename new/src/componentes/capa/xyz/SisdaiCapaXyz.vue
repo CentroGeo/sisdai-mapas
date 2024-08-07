@@ -1,16 +1,33 @@
 <script setup>
-import { inject, toRaw, watch } from 'vue'
-import OSM from 'ol/source/OSM.js'
-import TileLayer from 'ol/layer/Tile.js'
-import _props from './../props'
+import { inject, toRefs, watch } from 'vue'
+import OSM from 'ol/source/OSM'
+import ImageTile from 'ol/source/ImageTile'
+import TileLayer from 'ol/layer/Tile'
+import propsCapa from './../props'
 
 const mapa = inject('mapa')
-const props = defineProps(_props)
+const props = defineProps({
+  /**
+   * Url remota de la capa.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: ❌
+   */
+  url: {
+    type: String,
+    default: 'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
+  },
 
-console.log(props.id)
+  ...propsCapa
+})
+const { url } = toRefs(props)
 
 const xyz = new TileLayer({
-  source: new OSM()
+  // source: new OSM()
+  source: new ImageTile({
+    url: url.value
+  })
 })
 
 watch(mapa, (nv) => {
