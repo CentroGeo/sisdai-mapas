@@ -1,17 +1,12 @@
 <template>
   <SisdaiMapa
     :vista="{
-      extension: '-118.3651,14.5321,-86.7104,32.7187',
+      extension: '-118.3651,14.5321,-86.7104,32.7187'
     }"
-    elementosDescriptivos="titulo-mapa"
+    descripcion="Prueba de mapa con una capa wms"
   >
     <template #panel-encabezado-vis>
-      <p
-        id="titulo-mapa"
-        class="vis-titulo-visualizacion"
-      >
-        Ejemplo simple de una capa wms
-      </p>
+      <p id="titulo-mapa" class="vis-titulo-visualizacion">Ejemplo simple de una capa wms</p>
     </template>
 
     <SisdaiCapaXyz :posicion="1" />

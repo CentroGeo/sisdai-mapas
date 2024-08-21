@@ -27,7 +27,7 @@ import {
   shallowRef,
   toRefs,
   useSlots,
-  watch,
+  watch
 } from 'vue'
 import usarRegistroMapas from './../composables/usarRegistroMapas'
 import eventos from './../eventos/mapa'
@@ -40,6 +40,11 @@ import GloboInformativo from './info/InfoGlobo.vue'
 import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
 
 const props = defineProps({
+  descripcion: {
+    type: String,
+    default: undefined
+  },
+
   /**
    * Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
    *
@@ -51,7 +56,7 @@ const props = defineProps({
    */
   elementosDescriptivos: {
     type: String,
-    default: '',
+    default: ''
   },
 
   /**
@@ -64,7 +69,7 @@ const props = defineProps({
   escalaGrafica: {
     type: Boolean,
     default: true,
-    validator: valor => typeof valor === typeof Boolean(),
+    validator: (valor) => typeof valor === typeof Boolean()
   },
 
   /**
@@ -76,7 +81,7 @@ const props = defineProps({
    */
   id: {
     type: String,
-    default: () => idAleatorio(),
+    default: () => idAleatorio()
   },
 
   /**
@@ -87,7 +92,7 @@ const props = defineProps({
    */
   navegacionTeclado: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   /**
@@ -100,7 +105,7 @@ const props = defineProps({
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator: validaciones.vista,
+    validator: validaciones.vista
   },
 
   /**
@@ -116,8 +121,8 @@ const props = defineProps({
    */
   proyeccion: {
     type: String,
-    default: valoresPorDefecto.proyeccion,
-  },
+    default: valoresPorDefecto.proyeccion
+  }
 })
 
 provide('idMapa', props.id)
@@ -125,7 +130,7 @@ provide('idMapa', props.id)
 const emits = defineEmits(Object.values(eventos))
 const slots = useSlots()
 const refMapa = shallowRef(null)
-const { elementosDescriptivos, escalaGrafica, vista } = toRefs(props)
+const { descripcion, escalaGrafica, vista } = toRefs(props)
 
 /**
  * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
@@ -142,7 +147,7 @@ function mapa() {
  */
 watch(
   vista,
-  nv => {
+  (nv) => {
     mapa()?.asignarVista(nv)
 
     // if (
@@ -161,7 +166,7 @@ watch(
  */
 const estadoVistaMovida = reactive({
   centro: undefined,
-  acercamiento: undefined,
+  acercamiento: undefined
 })
 
 /**
@@ -186,12 +191,12 @@ function olMoveend({ map }) {
 const globoInfo = reactive({
   pixel: undefined,
   contenido: undefined,
-  visible: false,
+  visible: false
 })
 const cuadroInfo = reactive({
   pixel: undefined,
   contenido: undefined,
-  visible: false,
+  visible: false
 })
 
 function abrirGloboInfo(map, originalEvent) {
@@ -245,36 +250,29 @@ function olPointerLeave() {
 
 /**
  * Asigna al canvas valores de accesibilidad ARIA.
- * @param {String} describedby
  */
-function ariaCanvas(describedby) {
+function ariaCanvas() {
   mapa()
-    .busquedaPromesa(_mapa => _mapa.getViewport().querySelector('canvas'))
-    .then(canvas => {
+    .busquedaPromesa((_mapa) => _mapa.getViewport().querySelector('canvas'))
+    .then((canvas) => {
       canvas.setAttribute('aria-label', 'Mapa interactivo')
-      canvas.setAttribute('aria-describedby', describedby)
+      canvas.setAttribute('aria-describedby', `mapa-${props.id}-descripcion`)
     })
 }
 
 onMounted(() => {
   // console.log('SisdaiMapa')
-  usarRegistroMapas().registrarMapa(
-    props.id,
-    refMapa.value,
-    props.proyeccion,
-    emits
-  )
+  usarRegistroMapas().registrarMapa(props.id, refMapa.value, props.proyeccion, emits)
   mapa().asignarVista(vista.value)
   mapa().ajustarVista()
   mapa().on(MapEventType.MOVEEND, olMoveend)
   mapa().on(EventType.CLICK, olClick)
   mapa().on(PointerEventType.POINTERMOVE, olPointerMove)
-  mapa()
-    .getTargetElement()
-    .addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
+  mapa().getTargetElement().addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
 
-  ariaCanvas(elementosDescriptivos.value)
-  watch(elementosDescriptivos, ariaCanvas)
+  // ariaCanvas(elementosDescriptivos.value)
+  // watch(elementosDescriptivos, ariaCanvas)
+  ariaCanvas()
 })
 
 onUnmounted(() => {
@@ -282,9 +280,7 @@ onUnmounted(() => {
   mapa().un(EventType.CLICK, olClick)
   mapa().un(PointerEventType.POINTERMOVE, olPointerMove)
 
-  mapa()
-    .getTargetElement()
-    .removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
+  mapa().getTargetElement().removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
   usarRegistroMapas().borrarMapa(props.id)
 })
 
@@ -295,7 +291,7 @@ defineExpose({
    * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
    * incluir extensión).
    */
-  exportarImagen: nombreImagen => {
+  exportarImagen: (nombreImagen) => {
     mapa().exportarImagen(nombreImagen)
   },
 
@@ -303,26 +299,24 @@ defineExpose({
    * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
    * AjustarVista.
    */
-  ajustarVista: params => {
+  ajustarVista: (params) => {
     mapa().ajustarVista(params)
   },
 
   mapa: () => {
     return mapa()
-  },
+  }
 })
 
 /**
  * Variable computada para el asignar la regla css `display` al elemento de la escala gráfica.
  */
-const escalaGraficaVisible = computed(() =>
-  escalaGrafica.value ? 'block' : 'none'
-)
+const escalaGraficaVisible = computed(() => (escalaGrafica.value ? 'block' : 'none'))
 
 const focoEnMapa = ref(false)
 const navegacionTecladoVisible = ref('none')
 
-watch(focoEnMapa, nv => {
+watch(focoEnMapa, (nv) => {
   if (!nv) {
     setTimeout(() => {
       if (!focoEnMapa.value) {
@@ -375,20 +369,23 @@ const paneles = ['encabezado', 'izquierda', 'derecha', 'pie']
 function panelesEnUso() {
   // return !!slots[name]
   return paneles
-    .filter(panel => !!slots[`panel-${panel}-vis`])
-    .map(panel => `con-panel-${panel}-vis`)
+    .filter((panel) => !!slots[`panel-${panel}-vis`])
+    .map((panel) => `con-panel-${panel}-vis`)
 }
 </script>
 
 <template>
-  <div
-    :sisdai-mapa="id"
-    class="sisdai-mapa contenedor-vis borde-redondeado-8"
-  >
-    <div
-      class="contenedor-vis-paneles"
-      :class="panelesEnUso()"
-    >
+  <div :sisdai-mapa="id" class="sisdai-mapa contenedor-vis borde-redondeado-8">
+    <div v-if="descripcion">
+      <p :id="`mapa-${props.id}-descripcion`" class="a11y-solo-lectura a11y-simplificada-ocultar">
+        {{ descripcion }}
+      </p>
+      <p class="a11y-simplificada-mostrar-inline m-3">
+        {{ descripcion }}
+      </p>
+    </div>
+
+    <div class="contenedor-vis-paneles a11y-simplificada-ocultar" :class="panelesEnUso()">
       <div class="panel-encabezado-vis">
         <slot name="panel-encabezado-vis" />
       </div>
