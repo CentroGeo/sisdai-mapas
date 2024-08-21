@@ -5,8 +5,8 @@ import SimboloSvg from './../../clases/SimboloSvgLeyenda'
 const props = defineProps({
   simbolo: {
     type: SimboloSvg,
-    default: new SimboloSvg(),
-  },
+    default: new SimboloSvg()
+  }
 })
 
 const { simbolo } = toRefs(props)
@@ -19,10 +19,11 @@ const { simbolo } = toRefs(props)
     class="figura-variable"
     :style="{
       '--controlador-vis-figura-alto': `${simbolo.tamanio}px`,
-      'min-width': `${simbolo.tamanioSimboloMayorMinimo}px`,
+      'min-width': `${simbolo.tamanioSimboloMayorMinimo}px`
     }"
     :width="simbolo.tamanioSimboloMayorMinimo"
     :height="simbolo.tamanio"
     v-html="simbolo.xml"
+    aria-hidden="true"
   ></svg>
 </template>
