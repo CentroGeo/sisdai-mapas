@@ -33,7 +33,7 @@ const xyz = new TileLayer({
 watch(mapa, (nv) => {
   nv.addLayer(xyz)
 
-  console.log(nv.getAllLayers().length)
+  // console.log(nv.getAllLayers().length)
 })
 </script>
 
