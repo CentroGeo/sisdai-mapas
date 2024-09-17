@@ -13,7 +13,6 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * @module controles/AcercarAlejar
  */
@@ -57,7 +56,7 @@ export default class AcercarAlejar extends Control {
 
     super({
       element: contenedorControl,
-      target: undefined,
+      target: undefined
     })
 
     /**
@@ -66,7 +65,7 @@ export default class AcercarAlejar extends Control {
      * @protected
      */
     this.botonAcercar = crearBotonControl(
-      'Acercar vista del mapa',
+      'Acercar',
       'acercar',
       'agregar',
       this.acercamiento.bind(this)
@@ -77,12 +76,7 @@ export default class AcercarAlejar extends Control {
      * @type {HTMLButtonElement}
      * @protected
      */
-    this.botonAlejar = crearBotonControl(
-      'Alejar vista del mapa',
-      'alejar',
-      'restar',
-      this.alejamiento.bind(this)
-    )
+    this.botonAlejar = crearBotonControl('Alejar', 'alejar', 'restar', this.alejamiento.bind(this))
 
     contenedorControl.appendChild(this.botonAcercar)
     contenedorControl.appendChild(this.botonAlejar)
@@ -96,7 +90,7 @@ export default class AcercarAlejar extends Control {
       .getView()
       .animate({
         zoom: this.getMap().getView().getZoom() + 1,
-        duration: 250,
+        duration: 250
       })
   }
 
@@ -108,7 +102,7 @@ export default class AcercarAlejar extends Control {
       .getView()
       .animate({
         zoom: this.getMap().getView().getZoom() - 1,
-        duration: 250,
+        duration: 250
       })
   }
 }
