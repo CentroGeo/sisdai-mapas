@@ -1,3 +1,0 @@
-# index de prueba
-
-<prueba />

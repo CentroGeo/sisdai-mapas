@@ -13,42 +13,42 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
+import 'ol/ol.css'
+import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
+import SisdaiCapaWms from './componentes/SisdaiCapaWms.vue'
+import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
+import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
+import SisdaiLeyendaWmsExterna from './componentes/SisdaiLeyendaWmsExterna.vue'
+import SisdaiMapa from './componentes/SisdaiMapa.vue'
+import SisdaiMapaInstruccionalNavegacionTeclado from './componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
+import SisdaiUtfGrid from './componentes/SisdaiUtfGrid.vue'
+import SisdaiLeyendaControl from './componentes/leyenda/LeyendaControl.vue'
 
-import './estilos/index.scss'
-import Mapa from './componentes/SisdaiMapa.vue'
-import * as Capas from './componentes/capas'
-import * as Leyendas from './componentes/leyendas'
-import * as Elementos from './componentes/elementos'
-
-export default function plugin(Vue) {
-  //if (plugin.installed) {
-  //  return
-  //}
-  //
-  //plugin.installed = true
-
-  /**
-   *
-   * @param {Object} componente
-   */
-  function agregarComponente(componente) {
-    Vue.component(componente.__name, componente)
-  }
-
-  /**
-   *
-   * @param {*} componentes
-   */
-  function agregarComponentes(componentes) {
-    Object.values(componentes).forEach(componente =>
-      agregarComponente(componente)
+export default {
+  install: Vue => {
+    Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
+    Vue.component('SisdaiUtfGrid', SisdaiUtfGrid)
+    Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
+    Vue.component('SisdaiCapaWms', SisdaiCapaWms)
+    Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
+    Vue.component('SisdaiLeyenda', SisdaiLeyenda)
+    Vue.component('SisdaiLeyendaWmsExterna', SisdaiLeyendaWmsExterna)
+    Vue.component('SisdaiMapa', SisdaiMapa)
+    Vue.component(
+      'SisdaiMapaInstruccionalNavegacionTeclado',
+      SisdaiMapaInstruccionalNavegacionTeclado
     )
-  }
-
-  agregarComponente(Mapa)
-  agregarComponentes(Capas)
-  agregarComponentes(Elementos)
-  agregarComponentes(Leyendas)
+  },
 }
 
-export { plugin as install }
+export {
+  SisdaiCapaVectorial,
+  SisdaiCapaWms,
+  SisdaiCapaXyz,
+  SisdaiLeyenda,
+  SisdaiLeyendaControl,
+  SisdaiLeyendaWmsExterna,
+  SisdaiMapa,
+  SisdaiMapaInstruccionalNavegacionTeclado,
+  SisdaiUtfGrid,
+}

@@ -13,53 +13,48 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * @module composables/usarCapa
  */
 
-import { ref, toRefs, watch } from 'vue'
-import usarCapasRegistradas from './usarCapasRegistradas'
+import { inject, onBeforeUnmount, onMounted, toRefs, watch } from 'vue'
 import { idAleatorio } from './../utiles'
-import tiposEstatusCarga from './../defaults/estatusCarga'
+import usarRegistroMapas from './usarRegistroMapas'
 
 export const props = {
   /**
-   * `extension`
-   * - Tipo: `Array`
-   * - Valor por defecto: `[0, 0, 0, 0]`
-   * - Interactivo: ❌
+   * Establece las atribuciones de la fuente.
    *
-   * Extensión de la capa. Con este parametro se calcularán los mínimos y máximos de las capas
-   * registradas en el mapa.
+   * - Tipo: `String` o `Array<String>`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: ❌
+   *
+   * @see https://openlayers.org/en/latest/apidoc/module-ol_source_Source.html#~AttributionLike
    */
-  extension: {
-    type: Array,
-    default: () => [0, 0, 0, 0],
+  atribuciones: {
+    type: [String, Array],
+    default: undefined,
   },
 
   /**
-   * `id`
-   * - Tipo: `String`
-   * - Obligatorio: ✅
-   * - Interactivo: ❌
-   *
    * Identificador único de la capa. Si no es detectado, se asignará una cadena de texto
    * aleatorea. Para hacer uso de la leyenda esta propiedad pasa a ser obligatoria.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: Aleatorio
+   * - Reactivo: ❌
    */
   id: {
     type: String,
-    default: '_default_',
+    default: () => idAleatorio(),
   },
 
   /**
-   * `nombre`
-   * - Tipo: `String`
-   * - Valor por defecto: Identificador único de la capa.
-   * - Interactivo: ✅
+   * Nombre de la capa que aparecerá en el control de la leyenda.
    *
-   * Nombre de la capa que aparecerá en el control de la leyenda. Si no es detectado, se asignará
-   * el identificador único de la capa (`id`).
+   * - Tipo: `String`
+   * - Valor por defecto: `'Nombre no asignado'`.
+   * - Reactivo: ✅
    */
   nombre: {
     type: String,
@@ -67,142 +62,116 @@ export const props = {
   },
 
   /**
-   * `verCargador`
-   * - Tipo: `Boolean`
-   * - Valor por defecto: `false`
-   * - Interactivo: ❌
+   * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
-   * Esta propiedad le comunica a la vista del mapa si se desea sobreponer la vista que indica
-   * el proceso de carga de una capa.
+   * - Tipo: `Number` o `String`
+   * - Valor por defecto: `1`
+   * - Reactivo: ✅
    */
-  verCargador: {
-    type: Boolean,
-    default: false,
+  opacidad: {
+    type: [Number, String],
+    default: 1,
   },
 
   /**
-   * `visible`
+   * Indica la posición respecto a otras capas. Las capas con un valor mayor en este parámetro se mostrarán enfrente.
+   *
+   * - Tipo: `Number` o `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: ✅
+   */
+  posicion: {
+    type: [Number, String],
+    default: undefined,
+  },
+
+  /**
+   * Visibilidad de la capa.
+   *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Interactivo: ✅
-   *
-   * Visibilidad de la capa.
+   * - Reactivo: ✅
    */
   visible: {
     type: Boolean,
     default: true,
   },
-
-  /**
-   * `zIndex`
-   * - Tipo: `Number`
-   * - Valor por defecto: [trabajando...]
-   * - Interactivo: ✅ [trabajando...]
-   *
-   * Indica la posición respecto a otras capas, cuando se define un z-index mas alto respecto a
-   * las demás capas, esa capa se posicionara enfrente de ellas.
-   */
-  zIndex: {
-    type: Number,
-    default: undefined,
-  },
 }
 
-export const eventos = {
-  /**
-   * Evento ejecutado cuando se detecta el cambio de visibilidad de la capa desde las propiedades
-   * reactivas o desde los controles del componente como el control de leyenda.
-   * @param {Boolean} visibilidad Visibilidad final al ejecutarse este evento.
-   */
-  alCambiarVisibilidad: 'alCambiarVisibilidad',
+export default function usarCapa(_, props /*, emits = () => {}*/) {
+  var idMapa
+  const { nombre, opacidad, posicion, visible } = toRefs(props)
 
-  /**
-   * Evento ejecutado cuando se detecta que ha iniciado la carga de la información visible en el
-   * mapa. En el caso de capas vectoriales (GeoJSON) cuando inicia la consulta de los features;
-   * En el caso de capas raster (WMS) cuando inicia la consulta de la imagen; En el caso de las
-   * capas por conjunto de teselas (XYZ, OSM) cuando inicia la consulta de un grupo de teselas.
-   */
-  alIniciarCarga: 'alIniciarCarga',
-
-  /**
-   * Evento ejecutado cuando se detecta que ha finalizado la carga de la información visible en
-   * el mapa. En el caso de capas vectoriales (GeoJSON) cuando finaliza la consulta de los
-   * features; En el caso de capas raster (WMS) cuando finaliza la consulta de la imagen; En el
-   * caso de las capas por conjunto de teselas (XYZ, OSM) cuando finaliza la consulta de un
-   * grupo de teselas.
-   * @param {Boolean} cargaExitosa Indica si la carga no ha presentado error.
-   */
-  alFinalizarCarga: 'alFinalizarCarga',
-}
-
-export const emits = Object.values(eventos)
-
-/**
- * La finalidad de este composable es acceder a las funciones del genéricas de la capa desde
- * diferentes componentes o composables.
- * @param {Object} propsParam props genéricos de capa.
- * @param {Object} emitsParam emits genéricos de capa.
- * @returns {Function} composable.
- */
-export default function usarCapa(propsParam, emitsParam) {
-  const { registrarNuevaCapa, vincularCapa } = usarCapasRegistradas()
-  const { nombre, verCargador, visible, zIndex } = toRefs(propsParam)
-  const estatusCarga = ref(tiposEstatusCarga.no)
-
-  /**
-   * Asigna un identificador aleatorio en caso de que no se asigne.
-   */
-  const idValida = propsParam.id === '_default_' ? idAleatorio() : propsParam.id
-
-  /**
-   * Agrega los porps al objeto y propiedades de la capa.
-   * @param {import("ol/layer/Layer.js").default} olCapa objeto de capa de openlayers.
-   */
-  function asignarPorps(olCapa) {
-    olCapa.set('extension', propsParam.extension)
-    olCapa.set('estatusCarga', estatusCarga.value)
-    olCapa.set('id', idValida)
-    olCapa.set('nombre', nombre.value)
-    olCapa.set('verCargador', verCargador.value)
-    olCapa.setVisible(visible.value)
-    olCapa.setZIndex(zIndex.value)
+  var fnConfiguracion
+  function configurar(_fnConfiguracion) {
+    fnConfiguracion = _fnConfiguracion
   }
 
-  /**
-   *
-   * @returns
-   */
-  function vincular() {
-    return vincularCapa(idValida)
+  var fnAgregada = () => {}
+  function agregada(_fnAgregada) {
+    if (typeof _fnAgregada === typeof (() => {})) {
+      fnAgregada = _fnAgregada
+    }
   }
 
-  /**
-   * Prepara la capa y la registra en el composable de capas registradas.
-   * @param {import("ol/layer/Layer.js").default} olCapa objeto de capa de openlayers.
-   */
-  function registrar(olCapa) {
-    asignarPorps(olCapa)
-    registrarNuevaCapa(olCapa)
+  function agregar() {
+    usarRegistroMapas()
+      .mapaPromesa(idMapa)
+      .then(mapa => {
+        const { olLayerClass, olSource, tipo } = fnConfiguracion()
 
-    const {
-      visibilidad,
-      alternarVisibilidad,
-      cambiarNombre,
-      cambiarEstatusCarga,
-    } = vincular()
+        mapa.addLayer(
+          new olLayerClass({
+            id: props.id,
+            nombre: nombre.value,
+            opacity: Number(opacidad.value),
+            source: olSource,
+            tipo,
+            visible: visible.value,
+            zIndex: Number(posicion.value),
+          })
+        )
 
-    watch(visible, alternarVisibilidad)
-    watch(visibilidad, nuevoValor =>
-      emitsParam(eventos.alCambiarVisibilidad, nuevoValor)
-    )
+        watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
+        watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
+        watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(Number(nv)))
+        watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
 
-    watch(nombre, cambiarNombre)
-    watch(estatusCarga, cambiarEstatusCarga)
+        // En la siguiente clase pueden aplicarse emits para todas las capas como el cambio de visibilidad
+        // fnAgregadaParaTodas(mapa.buscarCapa(props.id))
+        fnAgregada(mapa.buscarCapa(props.id))
+      })
   }
+
+  onMounted(() => {
+    // console.log('onMounted composable capa')
+
+    //idMapa = buscarIdContenedorHtmlSisdai('mapa', refVar.value)
+    idMapa = inject('idMapa', 'no se encontró el id del mapa')
+
+    agregar()
+  })
+
+  function eliminar() {
+    // console.log('quitando capa', props.id)
+
+    usarRegistroMapas()
+      .mapaPromesa(idMapa)
+      .then(mapa => {
+        mapa.eliminarCapa(props.id)
+      })
+  }
+
+  onBeforeUnmount(() => {
+    // console.log('onBeforeUnmount composable')
+    eliminar()
+  })
 
   return {
-    registrar,
-    estatusCarga,
-    vincular,
+    agregada,
+    configurar,
+    // eliminar,
   }
 }
+
+// PARA PRUEBAS UNITARIAS QUIZÁ VERIFICAR SI LA CAPA SE AGREGÓ CORRECTAMENTE

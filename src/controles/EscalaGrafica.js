@@ -19,6 +19,7 @@
  */
 
 import ScaleLine from 'ol/control/ScaleLine'
+import { getPointResolution } from 'ol/proj'
 
 /**
  * Configuración del objeto original de openlayers.
@@ -37,6 +38,21 @@ const consifguracion = {
  * clase genérica `sisdai-mapa-control-${claseCss}`.
  */
 const claseCss = 'escala-grafica'
+
+/**
+ * Fuente:
+ * @see https://github.com/openlayers/openlayers/blob/v8.1.0/src/ol/control/ScaleLine.js#L28
+ *
+ * @const
+ * @type {number}
+ */
+const DEFAULT_DPI = 25.4 / 0.28
+
+/**
+ * Creando etiqueta que leera el asistente de voz para la escala numérica
+ */
+const label = document.createElement('span')
+label.classList.add('sisdai-mapa-escala-numerica')
 
 /**
  * @classdesc
@@ -60,14 +76,61 @@ export default class EscalaGrafica extends ScaleLine {
   constructor() {
     super(consifguracion)
 
-    this._agregarClasesSisdai()
+    // Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
+    this.element.classList.add('sisdai-mapa-control')
+    this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
+
+    // Esconder el elemnento div.ol-scale-bar-inner para que no lo lea el asistente de voz.
+    this.element
+      .querySelector('.ol-scale-bar-inner')
+      .setAttribute('aria-hidden', true)
+    // this.element.ariaHidden = true
+    // this.element.setAttribute('aria-hidden', true)
+
+    // Agregando etiqueta para el asistente de voz.
+    this.element.appendChild(label)
+    this.asignarEscalaNumerica()
   }
 
   /**
-   * Agrega al elemnto HTML del control las clases genéricas de los controles de la biblioteca.
+   * Asigna el texto apropiado para la etiqueta destinada para el asistente de voz.
+   * @param {number} resolutionScale La escala apropiada.
    */
-  _agregarClasesSisdai() {
-    this.element.classList.add('sisdai-mapa-control')
-    this.element.classList.add(`sisdai-mapa-control-${claseCss}`)
+  asignarEscalaNumerica(resolutionScale = undefined) {
+    var texto = 'Escala '
+
+    if (resolutionScale === undefined) {
+      texto += 'no definida'
+    } else {
+      texto +=
+        resolutionScale < 1
+          ? Math.round(1 / resolutionScale).toLocaleString() + ' : 1'
+          : '1 : ' + Math.round(resolutionScale).toLocaleString()
+    }
+    label.innerText = texto
+  }
+
+  /**
+   * Fuente:
+   * @see https://github.com/openlayers/openlayers/blob/v8.1.0/src/ol/control/ScaleLine.js#L453
+   *
+   * Returns the appropriate scale for the given resolution and units.
+   * @return {number} The appropriate scale.
+   */
+  getScaleForResolution() {
+    const resolution = getPointResolution(
+      this.viewState_.projection,
+      this.viewState_.resolution,
+      this.viewState_.center,
+      'm'
+    )
+    const dpi = this.dpi_ || DEFAULT_DPI
+    const inchesPerMeter = 1000 / 25.4
+    // return resolution * inchesPerMeter * dpi
+
+    // Modificación para capturar cuando cambie la escala.
+    const resolutionScale = resolution * inchesPerMeter * dpi
+    this.asignarEscalaNumerica(resolutionScale)
+    return resolutionScale
   }
 }

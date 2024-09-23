@@ -19,14 +19,16 @@ en su equipo a través del **protocolo HTTPS**.
 
 En la carpeta principal de tu proyecto Vue, instala la biblioteca en las dependencias de tu proyecto con:
 
-``` bash
+```bash
 npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas
 ```
 
 Dependiendo de la versión de la biblioteca a instalar, las instrucción anterior puede cambiar a:
-``` bash
+
+```bash
 npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
 ```
+
 donde N.N.N indica el número de versión, por ejemplo v1.0.0
 
 ### Importa la biblioteca
@@ -42,19 +44,14 @@ Vue.use(SisdaiMapas)
 
 ### Uso
 
-En cualquier vista en la sección `<template>` de tu proyecto puedes utilizar el componente de mapa,
+En cualquier vista en la sección `<template>` de tu proyecto puedes utilizar el componente de mapa
 sin necesidad de volver a importarlo en el script. Por ejemplo:
 
-```js
+```html
 <template>
-
-  <SisdaiMapa
-    :zoom="2"
-    :centro="0,0"
-  >
-    <SisdaiCapaXyzOsm />
+  <SisdaiMapa>
+    <SisdaiCapaXyz />
   </SisdaiMapa>
-
 </template>
 ```
 
@@ -75,27 +72,22 @@ donde N.N.N indica el número de versión, por ejemplo v1.0.0
 
 El componente `SisdaiMapa` es un contenedor especial único que alberga todos los elementos opcionales y requeridos para un mapa interactivo con datos georeferenciados
 
-| Elemento | Descripcion                                                                                                                                                                              |
-| ---------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| SisdaiMapaEncabezado | Contenedor generalmente para título y descripción, se muestra siempre arriba en el contenedor                                                                                            |
-| SisdaiMapaIzquierda | Contenedor generalmente para leyendas, se muestra arriba en vista de celular y a la izquierda en vista de escritorio                                                                     |
-| SisdaiMapaDerecha | Contenedor generalmente para leyendas, se muestra abajo en vista de celular y a la derecha en vista de escritorio                                                                        |
-| SisdaiMapaPie | Contenedor generalmente para notas y referencias, se muestra siempre abajo                                                                                                               |
-| SisdaiMapaCapas | Contenedor para agrupar las capas que utiliza el mapa                                                                                                                                    |
+| Elemento          | Descripción                                                                                                                                                                              |
+| ----------------- |------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | SisdaiCapaGeojson | Las capas vectoriales en geojson nos permiten manipular su información de forma local, esto nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos |
-| SisdaiCapaXyz | La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel de zoom y la coordenada x/y de una imagen (mosaico)                                                      |
-| SisdaiCapaWms | Componente para desplegar capas desde servicios Web Map Service (WMS) públicos o privados.                                                                                               |
+| SisdaiCapaXyz     | La capa de mosaicos xyz, consume servicios que dentro de la url incluyen el nivel de zoom y la coordenada x/y de una imagen (mosaico)                                                    |
+| SisdaiCapaWms     | Componente para desplegar capas desde servicios Web Map Service (WMS) públicos o privados.                                                                                               |
 | SisdaiMapaLeyenda | Componente de leyenda interactiva vinculada con una capa del mapa                                                                                                                        |
 
 ## Uso local del proyecto
 
 ### Pasos previos recomendados
 
-Para desarrollar este proyecto se usó [node.js](https://nodejs.org/en) como
+Para desarrollar este proyecto se usa [node.js](https://nodejs.org/en) como
 entorno de ejecución de JavaScript. La opción recomendada para instalarlo es
 [vía nvm](https://github.com/nvm-sh/nvm) que es el manejador de versiones de
 node. Siguiendo este camino, también se instalará el manejador de paquetes
-[npm](https://www.npmjs.com/). Dado lo anterior las instrucciones de instalación
+[npm](https://www.npmjs.com/). Las instrucciones de instalación
 y dependencias del proyecto se muestran aquí usando tanto npm, como nvm.
 
 ### Dependencias
@@ -120,7 +112,7 @@ nvm use 18
 
 Instala las dependencias de la biblioteca.
 
-```bash
+```sh
 npm install
 ```
 
@@ -130,11 +122,9 @@ Este proyecto cuenta con una documentación más extensa que aún está
 en proceso de desarrollo. Es posible levantarla en un ambiente local con la
 instrucción:
 
-
 ```bash
 npm run docs
 ```
-
 
 ## Licencia
 
@@ -151,7 +141,7 @@ artículo 63 se explicita que "cuando se trate
 de desarrollos basados en software libre, se respetarán las condiciones de su
 licenciamiento original [...]".
 
-Considerando lo anterior sisdai-mapas se publica bajo la licencia
+Considerando lo anterior, sisdai-mapas se publica bajo la licencia
 [LGPLv3](https://www.gnu.org/licenses/lgpl-3.0.html). Dicha licencia se puede
 consultar en el archivo _LICENSE_ de este repositorio.
 Esta licencia se encuentra disponible en inglés porque aunque el Sisdai privilegia
@@ -160,8 +150,6 @@ el idioma español se respeta la versión original de acuerdo al proyecto
 
 ## Contribuir
 
-Por el momento sólo quienes sean
-parte de un equipo de investigación del capítulo de un [ENI](https://eni.conahcyt.mx)
-podrán levantar issues en este repositorio.
-Mientras que el equipo del sistema de diseño [Sisdai](https://sisdai.conahcyt.mx/acerca-de)
-se encargará de mantenerlo.
+Por el momento sólo quienes sean parte de un equipo de investigación del
+capítulo de un ENI podrán levantar issues en este repositorio. El equipo del
+Sisdai se encargará de mantenerlo.

@@ -1,29 +1,36 @@
-.DS_Store
-node_modules/
-dist/
-package-lock.json
-
-#docs
-docs/.vuepress/dist/
-docs/.vitepress/dist/
-
-# local env files
-.env.local
-.env.*.local
-
-# Log files
+# Logs
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+package-lock.json
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+
+docs/.vitepress/dist
+docs/.vitepress/cache
+docs/.vitepress/.temp
 
 # Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
 .idea
-# .vscode
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-deprecated/
+*.tsbuildinfo

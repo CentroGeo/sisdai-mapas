@@ -13,7 +13,6 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-
 /**
  * @module controles/utiles
  */
@@ -34,18 +33,24 @@ export function crearContenedorControl(claseCss) {
 
 /**
  * Crea un elemento html de tipo botón con las siguientes características
+ * @param {String} ariaLabel texto que se asignará al elemento para el asistente de voz.
  * @param {String} claseCss Clase que distinguirá al elemento, recomendable usar la misma clase
  * del contenedor
  * @param {String} icono Icono que se visualizará dentro del botón
  * @param {Function} accion Función que se desencadenará con el evento click
  * @returns {HTMLButtonElement} Elemento html
  */
-export function crearBotonControl(claseCss, icono, accion) {
+export function crearBotonControl(ariaLabel, claseCss, icono, accion) {
   const boton = document.createElement('button')
 
-  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-icono boton-secundario`
-  boton.innerHTML = `<span class="icono-${icono}" />`
+  // boton.ariaLabel = ariaLabel
+  boton.className = `sisdai-mapa-control-${claseCss}-boton boton-pictograma boton-primario`
+  boton.type = 'button'
+  boton.innerHTML = `<span class="pictograma-${icono}" aria-hidden="true"></span>`
+  boton.setAttribute('role', 'button')
+  boton.setAttribute('aria-label', ariaLabel)
 
+  boton.addEventListener('click', accion, false)
   boton.addEventListener('click', accion, false)
 
   return boton

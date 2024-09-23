@@ -1,0 +1,14 @@
+.a11y-simplificada .sisdai-mapa {
+  display: block;
+  padding-bottom: 0;
+  border: none;
+
+  .contenido-vis,
+  .boton-conahcyt {
+    display: none;
+  }
+
+  .sisdai-mapa-leyenda {
+    display: none;
+  }
+}

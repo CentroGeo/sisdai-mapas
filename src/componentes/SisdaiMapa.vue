@@ -14,285 +14,437 @@
 <!--with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.-->
 
 <script setup>
-import { onMounted, onUnmounted, reactive, ref, toRefs, watch } from 'vue'
-import 'ol/ol.css'
-import Map from 'ol/Map'
-import View from 'ol/View'
-import AttributionControl from 'ol/control/Attribution'
-import { eventos, props } from './../scripts/mapa'
-import vistaMapaDefault from './../defaults/vistaMapa'
-import { extensionEsValida } from './../utiles'
-import usarCapasRegistradas from './../composables/usarCapasRegistradas'
-import ControlZoomPersonalizado from './../controles/ZoomPersonalizado'
-import ControlAjusteVista from './../controles/AjusteVista'
-import ControlEscalaGrafica from './../controles/EscalaGrafica'
-import BotonConacyt from './externos/BotonConacyt.vue'
-import VistaCarga from './externos/VistaCarga.vue'
-import AjusteVista from './../controles/AjusteVista'
-import exportarMapaComoImagen from './../scripts/mapa/ExportarImagen'
-import GloboInformativo from '../componentes/info/GloboInformativo'
+import MapEventType from 'ol/MapEventType'
+import EventType from 'ol/events/EventType'
+import PointerEventType from 'ol/pointer/EventType'
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  provide,
+  reactive,
+  ref,
+  shallowRef,
+  toRefs,
+  useSlots,
+  watch
+} from 'vue'
+import usarRegistroMapas from './../composables/usarRegistroMapas'
+import eventos from './../eventos/mapa'
+import { idAleatorio, stringifyIguales } from './../utiles'
+import { buscarContenidoCapaEnPixel } from './../utiles/globoInfo'
+import * as validaciones from './../utiles/validaciones'
+import * as valoresPorDefecto from './../valores/mapa'
+import CuadroInformativo from './info/InfoCuadro.vue'
+import GloboInformativo from './info/InfoGlobo.vue'
+import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
 
-// eslint-disable-next-line
-const propsSetup = defineProps(props)
-const { ajustarVistaPorCapasVisibles, escalaGrafica, vista } =
-  toRefs(propsSetup)
+const props = defineProps({
+  descripcion: {
+    type: String,
+    default: undefined
+  },
 
-// eslint-disable-next-line
-const emitsSetup = defineEmits(Object.values(eventos))
+  /**
+   * Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `''`
+   * - Reactivo: ✅
+   *
+   * > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
+   */
+  elementosDescriptivos: {
+    type: String,
+    default: ''
+  },
 
-/**
- * Referencia al elemento html contenedor del mapa
- */
-const refSisdaiMapa = ref(null)
+  /**
+   * Define si se agrega la escala grafica en el mapa.
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `true`
+   * - Reactivo: ✅
+   */
+  escalaGrafica: {
+    type: Boolean,
+    default: true,
+    validator: (valor) => typeof valor === typeof Boolean()
+  },
 
-/**
- * Objeto que contendrá la instancia del mapa, declararlo fuera de la función composable hace que
- * no se genere una nueva variable del mapa cada que se utilice el composable
- */
-const olMapa = ref(undefined)
+  /**
+   * Identificador único del mapa. Si no es definido se asignará un valor aleatorio.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: Aleatorio
+   * - Reactivo: ❌
+   */
+  id: {
+    type: String,
+    default: () => idAleatorio()
+  },
 
-/**
- *
- */
-function asignarProps() {
-  const vistaMapa = { ...vistaMapaDefault, ...vista.value }
-  vistaMapa.tipo = extensionEsValida(vistaMapa.extension)
-    ? 'extension'
-    : 'centro'
-  vistaMapa.ajustePorCapas = ajustarVistaPorCapasVisibles.value
+  /**
+   * PARA USO DE PRUEBA EN LA NAVEGACIÓN POR TECLADO,
+   * LA INTENCIÓN ES QUE AL APROBAR LA NAVEGACIÓN POR TECLADO
+   * ESTE PARÁMETRO Y SUS VALIDACIONES SE QUITEN PARA QUE
+   * SEA USADA POR DEFECTO
+   */
+  navegacionTeclado: {
+    type: Boolean,
+    default: false
+  },
 
-  olMapa.value.set('vista', vistaMapa)
-  olMapa.value.setView(
-    new View({
-      center: vistaMapa.centro,
-      zoom: vistaMapa.zoom,
-      projection: propsSetup.proyeccion,
-    })
-  )
+  /**
+   * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
+   *
+   * - Tipo: `Object`
+   * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
+   * - Reactivo: ✅
+   */
+  vista: {
+    type: Object,
+    default: () => valoresPorDefecto.vista,
+    validator: validaciones.vista
+  },
 
-  olMapa.value.on('moveend', ({ map }) => {
-    const zoomRedondeado = Math.round(map.getView().getZoom() * 100) / 100
-    if (Number(vista.value.zoom) !== zoomRedondeado) {
-      emitsSetup(eventos.alCambiarZoom, zoomRedondeado)
-    }
-  })
-}
-
-/**
- * Objeto reactivo con las propiedades del Globo de información
- */
-const globoInfo = reactive({
-  visible: false,
-  ubicacion: [0, 0],
-  contenido: undefined,
+  /**
+   * Código de identificación SRS que define la proyección de la vista.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'EPSG:4326'`
+   * - Reactivo: ❌
+   *
+   * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+   *
+   * > ⚠️ **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+   */
+  proyeccion: {
+    type: String,
+    default: valoresPorDefecto.proyeccion
+  }
 })
 
-function procesarContenidoGloboInfo(feature, contenido) {
-  return typeof contenido === 'function'
-    ? contenido(feature.getProperties())
-    : contenido
-}
+provide('idMapa', props.id)
 
-function buscarFeatureEnPixel(pixel) {
-  return olMapa.value.forEachFeatureAtPixel(pixel, (feature, layer) => {
-    globoInfo.visible = true
-    globoInfo.ubicacion = pixel
-    globoInfo.contenido = procesarContenidoGloboInfo(
-      feature,
-      layer.get('globoInfo')
-    )
-
-    olMapa.value.getTargetElement().style.cursor = 'pointer'
-    return true
-  })
-}
-
-function invocarGloboInfo() {
-  olMapa.value.on('pointermove', ({ originalEvent }) => {
-    const pixel = olMapa.value.getEventPixel(originalEvent)
-
-    if (buscarFeatureEnPixel(pixel) === undefined) {
-      globoInfo.visible = false
-      olMapa.value.getTargetElement().style.cursor = ''
-    }
-  })
-
-  olMapa.value.getTargetElement().addEventListener('pointerleave', () => {
-    globoInfo.visible = false
-    olMapa.value.getTargetElement().style.cursor = ''
-  })
-}
-
-const {
-  agregarTodoALMapa: agregarCapasRegistradas,
-  hayCapasCargadorVisibleProcesando: verCargador,
-  limpiarRegistro: limpiarCapasRegistradas,
-} = usarCapasRegistradas()
+const emits = defineEmits(Object.values(eventos))
+const slots = useSlots()
+const refMapa = shallowRef(null)
+const { descripcion, escalaGrafica, vista } = toRefs(props)
 
 /**
- * Creación del elemento mapa con atributos definidos.
- * @param {HTMLDivElement|String} target elemento o id del elemento html que contendrá el mapa.
+ * Permite acceder al mapa registrado sin usa `usarRegistroMapas().mapa(props.id)` en dónde se
+ * ocupe el mapa.
+ *
+ * @returns {import("./../clases/Mapa").default}
  */
-function crearMapa(target) {
-  // Instanciamiento del maapa como objeto de la calse ol/Map
-  return new Map({
-    target,
-    layers: [],
-    controls: [
-      new ControlZoomPersonalizado(),
-      new ControlAjusteVista(emitsSetup),
-      new AttributionControl({
-        collapsible: false,
-      }),
-    ],
-  })
+function mapa() {
+  return usarRegistroMapas().mapa(props.id)
+}
+
+/**
+ * Actualizar vista en el mapa registrado.
+ */
+watch(
+  vista,
+  (nv) => {
+    mapa()?.asignarVista(nv)
+
+    // if (
+    //   nv.ajustarVistaAlCambiarParametros === undefined ||
+    //   nv.ajustarVistaAlCambiarParametros
+    // ) {
+    //   mapa()?.ajustarVista()
+    // }
+  },
+  { deep: true }
+)
+
+/**
+ * Objeto reactivo utilizado para evaluar en que momento el centro o acercamiento de la vista es diferente
+ * a la anterior cada que se mueva el mapa.
+ */
+const estadoVistaMovida = reactive({
+  centro: undefined,
+  acercamiento: undefined
+})
+
+/**
+ * Desencadena los emits requeridos en cada movimiento
+ * @param {Object} e
+ */
+function olMoveend({ map }) {
+  emits(eventos.alMoverVista, map.getView())
+
+  if (stringifyIguales(map.getView().getCenter(), estadoVistaMovida.centro)) {
+    estadoVistaMovida.centro = map.getView().getCenter()
+    emits(eventos.alCambiarCentro, estadoVistaMovida.centro)
+  }
+
+  // const nuevoAcercamiento = Math.round(e.map.getView().getZoom() * 100) / 100
+  if (map.getView().getZoom() !== estadoVistaMovida.acercamiento) {
+    estadoVistaMovida.acercamiento = map.getView().getZoom()
+    emits(eventos.alCambiarAcercamiento, estadoVistaMovida.acercamiento)
+  }
+}
+
+const globoInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false
+})
+const cuadroInfo = reactive({
+  pixel: undefined,
+  contenido: undefined,
+  visible: false
+})
+
+function abrirGloboInfo(map, originalEvent) {
+  if (cuadroInfo.visible) {
+    globoInfo.visible = false
+    return
+  }
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
+
+  if (contenido !== undefined) {
+    globoInfo.visible = true
+    globoInfo.contenido = contenido
+    globoInfo.pixel = pixel
+  } else {
+    globoInfo.visible = false
+  }
+}
+function abrirCuadroInfo(map, originalEvent) {
+  const pixel = map.getEventPixel(originalEvent)
+  const contenido = buscarContenidoCapaEnPixel(pixel, map, 'cuadroInfo')
+
+  if (contenido !== undefined) {
+    cuadroInfo.visible = true
+    globoInfo.visible = false
+    cuadroInfo.contenido = contenido
+    cuadroInfo.pixel = pixel
+  } else {
+    cuadroInfo.visible = false
+  }
+}
+function olPointerMove({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    if (!cuadroInfo.visible) {
+      abrirCuadroInfo(map, originalEvent)
+    }
+    abrirGloboInfo(map, originalEvent)
+  } else {
+    globoInfo.visible = false
+  }
+}
+function olClick({ dragging, originalEvent, map }) {
+  if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+    abrirCuadroInfo(map, originalEvent)
+  }
+}
+function olPointerLeave() {
+  // console.log('salió')
+  globoInfo.visible = false
+}
+
+/**
+ * Asigna al canvas valores de accesibilidad ARIA.
+ */
+function ariaCanvas() {
+  mapa()
+    .busquedaPromesa((_mapa) => _mapa.getViewport().querySelector('canvas'))
+    .then((canvas) => {
+      canvas.setAttribute('aria-label', 'Mapa interactivo')
+      canvas.setAttribute('aria-describedby', `mapa-${props.id}-descripcion`)
+    })
 }
 
 onMounted(() => {
-  olMapa.value = crearMapa(refSisdaiMapa.value)
-  asignarProps()
-  invocarGloboInfo()
-  alternarEscalaGrafica(propsSetup.escalaGrafica)
-  agregarCapasRegistradas(olMapa.value)
+  // console.log('SisdaiMapa')
+  usarRegistroMapas().registrarMapa(props.id, refMapa.value, props.proyeccion, emits)
+  mapa().asignarVista(vista.value)
+  mapa().ajustarVista()
+  mapa().on(MapEventType.MOVEEND, olMoveend)
+  mapa().on(EventType.CLICK, olClick)
+  mapa().on(PointerEventType.POINTERMOVE, olPointerMove)
+  mapa().getTargetElement().addEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
+
+  // ariaCanvas(elementosDescriptivos.value)
+  // watch(elementosDescriptivos, ariaCanvas)
+  ariaCanvas()
 })
 
 onUnmounted(() => {
-  limpiarCapasRegistradas()
-  olMapa.value = undefined
+  mapa().un(MapEventType.MOVEEND, olMoveend)
+  mapa().un(EventType.CLICK, olClick)
+  mapa().un(PointerEventType.POINTERMOVE, olPointerMove)
+
+  mapa().getTargetElement().removeEventListener(PointerEventType.POINTERLEAVE, olPointerLeave)
+  usarRegistroMapas().borrarMapa(props.id)
 })
 
-/**
- * Devuelve un control por su nombre registrado
- * @param {String} nombreDelControl
- * @returns {import("ol/control/Control.js").default|undefined} olControl
- */
-function conseguirControl(nombreDelControl) {
-  if (olMapa.value) {
-    return olMapa.value
-      .getControls()
-      .getArray()
-      .find(olControl => olControl.nombre === nombreDelControl)
-  }
-}
-
-/**
- * Quita un control de openlayers en el mapa.
- * @param {import("ol/control/Control.js").default} olControl
- */
-function removerControl(olControl) {
-  if (olMapa.value) {
-    olMapa.value.removeControl(olControl)
-  }
-}
-
-/**
- * Quita o agrega el control de escala gáfica en el mapa dependiendo del parámetro boleano.
- * @param {Boolean} visible
- */
-function alternarEscalaGrafica(visible) {
-  if (visible) {
-    agregarControl(new ControlEscalaGrafica())
-  } else {
-    removerControl(conseguirControl(ControlEscalaGrafica.nombre))
-  }
-}
-watch(escalaGrafica, alternarEscalaGrafica)
-
-/**
- * Agrega un control de openlayers en el mapa.
- * @param {import("ol/control/Control.js").default} olControl
- */
-function agregarControl(olControl) {
-  if (olMapa.value) {
-    olMapa.value.addControl(olControl)
-  }
-}
-
-/**
- * Ajusta la vista del mapa a los valores definidos en la propiedad vista.
- */
-function ajustarVista() {
-  const controlAjusteVista = conseguirControl(AjusteVista.nombre)
-  controlAjusteVista.ajustar()
-}
-
-/**
- * Permite descargar la vista actual del mapa, con las capas visibles y zoom mostrado en
- * pantalla, sin controles. El formato de descargá es PNG.
- * @param {String} nombreCaptura nombre del archivo que se descargara del navegador (no debe incluir extensión).
- */
-function exportarImagen(nombreCaptura) {
-  exportarMapaComoImagen(olMapa.value, nombreCaptura)
-}
-
-/**
- * Actualiza la coordenada centrica del mapa
- * @param {Number} centro nueva coordenada centrica
- */
-function cambiarCentro(centro) {
-  if (olMapa.value) {
-    olMapa.value.getView().setCenter(centro)
-  }
-}
-watch(() => vista.value.centro, cambiarCentro)
-
-/**
- * Cambiar la extension, esto proboca que el mapa ajuste la vista con la extención actual
- * en caso de ser valida.
- * @param {Array<Number>} extension
- */
-function cambiarExtension(nuevaExtension) {
-  olMapa.value.get('vista').tipo = extensionEsValida(nuevaExtension)
-    ? 'extension'
-    : 'centro'
-  olMapa.value.get('vista').extension = nuevaExtension
-  ajustarVista()
-}
-// watch(extension, cambiarExtension)
-watch(() => vista.value.extension, cambiarExtension)
-
-/**
- * Actualiza el nivel de zoom en el mapa.
- * @param {Number} zoom nuevo bnivel de zoom
- */
-function cambiarZoom(zoom) {
-  if (olMapa.value) {
-    olMapa.value.getView().setZoom(zoom)
-  }
-}
-watch(() => vista.value.zoom, cambiarZoom)
-
-// eslint-disable-next-line
 defineExpose({
-  exportarImagen,
-  ajustarVista,
-  ajustarVistaPorCapasVisibles: undefined,
+  /**
+   * Permite descargar la vista actual del mapa, con las capas visibles y Acercamiento mostrado en
+   * pantalla, sin controles. El formato de descargá es PNG.
+   * @param {String} nombreImagen Nombre del archivo que se descargara del navegador (no debe
+   * incluir extensión).
+   */
+  exportarImagen: (nombreImagen) => {
+    mapa().exportarImagen(nombreImagen)
+  },
+
+  /**
+   * Ajusta la vista del mapa a los valores iniciales de la propiedad vista mediante el control
+   * AjustarVista.
+   */
+  ajustarVista: (params) => {
+    mapa().ajustarVista(params)
+  },
+
+  mapa: () => {
+    return mapa()
+  }
 })
+
+/**
+ * Variable computada para el asignar la regla css `display` al elemento de la escala gráfica.
+ */
+const escalaGraficaVisible = computed(() => (escalaGrafica.value ? 'block' : 'none'))
+
+const focoEnMapa = ref(false)
+const navegacionTecladoVisible = ref('none')
+
+watch(focoEnMapa, (nv) => {
+  if (!nv) {
+    setTimeout(() => {
+      if (!focoEnMapa.value) {
+        // console.log('se ha quitado el foco, quitar control')
+        navegacionTecladoVisible.value = 'none'
+        // mapa().navegacionTeclado.desactivar()
+      }
+    }, 2000)
+  }
+})
+
+function alTeclear({ key }) {
+  switch (key.toLowerCase()) {
+    case 'tab':
+      if (focoEnMapa.value) {
+        // if (key === 'Tab' && focoEnMapa.value) {
+        // console.log('hacer visible el control')
+        if (props.navegacionTeclado) {
+          navegacionTecladoVisible.value = 'block'
+        }
+      }
+      break
+
+    case valoresPorDefecto.teclasAtajo.AJUSTAR:
+      mapa().buscarControl('AjustarVista').ajustarVista()
+      break
+
+    case valoresPorDefecto.teclasAtajo.NORTE:
+      mapa().getView().setRotation(0)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_IZQUIERDA:
+      /**
+       * @see https://openlayers.org/en/latest/examples/full-screen-drag-rotate-and-zoom.html
+       */
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() + Math.PI / 8)
+      break
+
+    case valoresPorDefecto.teclasAtajo.ROTAR_DERECHA:
+      mapa()
+        .getView()
+        .setRotation(mapa().getView().getRotation() - Math.PI / 8)
+      break
+  }
+}
+
+const paneles = ['encabezado', 'izquierda', 'derecha', 'pie']
+function panelesEnUso() {
+  // return !!slots[name]
+  return paneles
+    .filter((panel) => !!slots[`panel-${panel}-vis`])
+    .map((panel) => `con-panel-${panel}-vis`)
+}
 </script>
 
 <template>
-  <div class="sisdai-mapa-contenedor borde borde-redondeado-8">
-    <div
-      ref="refSisdaiMapa"
-      class="sisdai-mapa"
-    >
-      <GloboInformativo
-        v-show="globoInfo.visible"
-        :ubicacion="globoInfo.ubicacion"
-        :contenido="globoInfo.contenido"
-      />
+  <div :sisdai-mapa="id" class="sisdai-mapa contenedor-vis borde-redondeado-8">
+    <div v-if="descripcion">
+      <p :id="`mapa-${props.id}-descripcion`" class="a11y-solo-lectura a11y-simplificada-ocultar">
+        {{ descripcion }}
+      </p>
+      <p class="a11y-simplificada-mostrar-inline m-3">
+        {{ descripcion }}
+      </p>
     </div>
 
-    <VistaCarga v-show="verCargador" />
+    <div class="contenedor-vis-paneles a11y-simplificada-ocultar" :class="panelesEnUso()">
+      <div class="panel-encabezado-vis">
+        <slot name="panel-encabezado-vis" />
+      </div>
 
-    <!-- Permite ingresar etiquetas dentro de etiqueta sisdai-mapa -->
-    <slot />
+      <div class="panel-izquierda-vis">
+        <slot name="panel-izquierda-vis" />
+      </div>
 
-    <BotonConacyt />
+      <!-- slot para las capas -->
+      <slot />
+
+      <div
+        class="contenido-vis"
+        ref="refMapa"
+        tabindex="0"
+        @focusin="focoEnMapa = true"
+        @focusout="focoEnMapa = false"
+        @keydown="alTeclear"
+      >
+        <GloboInformativo
+          :pixel="globoInfo.pixel"
+          :contenido="globoInfo.contenido"
+          :visible="globoInfo.visible"
+        />
+        <CuadroInformativo
+          :pixel="cuadroInfo.pixel"
+          :contenido="cuadroInfo.contenido"
+          :visible="cuadroInfo.visible"
+          @alCerrar="cuadroInfo.visible = false"
+        />
+      </div>
+
+      <div class="panel-derecha-vis">
+        <slot name="panel-derecha-vis" />
+      </div>
+
+      <div class="panel-pie-vis">
+        <slot name="panel-pie-vis" />
+      </div>
+    </div>
+
+    <!-- <SisdaiCargando /> -->
+    <ContenedorVisAtribuciones />
   </div>
 </template>
 
-<!-- Agregue el atributo "scoped" para limitar CSS solo a este componente -->
-<style lang="scss" scoped>
-@import './../estilos/mapa.scss';
+<style lang="scss">
+@import './../estilos/Accesibilidad.scss';
+@import './../estilos/Controles.scss';
+@import './../estilos/GloboInfo.scss';
+// @import './../estilos/SisdaiMapa.scss';
+
+.sisdai-mapa-control {
+  &-escala-grafica {
+    display: v-bind(escalaGraficaVisible);
+  }
+
+  &-navegacion-teclado {
+    display: v-bind(navegacionTecladoVisible);
+  }
+}
 </style>
