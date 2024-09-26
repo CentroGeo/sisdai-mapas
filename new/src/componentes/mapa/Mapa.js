@@ -1,4 +1,5 @@
 import olMap from 'ol/Map'
+import View from 'ol/View'
 
 /**
  * @classdesc
@@ -6,8 +7,47 @@ import olMap from 'ol/Map'
  * propiedades que faciliten la manipulación del contenido de la propia instancia.
  */
 export default class Mapa extends olMap {
-  constructor(opcionesOlMap) {
-    super(opcionesOlMap)
+  /**
+   * Creación del objeto mapa.
+   * @param {number} id
+   * @param {HTMLDivElement|string} target elemento o id del elemento html que contendrá el mapa.
+   * @param {string} proyeccion
+   * @returns {import("./../clases/Mapa.js").default} Mapa
+   */
+  constructor(id, target, proyeccion, emits) {
+    super({
+      controls: [],
+      target,
+      view: new View({
+        center: [0, 0],
+        zoom: 2
+      })
+    })
+
+    this.id = id
+
+    this.agregarAtributosAriaCanvas()
+  }
+
+  /**
+   *
+   */
+  async agregarAtributosAriaCanvas() {
+    const canvas = await this.buscarCanvasPromesa()
+    // console.log('SisdaiMapa2', Date.now())
+    canvas.setAttribute('aria-label', 'Mapa interactivo')
+    canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
+  }
+
+  /**
+   *
+   * @returns {Promise}
+   */
+  buscarCanvasPromesa() {
+    return this.busquedaPromesa(
+      (mapa) => mapa.getViewport().querySelector('canvas')
+      // mapa.getAllLayers().find(capa => capa.get('id') === idCapa)
+    )
   }
 
   /**
