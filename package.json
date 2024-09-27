@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "axios": "^1.7.7",
-    "ol": "^10.1.0",
+    "ol": "^10.2.1",
     "ol-displaced-points": "^0.3.1"
   },
   "devDependencies": {

@@ -1,11 +1,14 @@
 <script setup>
-import { inject, toRefs, watch } from 'vue'
-import OSM from 'ol/source/OSM'
+import { inject, toRefs, watch, reactive, onUnmounted } from 'vue'
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
 import propsCapa from './../props'
+import TileEventType from 'ol/source/TileEventType'
+import MonitoreoCargaElementos, { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
+import eventos from './eventos'
 
 const mapa = inject('mapa')
+const emits = defineEmits(Object.values(eventos))
 const props = defineProps({
   /**
    * Url remota de la capa.
@@ -23,18 +26,38 @@ const props = defineProps({
 })
 const { url } = toRefs(props)
 
-const xyz = new TileLayer({
-  // source: new OSM()
-  source: new ImageTile({
-    url: url.value
-  })
+const source = new ImageTile({
+  url: url.value,
+  crossOrigin: 'anonymous'
+})
+
+const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())
+function emitirEventosCargaTotal(estado) {
+  if (estado === TipoEstadoCarga.inicio) {
+    emits(eventos.alIniciarCarga)
+  } else {
+    emits(eventos.alFinalizarCarga, Boolean(estado === TipoEstadoCarga.fin))
+  }
+}
+watch(() => monitoreoCargaTeselas.estdo, emitirEventosCargaTotal)
+source.on(TileEventType.TILELOADSTART, () => {
+  emits(eventos.alIniciarCargaTesela)
+  monitoreoCargaTeselas.inicio++
+})
+source.on(TileEventType.TILELOADEND, () => {
+  emits(eventos.alFinalizarCargaTesela, true)
+  monitoreoCargaTeselas.fin++
+})
+source.on(TileEventType.TILELOADERROR, () => {
+  emits(eventos.alFinalizarCargaTesela, false)
+  monitoreoCargaTeselas.error++
 })
 
 watch(mapa, (nv) => {
-  nv.addLayer(xyz)
-
-  // console.log(nv.getAllLayers().length)
+  nv.addLayer(new TileLayer({ source }))
 })
+
+onUnmounted(() => {})
 </script>
 
 <template>
