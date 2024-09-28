@@ -1,5 +1,5 @@
 import { shallowMount } from '@vue/test-utils'
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import SisdaiCapaXyz from '@/componentes/capa/xyz'
 import eventos from '@/componentes/capa/xyz/eventos'
 import Mapa from '@/componentes/mapa/Mapa'

@@ -2,19 +2,12 @@ import { idAleatorio } from '../../utiles'
 
 export default {
   /**
-   * Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
+   * Descripción corta del mapa, la cual es visible en el modo solo texto y audible con herramientas de lectura por voz.
    *
    * - Tipo: `String`
-   * - Valor por defecto: `''`
+   * - Valor por defecto: `undefined`
    * - Reactivo: ✅
-   *
-   * > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
    */
-  elementosDescriptivos: {
-    type: String,
-    default: ''
-  },
-
   descripcion: {
     type: String,
     default: 'Mapa sin descripción'
