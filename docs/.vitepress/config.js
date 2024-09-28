@@ -1,6 +1,6 @@
 import pkg from './../../package.json'
-import sidebarComienza, { nav as navComienza } from './../comienza/sidebar'
-import sidebarAccesibilidad, { nav as navAccesibilidad } from './../accesibilidad/sidebar'
+import sidebarComienza, { nav as navComienza } from './sidebar/comienza'
+import sidebarAccesibilidad, { nav as navAccesibilidad } from './sidebar/accesibilidad'
 
 // .vitepress/config.js
 export default {

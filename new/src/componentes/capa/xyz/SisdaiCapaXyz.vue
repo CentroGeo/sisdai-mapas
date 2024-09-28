@@ -2,28 +2,14 @@
 import { inject, toRefs, watch, reactive, onUnmounted } from 'vue'
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
-import propsCapa from './../props'
+import _props from './props'
 import TileEventType from 'ol/source/TileEventType'
 import MonitoreoCargaElementos, { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 import eventos from './eventos'
 
 const mapa = inject('mapa')
 const emits = defineEmits(Object.values(eventos))
-const props = defineProps({
-  /**
-   * Url remota de la capa.
-   *
-   * - Tipo: `String`
-   * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
-   */
-  url: {
-    type: String,
-    default: 'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-  },
-
-  ...propsCapa
-})
+const props = defineProps(_props)
 const { url } = toRefs(props)
 
 const source = new ImageTile({
@@ -40,6 +26,7 @@ function emitirEventosCargaTotal(estado) {
   }
 }
 watch(() => monitoreoCargaTeselas.estdo, emitirEventosCargaTotal)
+
 source.on(TileEventType.TILELOADSTART, () => {
   emits(eventos.alIniciarCargaTesela)
   monitoreoCargaTeselas.inicio++
@@ -56,8 +43,6 @@ source.on(TileEventType.TILELOADERROR, () => {
 watch(mapa, (nv) => {
   nv.addLayer(new TileLayer({ source }))
 })
-
-onUnmounted(() => {})
 </script>
 
 <template>

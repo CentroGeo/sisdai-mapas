@@ -1,5 +1,5 @@
 <script setup>
-import EjemploBasico from "./basico.vue";
+import EjemploBasico from "./../.vitepress/components/basico.vue";
 import { dependencies, version } from './../../package.json'
 </script>
 
@@ -33,9 +33,9 @@ Dentro del componente en el que se desee crear mapas con el diseño sisdai, usa 
 
 Código:
 
-<!-- <<< @/.vitepress/components/basico.vue{2-4} -->
+<<< @/.vitepress/components/basico.vue{2-4}
 
-<<< ./basico.vue{2-4}
+<!-- <<< ./basico.vue{2-4} -->
 
 Resultado:
 

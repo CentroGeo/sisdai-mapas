@@ -1,5 +1,5 @@
 <script setup>
-import CapasXyz from "./../.vitepress/components/capas/xyz.vue";
+import CapaXyz from "./../.vitepress/ejemplos/CapaXyz.vue";
 </script>
 
 # Capa XYZ
@@ -18,13 +18,13 @@ La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel 
 
 Hereda las propiedades definidas en la sección Capas más las siguientes:
 
-#### `acercamientoMaximo`
+<!-- #### `acercamientoMaximo`
 
 Nivel de acercamiento máximo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Reactivo: ❌
+- Reactivo: No
 
 #### `acercamientoMinimo`
 
@@ -32,7 +32,7 @@ Nivel de acercamiento mínimo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Reactivo: ❌
+- Reactivo: No -->
 
 #### `url`
 
@@ -40,10 +40,24 @@ Url remota de la capa.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
-- Reactivo: ❌
+- Reactivo: No
+
+## Funciones
+
+#### `@alIniciarCargaTesela`
+
+Ejecutado cuando se detecta que ha iniciado la carga de cada uno de los mosaicos que conponen la capa visible en el mapa.
+
+#### `@alFinalizarCargaTesela`
+
+Ejecutado cuando se detecta que ha finalizado la carga de cada uno de los mosaicos que conponen la capa visible en el mapa.
+
+**Parametros:**
+
+- `Boolean`: Indica con `false` si al finalizar la carga del mosaico ha presentado error.
 
 ## Ejemplo
 
-<CapasXyz />
+<CapaXyz />
 
-<<< @/.vitepress/components/capas/xyz.vue
+<<< @/.vitepress/ejemplos/CapaXyz.vue
