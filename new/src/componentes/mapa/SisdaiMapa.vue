@@ -15,20 +15,20 @@ const { descripcion } = toRefs(props)
 const mapa = reactive(new Mapa(props.id))
 provide('mapa', mapa)
 
+watch(
+  () => mapa.capasCargando,
+  (nv) => {
+    if (nv) {
+      emits(eventos.alIniciarCarga)
+    } else {
+      emits(eventos.alFinalizarCarga, mapa.todasCapasConError)
+    }
+  }
+)
+
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
-
-  watch(
-    () => mapa.capasCargando,
-    (nv) => {
-      if (nv) {
-        emits(eventos.alIniciarCarga)
-      } else {
-        emits(eventos.alFinalizarCarga, mapa.todasCapasConError)
-      }
-    }
-  )
 })
 </script>
 
@@ -53,7 +53,38 @@ onMounted(() => {
       <!-- slot para las capas -->
       <slot />
 
-      <div class="contenido-vis" ref="refMapa" tabindex="0" />
+      <div class="contenido-vis" ref="refMapa" tabindex="0">
+        <div class="sisdai-mapa-control sisdai-mapa-control-acercar-alejar ol-unselectable">
+          <button
+            class="sisdai-mapa-control-acercar-boton boton-pictograma boton-primario"
+            type="button"
+            role="button"
+            aria-label="Acercar"
+            @click="mapa.getView().animate({ zoom: mapa.getView().getZoom() + 1, duration: 250 })"
+          >
+            <span class="pictograma-agregar" aria-hidden="true" />
+          </button>
+
+          <button
+            class="sisdai-mapa-control-alejar-boton boton-pictograma boton-primario"
+            type="button"
+            role="button"
+            aria-label="Alejar"
+            @click="mapa.getView().animate({ zoom: mapa.getView().getZoom() - 1, duration: 250 })"
+          >
+            <span class="pictograma-restar" aria-hidden="true" />
+          </button>
+
+          <button
+            class="sisdai-mapa-control-ajuste-vista-boton boton-pictograma boton-primario"
+            type="button"
+            role="button"
+            aria-label="Centrar"
+          >
+            <span class="pictograma-mapa-centro" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
 
       <div class="panel-derecha-vis">
         <slot name="panel-derecha-vis" />
@@ -62,17 +93,27 @@ onMounted(() => {
       <div class="panel-pie-vis">
         <slot name="panel-pie-vis" />
       </div>
+
+      <AnimacionCarga class="borde-t-redondeado-8" v-show="mapa.capasCargando" />
     </div>
 
-    <AnimacionCarga v-show="mapa.capasCargando" />
+    <!-- <AnimacionCarga class="borde-redondeado-8" v-show="mapa.capasCargando" /> -->
     <ContenedorVisAtribuciones />
   </div>
 </template>
 
 <style lang="scss">
 @import 'ol/ol.css';
+@import './../../../../src/estilos/Controles.scss';
 
 .sisdai-mapa.contenedor-vis {
-  position: relative;
+  .contenedor-vis-paneles {
+    position: relative;
+  }
+
+  .contenido-vis .sisdai-mapa-control {
+    // position: absolute;
+    z-index: 1;
+  }
 }
 </style>
