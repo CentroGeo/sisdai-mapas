@@ -1,20 +1,34 @@
 <script setup>
-import { useSlots, onMounted, shallowRef, ref, toRefs } from 'vue'
+import { useSlots, onMounted, shallowRef, toRefs, reactive, watch } from 'vue'
 import { panelesEnUso } from './utiles'
 import propsMapa from './props'
 import ContenedorVisAtribuciones from './../otros/ContenedorVisAtribuciones.vue'
+import AnimacionCarga from './../otros/AnimacionCarga.vue'
 import { provide } from 'vue'
 import Mapa from './Mapa'
+import eventos from './../capa/eventos'
 
+const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
 const { descripcion } = toRefs(props)
 
-const mapa = ref({})
+const mapa = reactive(new Mapa(props.id))
 provide('mapa', mapa)
 
 const refMapa = shallowRef(null)
 onMounted(() => {
-  mapa.value = new Mapa(props.id, refMapa.value)
+  mapa.setTarget(refMapa.value)
+
+  watch(
+    () => mapa.capasCargando,
+    (nv) => {
+      if (nv) {
+        emits(eventos.alIniciarCarga)
+      } else {
+        emits(eventos.alFinalizarCarga, mapa.todasCapasConError)
+      }
+    }
+  )
 })
 </script>
 
@@ -50,11 +64,15 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- <SisdaiCargando /> -->
+    <AnimacionCarga v-show="mapa.capasCargando" />
     <ContenedorVisAtribuciones />
   </div>
 </template>
 
 <style lang="scss">
 @import 'ol/ol.css';
+
+.sisdai-mapa.contenedor-vis {
+  position: relative;
+}
 </style>

@@ -17,12 +17,19 @@ const source = new ImageTile({
   crossOrigin: 'anonymous'
 })
 
+const layer = new TileLayer({ source, id: props.id, estado: TipoEstadoCarga.no })
+mapa.addLayer(layer)
+mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
+mapa.capas[props.id] = TipoEstadoCarga.no
+
 const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())
 function emitirEventosCargaTotal(estado) {
   if (estado === TipoEstadoCarga.inicio) {
     emits(eventos.alIniciarCarga)
+    mapa.capas[props.id] = TipoEstadoCarga.inicio
   } else {
     emits(eventos.alFinalizarCarga, Boolean(estado === TipoEstadoCarga.fin))
+    mapa.capas[props.id] = TipoEstadoCarga.fin
   }
 }
 watch(() => monitoreoCargaTeselas.estdo, emitirEventosCargaTotal)
@@ -38,10 +45,6 @@ source.on(TileEventType.TILELOADEND, () => {
 source.on(TileEventType.TILELOADERROR, () => {
   emits(eventos.alFinalizarCargaTesela, false)
   monitoreoCargaTeselas.error++
-})
-
-watch(mapa, (nv) => {
-  nv.addLayer(new TileLayer({ source }))
 })
 </script>
 

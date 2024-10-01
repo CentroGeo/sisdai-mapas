@@ -1,5 +1,6 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
+import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos.js'
 
 /**
  * @classdesc
@@ -9,7 +10,7 @@ import View from 'ol/View'
 export default class Mapa extends olMap {
   /**
    * Creación del objeto mapa.
-   * @param {number} id
+   * @param {number} id identificador del mapa.
    * @param {HTMLDivElement|string} target elemento o id del elemento html que contendrá el mapa.
    * @param {string} proyeccion
    * @returns {import("./../clases/Mapa.js").default} Mapa
@@ -17,12 +18,14 @@ export default class Mapa extends olMap {
   constructor(id, target, proyeccion, emits) {
     super({
       controls: [],
-      target,
+      // target,
       view: new View({
         center: [0, 0],
         zoom: 2
       })
     })
+
+    this.capas = {}
 
     this.id = id
 
@@ -32,22 +35,25 @@ export default class Mapa extends olMap {
   /**
    *
    */
-  async agregarAtributosAriaCanvas() {
-    const canvas = await this.buscarCanvasPromesa()
-    // console.log('SisdaiMapa2', Date.now())
-    canvas.setAttribute('aria-label', 'Mapa interactivo')
-    canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
+  get capasCargando() {
+    return Object.values(this.capas).some((capa) => capa === TipoEstadoCarga.inicio)
   }
 
   /**
    *
-   * @returns {Promise}
    */
-  buscarCanvasPromesa() {
-    return this.busquedaPromesa(
-      (mapa) => mapa.getViewport().querySelector('canvas')
-      // mapa.getAllLayers().find(capa => capa.get('id') === idCapa)
-    )
+  get todasCapasConError() {
+    return Object.values(this.capas).every((capa) => capa === TipoEstadoCarga.error)
+  }
+
+  /**
+   *
+   */
+  async agregarAtributosAriaCanvas() {
+    const canvas = await this.busquedaPromesa((mapa) => mapa.getViewport().querySelector('canvas'))
+
+    canvas.setAttribute('aria-label', 'Mapa interactivo')
+    canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
   }
 
   /**
