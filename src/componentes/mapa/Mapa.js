@@ -36,6 +36,10 @@ export default class Mapa extends olMap {
     this.agregarAtributosAriaCanvas()
   }
 
+  acercar(unidades = 1) {
+    this.getView().animate({ zoom: this.getView().getZoom() + unidades, duration: 250 })
+  }
+
   /**
    * Objeto vista: { acercamiento, centro, extencsion }
    * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:

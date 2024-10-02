@@ -7,6 +7,7 @@ import AnimacionCarga from './../otros/AnimacionCarga.vue'
 import { provide } from 'vue'
 import Mapa from './Mapa'
 import eventos from './../capa/eventos'
+import BotonAcercamiento from './../otros/BotonAcercamiento.vue'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
@@ -56,35 +57,14 @@ onMounted(() => {
       <slot />
 
       <div class="contenido-vis" ref="refMapa" tabindex="0">
-        <div class="sisdai-mapa-control sisdai-mapa-control-acercar-alejar ol-unselectable">
-          <button
-            class="sisdai-mapa-control-acercar-boton boton-pictograma boton-primario"
-            type="button"
-            role="button"
-            aria-label="Acercar"
-            @click="mapa.getView().animate({ zoom: mapa.getView().getZoom() + 1, duration: 250 })"
-          >
-            <span class="pictograma-agregar" aria-hidden="true" />
-          </button>
-
-          <button
-            class="sisdai-mapa-control-alejar-boton boton-pictograma boton-primario"
-            type="button"
-            role="button"
-            aria-label="Alejar"
-            @click="mapa.getView().animate({ zoom: mapa.getView().getZoom() - 1, duration: 250 })"
-          >
-            <span class="pictograma-restar" aria-hidden="true" />
-          </button>
-
-          <button
-            class="sisdai-mapa-control-ajuste-vista-boton boton-pictograma boton-primario"
-            type="button"
-            role="button"
-            aria-label="Centrar"
-          >
-            <span class="pictograma-mapa-centro" aria-hidden="true" />
-          </button>
+        <div class="sisdai-mapa-control contenedor-controles-vista ol-unselectable">
+          <BotonAcercamiento nombre="Acercar" pictograma="agregar" @click="mapa.acercar(1)" />
+          <BotonAcercamiento nombre="Alejar" pictograma="restar" @click="mapa.acercar(-1)" />
+          <BotonAcercamiento
+            nombre="Centrar"
+            pictograma="mapa-centro"
+            @click="mapa.ajustarVista()"
+          />
         </div>
       </div>
 
@@ -111,11 +91,6 @@ onMounted(() => {
 .sisdai-mapa.contenedor-vis {
   .contenedor-vis-paneles {
     position: relative;
-  }
-
-  .contenido-vis .sisdai-mapa-control {
-    // position: absolute;
-    z-index: 1;
   }
 }
 </style>

@@ -5,6 +5,7 @@
   --espacio-entre-botones: 4px;
 
   position: absolute;
+  z-index: 1;
 
   > button {
     height: var(--alto-boton);
@@ -16,22 +17,29 @@
       margin: auto;
     }
   }
-
-  &-acercar-alejar {
+  &.contenedor-controles-vista {
     display: flex;
     flex-direction: column;
     gap: var(--espacio-entre-botones);
     top: var(--margen);
     right: var(--margen);
-    > button {
-      margin: 0;
-    }
   }
 
-  &-ajuste-vista {
-    top: calc(var(--margen) + (2 * (var(--alto-boton) + var(--espacio-entre-botones))));
-    right: var(--margen);
-  }
+  // &-acercar-alejar {
+  //   display: flex;
+  //   flex-direction: column;
+  //   gap: var(--espacio-entre-botones);
+  //   top: var(--margen);
+  //   right: var(--margen);
+  //   > button {
+  //     margin: 0;
+  //   }
+  // }
+
+  // &-ajuste-vista {
+  //   top: calc(var(--margen) + (2 * (var(--alto-boton) + var(--espacio-entre-botones))));
+  //   right: var(--margen);
+  // }
 
   &-escala-grafica {
     bottom: calc(var(--margen) / 2);

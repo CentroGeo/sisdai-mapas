@@ -7,7 +7,6 @@ describe('Mapa', () => {
 
   // Configuración inicial
   const id = 'test-id'
-  const target = 'test-target'
   const proyeccion = 'EPSG:4326'
 
   // Crear la instancia del mapa
