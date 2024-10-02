@@ -11,7 +11,7 @@ export default {
   Layout: DisposicionPrincipal,
   async enhanceApp({ app, router, siteData }) {
     if (!import.meta.env.SSR) {
-      const SisdaiMapas = await import('./../../../new/src')
+      const SisdaiMapas = await import('./../../../src')
       app.use(SisdaiMapas.default)
 
       // const store = await import('sisdai-componentes/src/stores')
