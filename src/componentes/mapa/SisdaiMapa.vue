@@ -106,7 +106,7 @@ onMounted(() => {
 
 <style lang="scss">
 @import 'ol/ol.css';
-@import './../../../../src/estilos/Controles.scss';
+@import './../../estilos/Controles.scss';
 
 .sisdai-mapa.contenedor-vis {
   .contenedor-vis-paneles {

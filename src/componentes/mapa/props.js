@@ -1,6 +1,6 @@
 import { idAleatorio } from '../../utiles'
-import * as valoresPorDefecto from './../../../../src/valores/mapa'
-import * as validaciones from './../../../../src/utiles/validaciones'
+import * as valoresPorDefecto from './valores'
+import * as validaciones from './validaciones'
 
 export default {
   /**

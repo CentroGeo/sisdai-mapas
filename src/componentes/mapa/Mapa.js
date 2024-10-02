@@ -1,9 +1,9 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
-import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos.js'
-import { vista as vistaPorDefecto } from './../../../../src/valores/mapa'
-import * as validaciones from './../../../../src/utiles/validaciones'
-import { valorarArregloNumerico, valorarExtensionMargen } from './../../../../src/utiles'
+import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
+import { vista as vistaPorDefecto } from './valores'
+import * as validaciones from './validaciones'
+import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
 
 /**
  * @classdesc
