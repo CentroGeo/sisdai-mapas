@@ -1,7 +1,7 @@
 import { shallowMount } from '@vue/test-utils'
 import { describe, it, expect } from 'vitest'
 import SisdaiMapa from '@/componentes/mapa'
-import { addResizeObserver } from '../utils'
+import { addResizeObserver } from './../../utils'
 
 describe('SisdaiMapa', () => {
   addResizeObserver()

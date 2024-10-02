@@ -4,19 +4,19 @@ import SisdaiCapaXyz from '@/componentes/capa/xyz'
 import eventos from '@/componentes/capa/xyz/eventos'
 import Mapa from '@/componentes/mapa/Mapa'
 import { addResizeObserver } from '../../../utils'
-import { ref } from 'vue'
 import TileEventType from 'ol/source/TileEventType'
 
 describe('SisdaiCapaXyz', () => {
   addResizeObserver()
-  const mapa = ref(null)
+  const mapa = new Mapa()
   const id = 'idCapaXyz'
 
   const wrapper = shallowMount(SisdaiCapaXyz, {
     props: { id },
     global: { provide: { mapa } }
   })
-  mapa.value = new Mapa('idMapa', document.createElement('div'))
+  // mapa.value = new Mapa('idMapa', document.createElement('div'))
+  // mapa.setTarget(document.createElement('div'))
 
   it('agrega el identificador de la capa', () => {
     expect(wrapper.props().id).toBe(id)

@@ -3,7 +3,7 @@ import props from '@/componentes/capa/props'
 import SisdaiCapaXyz from '@/componentes/capa/xyz'
 import { shallowMount } from '@vue/test-utils'
 import { addResizeObserver } from '../../utils'
-import { ref } from 'vue'
+import Mapa from '@/componentes/mapa/Mapa'
 
 describe('Props Capa', () => {
   addResizeObserver()
@@ -13,7 +13,7 @@ describe('Props Capa', () => {
     const mockIdAleatorio = vi.fn(() => idAleatorio)
     vi.spyOn(props.id, 'default').mockImplementation(mockIdAleatorio)
     const wrapper = shallowMount(SisdaiCapaXyz, {
-      global: { provide: { mapa: ref(null) } }
+      global: { provide: { mapa: new Mapa() } }
     })
 
     expect(wrapper.props().id).toEqual(idAleatorio)

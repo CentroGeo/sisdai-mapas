@@ -1,6 +1,6 @@
 import Mapa from '@/componentes/mapa/Mapa'
 import { describe, it, expect, vi } from 'vitest'
-import { addResizeObserver } from '../utils'
+import { addResizeObserver } from '../../utils'
 
 describe('Mapa', () => {
   addResizeObserver()
@@ -11,7 +11,7 @@ describe('Mapa', () => {
   const proyeccion = 'EPSG:4326'
 
   // Crear la instancia del mapa
-  const mapa = new Mapa(id, target, proyeccion)
+  const mapa = new Mapa(id, proyeccion)
 
   it('debería crear una instancia del mapa correctamente', () => {
     // Comprobamos que se cree la instancia correctamente
