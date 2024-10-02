@@ -3,6 +3,11 @@
 <template>
   <SisdaiMapa
     descripcion="Mapa básico con una capa base visible a nivel mundial."
+    :vista="{
+      centro: [-102, 24],
+      // extension: [-118.3651, 14.5321, -86.7104, 32.7187],
+      acercamiento: 4.4
+    }"
     @alIniciarCarga="() => console.log('M: alIniciarCarga')"
     @alFinalizarCarga="(v) => console.log('M: alFinalizarCarga', v)"
   >

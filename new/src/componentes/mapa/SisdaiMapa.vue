@@ -10,9 +10,11 @@ import eventos from './../capa/eventos'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
-const { descripcion } = toRefs(props)
+const { descripcion, vista } = toRefs(props)
 
-const mapa = reactive(new Mapa(props.id))
+const mapa = reactive(new Mapa(props.id, props.proyeccion))
+mapa.asignarVista(vista.value)
+mapa.ajustarVista()
 provide('mapa', mapa)
 
 watch(

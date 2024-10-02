@@ -1,4 +1,6 @@
 import { idAleatorio } from '../../utiles'
+import * as valoresPorDefecto from './../../../../src/valores/mapa'
+import * as validaciones from './../../../../src/utiles/validaciones'
 
 export default {
   /**
@@ -6,7 +8,7 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ✅
+   * - Reactivo: Si
    */
   descripcion: {
     type: String,
@@ -18,10 +20,39 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Reactivo: ❌
+   * - Reactivo: No
    */
   id: {
     type: String,
     default: () => idAleatorio()
+  },
+
+  /**
+   * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
+   *
+   * - Tipo: `Object`
+   * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
+   * - Reactivo: Si
+   */
+  vista: {
+    type: Object,
+    default: () => valoresPorDefecto.vista,
+    validator: validaciones.vista
+  },
+
+  /**
+   * Código de identificación SRS que define la proyección de la vista.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'EPSG:4326'`
+   * - Reactivo: No
+   *
+   * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+   *
+   * > ⚠️ **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+   */
+  proyeccion: {
+    type: String,
+    default: valoresPorDefecto.proyeccion
   }
 }
