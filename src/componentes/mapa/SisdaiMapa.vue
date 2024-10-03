@@ -16,7 +16,7 @@ const { descripcion, vista } = toRefs(props)
 
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
 mapa.asignarVista(vista.value)
-mapa.ajustarVista()
+// mapa.ajustarVista()
 provide(MAPA_INYECTADO, mapa)
 
 watch(
@@ -33,6 +33,7 @@ watch(
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
+  mapa.ajustarVista()
 })
 </script>
 

@@ -70,4 +70,4 @@ Titulo de las clases de la leyenda, solo aplica si la capa cuenta con reglas de 
 
 <CapaWms />
 
-<<< @/.vitepress/ejemplos/CapaWms.vue{16-23}
+<<< @/.vitepress/ejemplos/CapaWms.vue{10-17}
