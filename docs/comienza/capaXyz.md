@@ -60,4 +60,4 @@ Ejecutado cuando se detecta que ha finalizado la carga de cada uno de los mosaic
 
 <CapaXyz />
 
-<<< @/.vitepress/ejemplos/CapaXyz.vue
+<<< @/.vitepress/ejemplos/CapaXyz.vue{9-15}

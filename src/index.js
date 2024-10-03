@@ -13,13 +13,15 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-import SisdaiMapa from './componentes/mapa'
 import SisdaiCapaVectorial from './componentes/capa/vectorial'
+import SisdaiCapaWms from './componentes/capa/wms'
 import SisdaiCapaXyz from './componentes/capa/xyz'
+import SisdaiMapa from './componentes/mapa'
 
 export default {
   install: (Vue) => {
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
+    Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiMapa', SisdaiMapa)
   }

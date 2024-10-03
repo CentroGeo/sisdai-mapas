@@ -1,5 +1,5 @@
 <script setup>
-import { inject, toRefs, watch, reactive, onUnmounted } from 'vue'
+import { inject, toRefs, watch, reactive } from 'vue'
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
 import _props from './props'
@@ -19,7 +19,7 @@ const source = new ImageTile({
 
 const layer = new TileLayer({ source, id: props.id, estado: TipoEstadoCarga.no })
 mapa.addLayer(layer)
-mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
+// mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 mapa.capas[props.id] = TipoEstadoCarga.no
 
 const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())

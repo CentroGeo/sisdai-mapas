@@ -1,13 +1,10 @@
 <template>
-  <SisdaiMapa descripcion="Mapa básico con una capa base visible a nivel mundial.">
+  <SisdaiMapa descripcion="Mapa básico con una capa wms visible.">
     <template #panel-encabezado-vis>
-      <p class="vis-titulo-visualizacion">Ejemplo una capas xyz</p>
+      <p class="vis-titulo-visualizacion">Ejemplo una capas wms</p>
     </template>
 
-    <SisdaiCapaXyz url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
-
-    <SisdaiCapaXyz
-      url="https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}"
+    <SisdaiCapaWms
       @alIniciarCargaTesela="() => console.log('C: alIniciarCargaTesela')"
       @alFinalizarCargaTesela="() => console.log('C: alFinalizarCargaTesela')"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
