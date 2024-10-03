@@ -2,12 +2,13 @@
 import { inject, toRefs, watch, reactive } from 'vue'
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
-import _props from './props'
 import TileEventType from 'ol/source/TileEventType'
+import _props from './props'
 import MonitoreoCargaElementos, { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 import eventos from './eventos'
+import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 
-const mapa = inject('mapa')
+const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
 const { url } = toRefs(props)
@@ -49,5 +50,5 @@ source.on(TileEventType.TILELOADERROR, () => {
 </script>
 
 <template>
-  <span :sisdai-capa="id" />
+  <span :sisdai-capa="props.id" />
 </template>

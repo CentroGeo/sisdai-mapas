@@ -8,6 +8,7 @@ import { provide } from 'vue'
 import Mapa from './Mapa'
 import eventos from './../capa/eventos'
 import BotonAcercamiento from './../otros/BotonAcercamiento.vue'
+import { MAPA_INYECTADO } from './../../utiles/identificadores'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
@@ -16,7 +17,7 @@ const { descripcion, vista } = toRefs(props)
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
 mapa.asignarVista(vista.value)
 mapa.ajustarVista()
-provide('mapa', mapa)
+provide(MAPA_INYECTADO, mapa)
 
 watch(
   () => mapa.capasCargando,
