@@ -1,7 +1,7 @@
 <template>
-  <SisdaiMapa descripcion="Mapa básico con una capa base visible a nivel mundial.">
+  <SisdaiMapa descripcion="Mapa básico con capas base visible a nivel mundial.">
     <template #panel-encabezado-vis>
-      <p class="vis-titulo-visualizacion">Ejemplo una capas xyz</p>
+      <p class="vis-titulo-visualizacion">Ejemplo capas xyz</p>
     </template>
 
     <SisdaiCapaXyz url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />

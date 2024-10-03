@@ -18,7 +18,7 @@ const source = new ImageTile({
   crossOrigin: 'anonymous'
 })
 
-const layer = new TileLayer({ source, id: props.id, estado: TipoEstadoCarga.no })
+const layer = new TileLayer({ source, id: props.id })
 mapa.addLayer(layer)
 // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 mapa.capas[props.id] = TipoEstadoCarga.no

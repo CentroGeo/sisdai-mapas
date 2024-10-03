@@ -1,5 +1,5 @@
 <script setup>
-import CapasVectoriales from "./../.vitepress/components/capas/vectoriales.vue";
+import CapaVectorial from "./../.vitepress/ejemplos/CapaVectorial.vue";
 </script>
 
 # Capa Vectorial
@@ -22,25 +22,25 @@ Hereda las propiedades definidas en la sección Capas más las siguientes:
 
 Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 'topojson'.
 
-- Tipo: `String`
+- Tipo: `String`.
 - Valor por defecto: `'geojson'`.
-- Reactivo: ❌
+- Reactivo: No.
 
 #### `fuente`
 
 Origen de la capa. Puede ser una url externa o relativa a las carpetas del proyecto, e incluso un objeto en formato geojson o topojson con coordenadas y atributos.
 
-- Tipo: `String` o `Object`
+- Tipo: `String` o `Object`.
 - Valor obligatorio.
-- Reactivo: ✅
+- Reactivo: Si.
 
 #### `globoInformativo`
 
 Contenido del globo de información que aparecerá al pasar el cursor sobre la capa. Puede ser un texto estático o una función que accede a las propiedades del elemento al que se sobrepone.
 
-- Tipo: `String` o `Function`
+- Tipo: `String` o `Function`.
 - Valor por defecto: `undefined`.
-- Reactivo: ✅
+- Reactivo: Si.
 
 #### `cuadroInformativo`
 
@@ -48,10 +48,10 @@ Contenido del cuadro de información que aparecerá al pasar el cursor sobre la 
 
 - Tipo: `String` o `Function`
 - Valor por defecto: `undefined`.
-- Reactivo: ✅
+- Reactivo: Si.
 
 ## Ejemplo
 
-<CapasVectoriales />
+<CapaVectorial />
 
 <<< @/.vitepress/components/capas/vectoriales.vue

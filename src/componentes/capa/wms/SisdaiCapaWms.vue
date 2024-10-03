@@ -20,8 +20,7 @@ const source = new ImageWMS({
   serverType: props.tipoServidor
 })
 
-const layer = new ImageLayer({ source, id: props.id })
-mapa.addLayer(layer)
+mapa.addLayer(new ImageLayer({ source, id: props.id }))
 mapa.capas[props.id] = TipoEstadoCarga.no
 
 source.on(ImageSourceEventType.IMAGELOADSTART, () => {
@@ -39,6 +38,12 @@ source.on(ImageSourceEventType.IMAGELOADERROR, () => {
 
 watch(estilo, (STYLES) => source.updateParams({ STYLES }))
 watch(filtro, (CQL_FILTER) => source.updateParams({ CQL_FILTER }))
+
+/**
+ * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que
+ * revisar si funciona bien con Utfgrid.
+ * @see https://openlayers.org/en/latest/examples/wms-tiled.html
+ */
 </script>
 
 <template>

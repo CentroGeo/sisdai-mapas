@@ -25,7 +25,7 @@ watch(
     if (nv) {
       emits(eventos.alIniciarCarga)
     } else {
-      emits(eventos.alFinalizarCarga, mapa.todasCapasConError)
+      emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
     }
   }
 )
