@@ -1,13 +1,11 @@
 <script setup>
-import { useSlots, onMounted, shallowRef, toRefs, reactive, watch } from 'vue'
+import { onMounted, provide, reactive, shallowRef, toRefs, useSlots, watch } from 'vue'
+import Mapa from './Mapa'
 import { panelesEnUso } from './utiles'
 import propsMapa from './props'
-import ContenedorVisAtribuciones from './../otros/ContenedorVisAtribuciones.vue'
-import AnimacionCarga from './../otros/AnimacionCarga.vue'
-import { provide } from 'vue'
-import Mapa from './Mapa'
+import { AnimacionCarga, BotonAcercamiento, ContenedorVisAtribuciones } from './elementos'
+import { GloboInformativo } from './elementos/info'
 import eventos from './../capa/eventos'
-import BotonAcercamiento from './../otros/BotonAcercamiento.vue'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
 
 const emits = defineEmits(Object.values(eventos))
@@ -19,16 +17,14 @@ mapa.asignarVista(vista.value)
 // mapa.ajustarVista()
 provide(MAPA_INYECTADO, mapa)
 
-watch(
-  () => mapa.capasCargando,
-  (nv) => {
-    if (nv) {
-      emits(eventos.alIniciarCarga)
-    } else {
-      emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
-    }
+function emitirEventosCarga(nv) {
+  if (nv) {
+    emits(eventos.alIniciarCarga)
+  } else {
+    emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
   }
-)
+}
+watch(() => mapa.capasCargando, emitirEventosCarga)
 
 const refMapa = shallowRef(null)
 onMounted(() => {
@@ -68,6 +64,8 @@ onMounted(() => {
             @click="mapa.ajustarVista()"
           />
         </div>
+
+        <GloboInformativo />
       </div>
 
       <div class="panel-derecha-vis">

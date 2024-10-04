@@ -42,13 +42,13 @@ Contenido del globo de información que aparecerá al pasar el cursor sobre la c
 - Valor por defecto: `undefined`.
 - Reactivo: Si.
 
-#### `cuadroInformativo`
+<!-- #### `cuadroInformativo`
 
 Contenido del cuadro de información que aparecerá al pasar el cursor sobre la capa. Puede ser un texto estático o una función que accede a las propiedades del elemento al que se sobrepone.
 
 - Tipo: `String` o `Function`
 - Valor por defecto: `undefined`.
-- Reactivo: Si.
+- Reactivo: Si. -->
 
 ## Ejemplo
 

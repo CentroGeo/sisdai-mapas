@@ -2,8 +2,6 @@
   <SisdaiMapa
     descripcion="Mapa básico con una capa vectorial."
     :vista="{ extension: '-118.3651,14.5321,-86.7104,32.7187' }"
-    @alIniciarCarga="() => console.log('M: alIniciarCarga')"
-    @alFinalizarCarga="(v) => console.log('M: alFinalizarCarga', v)"
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>
@@ -17,6 +15,12 @@
         'circle-stroke-color': '#232323',
         'circle-stroke-width': 0.5
       }"
+      :globoInformativo="
+        (p) => {
+          console.log(p)
+          return `Entidad: <b>{f.nom_edo}</b>`
+        }
+      "
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
     />

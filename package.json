@@ -48,7 +48,7 @@
     "vite": "^5.4.8",
     "vitepress": "^1.3.4",
     "vitest": "^2.1.2",
-    "vue": "^3.5.9"
+    "vue": "^3.5.11"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

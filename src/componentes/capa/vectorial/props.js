@@ -23,5 +23,21 @@ export default {
   fuente: {
     type: [String, Object],
     required: true
-  }
+  },
+
+  /**
+   * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
+   *
+   * - Tipo: `String` o `Function`.
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: Si.
+   */
+  globoInformativo: {
+    type: [String, Function, Object],
+    default: undefined
+  },
+
+  /** */
+  visualizacion: {}
 }

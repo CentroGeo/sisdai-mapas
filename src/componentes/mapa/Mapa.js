@@ -1,5 +1,6 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
+import PointerEventType from 'ol/pointer/EventType.js'
 import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
@@ -34,6 +35,19 @@ export default class Mapa extends olMap {
     this.id = id
 
     this.agregarAtributosAriaCanvas()
+
+    this.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent, map }) => {
+      if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
+        this.abrirGloboInfo(originalEvent)
+        // console.log({ dragging, originalEvent, map })
+      }
+    })
+  }
+
+  abrirGloboInfo(originalEvent) {
+    const pixel = this.getEventPixel(originalEvent)
+    // const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
+    console.log(pixel)
   }
 
   acercar(unidades = 1) {
