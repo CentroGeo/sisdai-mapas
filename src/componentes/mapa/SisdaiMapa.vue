@@ -65,7 +65,7 @@ onMounted(() => {
           />
         </div>
 
-        <GloboInformativo />
+        <GloboInformativo contenido="Soy un globo de información" :pixel="[10, 10]" />
       </div>
 
       <div class="panel-derecha-vis">

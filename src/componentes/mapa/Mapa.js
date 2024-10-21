@@ -5,6 +5,7 @@ import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
+import { ref } from 'vue'
 
 /**
  * @classdesc
@@ -36,6 +37,7 @@ export default class Mapa extends olMap {
 
     this.agregarAtributosAriaCanvas()
 
+    // this.pixel = [0,0]
     this.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent, map }) => {
       if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
         this.abrirGloboInfo(originalEvent)
@@ -44,10 +46,12 @@ export default class Mapa extends olMap {
     })
   }
 
+  pixel = ref([0, 0])
   abrirGloboInfo(originalEvent) {
     const pixel = this.getEventPixel(originalEvent)
     // const contenido = buscarContenidoCapaEnPixel(pixel, map, 'globoInfo')
-    console.log(pixel)
+    // console.log(pixel)
+    this.pixel.value = pixel
   }
 
   acercar(unidades = 1) {

@@ -1,14 +1,26 @@
 <script setup>
-import { toRefs } from 'vue'
+import { computed, inject, toRefs, watch } from 'vue'
+import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
+
+const mapa = inject(MAPA_INYECTADO)
+// console.log(mapa.pixel)
+const x = computed(() => {
+  // return mapa.pixel
+  return mapa.pixel.map((p) => `${p}px`)
+})
+
+watch(
+  // () => mapa.pixel,
+  x,
+  (nv) => {
+    console.log(nv)
+  }
+)
 
 const props = defineProps({
   contenido: {
     type: String,
     default: undefined
-  },
-  pixel: {
-    type: Array,
-    default: () => [0, 0]
   },
   visible: {
     type: Boolean,
@@ -16,11 +28,22 @@ const props = defineProps({
   }
 })
 
-const { contenido, pixel, visible } = toRefs(props)
+const { contenido, visible } = toRefs(props)
 </script>
 
 <template>
-  <div class="globo-informacion ol-unselectable" role="tooltip" aria-live="assertive">
-    <div class="globo-informacion-cuerpo">Soy un globo de información</div>
+  <div
+    class="globo-informacion"
+    role="tooltip"
+    aria-live="assertive"
+    :style="`left: ${x[0]}; top: ${x[1]};`"
+  >
+    <div class="globo-informacion-cuerpo">{{ contenido }}</div>
   </div>
 </template>
+
+<style lang="scss">
+.sisdai-mapa.contenedor-vis .contenido-vis .globo-informacion {
+  position: absolute;
+}
+</style>
