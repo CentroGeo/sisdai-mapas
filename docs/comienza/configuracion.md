@@ -18,25 +18,20 @@ El componente `SisdaiMapa` es el componente princial de esta librería. Dentro d
 
 ## Propiedades
 
-#### `elementosDescriptivos`
+#### `descripcion`
 
-Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
+Descripción corta del mapa, la cual es visible en el modo solo texto y audible con herramientas de lectura por voz.
 
 - Tipo: `String`
-- Valor por defecto: `''`
-- Reactivo: ✅
+- Valor por defecto: `'Mapa sin descripción'`
+- Reactivo: Si.
 
-> ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
+> **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que lo describe.
 
 **Uso:**
 
 ```html
-<h2 id="titulo-mapa">Titulo del mapa.</h2>
-<p id="descripcion-corta-mapa">Descripción corta del mapa.</p>
-
-<SisdaiMapa elementosDescriptivos="titulo-mapa descripcion-corta-mapa">
-  ...
-</SisdaiMapa>
+<SisdaiMapa descripcion="Descripción corta del mapa."> ... </SisdaiMapa>
 ```
 
 #### `escalaGrafica`
@@ -45,7 +40,7 @@ Define si se agrega la escala grafica en el mapa.
 
 - Tipo: `Boolean`
 - Valor por defecto: `true`
-- Reactivo: ✅
+- Reactivo: Si.
 
 **Uso:**
 
@@ -59,7 +54,7 @@ Identificador único del mapa. Si no es definido se asignará un valor aleatorio
 
 - Tipo: `String`
 - Valor por defecto: Aleatorio
-- Reactivo: ❌
+- Reactivo: No.
 
 **Uso:**
 
@@ -73,7 +68,7 @@ Código de identificación SRS que define la proyección de la vista.
 
 - Tipo: `String`
 - Valor por defecto: `'EPSG:4326'`
-- Reactivo: ❌
+- Reactivo: No.
 
 > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
 
@@ -91,7 +86,7 @@ Objeto que define la vista del mapa. Revisa los detalles de la vista en la [secc
 
 - Tipo: `Object`
 - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
-- Reactivo: ✅
+- Reactivo: Si.
 
 ## Funciones ​
 
@@ -115,9 +110,7 @@ const mapa = ref()
 ```html
 <SisdaiMapa ref="mapa"> ... </SisdaiMapa>
 
-<button @click="mapa.exportarImagen('mapa-sisdai')">
-  Exportar mapa como imagen
-</button>
+<button @click="mapa.exportarImagen('mapa-sisdai')">Exportar mapa como imagen</button>
 ```
 
 ## Ejemplo

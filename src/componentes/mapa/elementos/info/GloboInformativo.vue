@@ -45,5 +45,6 @@ const { contenido, visible } = toRefs(props)
 <style lang="scss">
 .sisdai-mapa.contenedor-vis .contenido-vis .globo-informacion {
   position: absolute;
+  display: none;
 }
 </style>

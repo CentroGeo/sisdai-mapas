@@ -7,7 +7,7 @@ export default {
    * Descripción corta del mapa, la cual es visible en el modo solo texto y audible con herramientas de lectura por voz.
    *
    * - Tipo: `String`
-   * - Valor por defecto: `undefined`
+   * - Valor por defecto: `'Mapa sin descripción'`
    * - Reactivo: Si
    */
   descripcion: {

@@ -15,14 +15,18 @@ Instalación y descarga de la biblioteca:
 npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
 ```
 
+Actualmente la versión más estable es: v{{ version }}.
+
 ## Importación y registro
 
 En el archivo que se desee utilizar el componente:
 
 ```js
-import Vue from 'vue'
 import SisdaiMapas from 'sisdai-mapas'
-Vue.use(SisdaiMapas)
+import App from './App.vue'
+
+const app = createApp(App)
+app.use(SisdaiMapas)
 ```
 
 Si se utiliza el componente sisdai-mapas en dos archivos o más, se recomienda registrar el componente en el archivo `src/main.js` del proyecto.

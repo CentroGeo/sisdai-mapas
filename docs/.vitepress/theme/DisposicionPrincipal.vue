@@ -17,7 +17,7 @@ const { page, frontmatter } = useData()
 
     <SisdaiNavegacionGobMx />
     <NavegacionPrincipal />
-    <SisdaiMenuAccesibilidad />
+    <SisdaiMenuAccesibilidad perfilColor="sisdai" />
 
     <Pagina404 v-if="page.isNotFound" />
 
