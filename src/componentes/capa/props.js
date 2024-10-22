@@ -6,7 +6,7 @@ export default {
    *
    * - Tipo: `String` o `Array<String>`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_Source.html#~AttributionLike
    */
@@ -21,7 +21,7 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   id: {
     type: String,
@@ -33,7 +33,7 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: `'Nombre no asignado'`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   nombre: {
     type: String,
@@ -45,7 +45,7 @@ export default {
    *
    * - Tipo: `Number` o `String`
    * - Valor por defecto: `1`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   opacidad: {
     type: [Number, String],
@@ -57,7 +57,7 @@ export default {
    *
    * - Tipo: `Number` o `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   posicion: {
     type: [Number, String],
@@ -69,7 +69,7 @@ export default {
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   visible: {
     type: Boolean,

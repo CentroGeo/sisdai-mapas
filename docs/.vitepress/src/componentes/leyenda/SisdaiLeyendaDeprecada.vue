@@ -7,7 +7,7 @@ import {
   acomodarFormaDesdeVector,
   estiloContiene,
   estiloParaSvg,
-  estiloParaSvgPunto,
+  estiloParaSvgPunto
 } from '../utiles/estiloVectores'
 import { tiposCapa } from '../valores/capa'
 import { acomodarReglasWms } from './../utiles/leyenda'
@@ -21,11 +21,11 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   para: {
     type: String,
-    require: true,
+    require: true
   },
 
   /**
@@ -34,11 +34,11 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `false`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   sinControl: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   /**
@@ -47,8 +47,8 @@ const props = defineProps({
    */
   sinControlClases: {
     type: Boolean,
-    default: true,
-  },
+    default: true
+  }
 })
 
 const sisdaiLeyenda = shallowRef()
@@ -58,7 +58,7 @@ const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
   tituloClases: 'titulo-clases',
-  visible: false,
+  visible: false
 })
 
 function actualizarClaseVector(estilo, geometria) {
@@ -89,14 +89,14 @@ function actualizarClaseVector(estilo, geometria) {
     forma: puntosForma,
     geometria,
     icono,
-    tamanio,
+    tamanio
   })
   // console.log(simbolo.xml)
 
   capa.clases = [
     {
-      simbolo,
-    },
+      simbolo
+    }
   ]
 }
 
@@ -107,7 +107,7 @@ function actualizarClasesDesdeWms(_url, params) {
       params.LAYERS
     }&STYLE=${params.STYLES ? params.STYLES : ''}`
 
-  fetchJSON(url).then(data => {
+  fetchJSON(url).then((data) => {
     const clases = acomodarReglasWms(data)
     // console.log(clases)
 
@@ -126,7 +126,7 @@ function vincularCapa(_capa) {
   capa.nombre = _capa.get('nombre')
   watch(
     () => _capa.get('nombre'),
-    nv => (capa.nombre = nv)
+    (nv) => (capa.nombre = nv)
   )
 
   /**
@@ -135,24 +135,24 @@ function vincularCapa(_capa) {
   capa.visible = _capa.getVisible()
   watch(
     () => _capa.getVisible(),
-    nv => (capa.visible = nv)
+    (nv) => (capa.visible = nv)
   )
   watch(
     () => capa.visible,
-    nv => _capa.setVisible(nv)
+    (nv) => _capa.setVisible(nv)
   )
 
   capa.tituloClases = _capa.get('tituloClases')
   watch(
     () => _capa.get('tituloClases'),
-    nv => (capa.tituloClases = nv)
+    (nv) => (capa.tituloClases = nv)
   )
 
   if (_capa.get('tipo') === tiposCapa.vectorial) {
     actualizarClaseVector(_capa.get('estilo2'), _capa.get('geometria'))
     watch(
       () => _capa.get('estilo2'),
-      nv => actualizarClaseVector(nv, _capa.get('geometria')),
+      (nv) => actualizarClaseVector(nv, _capa.get('geometria')),
       { deep: true }
     )
   }
@@ -162,7 +162,7 @@ function vincularCapa(_capa) {
     actualizarClasesDesdeWms(fuente, _capa.getSource().getParams())
     watch(
       () => _capa.getSource().getParams(),
-      nv => actualizarClasesDesdeWms(fuente, nv),
+      (nv) => actualizarClasesDesdeWms(fuente, nv),
       { deep: true }
     )
   }
@@ -175,7 +175,7 @@ onMounted(() => {
   // usarRegistroMapas().mapaPromesa(idMapa).then(vincularCapa)
   usarRegistroMapas()
     .mapaPromesa(idMapa)
-    .then(mapa => mapa.buscarCapaPromesa(props.para))
+    .then((mapa) => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
 
@@ -183,10 +183,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <ul
-    ref="sisdaiLeyenda"
-    class="sisdai-mapa-leyenda casillas-anidadas"
-  >
+  <ul ref="sisdaiLeyenda" class="sisdai-mapa-leyenda casillas-anidadas">
     <li class="leyenda-titulo">
       <LeyendaControl
         :id="`${para}-control`"
@@ -194,18 +191,12 @@ onMounted(() => {
         :simbolo="capa.clases.length === 1 ? capa.clases[0].simbolo : undefined"
         :encendido="capa.visible"
         :sinControl="sinControl"
-        @alCambiar="valor => (capa.visible = valor)"
+        @alCambiar="(valor) => (capa.visible = valor)"
       />
     </li>
 
-    <ul
-      v-if="capa.clases.length > 1"
-      class="leyenda-clases casillas-subseleccion"
-    >
-      <p
-        class="titulo-clases m-y-1"
-        v-if="capa.tituloClases"
-      >
+    <ul v-if="capa.clases.length > 1" class="leyenda-clases casillas-subseleccion">
+      <p class="titulo-clases m-y-1" v-if="capa.tituloClases">
         {{ capa.tituloClases }}
       </p>
       <LeyendaControl

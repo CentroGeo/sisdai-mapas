@@ -8,7 +8,7 @@ const eventos = {
   /**
    *
    */
-  alCambiarFiltroLeyenda: 'alCambiarFiltroLeyenda',
+  alCambiarFiltroLeyenda: 'alCambiarFiltroLeyenda'
 }
 </script>
 
@@ -22,27 +22,27 @@ import LeyendaControl from './leyenda/LeyendaControl.vue'
 const props = defineProps({
   capa: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   deshabilitado: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   estiloCapa: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   fuenteCapa: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   globoInformativo: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -51,11 +51,11 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `false`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   sinControl: {
     type: Boolean,
-    default: true,
+    default: true
   },
 
   /**
@@ -64,18 +64,18 @@ const props = defineProps({
    */
   sinControlClases: {
     type: Boolean,
-    default: true,
+    default: true
   },
 
   tituloCapa: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   visibilidadCapa: {
     type: [Boolean, Array],
-    default: true,
-  },
+    default: true
+  }
 })
 const emits = defineEmits(Object.values(eventos))
 
@@ -87,13 +87,13 @@ const {
   sinControl,
   sinControlClases,
   tituloCapa,
-  visibilidadCapa,
+  visibilidadCapa
 } = toRefs(props)
 
 const clases = ref([])
 watch(
   () => clases.value.map(({ visible }) => visible),
-  nv => emits(eventos.alCambiarVisibilidad, nv)
+  (nv) => emits(eventos.alCambiarVisibilidad, nv)
 )
 
 function urlGeoserver() {
@@ -103,7 +103,7 @@ function urlGeoserver() {
     request: 'GetLegendGraphic',
     format: 'application/json',
     layer: capa.value,
-    style: estiloCapa.value,
+    style: estiloCapa.value
   }
 
   return fuenteCapa.value + '?' + parametrosEnFormatoURL(parametros)
@@ -117,7 +117,7 @@ function actualizarClasesDesdeWms() {
       clases.value = acomodarReglasWms(
         data,
         Array.isArray(visibilidadCapa.value)
-          ? visibilidadCapa.value.some(v => v)
+          ? visibilidadCapa.value.some((v) => v)
           : visibilidadCapa.value
       )
 
@@ -153,14 +153,14 @@ watch(
       .map(({ filtro }) => filtro)
       .join(' OR ')
   },
-  nv => emits(eventos.alCambiarFiltroLeyenda, nv)
+  (nv) => emits(eventos.alCambiarFiltroLeyenda, nv)
 )
 
 const capaEncendida = computed({
   // getter
   get() {
     return Array.isArray(visibilidadCapa.value)
-      ? visibilidadCapa.value.some(v => v)
+      ? visibilidadCapa.value.some((v) => v)
       : visibilidadCapa.value
   },
   // setter
@@ -170,47 +170,37 @@ const capaEncendida = computed({
     clases.value.forEach((_, idx) => {
       clases.value[idx].visible = valor
     })
-  },
+  }
 })
 </script>
 
 <template>
-  <div
-    ref="sisdaiLeyendaExterna"
-    class="sisdai-mapa-leyenda"
-  >
+  <div ref="sisdaiLeyendaExterna" class="sisdai-mapa-leyenda">
     <div class="leyenda-titulo">
       <LeyendaControl
         :deshabilitado="deshabilitado"
         :etiqueta="tituloCapa"
         :encendido="capaEncendida"
         :encendidoIndeterminado="
-          clases.some(({ visible }) => visible) &&
-          !clases.every(({ visible }) => visible)
+          clases.some(({ visible }) => visible) && !clases.every(({ visible }) => visible)
         "
         :globoInformativo="globoInformativo"
         :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
         :sinControl="sinControl"
-        @alCambiar="valor => (capaEncendida = valor)"
+        @alCambiar="(valor) => (capaEncendida = valor)"
       />
     </div>
 
-    <div
-      v-if="clases.length > 1"
-      class="leyenda-clases casillas-subseleccion"
-    >
+    <div v-if="clases.length > 1" class="leyenda-clases casillas-subseleccion">
       <ul class="casillas-anidadas">
-        <li
-          v-for="(clase, idx) in clases"
-          :key="`${capa}-clase-control-${idx}`"
-        >
+        <li v-for="(clase, idx) in clases" :key="`${capa}-clase-control-${idx}`">
           <LeyendaControl
             :id="`${capa}-clase-control-${idx}`"
             :encendido="clase.visible"
             :etiqueta="clase.titulo"
             :simbolo="clase.simbolo"
             :sinControl="sinControlClases"
-            @alCambiar="valor => (clase.visible = valor)"
+            @alCambiar="(valor) => (clase.visible = valor)"
           />
         </li>
       </ul>

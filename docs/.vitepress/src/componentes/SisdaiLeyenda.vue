@@ -7,12 +7,12 @@ import SisdaiLeyendaWmsExterna from './SisdaiLeyendaWmsExterna.vue'
 const props = defineProps({
   deshabilitado: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   globoInformativo: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -20,11 +20,11 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   para: {
     type: String,
-    require: true,
+    require: true
   },
 
   /**
@@ -33,11 +33,11 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `false`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   sinControl: {
     type: Boolean,
-    default: false,
+    default: false
   },
 
   /**
@@ -46,8 +46,8 @@ const props = defineProps({
    */
   sinControlClases: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 var idMapa
@@ -58,13 +58,13 @@ const capa = reactive({
   nombre: 'Cargando...',
   clases: [],
   tituloClases: 'titulo-clases',
-  visible: false,
+  visible: false
 })
 
 const wms = reactive({
   fuente: undefined,
   capa: undefined,
-  estilo: undefined,
+  estilo: undefined
 })
 
 const filtroLeyenda = ref(undefined)
@@ -85,7 +85,7 @@ function vincularCapa(_capa) {
   capa.nombre = _capa.get('nombre')
   watch(
     () => _capa.get('nombre'),
-    nv => (capa.nombre = nv)
+    (nv) => (capa.nombre = nv)
   )
 
   /**
@@ -94,21 +94,21 @@ function vincularCapa(_capa) {
   capa.visible = _capa.getVisible()
   watch(
     () => _capa.getVisible(),
-    nv => (capa.visible = nv)
+    (nv) => (capa.visible = nv)
   )
   watch(
     () => capa.visible,
-    nv => _capa.setVisible(Array.isArray(nv) ? nv.some(v => v) : nv)
+    (nv) => _capa.setVisible(Array.isArray(nv) ? nv.some((v) => v) : nv)
   )
 
   if (_capa.get('tipo') === tiposCapa.wms) {
     wms.fuente = _capa.getSource().getUrl()
     actualizarParametros(_capa.getSource().getParams())
     watch(() => _capa.getSource().getParams(), actualizarParametros, {
-      deep: true,
+      deep: true
     })
 
-    watch(filtroLeyenda, nv => _capa.set('filtroLeyenda', nv))
+    watch(filtroLeyenda, (nv) => _capa.set('filtroLeyenda', nv))
   }
 }
 
@@ -119,7 +119,7 @@ onMounted(() => {
 
   usarRegistroMapas()
     .mapaPromesa(idMapa)
-    .then(mapa => mapa.buscarCapaPromesa(props.para))
+    .then((mapa) => mapa.buscarCapaPromesa(props.para))
     .then(vincularCapa)
 })
 </script>
@@ -136,8 +136,8 @@ onMounted(() => {
       :sinControlClases="sinControlClases"
       :tituloCapa="capa.nombre"
       :visibilidadCapa="capa.visible"
-      @alCambiarFiltroLeyenda="valor => (filtroLeyenda = valor)"
-      @alCambiarVisibilidad="valor => (capa.visible = valor)"
+      @alCambiarFiltroLeyenda="(valor) => (filtroLeyenda = valor)"
+      @alCambiarVisibilidad="(valor) => (capa.visible = valor)"
     />
   </div>
 </template>

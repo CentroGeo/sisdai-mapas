@@ -50,9 +50,9 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `''`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    *
-   * > ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
+   * >  **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
    */
   elementosDescriptivos: {
     type: String,
@@ -64,7 +64,7 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   escalaGrafica: {
     type: Boolean,
@@ -77,7 +77,7 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   id: {
     type: String,
@@ -100,7 +100,7 @@ const props = defineProps({
    *
    * - Tipo: `Object`
    * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   vista: {
     type: Object,
@@ -113,11 +113,11 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `'EPSG:4326'`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    *
-   * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+   * >  **Información:** El valor predeterminado es Universal Transversal de Mercator.
    *
-   * > ⚠️ **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+   * >  **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
    */
   proyeccion: {
     type: String,

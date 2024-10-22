@@ -10,7 +10,7 @@ import {
   reactive,
   shallowRef,
   toRefs,
-  watch,
+  watch
 } from 'vue'
 import usarRegistroMapas from '../composables/usarRegistroMapas'
 import { parametrosEnFormatoURL } from '../utiles'
@@ -29,7 +29,7 @@ const defaultParametros = {
   WIDTH: undefined,
   HEIGHT: undefined,
   LAYERS: undefined,
-  CQL_FILTER: undefined,
+  CQL_FILTER: undefined
   // PROPERTYNAME: undefined,
 }
 
@@ -38,17 +38,17 @@ var idMapa
 const props = defineProps({
   capa: {
     typo: String,
-    required: true,
+    required: true
   },
 
   filtro: {
     typo: String,
-    required: undefined,
+    required: undefined
   },
 
   fuente: {
     typo: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms',
+    default: 'https://gema.conahcyt.mx/geoserver/wms'
   },
 
   /**
@@ -57,21 +57,21 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Function`
    * - Valor por defecto: `undefined`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   globoInformativo: {
     type: Function,
-    default: undefined,
+    default: undefined
   },
 
-  ...propsCapa,
+  ...propsCapa
 })
 
 const sisdaiCapaUtfGrid = shallowRef()
 const { globoInformativo, posicion, visible, filtro } = toRefs(props)
 const parametrosUtfgrid = reactive({
   ...defaultParametros,
-  LAYERS: props.capa,
+  LAYERS: props.capa
 })
 
 function actualizarParametrosUtfgrid({ target: mapa }) {
@@ -79,10 +79,8 @@ function actualizarParametrosUtfgrid({ target: mapa }) {
   const extent = mapa.getView().calculateExtent(size)
 
   parametrosUtfgrid.BBOX = extent.join(',')
-  parametrosUtfgrid.WIDTH =
-    size[0] % 4 === 0 ? size[0] : size[0] + (size[0] % 4)
-  parametrosUtfgrid.HEIGHT =
-    size[1] % 4 === 0 ? size[1] : size[1] + (size[1] % 4)
+  parametrosUtfgrid.WIDTH = size[0] % 4 === 0 ? size[0] : size[0] + (size[0] % 4)
+  parametrosUtfgrid.HEIGHT = size[1] % 4 === 0 ? size[1] : size[1] + (size[1] % 4)
 
   // console.log(toRaw(parametrosUtfgrid))
 }
@@ -90,22 +88,22 @@ function actualizarParametrosUtfgrid({ target: mapa }) {
 const urlUtfGrid = computed(() => {
   return `${props.fuente}?${parametrosEnFormatoURL({
     ...parametrosUtfgrid,
-    CQL_FILTER: filtro.value,
+    CQL_FILTER: filtro.value
   })}`
 })
 
 function agregar() {
   usarRegistroMapas()
     .mapaPromesa(idMapa)
-    .then(mapa => {
+    .then((mapa) => {
       mapa.rejillasUtf[props.id] = {
         visible: visible.value,
         posicion: Number(posicion.value),
         globoInfo: globoInformativo.value,
-        resultado: undefined,
+        resultado: undefined
       }
 
-      watch(visible, nv => (mapa.rejillasUtf[props.id].visible = nv))
+      watch(visible, (nv) => (mapa.rejillasUtf[props.id].visible = nv))
 
       mapa.on('moveend', actualizarParametrosUtfgrid)
       watch([urlUtfGrid, visible], () => {
@@ -139,7 +137,7 @@ onMounted(() => {
 onBeforeMount(() => {
   usarRegistroMapas()
     .mapaPromesa(idMapa)
-    .then(mapa => {
+    .then((mapa) => {
       mapa.un('moveend', actualizarParametrosUtfgrid)
     })
 })

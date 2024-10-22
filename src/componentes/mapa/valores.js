@@ -8,9 +8,9 @@ export const vista = {
    *
    * - Tipo: `Number`
    * - Valor por defecto: `1`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    *
-   * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+   * >  **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
    */
   acercamiento: 1.5,
 
@@ -25,11 +25,11 @@ export const vista = {
    * - Tipo: `Array<Number>|String`
    * - Valor por defecto: `[0, 0]`
    * - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    *
-   * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
+   * >  **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
-   * > ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+   * >  **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
    */
   centro: [0, 0],
 
@@ -39,11 +39,11 @@ export const vista = {
    * - Tipo: `Array<Number>`
    * - Valor por defecto: `undefined`
    * - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    *
-   * > ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
+   * >  **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
    *
-   * > ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
+   * >  **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
    */
   extension: undefined,
 
@@ -53,9 +53,9 @@ export const vista = {
    * - Tipo: `Array<Number>|String`
    * - Valor por defecto: `[10, 10, 10, 10]`
    * - Admite: `N`, `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    *
-   * > ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
+   * >  **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
   extensionMargen: 10
 }
@@ -65,9 +65,9 @@ export const vista = {
  *
  * - Tipo: `String`
  * - Valor por defecto: `EPSG:4326`
- * - Reactivo: ❌
+ * - Reactivo: No.
  *
- * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+ * >  **Información:** El valor predeterminado es Universal Transversal de Mercator.
  */
 export const proyeccion = 'EPSG:4326'
 

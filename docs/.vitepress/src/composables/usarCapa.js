@@ -27,13 +27,13 @@ export const props = {
    *
    * - Tipo: `String` o `Array<String>`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_Source.html#~AttributionLike
    */
   atribuciones: {
     type: [String, Array],
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -42,11 +42,11 @@ export const props = {
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   id: {
     type: String,
-    default: () => idAleatorio(),
+    default: () => idAleatorio()
   },
 
   /**
@@ -54,11 +54,11 @@ export const props = {
    *
    * - Tipo: `String`
    * - Valor por defecto: `'Nombre no asignado'`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   nombre: {
     type: String,
-    default: 'Nombre no asignado',
+    default: 'Nombre no asignado'
   },
 
   /**
@@ -66,11 +66,11 @@ export const props = {
    *
    * - Tipo: `Number` o `String`
    * - Valor por defecto: `1`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   opacidad: {
     type: [Number, String],
-    default: 1,
+    default: 1
   },
 
   /**
@@ -78,11 +78,11 @@ export const props = {
    *
    * - Tipo: `Number` o `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   posicion: {
     type: [Number, String],
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -90,12 +90,12 @@ export const props = {
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   visible: {
     type: Boolean,
-    default: true,
-  },
+    default: true
+  }
 }
 
 export default function usarCapa(_, props /*, emits = () => {}*/) {
@@ -117,7 +117,7 @@ export default function usarCapa(_, props /*, emits = () => {}*/) {
   function agregar() {
     usarRegistroMapas()
       .mapaPromesa(idMapa)
-      .then(mapa => {
+      .then((mapa) => {
         const { olLayerClass, olSource, tipo } = fnConfiguracion()
 
         mapa.addLayer(
@@ -128,14 +128,14 @@ export default function usarCapa(_, props /*, emits = () => {}*/) {
             source: olSource,
             tipo,
             visible: visible.value,
-            zIndex: Number(posicion.value),
+            zIndex: Number(posicion.value)
           })
         )
 
-        watch(nombre, nv => mapa.buscarCapa(props.id).set('nombre', nv))
-        watch(opacidad, nv => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
-        watch(posicion, nv => mapa.buscarCapa(props.id).setZIndex(Number(nv)))
-        watch(visible, nv => mapa.buscarCapa(props.id).setVisible(nv))
+        watch(nombre, (nv) => mapa.buscarCapa(props.id).set('nombre', nv))
+        watch(opacidad, (nv) => mapa.buscarCapa(props.id).setOpacity(Number(nv)))
+        watch(posicion, (nv) => mapa.buscarCapa(props.id).setZIndex(Number(nv)))
+        watch(visible, (nv) => mapa.buscarCapa(props.id).setVisible(nv))
 
         // En la siguiente clase pueden aplicarse emits para todas las capas como el cambio de visibilidad
         // fnAgregadaParaTodas(mapa.buscarCapa(props.id))
@@ -157,7 +157,7 @@ export default function usarCapa(_, props /*, emits = () => {}*/) {
 
     usarRegistroMapas()
       .mapaPromesa(idMapa)
-      .then(mapa => {
+      .then((mapa) => {
         mapa.eliminarCapa(props.id)
       })
   }
@@ -169,7 +169,7 @@ export default function usarCapa(_, props /*, emits = () => {}*/) {
 
   return {
     agregada,
-    configurar,
+    configurar
     // eliminar,
   }
 }

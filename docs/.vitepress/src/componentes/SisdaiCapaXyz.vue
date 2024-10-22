@@ -14,11 +14,11 @@ const props = defineProps({
    *
    * - Tipo: `Number`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   acercamientoMaximo: {
     type: Number,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -26,11 +26,11 @@ const props = defineProps({
    *
    * - Tipo: `Number`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   acercamientoMinimo: {
     type: Number,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -38,15 +38,14 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   url: {
     type: String,
-    default:
-      'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+    default: 'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
   },
 
-  ...propsCapa,
+  ...propsCapa
 })
 
 const emits = defineEmits(Object.values(eventos))
@@ -60,7 +59,7 @@ const monitoreoCargaTeselas = reactive(new MonitoreoCargaTeselas())
 
 watch(
   () => monitoreoCargaTeselas.estdo,
-  _estadoCarga => {
+  (_estadoCarga) => {
     // estatusCarga.value = _estadoCarga
     if (_estadoCarga === tipoEstadoCarga.inicio) {
       emits(eventos.alIniciarCarga)
@@ -79,7 +78,7 @@ configurar(() => {
     //   '<a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">&copy; Carto</a>',
     maxZoom: props.acercamientoMaximo,
     minZoom: props.acercamientoMinimo,
-    crossOrigin: 'Anonymous',
+    crossOrigin: 'Anonymous'
   })
 
   olSource.on(TileEventType.TILELOADSTART, () => {
@@ -104,8 +103,5 @@ onMounted(() => {
 </script>
 
 <template>
-  <span
-    ref="sisdaiCapaXyz"
-    :sisdai-capa="id"
-  />
+  <span ref="sisdaiCapaXyz" :sisdai-capa="id" />
 </template>

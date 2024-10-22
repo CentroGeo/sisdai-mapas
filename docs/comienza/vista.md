@@ -14,9 +14,9 @@ Nivel de acercamiento utilizado para calcular la resolución inicial de la vista
 
 - Tipo: `Number`
 - Valor por defecto: `1.5`
-- Reactivo: ✅
+- Reactivo: Si.
 
-> ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+> **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
 
 **Uso:**
 
@@ -32,11 +32,11 @@ Coordenadas `[x, y]` del centro inicial de la vista.
 - Tipo: `Array<Number>|String`
 - Valor por defecto: `[0, 0]`
 - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
-- Reactivo: ✅
+- Reactivo: Si.
 
-> ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
+> **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
 
-> ⚠️ **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+> **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
 
 **Uso:**
 
@@ -52,21 +52,17 @@ Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 - Tipo: `Array<Number>`
 - Valor por defecto: `undefined`
 - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-- Reactivo: ✅
+- Reactivo: Si.
 
-> ℹ️ **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
+> **Información:** La proyección de estas coordenadas deben coincidir con la `proyeccion` definida en el mapa.
 
-> ⚠️ **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
+> **Importante:** Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
 
 **Uso:**
 
 ```html
 <!-- extensión de la República Mexicana -->
-<SisdaiMapa
-  :vista="{ extension: [-118.3651, 14.5321, -86.7104, 32.7187], ... }"
->
-  ...
-</SisdaiMapa>
+<SisdaiMapa :vista="{ extension: [-118.3651, 14.5321, -86.7104, 32.7187], ... }"> ... </SisdaiMapa>
 ```
 
 #### `extensionMargen`
@@ -76,16 +72,14 @@ Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores
 - Tipo: `Array<Number>|String`
 - Valor por defecto: `[10, 10, 10, 10]`
 - Admite: `N`, `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
-- Reactivo: ❌
+- Reactivo: No.
 
-> ℹ️ **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
+> **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
 
 **Uso:**
 
 ```html
-<SisdaiMapa :vista="{ extensionMargen: [15, 15, 15, 15], ... }">
-  ...
-</SisdaiMapa>
+<SisdaiMapa :vista="{ extensionMargen: [15, 15, 15, 15], ... }"> ... </SisdaiMapa>
 ```
 
 ## Funciones
@@ -110,9 +104,7 @@ const mapa = ref()
   Ajustar vista diferente a la definida en el mapa con boton externo
 </button>
 
-<button @click="mapa.ajustarVista()">
-  Ajustar vista definida en el mapa con boton externo
-</button>
+<button @click="mapa.ajustarVista()">Ajustar vista definida en el mapa con boton externo</button>
 ```
 
 ## Eventos
@@ -146,9 +138,7 @@ Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
 **Uso:**
 
 ```html
-<SisdaiMapa @alCambiarCentro="(nuevoCentro) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
+<SisdaiMapa @alCambiarCentro="(nuevoCentro) => `ejecutar una funcion`"> ... </SisdaiMapa>
 ```
 
 #### `@alCambiarAcercamiento`
@@ -162,9 +152,7 @@ Ejecutado cuando se detecta que el acercamiento de la vista del mapa ha cambiado
 **Uso:**
 
 ```html
-<SisdaiMapa
-  @alCambiarAcercamiento="(nuevoAcercamiento) => `ejecutar una funcion`"
->
+<SisdaiMapa @alCambiarAcercamiento="(nuevoAcercamiento) => `ejecutar una funcion`">
   ...
 </SisdaiMapa>
 ```
@@ -180,9 +168,7 @@ Ejecutado cuando se detecta que la vista del mapa ha cambiado.
 **Uso:**
 
 ```html
-<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
+<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`"> ... </SisdaiMapa>
 ```
 
 ## Ejemplo

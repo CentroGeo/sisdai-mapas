@@ -55,7 +55,7 @@ Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o q
 URL del servicio WMS.
 
 - Tipo: `String`.
-- Valor por defecto: `undefined`.
+- Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
 - Reactivo: No.
 
 <!-- #### `tituloClases`

@@ -5,7 +5,7 @@ import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
 
 # Leyendas
 
-<Leyenda />
+<!-- <Leyenda /> -->
 
 Uso:
 
@@ -21,7 +21,7 @@ Recibe el identificador de la capa con la que se quiere vincular la leyenda.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
-- Reactivo: ✅
+- Reactivo: Si.
 
 #### `sinControl`
 
@@ -29,7 +29,7 @@ Define si se agrega el control (input) en el titulo de la leyenda. El control se
 
 - Tipo: `Boolean`
 - Valor por defecto: `false`
-- Reactivo: ✅
+- Reactivo: Si.
 
 ## Eventos
 

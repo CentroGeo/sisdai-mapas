@@ -11,22 +11,22 @@ import SisdaiUtfGrid from './SisdaiUtfGrid.vue'
 const props = defineProps({
   capa: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   estilo: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   filtro: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   globoInformativo: {
     type: Function,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -35,11 +35,11 @@ const props = defineProps({
    *
    * - Tipo: `Object`
    * - Valor por defecto: `{}`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   parametros: {
     type: Object,
-    default: () => ({}),
+    default: () => ({})
     // validator({ LAYERS }) {
     //   const validarLayer = LAYERS !== undefined && LAYERS !== null
 
@@ -56,13 +56,13 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `'geoserver'`.
-   * - Reactivo: ❌
+   * - Reactivo: No.
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
   tipoServidor: {
     type: String,
-    default: 'geoserver',
+    default: 'geoserver'
   },
 
   /**
@@ -70,11 +70,11 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   tituloClases: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -82,14 +82,14 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `undefined`.
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   url: {
     type: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms',
+    default: 'https://gema.conahcyt.mx/geoserver/wms'
   },
 
-  ...propsCapa,
+  ...propsCapa
 })
 
 const emits = defineEmits(Object.values(eventos))
@@ -105,7 +105,7 @@ const {
   posicion,
   tituloClases,
   url,
-  visible,
+  visible
 } = toRefs(props)
 
 const filtroLeyenda = ref(undefined)
@@ -115,8 +115,8 @@ const filtroCompleto = computed(() => {
   }
 
   return [filtro.value, filtroLeyenda.value]
-    .filter(f => f !== undefined)
-    .map(f => `(${f})`)
+    .filter((f) => f !== undefined)
+    .map((f) => `(${f})`)
     .join(' AND ')
 })
 
@@ -129,10 +129,10 @@ configurar(() => {
     params: {
       LAYERS: capa.value || parametros.value.LAYERS,
       CQL_FILTER: filtroCompleto.value,
-      STYLES: estilo.value || parametros.value.STYLES,
+      STYLES: estilo.value || parametros.value.STYLES
     },
     serverType: props.tipoServidor,
-    crossOrigin: 'Anonymous',
+    crossOrigin: 'Anonymous'
   })
 
   olSource.on(ImageSourceEventType.IMAGELOADSTART, () => {
@@ -151,7 +151,7 @@ configurar(() => {
   return { olSource, olLayerClass: ImageLayer, tipo: tiposCapa.wms }
 })
 
-agregada(_capa => {
+agregada((_capa) => {
   // console.log(_capa.getSource())
   // _capa.set('parametros', parametros.value)
   _capa.set('tituloClases', tituloClases.value)
@@ -160,7 +160,7 @@ agregada(_capa => {
     _capa.getSource().updateParams({
       LAYERS: capa.value || parametros.value.LAYERS,
       CQL_FILTER: filtroCompleto.value,
-      STYLES: estilo.value || parametros.value.STYLES,
+      STYLES: estilo.value || parametros.value.STYLES
     })
   })
 
@@ -170,7 +170,7 @@ agregada(_capa => {
 
   watch(
     () => _capa.get('filtroLeyenda'),
-    nv => (filtroLeyenda.value = nv)
+    (nv) => (filtroLeyenda.value = nv)
   )
   function watchVue2() {
     setTimeout(() => {
@@ -182,7 +182,7 @@ agregada(_capa => {
 
   watch(
     () => _capa.getVisible(),
-    nv => {
+    (nv) => {
       utfgridVisible.value = nv
       emits(eventos.alCambiarVisibilidad, nv)
     }
@@ -197,10 +197,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <span
-    ref="sisdaiCapaWms"
-    :sisdai-capa="id"
-  >
+  <span ref="sisdaiCapaWms" :sisdai-capa="id">
     <SisdaiUtfGrid
       v-if="globoInformativo !== undefined"
       :capa="capa"

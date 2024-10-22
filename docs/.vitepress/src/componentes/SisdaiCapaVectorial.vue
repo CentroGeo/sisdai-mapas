@@ -23,7 +23,7 @@ const props = defineProps({
    */
   estilo: {
     type: Object,
-    default: () => DEFAULT_ESTILO_VECTOR,
+    default: () => DEFAULT_ESTILO_VECTOR
   },
 
   /**
@@ -31,11 +31,11 @@ const props = defineProps({
    *
    * - Tipo: `String`
    * - Valor por defecto: `'geojson'`.
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   formato: {
     type: String,
-    default: 'geojson',
+    default: 'geojson'
   },
 
   /**
@@ -44,11 +44,11 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Object`
    * - Valor obligatorio.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   fuente: {
     type: [String, Object],
-    required: true,
+    required: true
   },
 
   /**
@@ -57,11 +57,11 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Function`
    * - Valor por defecto: `undefined`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   globoInformativo: {
     type: [String, Function, Object],
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -70,11 +70,11 @@ const props = defineProps({
    *
    * - Tipo: `String` o `Function`
    * - Valor por defecto: `undefined`.
-   * - Reactivo: ✅
+   * - Reactivo: Si.
    */
   cuadroInformativo: {
     type: [String, Function],
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -84,7 +84,7 @@ const props = defineProps({
    */
   geometria: {
     type: String,
-    default: undefined,
+    default: undefined
     // 'LinearRing', 'GeometryCollection', 'Circle'
   },
 
@@ -93,7 +93,7 @@ const props = defineProps({
    */
   nombreAccesiblePorElemento: {
     type: String,
-    default: undefined,
+    default: undefined
   },
 
   /**
@@ -101,14 +101,14 @@ const props = defineProps({
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`.
-   * - Reactivo: ❌
+   * - Reactivo: No.
    */
   renderizarComoImagen: {
     type: Boolean,
-    default: true,
+    default: true
   },
 
-  ...propsCapa,
+  ...propsCapa
 })
 
 const sisdaiCapaVectorial = shallowRef()
@@ -119,7 +119,7 @@ const {
   cuadroInformativo,
   geometria,
   nombreAccesiblePorElemento,
-  formato,
+  formato
 } = toRefs(props)
 const emits = defineEmits(Object.values(eventos))
 
@@ -159,7 +159,7 @@ configurar(() => {
   return {
     olSource,
     olLayerClass: props.renderizarComoImagen ? VectorImageLayer : VectorLayer,
-    tipo: tiposCapa.vectorial,
+    tipo: tiposCapa.vectorial
   }
 })
 
@@ -167,7 +167,7 @@ const estiloConbinado = computed(() =>
   traducirEstilo({ ...DEFAULT_ESTILO_VECTOR, ...estilo.value })
 )
 
-agregada(capa => {
+agregada((capa) => {
   capa.setStyle(estiloConbinado.value)
   capa.set('estilo', estilo.value)
   capa.set('estilo2', JSON.stringify(estiloConbinado.value))
@@ -177,21 +177,18 @@ agregada(capa => {
   capa.set('nombreAccesible', nombreAccesiblePorElemento.value)
 
   // reactivo
-  watch(estiloConbinado, nv => capa.setStyle(nv))
-  watch(estilo, nv => capa.set('estilo', nv))
-  watch(estiloConbinado, nv => capa.set('estilo2', JSON.stringify(nv)))
-  watch(cuadroInformativo, nv => capa.set('cuadroInfo', nv))
-  watch(globoInformativo, nv => capa.set('globoInfo', nv))
-  watch(geometria, nv => capa.set('geometria', nv))
-  watch(nombreAccesiblePorElemento, nv => capa.set('nombreAccesible', nv))
+  watch(estiloConbinado, (nv) => capa.setStyle(nv))
+  watch(estilo, (nv) => capa.set('estilo', nv))
+  watch(estiloConbinado, (nv) => capa.set('estilo2', JSON.stringify(nv)))
+  watch(cuadroInformativo, (nv) => capa.set('cuadroInfo', nv))
+  watch(globoInformativo, (nv) => capa.set('globoInfo', nv))
+  watch(geometria, (nv) => capa.set('geometria', nv))
+  watch(nombreAccesiblePorElemento, (nv) => capa.set('nombreAccesible', nv))
 })
 
 // onMounted(() => {})
 </script>
 
 <template>
-  <span
-    ref="sisdaiCapaVectorial"
-    :sisdai-capa="id"
-  />
+  <span ref="sisdaiCapaVectorial" :sisdai-capa="id" />
 </template>

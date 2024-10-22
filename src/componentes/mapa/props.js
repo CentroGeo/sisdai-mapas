@@ -47,9 +47,9 @@ export default {
    * - Valor por defecto: `'EPSG:4326'`
    * - Reactivo: No
    *
-   * > ℹ️ **Información:** El valor predeterminado es Universal Transversal de Mercator.
+   * >  **Información:** El valor predeterminado es Universal Transversal de Mercator.
    *
-   * > ⚠️ **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+   * >  **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
    */
   proyeccion: {
     type: String,
