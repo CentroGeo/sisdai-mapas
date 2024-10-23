@@ -16,6 +16,12 @@ import AccesibilidadTeclado from "./../.vitepress/components/accesibilidad/tecla
 - Presione la tecla `h` para regresar a la ubicación inicial del mapa.
 <!-- - Para obtener detalles sobre su área actual, presione la tecla `i`. -->
 
+Integrar instrucciones en el mapa:
+
+```vue
+<SisdaiMapaInstruccionalNavegacionTeclado />
+```
+
 **Navegación de los elementos en la vista**
 
 Acciona el botón <span class="icono-accesibilidad" aria-hidden="true" /> para visualizar las instrucciones para acceder a los elementos accesibles en la vista del mapa (puntos vectoriales).
