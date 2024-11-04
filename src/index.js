@@ -17,6 +17,7 @@ import SisdaiCapaVectorial from './componentes/capa/vectorial'
 import SisdaiCapaWms from './componentes/capa/wms'
 import SisdaiCapaXyz from './componentes/capa/xyz'
 import SisdaiMapa from './componentes/mapa'
+import SisdaiLeyendaWms from './componentes/leyenda/wms'
 
 export default {
   install: (Vue) => {
@@ -24,5 +25,6 @@ export default {
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiMapa', SisdaiMapa)
+    Vue.component('SisdaiLeyendaWms', SisdaiLeyendaWms)
   }
 }

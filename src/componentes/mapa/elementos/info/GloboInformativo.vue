@@ -13,7 +13,7 @@ watch(
   // () => mapa.pixel,
   x,
   (nv) => {
-    console.log(nv)
+    // console.log(nv)
   }
 )
 

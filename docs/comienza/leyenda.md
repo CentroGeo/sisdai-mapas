@@ -1,11 +1,12 @@
 <script setup>
-import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
-import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
+// import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
+// import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
+import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
 </script>
 
 # Leyendas
 
-<!-- <Leyenda /> -->
+<LeyendaWms />
 
 Uso:
 

@@ -101,11 +101,9 @@ function actualizarClaseVector(estilo, geometria) {
 }
 
 function actualizarClasesDesdeWms(_url, params) {
-  const url =
-    //
-    `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
-      params.LAYERS
-    }&STYLE=${params.STYLES ? params.STYLES : ''}`
+  const url = `${_url}?service=wms&version=1.3.0&request=GetLegendGraphic&format=application%2Fjson&layer=${
+    params.LAYERS
+  }&STYLE=${params.STYLES ? params.STYLES : ''}`
 
   fetchJSON(url).then((data) => {
     const clases = acomodarReglasWms(data)
