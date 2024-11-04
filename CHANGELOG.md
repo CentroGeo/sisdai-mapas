@@ -14,8 +14,6 @@ compatible y tiene instalada.
 
 ## [Unreleased]
 
-sisdai-css v1.3.3<br>sisdai-componentes v4.1.6
-
 ### Cambiado (Changed)
 
 - Posición del globo de información desde inject
@@ -26,6 +24,17 @@ sisdai-css v1.3.3<br>sisdai-componentes v4.1.6
 ### Agregado (Added)
 
 - Preliminar de animación al cargar
+
+## [1.12.0] - 2024-11-04
+
+### Cambiado (Changed)
+
+- Actualización de sisdai-css a v1.3.3
+- Actualización de sisdai-componentes a v4.1.6
+
+### Agregado (Changed)
+
+- Se agrega aviso de que la documentación se encuentra en una versión beta
 
 ## [1.11.9] - 2024-09-25
 
@@ -87,5 +96,6 @@ sisdai-css v0.31.2
 - Ejemplo de Gema con contenedor
 
 [unreleased]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/tree/feature/test-unit/
+[1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
 [1.11.9]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
 [1.0.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/releases/v1.0.0
