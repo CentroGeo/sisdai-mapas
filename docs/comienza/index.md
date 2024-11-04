@@ -3,6 +3,8 @@ import EjemploBasico from "./basico.vue";
 import { dependencies, version } from './../../package.json'
 </script>
 
+**La presente documentación está en construcción. Agradecemos tu paciencia mientras la completamos.**
+
 # Introducción
 
 **Sisdai-mapas** es una biblioteca de componentes de [Vue.js](https://vuejs.org/) para generar mapas interactivos con datos georeferenciados. Está creada con [Vue.js](https://vuejs.org/) y la versión `{{ dependencies.ol.replace('^', '') }}` de [OpenLayers](https://openlayers.org/).
