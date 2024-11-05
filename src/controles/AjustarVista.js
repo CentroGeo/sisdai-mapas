@@ -50,7 +50,7 @@ export default class AjustarVista extends Control {
 
     super({
       element: contenedorControl,
-      target: undefined,
+      target: undefined
     })
 
     /**
@@ -59,7 +59,7 @@ export default class AjustarVista extends Control {
      * @private
      */
     this.botonAjustarVista = crearBotonControl(
-      'Ajustar vista',
+      'Centrar',
       claseCss,
       'mapa-centro',
       this.ajustarVista.bind(this)
