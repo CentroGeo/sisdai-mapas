@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.11.9",
+  "version": "1.12.0",
   "description": "Mapas interactivos: Componentes de software libre para el Sistema de Diseño y Accesibilidad para la Investigación (Sisdai).",
   "main": "./docs/.vitepress/src/index.js",
   "license": "LGPL-3.0-only",
@@ -42,7 +42,7 @@
     "lint-staged": "^15.2.10",
     "pinia": "^2.2.4",
     "prettier": "^3.3.3",
-    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.1.5",
+    "sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.1.6",
     "sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.3.3",
     "start-server-and-test": "^2.0.8",
     "vite": "^5.4.10",
