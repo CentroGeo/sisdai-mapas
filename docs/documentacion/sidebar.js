@@ -1,4 +1,5 @@
-export const ruta = '/comienza/'
+// export const ruta = '/'
+export const ruta = '/documentacion/'
 
 export const nav = {
   text: 'Documentación',

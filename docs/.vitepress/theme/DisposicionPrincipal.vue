@@ -21,7 +21,7 @@ const { page, frontmatter } = useData()
 
     <Pagina404 v-if="page.isNotFound" />
 
-    <PaginaInicio v-else-if="frontmatter.layout === 'inicio'" />
+    <!-- <PaginaInicio v-else-if="frontmatter.layout === 'inicio'" /> -->
 
     <div v-else>
       <div class="flex" v-if="hasSidebar">

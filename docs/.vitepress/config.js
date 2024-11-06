@@ -1,5 +1,8 @@
 import pkg from './../../package.json'
-import sidebarComienza, { nav as navComienza } from './../comienza/sidebar'
+import sidebarDocumentacion, {
+  nav as navDocumentacion,
+  sidebar as sidebarInicio
+} from '../documentacion/sidebar'
 import sidebarAccesibilidad, { nav as navAccesibilidad } from './../accesibilidad/sidebar'
 
 // .vitepress/config.js
@@ -27,7 +30,7 @@ export default {
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config#nav
     nav: [
-      { ...navComienza },
+      { ...navDocumentacion },
       { ...navAccesibilidad },
       {
         text: `v${pkg.version}`,
@@ -41,8 +44,9 @@ export default {
     // https://vitepress.dev/es/reference/default-theme-config#sidebar
     // https://vitepress.dev/es/reference/default-theme-sidebar
     sidebar: {
-      // '/comienza/': sidebarComienza
-      ...sidebarComienza,
+      // '/comienza/': sidebarDocumentacion
+      '/': sidebarInicio,
+      ...sidebarDocumentacion,
       ...sidebarAccesibilidad
     }
   }
