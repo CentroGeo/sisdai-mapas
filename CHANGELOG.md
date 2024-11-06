@@ -25,7 +25,13 @@ compatible y tiene instalada.
 
 - Preliminar de animación al cargar
 
-## [1.12.1] - 2024-11-04
+## [1.13.0] - 2024-11-06
+
+### Agregado (Added)
+
+- vue-matomo para seguir las analíticas del sitio
+
+## [1.12.1] - 2024-11-06
 
 ### Cambiado (Changed)
 
@@ -107,6 +113,7 @@ sisdai-css v0.31.2
 - Ejemplo de Gema con contenedor
 
 [unreleased]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/tree/feature/test-unit/
+[1.13.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
 [1.12.1]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
 [1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
 [1.11.9]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
