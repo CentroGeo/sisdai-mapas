@@ -8,7 +8,7 @@ export default {
    * El estilo simple es aquel que es constante para la capa, por ejemplo, independientemente de los datos que tenga un poligono o punto en el sigueinte mapa siempre tendra el mismo color y contorno de su simbologia.
    */
   estilo: {
-    type: Object
+    type: Object,
     // default: () => DEFAULT_ESTILO_VECTOR,
   },
 
@@ -22,7 +22,7 @@ export default {
    */
   fuente: {
     type: [String, Object],
-    required: true
+    required: true,
   },
 
   /**
@@ -35,9 +35,9 @@ export default {
    */
   globoInformativo: {
     type: [String, Function, Object],
-    default: undefined
+    default: undefined,
   },
 
   /** */
-  visualizacion: {}
+  visualizacion: {},
 }

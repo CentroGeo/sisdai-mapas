@@ -1,9 +1,21 @@
 <script setup>
-import { onMounted, provide, reactive, shallowRef, toRefs, useSlots, watch } from 'vue'
+import {
+  onMounted,
+  provide,
+  reactive,
+  shallowRef,
+  toRefs,
+  useSlots,
+  watch,
+} from 'vue'
 import Mapa from './Mapa'
 import { panelesEnUso } from './utiles'
 import propsMapa from './props'
-import { AnimacionCarga, BotonAcercamiento, ContenedorVisAtribuciones } from './elementos'
+import {
+  AnimacionCarga,
+  BotonAcercamiento,
+  ContenedorVisAtribuciones,
+} from './elementos'
 import { GloboInformativo } from './elementos/info'
 import eventos from './../capa/eventos'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
@@ -34,15 +46,24 @@ onMounted(() => {
 </script>
 
 <template>
-  <div :sisdai-mapa="props.id" class="sisdai-mapa contenedor-vis borde-redondeado-8">
-    <p :id="`mapa-${props.id}-descripcion`" class="a11y-solo-lectura a11y-simplificada-ocultar">
+  <div
+    :sisdai-mapa="props.id"
+    class="sisdai-mapa contenedor-vis borde-redondeado-8"
+  >
+    <p
+      :id="`mapa-${props.id}-descripcion`"
+      class="a11y-solo-lectura a11y-simplificada-ocultar"
+    >
       {{ descripcion }}
     </p>
     <p class="a11y-simplificada-mostrar-inline m-3">
       {{ descripcion }}
     </p>
 
-    <div class="contenedor-vis-paneles a11y-simplificada-ocultar" :class="panelesEnUso(useSlots())">
+    <div
+      class="contenedor-vis-paneles a11y-simplificada-ocultar"
+      :class="panelesEnUso(useSlots())"
+    >
       <div class="panel-encabezado-vis">
         <slot name="panel-encabezado-vis" />
       </div>
@@ -54,10 +75,24 @@ onMounted(() => {
       <!-- slot para las capas -->
       <slot />
 
-      <div class="contenido-vis" ref="refMapa" tabindex="0">
-        <div class="sisdai-mapa-control contenedor-controles-vista ol-unselectable">
-          <BotonAcercamiento nombre="Acercar" pictograma="agregar" @click="mapa.acercar(1)" />
-          <BotonAcercamiento nombre="Alejar" pictograma="restar" @click="mapa.acercar(-1)" />
+      <div
+        class="contenido-vis"
+        ref="refMapa"
+        tabindex="0"
+      >
+        <div
+          class="sisdai-mapa-control contenedor-controles-vista ol-unselectable"
+        >
+          <BotonAcercamiento
+            nombre="Acercar"
+            pictograma="agregar"
+            @click="mapa.acercar(1)"
+          />
+          <BotonAcercamiento
+            nombre="Alejar"
+            pictograma="restar"
+            @click="mapa.acercar(-1)"
+          />
           <BotonAcercamiento
             nombre="Centrar"
             pictograma="mapa-centro"
@@ -65,7 +100,10 @@ onMounted(() => {
           />
         </div>
 
-        <GloboInformativo contenido="Soy un globo de información" :pixel="[10, 10]" />
+        <GloboInformativo
+          contenido="Soy un globo de información"
+          :pixel="[10, 10]"
+        />
       </div>
 
       <div class="panel-derecha-vis">
@@ -76,7 +114,10 @@ onMounted(() => {
         <slot name="panel-pie-vis" />
       </div>
 
-      <AnimacionCarga class="borde-t-redondeado-8" v-show="mapa.capasCargando" />
+      <AnimacionCarga
+        class="borde-t-redondeado-8"
+        v-show="mapa.capasCargando"
+      />
     </div>
 
     <!-- <AnimacionCarga class="borde-redondeado-8" v-show="mapa.capasCargando" /> -->

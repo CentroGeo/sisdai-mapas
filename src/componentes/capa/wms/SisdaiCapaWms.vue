@@ -15,9 +15,13 @@ const { estilo, filtro } = toRefs(props)
 
 const source = new ImageWMS({
   url: props.url,
-  params: { LAYERS: props.capa, STYLES: estilo.value, CQL_FILTER: filtro.value },
+  params: {
+    LAYERS: props.capa,
+    STYLES: estilo.value,
+    CQL_FILTER: filtro.value,
+  },
   ratio: 1,
-  serverType: props.tipoServidor
+  serverType: props.tipoServidor,
 })
 
 mapa.addLayer(new ImageLayer({ source, id: props.id }))
@@ -36,8 +40,8 @@ source.on(ImageSourceEventType.IMAGELOADERROR, () => {
   mapa.capas[props.id] = TipoEstadoCarga.error
 })
 
-watch(estilo, (STYLES) => source.updateParams({ STYLES }))
-watch(filtro, (CQL_FILTER) => source.updateParams({ CQL_FILTER }))
+watch(estilo, STYLES => source.updateParams({ STYLES }))
+watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
 
 /**
  * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que

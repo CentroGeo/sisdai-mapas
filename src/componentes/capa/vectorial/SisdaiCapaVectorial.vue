@@ -16,7 +16,7 @@ const { estilo, fuente, globoInformativo } = toRefs(props)
 
 const source = new VectorSource({
   url: fuente.value,
-  format: new GeoJSON()
+  format: new GeoJSON(),
 })
 
 source.on(VectorEventType.FEATURESLOADSTART, () => {
@@ -36,8 +36,8 @@ const layer = new VectorLayer({ source, id: props.id, style: estilo.value })
 mapa.addLayer(layer)
 mapa.capas[props.id] = TipoEstadoCarga.no
 
-watch(estilo, (nv) => layer.setStyle(nv))
-watch(fuente, (nv) => layer.setSource(nv))
+watch(estilo, nv => layer.setStyle(nv))
+watch(fuente, nv => layer.setSource(nv))
 </script>
 
 <template>

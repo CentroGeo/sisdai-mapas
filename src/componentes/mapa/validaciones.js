@@ -15,7 +15,6 @@ export function arregloSinVacios(valor, msgError, tamanioMinimo = 0) {
     valor.includes(null) ||
     valor.includes(undefined)
   ) {
-    // eslint-disable-next-line
     console.error(msgError)
     return false
   }
@@ -72,9 +71,13 @@ export function acercamiento(valor) {
 
   // tipos admitidos para acercamiento: N o "N"
   const acercamientoNumerico = Number(valor)
-  if (isNaN(acercamientoNumerico) || !(acercamientoNumerico >= 1 && acercamientoNumerico <= 22)) {
-    // eslint-disable-next-line
-    console.error('LA PROPIEDAD "acercamiento" DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22')
+  if (
+    isNaN(acercamientoNumerico) ||
+    !(acercamientoNumerico >= 1 && acercamientoNumerico <= 22)
+  ) {
+    console.error(
+      'LA PROPIEDAD "acercamiento" DE LA VISTA DEL MAPA DEBE SER ENTRE 1 Y 22'
+    )
     return false
   }
 
@@ -105,7 +108,10 @@ export function centro(valor) {
  */
 export function vista(valor) {
   if (extension(valor.extension)) {
-    if (valor.extensionMargen !== undefined && !extensionMargen(valor.extensionMargen)) {
+    if (
+      valor.extensionMargen !== undefined &&
+      !extensionMargen(valor.extensionMargen)
+    ) {
       return false
     }
     return true

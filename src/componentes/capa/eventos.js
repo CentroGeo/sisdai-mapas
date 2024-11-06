@@ -22,5 +22,5 @@ export default {
    * grupo de teselas.
    * @param {Boolean} cargaExitosa Indica si la carga no ha presentado error.
    */
-  alFinalizarCarga: 'alFinalizarCarga'
+  alFinalizarCarga: 'alFinalizarCarga',
 }

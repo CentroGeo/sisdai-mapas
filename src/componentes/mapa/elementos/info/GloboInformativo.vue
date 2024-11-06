@@ -6,13 +6,13 @@ const mapa = inject(MAPA_INYECTADO)
 // console.log(mapa.pixel)
 const x = computed(() => {
   // return mapa.pixel
-  return mapa.pixel.map((p) => `${p}px`)
+  return mapa.pixel.map(p => `${p}px`)
 })
 
 watch(
   // () => mapa.pixel,
   x,
-  (nv) => {
+  nv => {
     // console.log(nv)
   }
 )
@@ -20,12 +20,12 @@ watch(
 const props = defineProps({
   contenido: {
     type: String,
-    default: undefined
+    default: undefined,
   },
   visible: {
     type: Boolean,
-    default: false
-  }
+    default: false,
+  },
 })
 
 const { contenido, visible } = toRefs(props)

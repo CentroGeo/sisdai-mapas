@@ -14,5 +14,5 @@ export default {
    * que conponen la capa visible en el mapa.
    * @param {Boolean} cargaExitosa Indica con `false` si al finalizar la carga del mosaico ha presentado error.
    */
-  alFinalizarCargaTesela: 'alFinalizarCargaTesela'
+  alFinalizarCargaTesela: 'alFinalizarCargaTesela',
 }

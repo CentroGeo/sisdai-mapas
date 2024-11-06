@@ -20,11 +20,11 @@ import SisdaiMapa from './componentes/mapa'
 import SisdaiLeyendaWms from './componentes/leyenda/wms'
 
 export default {
-  install: (Vue) => {
+  install: Vue => {
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiMapa', SisdaiMapa)
     Vue.component('SisdaiLeyendaWms', SisdaiLeyendaWms)
-  }
+  },
 }

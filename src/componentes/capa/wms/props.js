@@ -12,7 +12,7 @@ export default {
    */
   capa: {
     type: String,
-    required: true
+    required: true,
   },
 
   /**
@@ -25,7 +25,7 @@ export default {
    */
   estilo: {
     type: String,
-    default: undefined
+    default: undefined,
   },
 
   /**
@@ -39,7 +39,7 @@ export default {
    */
   filtro: {
     type: String,
-    default: undefined
+    default: undefined,
   },
 
   /**
@@ -53,7 +53,7 @@ export default {
    */
   tipoServidor: {
     type: String,
-    default: 'geoserver'
+    default: 'geoserver',
   },
 
   /**
@@ -65,6 +65,6 @@ export default {
    */
   url: {
     type: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms'
-  }
+    default: 'https://gema.conahcyt.mx/geoserver/wms',
+  },
 }

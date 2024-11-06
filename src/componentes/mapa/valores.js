@@ -57,7 +57,7 @@ export const vista = {
    *
    * >  **Información:** Puede prescindir de algunos elementos de la matriz siguiendo la estructura: [todo], [vertical,horizontal], [arriba,horizontal,abajo] o [arriba, derecha, abajo, izquierda].
    */
-  extensionMargen: 10
+  extensionMargen: 10,
 }
 
 /**
@@ -87,5 +87,5 @@ export const teclasAtajo = {
   ESCAPAR: 'escape',
   LISTAR_ANTERIORES: '8',
   LISTAR_SIGUIENTES: '9',
-  TABULADOR: 'tab'
+  TABULADOR: 'tab',
 }

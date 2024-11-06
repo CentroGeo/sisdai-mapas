@@ -9,7 +9,7 @@ export const TipoEstadoCarga = {
   no: 'indefinida',
   inicio: 'iniciada',
   error: 'error',
-  fin: 'finalizada'
+  fin: 'finalizada',
 }
 
 /**

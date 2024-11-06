@@ -12,7 +12,7 @@ export default {
    */
   descripcion: {
     type: String,
-    default: 'Mapa sin descripción'
+    default: 'Mapa sin descripción',
   },
 
   /**
@@ -24,7 +24,7 @@ export default {
    */
   id: {
     type: String,
-    default: () => idAleatorio()
+    default: () => idAleatorio(),
   },
 
   /**
@@ -37,7 +37,7 @@ export default {
   vista: {
     type: Object,
     default: () => valoresPorDefecto.vista,
-    validator: validaciones.vista
+    validator: validaciones.vista,
   },
 
   /**
@@ -53,6 +53,6 @@ export default {
    */
   proyeccion: {
     type: String,
-    default: valoresPorDefecto.proyeccion
-  }
+    default: valoresPorDefecto.proyeccion,
+  },
 }

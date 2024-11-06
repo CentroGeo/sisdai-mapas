@@ -4,7 +4,9 @@ import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
 import TileEventType from 'ol/source/TileEventType'
 import _props from './props'
-import MonitoreoCargaElementos, { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
+import MonitoreoCargaElementos, {
+  TipoEstadoCarga,
+} from './../../../utiles/MonitoreoCargaElementos'
 import eventos from './eventos'
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 
@@ -15,7 +17,7 @@ const { url } = toRefs(props)
 
 const source = new ImageTile({
   url: url.value,
-  crossOrigin: 'anonymous'
+  crossOrigin: 'anonymous',
 })
 
 const layer = new TileLayer({ source, id: props.id })

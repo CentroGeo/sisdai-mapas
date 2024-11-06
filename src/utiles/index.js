@@ -13,7 +13,9 @@ export function esNuemro(valor) {
  * @returns {Boolean} `ture` en caso de ser objeto.
  */
 export function esObjeto(valor) {
-  return typeof valor === typeof Object() && valor !== null && !Array.isArray(valor)
+  return (
+    typeof valor === typeof Object() && valor !== null && !Array.isArray(valor)
+  )
 }
 
 /**
@@ -45,7 +47,7 @@ export function valorarArregloNumerico(valor) {
 
   const arreglo = esTexto(valor) ? valor.split(',') : valor
 
-  if (Array.isArray(arreglo)) return arreglo.map((n) => Number(n))
+  if (Array.isArray(arreglo)) return arreglo.map(n => Number(n))
 
   console.warn(`${valor} NO SE PUEDE VALORAR COMO ARREGLO NUMÉRICO`)
 }

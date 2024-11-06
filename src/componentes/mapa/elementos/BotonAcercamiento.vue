@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
   nombre: {},
-  pictograma: {}
+  pictograma: {},
 })
 </script>
 
@@ -12,6 +12,9 @@ defineProps({
     role="button"
     :aria-label="nombre"
   >
-    <span :class="`pictograma-${pictograma}`" aria-hidden="true" />
+    <span
+      :class="`pictograma-${pictograma}`"
+      aria-hidden="true"
+    />
   </button>
 </template>

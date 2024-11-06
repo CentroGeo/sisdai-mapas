@@ -11,9 +11,17 @@ const clases = [1, 2]
       <SisdaiLeyendaControl />
     </div>
 
-    <div v-if="clases.length > 1" class="leyenda-clases casillas-subseleccion">
+    <div
+      v-if="clases.length > 1"
+      class="leyenda-clases casillas-subseleccion"
+    >
       <ul class="casillas-anidadas">
-        <li v-for="(clase, idx) in clases" :key="`${'capa'}-clase-control-${idx}`">{{ clase }}</li>
+        <li
+          v-for="(clase, idx) in clases"
+          :key="`${'capa'}-clase-control-${idx}`"
+        >
+          {{ clase }}
+        </li>
       </ul>
     </div>
   </div>

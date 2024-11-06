@@ -94,7 +94,9 @@
   }
 
   &-navegacion-teclado {
-    top: calc(var(--margen) + (3 * (var(--alto-boton) + var(--espacio-entre-botones))));
+    top: calc(
+      var(--margen) + (3 * (var(--alto-boton) + var(--espacio-entre-botones)))
+    );
     right: var(--margen);
   }
 }

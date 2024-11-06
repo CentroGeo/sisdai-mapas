@@ -12,6 +12,7 @@ export default {
    */
   url: {
     type: String,
-    default: 'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png'
-  }
+    default:
+      'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',
+  },
 }

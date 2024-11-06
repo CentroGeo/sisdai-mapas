@@ -27,8 +27,8 @@ export default class Mapa extends olMap {
       view: new View({
         center: [0, 0],
         projection: proyeccion,
-        zoom: 2
-      })
+        zoom: 2,
+      }),
     })
 
     this.capas = {}
@@ -38,12 +38,17 @@ export default class Mapa extends olMap {
     this.agregarAtributosAriaCanvas()
 
     // this.pixel = [0,0]
-    this.on(PointerEventType.POINTERMOVE, ({ dragging, originalEvent, map }) => {
-      if (!(dragging || originalEvent.target.closest('.sisdai-mapa-control'))) {
-        this.abrirGloboInfo(originalEvent)
-        // console.log({ dragging, originalEvent, map })
+    this.on(
+      PointerEventType.POINTERMOVE,
+      ({ dragging, originalEvent, map }) => {
+        if (
+          !(dragging || originalEvent.target.closest('.sisdai-mapa-control'))
+        ) {
+          this.abrirGloboInfo(originalEvent)
+          // console.log({ dragging, originalEvent, map })
+        }
       }
-    })
+    )
   }
 
   pixel = ref([0, 0])
@@ -55,7 +60,10 @@ export default class Mapa extends olMap {
   }
 
   acercar(unidades = 1) {
-    this.getView().animate({ zoom: this.getView().getZoom() + unidades, duration: 250 })
+    this.getView().animate({
+      zoom: this.getView().getZoom() + unidades,
+      duration: 250,
+    })
   }
 
   /**
@@ -65,10 +73,15 @@ export default class Mapa extends olMap {
    */
   ajustarVista(vista) {
     const acercamiento =
-      vista?.acercamiento || this.getView().get('acercamiento') || vistaPorDefecto.acercamiento
-    const centro = vista?.centro || this.getView().get('centro') || vistaPorDefecto.centro
+      vista?.acercamiento ||
+      this.getView().get('acercamiento') ||
+      vistaPorDefecto.acercamiento
+    const centro =
+      vista?.centro || this.getView().get('centro') || vistaPorDefecto.centro
     const extension =
-      vista?.extension || this.getView().get('extension') || vistaPorDefecto.extension
+      vista?.extension ||
+      this.getView().get('extension') ||
+      vistaPorDefecto.extension
     const extensionMargen =
       vista?.extensionMargen ||
       this.getView().get('extensionMargen') ||
@@ -85,11 +98,13 @@ export default class Mapa extends olMap {
     if (validaciones.extension(extension)) {
       // console.log(this.getView().get('extensionMargen'))
       this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(extensionMargen)
+        padding: valorarExtensionMargen(extensionMargen),
       })
     } else {
       this.getView().setCenter(
-        validaciones.centro(centro) ? valorarArregloNumerico(centro) : vistaPorDefecto.centro
+        validaciones.centro(centro)
+          ? valorarArregloNumerico(centro)
+          : vistaPorDefecto.centro
       )
       this.getView().setZoom(Number(acercamiento))
     }
@@ -138,21 +153,27 @@ export default class Mapa extends olMap {
    *
    */
   get capasCargando() {
-    return Object.values(this.capas).some((capa) => capa === TipoEstadoCarga.inicio)
+    return Object.values(this.capas).some(
+      capa => capa === TipoEstadoCarga.inicio
+    )
   }
 
   /**
    *
    */
   get todasCapasConError() {
-    return Object.values(this.capas).every((capa) => capa === TipoEstadoCarga.error)
+    return Object.values(this.capas).every(
+      capa => capa === TipoEstadoCarga.error
+    )
   }
 
   /**
    *
    */
   async agregarAtributosAriaCanvas() {
-    const canvas = await this.busquedaPromesa((mapa) => mapa.getViewport().querySelector('canvas'))
+    const canvas = await this.busquedaPromesa(mapa =>
+      mapa.getViewport().querySelector('canvas')
+    )
 
     canvas.setAttribute('aria-label', 'Mapa interactivo')
     canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
@@ -165,7 +186,7 @@ export default class Mapa extends olMap {
    * @returns {Promise}
    */
   busquedaPromesa(busqueda) {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       const _this = this
 
       function revisar() {

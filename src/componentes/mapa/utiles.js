@@ -4,6 +4,6 @@
  */
 export function panelesEnUso(slots) {
   return ['encabezado', 'izquierda', 'derecha', 'pie']
-    .filter((panel) => !!slots[`panel-${panel}-vis`])
-    .map((panel) => `con-panel-${panel}-vis`)
+    .filter(panel => !!slots[`panel-${panel}-vis`])
+    .map(panel => `con-panel-${panel}-vis`)
 }

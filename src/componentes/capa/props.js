@@ -12,7 +12,7 @@ export default {
    */
   atribuciones: {
     type: [String, Array],
-    default: undefined
+    default: undefined,
   },
 
   /**
@@ -25,7 +25,7 @@ export default {
    */
   id: {
     type: String,
-    default: () => idAleatorio()
+    default: () => idAleatorio(),
   },
 
   /**
@@ -37,7 +37,7 @@ export default {
    */
   nombre: {
     type: String,
-    default: 'Nombre no asignado'
+    default: 'Nombre no asignado',
   },
 
   /**
@@ -49,7 +49,7 @@ export default {
    */
   opacidad: {
     type: [Number, String],
-    default: 1
+    default: 1,
   },
 
   /**
@@ -61,7 +61,7 @@ export default {
    */
   posicion: {
     type: [Number, String],
-    default: undefined
+    default: undefined,
   },
 
   /**
@@ -73,6 +73,6 @@ export default {
    */
   visible: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 }
