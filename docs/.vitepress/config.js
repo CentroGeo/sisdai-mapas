@@ -27,13 +27,6 @@ export default {
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config#nav
     nav: [
-      {
-        text: 'Sisdai',
-        link: 'https://sisdai.conahcyt.mx/',
-        rel: 'noopener noreferrer',
-        target: '_blank'
-      },
-      { text: 'Inicio', link: '/' },
       { ...navComienza },
       { ...navAccesibilidad },
       {
