@@ -1,5 +1,5 @@
 <script setup>
-import EjemploConfiguracion from "./../.vitepress/components/configuracion.vue";
+import EjemploConfiguracion from "/.vitepress/components/configuracion.vue";
 </script>
 
 # Configuración
@@ -87,7 +87,7 @@ Código de identificación SRS que define la proyección de la vista.
 
 #### `vista`
 
-Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
+Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/documentacion/vista.html) de esta documentación.
 
 - Tipo: `Object`
 - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`

@@ -1,7 +1,8 @@
-export const ruta = '/comienza/'
+// export const ruta = '/'
+export const ruta = '/documentacion/'
 
 export const nav = {
-  text: 'Comienza',
+  text: 'Documentación',
   link: ruta,
   activeMatch: ruta
 }
