@@ -8,6 +8,16 @@ const { theme, page } = useData()
 
 <template>
   <SisdaiNavegacionPrincipal>
+    <template #complementario>
+      <a
+        class="nav-hipervinculo"
+        href="https://sisdai.conahcyt.mx"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <b>IR A SISDAI</b>
+      </a>
+    </template>
     <ul class="nav-menu">
       <li v-for="nav in theme.nav" :key="nav.text">
         <a

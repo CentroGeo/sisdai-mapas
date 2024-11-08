@@ -98,7 +98,7 @@ y dependencias del proyecto se muestran aquí usando tanto npm, como nvm.
 ### Instalación
 
 Se puede clonar e instalar este proyecto en tu equipo
-utilizando **solo el protocolo HTTPS**, es decir:
+utilizando **sólo el protocolo HTTPS**, es decir:
 
 ```bash
 git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git

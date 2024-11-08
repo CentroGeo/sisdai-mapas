@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.12.0",
+  "version": "1.13.1",
   "description": "Mapas interactivos: Componentes de software libre para el Sistema de Diseño y Accesibilidad para la Investigación (Sisdai).",
   "main": "./docs/.vitepress/src/index.js",
   "license": "LGPL-3.0-only",
@@ -51,7 +51,8 @@
     "vite": "^5.4.10",
     "vitepress": "^1.5.0",
     "vitest": "^2.1.4",
-    "vue": "^3.5.12"
+    "vue": "^3.5.12",
+    "vue-matomo": "^4.2.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

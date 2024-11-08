@@ -3,11 +3,13 @@ import EjemploBasico from "./../.vitepress/components/basico.vue";
 import { dependencies, version } from './../../package.json'
 </script>
 
-**La presente documentación está en construcción. Agradecemos tu paciencia mientras la completamos.**
-
 # Introducción
 
-**Sisdai-mapas** es una biblioteca de componentes de [Vue.js](https://vuejs.org/) para generar mapas interactivos con datos georeferenciados. Está creada con [Vue.js](https://vuejs.org/) y la versión `{{ dependencies.ol.replace('^', '') }}` de [OpenLayers](https://openlayers.org/).
+**Sisdai-mapas** es una biblioteca de componentes de
+[Vue.js](https://vuejs.org/) para generar mapas interactivos con datos
+georeferenciados. Está creada con [Vue.js](https://vuejs.org/) y la versión
+`{{ dependencies.ol.replace('^', '') }}` de
+[OpenLayers](https://openlayers.org/).
 
 ## Instalación
 
@@ -31,11 +33,14 @@ const app = createApp(App)
 app.use(SisdaiMapas)
 ```
 
-Si se utiliza el componente sisdai-mapas en dos archivos o más, se recomienda registrar el componente en el archivo `src/main.js` del proyecto.
+Si se utiliza el componente sisdai-mapas en dos archivos o más, se recomienda
+registrar el componente en el archivo `src/main.js` del proyecto.
 
 ## Crear un mapa básico
 
-Dentro del componente en el que se desee crear mapas con el diseño sisdai, usa la etiqueta `SisdaiMapa` dentro del `template` del HTML y agrega las capas y directivas que necesites:
+Dentro del componente en el que se desee crear mapas con el diseño sisdai, usa
+la etiqueta `SisdaiMapa` dentro del `template` del HTML y agrega las capas y
+directivas que necesites:
 
 Código:
 
@@ -49,7 +54,8 @@ Resultado:
 
 ## Documentación en local
 
-Para revisar la documentación en local primero clona este repositorio y accede a la carpeta del proyecto con:
+Para revisar la documentación en local primero clona este repositorio y accede a
+la carpeta del proyecto con:
 
 ```bash
 git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git
@@ -64,7 +70,3 @@ npm run docs
 ```
 
 <!-- Se habilitara en [localhost:5173](http://localhost:5173) (por defecto). -->
-
-<!-- ## Contribución
-
-Si quieres contribuir al código de esta boblioteca revisa los [lineamientos de contribución establecidos por SALSA](https://salsa.crip.conacyt.mx/guidelines/contribute/) -->

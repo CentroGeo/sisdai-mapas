@@ -57,7 +57,6 @@ const { site } = useData()
           </div>
         </a>
       </div>
-      <p><strong>La presente documentación está en construcción. Agradecemos tu paciencia mientras la completamos.</strong></p>
     </div>
   </main>
 </template>

@@ -1,6 +1,9 @@
 import pkg from './../../package.json'
-import sidebarComienza, { nav as navComienza } from './sidebar/comienza'
-import sidebarAccesibilidad, { nav as navAccesibilidad } from './sidebar/accesibilidad'
+import sidebarDocumentacion, {
+  nav as navDocumentacion,
+  sidebar as sidebarInicio
+} from '../documentacion/sidebar'
+import sidebarAccesibilidad, { nav as navAccesibilidad } from './../accesibilidad/sidebar'
 
 // .vitepress/config.js
 export default {
@@ -27,14 +30,7 @@ export default {
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config#nav
     nav: [
-      {
-        text: 'Sisdai',
-        link: 'https://sisdai.conahcyt.mx/',
-        rel: 'noopener noreferrer',
-        target: '_blank'
-      },
-      { text: 'Inicio', link: '/' },
-      { ...navComienza },
+      { ...navDocumentacion },
       { ...navAccesibilidad },
       {
         text: `v${pkg.version}`,
@@ -48,8 +44,9 @@ export default {
     // https://vitepress.dev/es/reference/default-theme-config#sidebar
     // https://vitepress.dev/es/reference/default-theme-sidebar
     sidebar: {
-      // '/comienza/': sidebarComienza
-      ...sidebarComienza,
+      // '/comienza/': sidebarDocumentacion
+      '/': sidebarInicio,
+      ...sidebarDocumentacion,
       ...sidebarAccesibilidad
     }
   }
