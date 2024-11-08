@@ -1,3 +1,16 @@
+import { vista } from '../componentes/mapa/valores'
+
+/**
+ * Ejecuta los metodos de un array en un objeto.
+ * @param {Object} obj
+ * @param {Function} funcion
+ * @param {String} metodo map | filter | find | some | every | etc
+ * @returns {Object}
+ */
+export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
+  return Object.fromEntries(Object.entries(obj)[metodo](funcion))
+}
+
 /**
  * Valida si un valor es de tipo número.
  * @param {any} valor a evaluar
@@ -33,6 +46,17 @@ export function esTexto(valor) {
  */
 export function idAleatorio() {
   return Math.random().toString(36).substring(2)
+}
+
+/**
+ * Devuelve un objeto en texto con sintaxis de reglas css.
+ * @param {Object} obj
+ * @returns {String}
+ */
+export function objEnSintaxisCss(obj) {
+  return Object.entries(obj)
+    .map(([k, v]) => `${k}:${v};`)
+    .join('')
 }
 
 /**

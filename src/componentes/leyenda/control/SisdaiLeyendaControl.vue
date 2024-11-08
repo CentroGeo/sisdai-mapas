@@ -3,6 +3,7 @@ import { toRefs } from 'vue'
 import _props from './props'
 import { idAleatorio } from '../../../utiles'
 import eventos from './eventos'
+import SisdaiLeyendaSimbolo from './../simbolo'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
@@ -27,7 +28,7 @@ const idCheck = `${props.id}-${idAleatorio()}`
         type="checkbox"
       />
       <label :for="idCheck">
-        <!-- <span>x</span> -->
+        <SisdaiLeyendaSimbolo />
         <span
           class="nombre-variable"
           v-html="etiqueta"
