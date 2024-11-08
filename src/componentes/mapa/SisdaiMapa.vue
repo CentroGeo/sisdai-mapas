@@ -19,6 +19,8 @@ import {
 import { GloboInformativo } from './elementos/info'
 import eventos from './../capa/eventos'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
+import 'ol/ol.css'
+import './../../estilos/Controles.scss'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
@@ -126,8 +128,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
-@import 'ol/ol.css';
-@import './../../estilos/Controles.scss';
+// @import 'ol/ol.css';
+// @import './../../estilos/Controles.scss';
 
 .sisdai-mapa.contenedor-vis {
   .contenedor-vis-paneles {

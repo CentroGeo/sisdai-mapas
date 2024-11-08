@@ -3,17 +3,19 @@ import ContenidoPrincipal from './ContenidoPrincipal.vue'
 import MenuLateral from './MenuLateral.vue'
 import NavegacionPrincipal from './NavegacionPrincipal.vue'
 import Pagina404 from './Pagina404.vue'
-import PaginaInicio from './PaginaInicio.vue'
+// import PaginaInicio from './PaginaInicio.vue'
 import { useData } from 'vitepress'
 import { useSidebar } from 'vitepress/theme'
+import 'sisdai-css'
 
 const { hasSidebar } = useSidebar()
-const { page, frontmatter } = useData()
+const { page /*, frontmatter*/ } = useData()
+
 </script>
 
 <template>
   <div>
-    <a href="#principal" class="ir-contenido-principal"> Ir a contenido principal </a>
+    <a href="#principal" class="ir-contenido-principal">Ir a contenido principal</a>
 
     <SisdaiNavegacionGobMx />
     <NavegacionPrincipal />

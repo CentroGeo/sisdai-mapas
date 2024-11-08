@@ -9,7 +9,7 @@ import DisposicionPrincipal from './DisposicionPrincipal.vue'
 
 export default {
   Layout: DisposicionPrincipal,
-  async enhanceApp({ app, router, siteData }) {
+  async enhanceApp({ app /*, router, siteData*/ }) {
     if (!import.meta.env.SSR) {
       const SisdaiMapas = await import('./../../../src')
       app.use(SisdaiMapas.default)
