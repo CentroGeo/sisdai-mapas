@@ -4,7 +4,7 @@ import _props from './props'
 import { idAleatorio } from '../../../utiles'
 
 const props = defineProps(_props)
-const { etiqueta, sinControl } = toRefs(props)
+const { etiqueta, informacion, sinControl } = toRefs(props)
 
 const idCheck = `${props.id}-${idAleatorio()}`
 </script>
@@ -24,11 +24,25 @@ const idCheck = `${props.id}-${idAleatorio()}`
         :id="idCheck"
       />
       <label :for="idCheck">
+        <!-- <span>x</span> -->
         <span
           class="nombre-variable"
           v-html="etiqueta"
+        />
+        <span
+          v-if="informacion !== undefined"
+          class="info pictograma-informacion m-l-1"
+          tabindex="0"
+          v-globo-informacion="informacion"
         />
       </label>
     </template>
   </div>
 </template>
+
+<style lang="scss">
+.info {
+  padding: 0;
+  font-size: 1.25rem;
+}
+</style>

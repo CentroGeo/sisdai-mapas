@@ -1,5 +1,8 @@
 <script setup>
 import SisdaiLeyendaControl from './../control'
+import _props from './props'
+
+const { informacion } = defineProps(_props)
 
 const clases = [1, 2]
 </script>
@@ -7,7 +10,10 @@ const clases = [1, 2]
 <template>
   <div class="sisdai-mapa-leyenda">
     <div class="leyenda-titulo">
-      <SisdaiLeyendaControl etiqueta="pruebas" />
+      <SisdaiLeyendaControl
+        etiqueta="pruebas"
+        :informacion="informacion"
+      />
     </div>
 
     <div

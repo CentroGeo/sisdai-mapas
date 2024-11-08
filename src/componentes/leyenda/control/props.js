@@ -9,9 +9,20 @@ export default {
     default: 'Cargando...',
   },
 
+  /**
+   *
+   */
   id: {
     type: String,
     default: () => idAleatorio(),
+  },
+
+  /**
+   *
+   */
+  informacion: {
+    type: String,
+    default: undefined,
   },
 
   /**
