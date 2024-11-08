@@ -7,8 +7,7 @@ const clases = [1, 2]
 <template>
   <div class="sisdai-mapa-leyenda">
     <div class="leyenda-titulo">
-      {leyenda-titulo}
-      <SisdaiLeyendaControl />
+      <SisdaiLeyendaControl etiqueta="pruebas" />
     </div>
 
     <div
@@ -20,7 +19,8 @@ const clases = [1, 2]
           v-for="(clase, idx) in clases"
           :key="`${'capa'}-clase-control-${idx}`"
         >
-          {{ clase }}
+          <!-- {{ clase }} -->
+          <SisdaiLeyendaControl :etiqueta="clase" />
         </li>
       </ul>
     </div>

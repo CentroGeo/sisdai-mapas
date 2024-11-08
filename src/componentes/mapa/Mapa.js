@@ -20,7 +20,7 @@ export default class Mapa extends olMap {
    * @param {string} proyeccion
    * @returns {import("./../clases/Mapa.js").default} Mapa
    */
-  constructor(id, proyeccion/*, target, emits*/) {
+  constructor(id, proyeccion /*, target, emits*/) {
     super({
       controls: [],
       // target,
@@ -40,7 +40,7 @@ export default class Mapa extends olMap {
     // this.pixel = [0,0]
     this.on(
       PointerEventType.POINTERMOVE,
-      ({ dragging, originalEvent/*, map */}) => {
+      ({ dragging, originalEvent /*, map */ }) => {
         if (
           !(dragging || originalEvent.target.closest('.sisdai-mapa-control'))
         ) {
