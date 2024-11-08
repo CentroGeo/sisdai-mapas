@@ -2,7 +2,9 @@
 import { toRefs } from 'vue'
 import _props from './props'
 import { idAleatorio } from '../../../utiles'
+import eventos from './eventos'
 
+const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
 const { etiqueta, informacion, sinControl } = toRefs(props)
 
@@ -20,8 +22,9 @@ const idCheck = `${props.id}-${idAleatorio()}`
 
     <template v-else>
       <input
-        type="checkbox"
         :id="idCheck"
+        @input="({ target }) => emits(eventos.alCambiar, target.checked)"
+        type="checkbox"
       />
       <label :for="idCheck">
         <!-- <span>x</span> -->

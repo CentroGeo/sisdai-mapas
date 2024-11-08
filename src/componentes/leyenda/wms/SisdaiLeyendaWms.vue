@@ -13,6 +13,7 @@ const clases = [1, 2]
       <SisdaiLeyendaControl
         etiqueta="pruebas"
         :informacion="informacion"
+        @alCambiar="x => console.log(x)"
       />
     </div>
 
