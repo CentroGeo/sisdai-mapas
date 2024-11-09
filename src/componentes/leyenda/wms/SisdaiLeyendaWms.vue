@@ -2,7 +2,8 @@
 import SisdaiLeyendaControl from './../control'
 import _props from './props'
 
-const { informacion } = defineProps(_props)
+const { informacion, sinControl, sinControlClases, titulo } =
+  defineProps(_props)
 
 const clases = [1, 2]
 </script>
@@ -11,9 +12,10 @@ const clases = [1, 2]
   <div class="sisdai-mapa-leyenda">
     <div class="leyenda-titulo">
       <SisdaiLeyendaControl
-        etiqueta="pruebas"
-        :informacion="informacion"
         @alCambiar="x => console.log(x)"
+        :etiqueta="titulo"
+        :informacion="informacion"
+        :sinControl="sinControl"
       />
     </div>
 
@@ -27,7 +29,10 @@ const clases = [1, 2]
           :key="`${'capa'}-clase-control-${idx}`"
         >
           <!-- {{ clase }} -->
-          <SisdaiLeyendaControl :etiqueta="clase" />
+          <SisdaiLeyendaControl
+            :etiqueta="clase"
+            :sinControl="sinControlClases"
+          />
         </li>
       </ul>
     </div>

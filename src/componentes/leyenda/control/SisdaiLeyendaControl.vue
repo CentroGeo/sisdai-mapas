@@ -7,7 +7,7 @@ import SisdaiLeyendaSimbolo from './../simbolo'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { etiqueta, informacion, sinControl } = toRefs(props)
+const { deshabilitado, etiqueta, informacion, sinControl } = toRefs(props)
 
 const idCheck = `${props.id}-${idAleatorio()}`
 </script>
@@ -15,14 +15,24 @@ const idCheck = `${props.id}-${idAleatorio()}`
 <template>
   <div class="controlador-vis">
     <template v-if="sinControl">
-      <span
-        class="nombre-variable"
-        v-html="etiqueta"
-      />
+      <p class="lectura">
+        <SisdaiLeyendaSimbolo />
+        <span
+          class="nombre-variable"
+          v-html="etiqueta"
+        />
+        <span
+          v-if="informacion !== undefined"
+          class="info pictograma-informacion m-l-1"
+          tabindex="0"
+          v-globo-informacion="informacion"
+        />
+      </p>
     </template>
 
     <template v-else>
       <input
+        :disabled="deshabilitado"
         :id="idCheck"
         @input="({ target }) => emits(eventos.alCambiar, target.checked)"
         type="checkbox"
@@ -44,9 +54,14 @@ const idCheck = `${props.id}-${idAleatorio()}`
   </div>
 </template>
 
-<style lang="scss">
-.info {
-  padding: 0;
-  font-size: 1.25rem;
+<style lang="scss" scoped>
+.controlador-vis {
+  .lectura {
+    padding: 0;
+  }
+  .info {
+    padding: 0;
+    font-size: 1.25rem;
+  }
 }
 </style>
