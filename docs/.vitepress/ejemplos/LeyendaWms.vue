@@ -8,7 +8,7 @@
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa wms</p>
 
-      <SisdaiLeyendaWms informacion="informnación de la leyenda" :sinControl="true" :sinControlClases="true" titulo="Capa wms" />
+      <SisdaiLeyendaWms informacion="informnación de la leyenda" titulo="Capa wms" :visible="true" />
     </template>
 
     <SisdaiCapaWms

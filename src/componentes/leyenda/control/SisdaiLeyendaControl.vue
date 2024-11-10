@@ -7,9 +7,18 @@ import SisdaiLeyendaSimbolo from './../simbolo'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { deshabilitado, etiqueta, informacion, sinControl } = toRefs(props)
-
+const {
+  deshabilitado,
+  encendido,
+  encendidoIndeterminado,
+  etiqueta,
+  informacion,
+  sinControl,
+} = toRefs(props)
 const idCheck = `${props.id}-${idAleatorio()}`
+
+// Cuando indeterminado cambie a verdadero, el encendido debe cambiar a verdadero
+// Cuando encendido cambie a verdadero o falso, el indeterminado debe cambiar a falso
 </script>
 
 <template>
@@ -32,8 +41,10 @@ const idCheck = `${props.id}-${idAleatorio()}`
 
     <template v-else>
       <input
+        :checked="encendido"
         :disabled="deshabilitado"
         :id="idCheck"
+        :indeterminate="encendidoIndeterminado"
         @input="({ target }) => emits(eventos.alCambiar, target.checked)"
         type="checkbox"
       />

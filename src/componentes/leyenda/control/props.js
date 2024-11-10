@@ -20,6 +20,22 @@ export default {
   /**
    *
    */
+  encendido: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   *
+   */
+  encendidoIndeterminado: {
+    type: Boolean,
+    default: false,
+  },
+
+  /**
+   *
+   */
   id: {
     type: String,
     default: () => idAleatorio(),

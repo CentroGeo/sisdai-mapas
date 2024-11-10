@@ -52,8 +52,8 @@ export default {
   /**
    *
    */
-  visibilidad: {
-    type: [Boolean, Array],
+  visible: {
+    type: Boolean,
     default: true,
   },
 }
