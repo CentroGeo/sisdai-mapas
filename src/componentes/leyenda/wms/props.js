@@ -1,20 +1,18 @@
+import { urlGeoserverGema } from '../../../utiles/constantes'
 import propsControl from './../control/props'
 
 export default {
   /**
    *
    */
-  deshabilitado: {
-    type: Boolean,
-    default: false,
-  },
+  deshabilitado: propsControl.deshabilitado,
 
   /**
    *
    */
   feunte: {
     type: String,
-    default: undefined,
+    default: urlGeoserverGema,
   },
 
   /**
