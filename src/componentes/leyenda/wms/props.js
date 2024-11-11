@@ -10,7 +10,7 @@ export default {
   /**
    *
    */
-  feunte: {
+  fuente: {
     type: String,
     default: urlGeoserverGema,
   },

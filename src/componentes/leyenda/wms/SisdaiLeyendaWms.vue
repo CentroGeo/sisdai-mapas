@@ -8,7 +8,7 @@ import { GeoserverCapa2, acomodarReglasWms } from './utils'
 const props = defineProps(_props)
 const {
   deshabilitado,
-  feunte,
+  fuente,
   informacion,
   nombre,
   sinControl,
@@ -18,11 +18,14 @@ const {
 } = toRefs(props)
 
 const clases = ref([])
-function actualizarClasesDesdeWms() {
-  const leyenda = new GeoserverCapa2({
-    capa: nombre.value,
-    fuente: feunte.value,
-  })
+watch(
+  () => clases.value.map(({ visible }) => visible),
+  (nv) => {
+    console.log(nv);
+  }
+)
+function actualizarClasesDesdeWms([capa, fuente]) {
+  const leyenda = new GeoserverCapa2({ capa, fuente })
 
   axios(leyenda.url)
     .then(({ data, status }) => {
@@ -31,12 +34,13 @@ function actualizarClasesDesdeWms() {
       // const reglas = acomodarReglasWms(data)
       // console.log(reglas[0].simbolo)
       clases.value = acomodarReglasWms(data)
+      asignarVisibilidad(visible.value)
     })
     .catch(() => {})
 }
-actualizarClasesDesdeWms()
+actualizarClasesDesdeWms([nombre.value, fuente.value])
+watch([nombre, fuente], actualizarClasesDesdeWms)
 
-// const clases = ref([new Clase(0), new Clase(1), new Clase(2)])
 function asignarVisibilidad(nv) {
   clases.value.forEach(clase => (clase.visible = nv))
   // console.log(clases.value.map(({ visible }) => visible))
@@ -53,6 +57,9 @@ const encendidoIndeterminado = computed(
     !clases.value.every(({ visible }) => visible)
 )
 
+/**
+ *
+ */
 const capaEncendida = computed({
   // get: () => visible.value,
   get: () => clases.value.some(({ visible }) => visible),
