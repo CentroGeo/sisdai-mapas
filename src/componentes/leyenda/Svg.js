@@ -1,6 +1,6 @@
 import { toRaw } from 'vue'
-import { DEFAULT_ESTILO_VECTOR_SVG } from '../../../utiles/eslitosCapa'
-import { objEnSintaxisCss } from '../../../utiles'
+import { DEFAULT_ESTILO_VECTOR_SVG } from './../../utiles/eslitosCapa'
+import { objEnSintaxisCss } from './../../utiles'
 
 /**
  *

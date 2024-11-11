@@ -8,7 +8,8 @@
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa wms</p>
 
-      <SisdaiLeyendaWms nombre="hcti_snii_sexo_22_est_a" informacion="informnación de la leyenda" titulo="Capa wms" />
+      <!-- salu_unidades_medicas_1n_clues_21_xy_p -->
+      <SisdaiLeyendaWms nombre="pciaf_pob_indigena_asent_hist_20_loc_p" informacion="informnación de la leyenda" titulo="Capa wms" />
     </template>
 
     <SisdaiCapaWms

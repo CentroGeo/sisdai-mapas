@@ -13,6 +13,7 @@ const {
   encendidoIndeterminado,
   etiqueta,
   informacion,
+  simbolo,
   sinControl,
 } = toRefs(props)
 const idCheck = `${props.id}-${idAleatorio()}`
@@ -22,10 +23,18 @@ const idCheck = `${props.id}-${idAleatorio()}`
 </script>
 
 <template>
-  <div class="controlador-vis">
+  <div
+    class="controlador-vis"
+    :style="{
+      '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
+    }"
+  >
     <template v-if="sinControl">
       <p class="lectura">
-        <SisdaiLeyendaSimbolo />
+        <SisdaiLeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
         <span
           class="nombre-variable"
           v-html="etiqueta"
@@ -49,7 +58,10 @@ const idCheck = `${props.id}-${idAleatorio()}`
         type="checkbox"
       />
       <label :for="idCheck">
-        <SisdaiLeyendaSimbolo />
+        <SisdaiLeyendaSimbolo
+          v-if="simbolo"
+          :simbolo="simbolo"
+        />
         <span
           class="nombre-variable"
           v-html="etiqueta"

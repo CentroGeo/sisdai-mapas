@@ -2,9 +2,8 @@
 import { computed, ref, toRefs, watch } from 'vue'
 import SisdaiLeyendaControl from './../control'
 import _props from './props'
-import { GetLegendGraphic, utils } from 'geoserver-api-reader'
 import axios from 'axios'
-import { acomodarReglasWms } from '../../../../docs/.vitepress/src/utiles/leyenda'
+import { GeoserverCapa2, acomodarReglasWms } from './utils'
 
 const props = defineProps(_props)
 const {
@@ -18,6 +17,7 @@ const {
   visible,
 } = toRefs(props)
 
+const clases = ref([])
 function actualizarClasesDesdeWms() {
   const leyenda = new GeoserverCapa2({
     capa: nombre.value,
@@ -28,13 +28,15 @@ function actualizarClasesDesdeWms() {
     .then(({ data, status }) => {
       if (status !== 200) return
 
-      console.log(acomodarReglasWms(data))
+      // const reglas = acomodarReglasWms(data)
+      // console.log(reglas[0].simbolo)
+      clases.value = acomodarReglasWms(data)
     })
     .catch(() => {})
 }
 actualizarClasesDesdeWms()
 
-const clases = ref([new Clase(0), new Clase(1), new Clase(2)])
+// const clases = ref([new Clase(0), new Clase(1), new Clase(2)])
 function asignarVisibilidad(nv) {
   clases.value.forEach(clase => (clase.visible = nv))
   // console.log(clases.value.map(({ visible }) => visible))
@@ -68,6 +70,7 @@ const capaEncendida = computed({
         :encendidoIndeterminado="encendidoIndeterminado"
         :etiqueta="titulo"
         :informacion="informacion"
+        :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
         :sinControl="sinControl"
       />
     </div>
@@ -87,6 +90,7 @@ const capaEncendida = computed({
             :deshabilitado="deshabilitado"
             :encendido="clase.visible"
             :etiqueta="clase.titulo"
+            :simbolo="clase.simbolo"
             :sinControl="sinControlClases"
             @alCambiar="valor => (clase.visible = valor)"
           />
@@ -96,26 +100,4 @@ const capaEncendida = computed({
   </div>
 </template>
 
-<script>
-class Clase {
-  visible = false
-
-  constructor(titulo) {
-    this.titulo = titulo
-  }
-}
-
-class GeoserverCapa2 extends GetLegendGraphic {
-  constructor(parameters) {
-    super(parameters)
-
-    this._formato = 'application/json'
-    this._legendOptions = undefined
-    this._fuente = parameters.fuente
-  }
-
-  get url() {
-    return `${utils.urlService(this._fuente, this._servicio)}${this.parametrosEnFormatoURL}`
-  }
-}
-</script>
+<script></script>

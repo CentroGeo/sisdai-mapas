@@ -1,4 +1,5 @@
 import { idAleatorio } from './../../../utiles'
+import Svg from './../Svg'
 
 export default {
   /**
@@ -46,6 +47,15 @@ export default {
    */
   informacion: {
     type: String,
+    default: undefined,
+  },
+
+  /**
+   *
+   */
+  simbolo: {
+    typo: Svg,
+    // default: new Svg(),
     default: undefined,
   },
 

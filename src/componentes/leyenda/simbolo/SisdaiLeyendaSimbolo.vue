@@ -1,12 +1,9 @@
 <script setup>
 import { toRefs } from 'vue'
-import Svg from './Svg'
+import propsControl from './../control/props'
 
 const props = defineProps({
-  simbolo: {
-    type: Svg,
-    default: new Svg(),
-  },
+  simbolo: propsControl.simbolo,
 })
 
 const { simbolo } = toRefs(props)
