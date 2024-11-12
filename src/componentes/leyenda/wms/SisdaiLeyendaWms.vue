@@ -4,7 +4,9 @@ import SisdaiLeyendaControl from './../control'
 import _props from './props'
 import axios from 'axios'
 import { GeoserverCapa2, acomodarReglasWms } from './utils'
+import eventos from './eventos'
 
+const emits = defineEmits(eventos)
 const props = defineProps(_props)
 const {
   deshabilitado,
@@ -20,9 +22,7 @@ const {
 const clases = ref([])
 watch(
   () => clases.value.map(({ visible }) => visible),
-  (nv) => {
-    console.log(nv);
-  }
+  nv => emits(eventos.alCambiarVisibilidad, nv)
 )
 function actualizarClasesDesdeWms([capa, fuente]) {
   const leyenda = new GeoserverCapa2({ capa, fuente })

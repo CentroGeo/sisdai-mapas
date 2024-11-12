@@ -8,7 +8,12 @@
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa wms</p>
 
-      <SisdaiLeyendaWms nombre="hcti_snii_sexo_22_est_a" informacion="informnación de la leyenda" titulo="Capa wms" />
+      <SisdaiLeyendaWms
+        informacion="informnación de la leyenda"
+        nombre="hcti_snii_sexo_22_est_a"
+        titulo="Capa wms"
+        @alCambiarVisibilidad="x => console.log(x)"
+      />
     </template>
 
     <SisdaiCapaWms
