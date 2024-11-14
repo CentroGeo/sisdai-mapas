@@ -4,7 +4,9 @@ import CapaVectorial from "./../.vitepress/ejemplos/CapaVectorial.vue";
 
 # Capa Vectorial
 
-Las capas vectoriales nos permiten manipular su información de forma local, esto nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos.
+Las capas vectoriales nos permiten manipular su información de forma local, esto
+nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de
+clasificarlos.
 
 **Uso:**
 
@@ -20,7 +22,8 @@ Hereda las propiedades definidas en la sección Capas más las siguientes:
 
 #### `formato`
 
-Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 'topojson'.
+Define el formato de los datos fuente, los valores admitidos son: 'geojson' y
+'topojson'.
 
 - Tipo: `String`.
 - Valor por defecto: `'geojson'`.
@@ -28,7 +31,9 @@ Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 't
 
 #### `fuente`
 
-Origen de la capa. Puede ser una url externa o relativa a las carpetas del proyecto, e incluso un objeto en formato geojson o topojson con coordenadas y atributos.
+Origen de la capa. Puede ser una url externa o relativa a las carpetas del
+proyecto, e incluso un objeto en formato geojson o topojson con coordenadas y
+atributos.
 
 - Tipo: `String` o `Object`.
 - Valor obligatorio.
@@ -36,7 +41,9 @@ Origen de la capa. Puede ser una url externa o relativa a las carpetas del proye
 
 #### `globoInformativo`
 
-Contenido del globo de información que aparecerá al pasar el cursor sobre la capa. Puede ser un texto estático o una función que accede a las propiedades del elemento al que se sobrepone.
+Contenido del globo de información que aparecerá al pasar el cursor sobre la
+capa. Puede ser un texto estático o una función que accede a las propiedades del
+elemento al que se sobrepone.
 
 - Tipo: `String` o `Function`.
 - Valor por defecto: `undefined`.
@@ -54,4 +61,4 @@ Contenido del cuadro de información que aparecerá al pasar el cursor sobre la 
 
 <CapaVectorial />
 
-<<< @/.vitepress/components/capas/vectoriales.vue
+<<< @/.vitepress/ejemplos/CapaVectorial.vue

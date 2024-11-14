@@ -12,7 +12,7 @@ import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { estilo, fuente, globoInformativo } = toRefs(props)
+const { estilo, fuente } = toRefs(props)
 
 const source = new VectorSource({
   url: fuente.value,
