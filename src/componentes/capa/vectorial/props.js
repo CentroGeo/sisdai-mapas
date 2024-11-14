@@ -41,14 +41,6 @@ export default {
   /**
    *
    */
-  visualizacion: {
-    type: String,
-    default: undefined,
-  },
-
-  /**
-   *
-   */
   representacion: {
     type: [String, Object],
     default: undefined,
