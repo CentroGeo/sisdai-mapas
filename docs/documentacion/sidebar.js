@@ -28,7 +28,8 @@ export const sidebar = [
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
       { text: 'XYZ', link: `${ruta}capaXyz` },
       // { text: 'Globos de información', link: `${ruta}globos` },
-      { text: 'Leyenda', link: `${ruta}leyenda` }
+      { text: 'Leyenda', link: `${ruta}leyenda` },
+      { text: 'Puntos Desplazados', link: `${ruta}puntos-desplazados` }
     ]
   },
 

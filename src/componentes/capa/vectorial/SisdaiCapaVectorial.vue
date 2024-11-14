@@ -13,7 +13,7 @@ import obtenerRepresentacion from './representacion'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { estilo, fuente, visualizacion } = toRefs(props)
+const { estilo, fuente, representacion } = toRefs(props)
 
 const source = new VectorSource({
   url: fuente.value,
@@ -34,7 +34,7 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 })
 
 const layer = new VectorLayer({
-  source: obtenerRepresentacion(visualizacion.value, source),
+  source: obtenerRepresentacion(representacion.value, source),
   id: props.id,
   style: estilo.value,
 })
@@ -44,7 +44,7 @@ mapa.capas[props.id] = TipoEstadoCarga.no
 watch(estilo, nv => layer.setStyle(nv))
 // watch(fuente, nv => layer.setSource(nv))
 // watch(visualizacion, (nv) => layer.setSource())
-watch([visualizacion, fuente], ([vis, fue]) =>
+watch([representacion, fuente], ([vis, fue]) =>
   layer.setSource(obtenerRepresentacion(vis, fue))
 )
 </script>
