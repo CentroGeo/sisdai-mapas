@@ -2,6 +2,8 @@
 import CapaVectorial from "./../.vitepress/ejemplos/CapaVectorial.vue";
 </script>
 
+<CapaVectorial />
+
 # Capa Vectorial
 
 Las capas vectoriales nos permiten manipular su información de forma local, esto
@@ -58,7 +60,5 @@ Contenido del cuadro de información que aparecerá al pasar el cursor sobre la 
 - Reactivo: Si. -->
 
 ## Ejemplo
-
-<CapaVectorial />
 
 <<< @/.vitepress/ejemplos/CapaVectorial.vue

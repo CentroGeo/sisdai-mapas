@@ -38,6 +38,11 @@ export default {
     default: undefined,
   },
 
-  /** */
-  visualizacion: {},
+  /**
+   *
+   */
+  visualizacion: {
+    type: String,
+    default: undefined,
+  },
 }

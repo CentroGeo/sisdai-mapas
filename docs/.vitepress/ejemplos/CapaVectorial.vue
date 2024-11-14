@@ -7,20 +7,18 @@
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>
     </template>
 
+    <SisdaiCapaXyz />
+
+    <!-- fuente="https://gema.conahcyt.mx/geoserver/humanidades_ciencias/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=humanidades_ciencias%3Ahcti_jardines_etnobiologicos_210923_xy_p&outputFormat=application%2Fjson" -->
     <SisdaiCapaVectorial
-      fuente="https://gema.conahcyt.mx/geoserver/humanidades_ciencias/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=humanidades_ciencias%3Ahcti_jardines_etnobiologicos_210923_xy_p&outputFormat=application%2Fjson"
+      fuente="/assets/estados-centroides.geojson"
       :estilo="{
         'circle-radius': 5,
         'circle-fill-color': '#58ADA8',
         'circle-stroke-color': '#232323',
         'circle-stroke-width': 0.5
       }"
-      :globoInformativo="
-        (p) => {
-          console.log(p)
-          return `Entidad: <b>{f.nom_edo}</b>`
-        }
-      "
+      visualizacion='puntos-desplazados'
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
     />
