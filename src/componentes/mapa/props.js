@@ -8,7 +8,7 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: `'Mapa interactivo'`
-   * - Reactivo: Si
+   * - Reactivo: si
    */
   descripcion: {
     type: String,
@@ -16,11 +16,24 @@ export default {
   },
 
   /**
+   * Define si se agrega la escala grafica en el mapa.
+   *
+   * - Tipo: `Boolean`
+   * - Valor por defecto: `true`
+   * - Reactivo: Si.
+   */
+  escalaGrafica: {
+    type: Boolean,
+    default: true,
+    validator: valor => typeof valor === typeof Boolean(),
+  },
+
+  /**
    * Identificador único del mapa. Si no es definido se asignará un valor aleatorio.
    *
    * - Tipo: `String`
    * - Valor por defecto: Aleatorio
-   * - Reactivo: No
+   * - Reactivo: no
    */
   id: {
     type: String,
@@ -32,7 +45,7 @@ export default {
    *
    * - Tipo: `Object`
    * - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`
-   * - Reactivo: Si
+   * - Reactivo: si
    */
   vista: {
     type: Object,

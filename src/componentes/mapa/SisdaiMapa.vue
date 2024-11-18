@@ -20,7 +20,7 @@ import 'ol/ol.css'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
-const { descripcion, vista } = toRefs(props)
+const { descripcion, escalaGrafica, vista } = toRefs(props)
 
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
 mapa.asignarVista(vista.value)
@@ -76,6 +76,7 @@ onMounted(() => {
       <div class="contenido-vis">
         <div
           class="mapa"
+          :class="{ 'sin-escala-grafica': !escalaGrafica }"
           ref="refMapa"
           tabindex="0"
         />
@@ -114,6 +115,40 @@ onMounted(() => {
 
   .contenido-vis > .mapa {
     height: 100%;
+  }
+}
+</style>
+
+<style lang="scss">
+.sisdai-mapa .sin-escala-grafica .sisdai-mapa-control-escala-grafica {
+  display: none;
+}
+
+.sisdai-mapa-control-escala-grafica {
+  .ol-scale-bar-inner {
+    .ol-scale-text {
+      bottom: unset;
+      color: transparent;
+      text-shadow: none;
+      &:before {
+        content: 'Escala ';
+      }
+    }
+    .ol-scale-step-marker {
+      height: 10px;
+      top: 0px !important;
+    }
+    .ol-scale-singlebar {
+      height: 3px;
+      top: 8px;
+    }
+    .ol-scale-step-text {
+      bottom: 10px;
+      font-size: 11px;
+    }
+    div > .ol-scale-step-marker {
+      top: -2px !important;
+    }
   }
 }
 </style>

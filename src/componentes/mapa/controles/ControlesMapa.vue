@@ -26,7 +26,7 @@ const mapa = inject(MAPA_INYECTADO)
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sisdai-mapa-control {
   --margen: 16px;
   --alto-boton: 40px;
@@ -46,45 +46,6 @@ const mapa = inject(MAPA_INYECTADO)
     gap: var(--espacio-entre-botones);
     top: var(--margen);
     right: var(--margen);
-  }
-
-  //
-  &-escala-grafica {
-    bottom: calc(var(--margen) / 2);
-    left: calc(var(--margen) / 2);
-
-    .sisdai-mapa-escala-numerica {
-      position: absolute;
-      bottom: 0;
-      width: 100%;
-      color: transparent;
-    }
-
-    .ol-scale-bar-inner {
-      .ol-scale-text {
-        bottom: unset;
-        color: transparent;
-        text-shadow: none;
-        &:before {
-          content: 'Escala ';
-        }
-      }
-      .ol-scale-step-marker {
-        height: 10px;
-        top: 0px !important;
-      }
-      .ol-scale-singlebar {
-        height: 3px;
-        top: 8px;
-      }
-      .ol-scale-step-text {
-        bottom: 10px;
-        font-size: 11px;
-      }
-      div > .ol-scale-step-marker {
-        top: -2px !important;
-      }
-    }
   }
 }
 </style>

@@ -6,24 +6,20 @@ const mapa = ref()
 
 <template>
   <SisdaiMapa
-    class="sin-cargador con-panel-pie-vis con-panel-encabezado-vis"
     ref="mapa"
-    elementosDescriptivos="titulo-mapa descripcion-corta-mapa"
-    proyeccion="EPSG:3857"
+    descripcion="Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo conforme a las necesidades de cada proyecto."
   >
     <template #panel-encabezado-vis>
-      <p
-        class="vis-titulo-visualizacion"
-        id="titulo-mapa"
-      >
+      <p class="vis-titulo-visualizacion">
         Ejemplo de la configuración del mapa.
       </p>
 
-      <p id="descripcion-corta-mapa">
+      <p>
         Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo
         conforme a las necesidades de cada proyecto.
       </p>
     </template>
+
     <SisdaiCapaXyz />
 
     <template #panel-pie-vis>
