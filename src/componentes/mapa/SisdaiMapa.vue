@@ -11,16 +11,12 @@ import {
 import Mapa from './Mapa'
 import { panelesEnUso } from './utiles'
 import propsMapa from './props'
-import {
-  AnimacionCarga,
-  BotonAcercamiento,
-  ContenedorVisAtribuciones,
-} from './elementos'
+import { AnimacionCarga, ContenedorVisAtribuciones } from './elementos'
 import { GloboInformativo } from './elementos/info'
 import eventos from './../capa/eventos'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
+import { ControlesMapa } from './controles'
 import 'ol/ol.css'
-import './../../estilos/Controles.scss'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
@@ -77,30 +73,14 @@ onMounted(() => {
       <!-- slot para las capas -->
       <slot />
 
-      <div
-        class="contenido-vis"
-        ref="refMapa"
-        tabindex="0"
-      >
+      <div class="contenido-vis">
         <div
-          class="sisdai-mapa-control contenedor-controles-vista ol-unselectable"
-        >
-          <BotonAcercamiento
-            nombre="Acercar"
-            pictograma="agregar"
-            @click="mapa.acercar(1)"
-          />
-          <BotonAcercamiento
-            nombre="Alejar"
-            pictograma="restar"
-            @click="mapa.acercar(-1)"
-          />
-          <BotonAcercamiento
-            nombre="Centrar"
-            pictograma="mapa-centro"
-            @click="mapa.ajustarVista()"
-          />
-        </div>
+          class="mapa"
+          ref="refMapa"
+          tabindex="0"
+        />
+
+        <ControlesMapa />
 
         <GloboInformativo
           contenido="Soy un globo de información"
@@ -122,18 +102,18 @@ onMounted(() => {
       />
     </div>
 
-    <!-- <AnimacionCarga class="borde-redondeado-8" v-show="mapa.capasCargando" /> -->
     <ContenedorVisAtribuciones />
   </div>
 </template>
 
-<style lang="scss">
-// @import 'ol/ol.css';
-// @import './../../estilos/Controles.scss';
-
+<style lang="scss" scoped>
 .sisdai-mapa.contenedor-vis {
   .contenedor-vis-paneles {
     position: relative;
+  }
+
+  .contenido-vis > .mapa {
+    height: 100%;
   }
 }
 </style>

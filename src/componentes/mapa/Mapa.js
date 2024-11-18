@@ -6,6 +6,7 @@ import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
 import { ref } from 'vue'
+import { EscalaGrafica } from './controles'
 
 /**
  * @classdesc
@@ -22,7 +23,7 @@ export default class Mapa extends olMap {
    */
   constructor(id, proyeccion /*, target, emits*/) {
     super({
-      controls: [],
+      controls: [new EscalaGrafica()],
       // target,
       view: new View({
         center: [0, 0],

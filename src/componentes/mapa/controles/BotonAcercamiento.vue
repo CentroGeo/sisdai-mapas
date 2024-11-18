@@ -19,3 +19,9 @@ defineProps({
     />
   </button>
 </template>
+
+<style lang="scss" scoped>
+span {
+  margin: auto;
+}
+</style>
