@@ -11,12 +11,7 @@ const mapa = ref()
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">
-        Ejemplo de la configuración del mapa.
-      </p>
-
-      <p>
-        Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo
-        conforme a las necesidades de cada proyecto.
+        Ejemplo de la configuración del mapa
       </p>
     </template>
 

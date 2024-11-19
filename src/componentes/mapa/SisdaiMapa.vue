@@ -50,7 +50,7 @@ defineExpose(mapa)
     :sisdai-mapa="props.id"
     class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
-    <p
+    <!-- <p
       :id="`mapa-${props.id}-descripcion`"
       class="a11y-solo-lectura a11y-simplificada-ocultar"
     >
@@ -58,10 +58,10 @@ defineExpose(mapa)
     </p>
     <p class="a11y-simplificada-mostrar-inline m-3">
       {{ descripcion }}
-    </p>
+    </p> -->
 
     <div
-      class="contenedor-vis-paneles a11y-simplificada-ocultar"
+      class="contenedor-vis-paneles"
       :class="panelesEnUso(useSlots())"
     >
       <div class="panel-encabezado-vis">
@@ -76,6 +76,13 @@ defineExpose(mapa)
       <slot />
 
       <div class="contenido-vis">
+        <p
+          :id="`mapa-${props.id}-descripcion`"
+          class="a11y-solo-lectura"
+        >
+          {{ descripcion }}
+        </p>
+        <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
         <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"
@@ -117,6 +124,18 @@ defineExpose(mapa)
 
   .contenido-vis > .mapa {
     height: 100%;
+  }
+}
+
+.a11y-simplificada .sisdai-mapa.contenedor-vis .contenedor-vis-paneles {
+  min-height: fit-content;
+
+  .contenido-vis {
+    min-height: fit-content;
+    > .mapa,
+    .sisdai-mapa-control {
+      display: none;
+    }
   }
 }
 </style>
