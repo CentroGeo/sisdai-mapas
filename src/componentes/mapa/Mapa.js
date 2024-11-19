@@ -1,12 +1,14 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
-import PointerEventType from 'ol/pointer/EventType.js'
+import PointerEventType from 'ol/pointer/EventType'
 import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
 import { ref } from 'vue'
 import { EscalaGrafica } from './controles'
+import RenderEventType from 'ol/render/EventType'
+import { crearImagenMapa } from './utiles'
 
 /**
  * @classdesc
@@ -200,5 +202,22 @@ export default class Mapa extends olMap {
 
       revisar()
     })
+  }
+
+  /**
+   * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
+   * pantalla, sin controles. El formato de descargá es PNG.
+   * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
+   * incluir extensión).
+   */
+  exportarImagen(nombreImagen = 'mapa') {
+    this.once(RenderEventType.RENDERCOMPLETE, function () {
+      const link = document.createElement('a')
+      link.href = crearImagenMapa(this)
+      link.download = `${nombreImagen}.png`
+      link.click()
+    })
+
+    this.renderSync()
   }
 }

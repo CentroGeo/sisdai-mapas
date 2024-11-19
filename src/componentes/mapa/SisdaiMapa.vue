@@ -41,6 +41,8 @@ onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.ajustarVista()
 })
+
+defineExpose(mapa)
 </script>
 
 <template>
