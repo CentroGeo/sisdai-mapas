@@ -11,6 +11,7 @@ export default {
   lang: 'es-mx',
   title: pkg.name,
   description: pkg.description,
+  version: pkg.version,
   lastUpdated: true,
   // appearance: false,
 
@@ -49,5 +50,5 @@ export default {
       ...sidebarDocumentacion,
       ...sidebarAccesibilidad
     }
-  }
+  },
 }

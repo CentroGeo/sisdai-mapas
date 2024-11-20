@@ -25,6 +25,16 @@ compatible y tiene instalada.
 
 - Preliminar de animación al cargar
 
+## [1.13.2] - 2024-11-19
+
+### Arreglado (Fixed)
+
+- Ya se muestra la información de despliegue en el ambiente de desarrollo y no en el ambiente de producción
+
+### Eliminado (Removed)
+
+- Contribución a proyectos que mencionaba SALSA
+
 ## [1.13.0] - 2024-11-06
 
 ### Agregado (Added)
