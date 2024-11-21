@@ -18,25 +18,26 @@ El componente `SisdaiMapa` es el componente princial de esta librería. Dentro d
 
 ## Propiedades
 
-#### `elementosDescriptivos`
+#### `descripcion`
 
-Recíbe los ID, separados por espacios, de los elementos que describen al mapa como título, descripciones cortas o largas.
+Descripción corta del mapa, la cual es visible en el modo solo texto y audible
+con herramientas de lectura por voz.
 
 - Tipo: `String`
-- Valor por defecto: `''`
-- Reactivo: ✅
+- Valor por defecto: `'Mapa interactivo'`
+- Reactivo: si
 
-> ℹ️ **Información:** Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que los describe.
+<div class="nota-contenedor">
+  <p class="nota-titulo">Información:</p>
+  <p class="nota">
+    Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que lo describe.
+  </p>
+</div>
 
 **Uso:**
 
 ```html
-<h2 id="titulo-mapa">Titulo del mapa.</h2>
-<p id="descripcion-corta-mapa">Descripción corta del mapa.</p>
-
-<SisdaiMapa elementosDescriptivos="titulo-mapa descripcion-corta-mapa">
-  ...
-</SisdaiMapa>
+<SisdaiMapa descripcion="Descripción corta del mapa.">...</SisdaiMapa>
 ```
 
 #### `escalaGrafica`
@@ -115,9 +116,7 @@ const mapa = ref()
 ```html
 <SisdaiMapa ref="mapa"> ... </SisdaiMapa>
 
-<button @click="mapa.exportarImagen('mapa-sisdai')">
-  Exportar mapa como imagen
-</button>
+<button @click="mapa.exportarImagen('mapa-sisdai')">Exportar mapa como imagen</button>
 ```
 
 ## Ejemplo

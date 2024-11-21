@@ -18,13 +18,31 @@ Componenete para desplegar capas desde servicios wms publicos o privados.
 
 Hereda las propiedades definidas en la sección Capas más las siguientes:
 
-#### `parametros`
+Hereda las propiedades definidas en la sección Capas más las siguientes:
 
-Parámetros de solicitud WMS. El atributo LAYERS (nombre de las capas separadas por comas) es obligatorio. Para revisar los valores por defecto consulte el [modulo WMS de OpenLayers](https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html).
+#### `capa`
 
-- Tipo: `Object`
-- Valor por defecto: `{}`.
-- Reactivo: ✅
+Nombre de la capa en el servidor de mapas.
+
+- Tipo: `String`.
+- Valor **obligatorio**.
+- Reactivo: No.
+
+#### `estilo`
+
+Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el estilo de la capa por defecto que tenga en el servidor.
+
+- Tipo: `String`.
+- Valor por defecto: `undefined`.
+- Reactivo: Si.
+
+#### `filtro`
+
+Filtro en sintaxis CQL, compatible con la [Api de Geoserver](https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html).
+
+- Tipo: `String`.
+- Valor por defecto: `undefined`.
+- Reactivo: Si.
 
 #### `tipoServidor`
 
