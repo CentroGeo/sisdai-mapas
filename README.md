@@ -1,12 +1,19 @@
 # sisdai-mapas
 
-El proyecto sisdai-mapas es una biblioteca de visualización de datos geográficos que forma parte del
-Sistema de Diseño y Accesibilidad para la Investigación ([Sisdai](https://sisdai.conahcyt.mx)).
+El proyecto sisdai-mapas es una biblioteca visualización de datos geográficos que
+forma parte del Sistema de Diseño y Accesibilidad para la
+Investigación ([Sisdai](https://sisdai.conahcyt.mx/)). El Sisdai es un proyecto de investigación desarrollado por el
+Centro de Investigación en Ciencias de Información Geoespacial, A.C.
+([CentroGeo](https://www.centrogeo.org.mx/)) y coordinado por el Consejo Nacional de Humanidades, Ciencias y Tecnologías
+([Conahcyt](https://conahcyt.mx)) del Gobierno de México.
 
-Para leer la documentación de la biblioteca, puedes visitar el sitio [sisdai-mapas.conahcyt.mx](https://sisdai-mapas.conahcyt.mx/) ó levantar la documentación localmente siguiendo las instrucciones escritas en la sección [Uso local del proyecto](#uso-local-del-proyecto) de este documento.
+Para leer la documentación de la biblioteca, puedes visitar el sitio [sisdai-mapas.conahcyt.mx](https://sisdai-mapas.conahcyt.mx)
+o levantar la documentación localmente siguiendo las instrucciones escritas en la sección [Uso local del proyecto](#uso-local-del-proyecto) de este
+documento.
 
-Cualquier persona puede hacer uso de esta biblioteca al clonarla e instalarla
-en su equipo a través del **protocolo HTTPS** o bien instalándola mediante [npm/sisdai](https://www.npmjs.com/~sisdai).
+Cualquier persona puede hacer uso de esta biblioteca al clonarla e instalarla en su equipo a través del
+**protocolo HTTPS** o bien instalándola mediante [npm](https://www.npmjs.com/~centrogeomx).
+
 
 ## Utilidades
 
@@ -21,11 +28,11 @@ en su equipo a través del **protocolo HTTPS** o bien instalándola mediante [np
 
 En la carpeta principal de tu proyecto Vue puedes instalar la última versión de sisdai-mapas mediante dos opciones:
 
-**Opción A.** Desde el repositorio del [sisdai-mapas en npm](https://www.npmjs.com/package/sisdai-mapas).
+**Opción A.** Desde el repositorio del [sisdai-mapas en npm](https://www.npmjs.com/package/@centrogeomx/sisdai-mapas).
 
 En la línea de comando escribe
 ```bash
-npm i sisdai-mapas
+npm i @centrogeomx/sisdai-mapas
 ```
 
 **Opción B.** Desde el repositorio de [sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas).
@@ -67,10 +74,10 @@ Si necesitas utilizar otra versión de sisdai-mapas, ubícate en la carpeta del
 proyecto en donde necesitas la actualización e instala la versión que requieres
 nuevamente usando una de estas dos opciones
 
-**Opción A.** Para versiones publicadas en el repositorio de [sisdai-mapas en npm](https://www.npmjs.com/package/sisdai-mapas).
+**Opción A.** Para versiones publicadas en el repositorio de [sisdai-mapas en npm](https://www.npmjs.com/package/@centrogeomx/sisdai-mapas).
 
 ```bash
-npm i sisdai-mapas@vN.N.N
+npm i @centrogeomx/sisdai-mapas@vN.N.N
 ```
 
 **Opción B.** Para cualquier versión desde el repositorio de [sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas).
