@@ -1,6 +1,6 @@
 {
   "name": "sisdai-mapas",
-  "version": "1.13.5",
+  "version": "1.13.6",
   "publishConfig": {
     "access": "public"
   },
