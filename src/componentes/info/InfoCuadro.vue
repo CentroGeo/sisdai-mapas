@@ -1,6 +1,6 @@
 <script>
 const eventos = {
-  alCerrar: 'alCerrar',
+  alCerrar: 'alCerrar'
 }
 </script>
 
@@ -11,16 +11,16 @@ import { calcularPosicionInfo } from './../../utiles/globoInfo'
 const props = defineProps({
   contenido: {
     type: String,
-    default: undefined,
+    default: undefined
   },
   pixel: {
     type: Array,
-    default: () => [0, 0],
+    default: () => [0, 0]
   },
   visible: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const emits = defineEmits(Object.values(eventos))
@@ -34,7 +34,7 @@ function calcular() {
 }
 
 var intervalo
-watch(visible, nv => {
+watch(visible, (nv) => {
   if (nv) {
     intervalo = setInterval(calcular, 100)
   } else {
@@ -47,8 +47,8 @@ onUnmounted(() => clearInterval(intervalo))
 <template>
   <div
     ref="sisdaiCuadroInfo"
-    class="contenedor-globo-info-ext"
-    :class="{ esconder: !visible }"
+    class="globo-informacion"
+    :class="{ oculto: !visible }"
     :style="`left: ${posicion.x}px; top: ${posicion.y}px;`"
     aria-live="assertive"
   >
@@ -59,9 +59,6 @@ onUnmounted(() => clearInterval(intervalo))
       <span class="icono-cerrar" />
       <span class="a11y-solo-lectura">Cerrar.</span>
     </button>
-    <div
-      class="cuerpo-globo-info"
-      v-html="contenido"
-    />
+    <div class="globo-informacion-cuerpo" v-html="contenido" />
   </div>
 </template>
