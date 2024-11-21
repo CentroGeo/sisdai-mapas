@@ -5,8 +5,6 @@ import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
 
 # Leyendas
 
-<Leyenda />
-
 Uso:
 
 ```vue
@@ -59,6 +57,8 @@ Uso avanzado:
 ```
 
 ## Ejemplo
+
+<Leyenda />
 
 <!-- <ResaAtoyac /> -->
 

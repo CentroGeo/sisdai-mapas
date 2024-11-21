@@ -1,6 +1,6 @@
 <script setup>
 function globo(params) {
-  console.log('globo', params)
+  // console.log('globo', params)
   return `
     <p>Entidad: <b>${params['nom_ent']}</b></p>
     <p>Investigadoras: <b>${params['investigadoras']}</b></p>
