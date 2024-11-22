@@ -6,8 +6,8 @@ const mapa = ref()
 
 <template>
   <SisdaiMapa
-    ref="mapa"
     descripcion="Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo conforme a las necesidades de cada proyecto."
+    ref="mapa"
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">

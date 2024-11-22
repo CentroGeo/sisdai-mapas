@@ -82,7 +82,7 @@ Código de identificación SRS que define la proyección de la vista.
 - Reactivo: no
 
 <div class="nota-contenedor">
-  <p class="nota-titulo">Información:</p>
+  <p class="nota-titulo">Importante:</p>
   <p class="nota">
     Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
   </p>
@@ -120,17 +120,15 @@ acercamiento mostrado en pantalla, sin controles. El formato de descargá es PNG
 
 **Uso:**
 
-```vue
-<script setup>
+```js
 import { ref } from 'vue'
 const mapa = ref()
-</script>
+```
 
-<template>
-  <SisdaiMapa ref="mapa">...</SisdaiMapa>
+```vue
+<SisdaiMapa ref="mapa">...</SisdaiMapa>
 
-  <button @click="mapa.exportarImagen('mapa-sisdai')">
-    Exportar mapa como imagen
-  </button>
-</template>
+<button @click="mapa.exportarImagen('mapa-sisdai')">
+  Exportar mapa como imagen
+</button>
 ```

@@ -20,12 +20,12 @@ import 'ol/ol.css'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
-const { descripcion, escalaGrafica, vista } = toRefs(props)
-
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
-mapa.asignarVista(vista.value)
-// mapa.ajustarVista()
+// mapa.vista = props.vista
 provide(MAPA_INYECTADO, mapa)
+
+const { descripcion, escalaGrafica, vista } = toRefs(props)
+watch(vista, nv => (mapa.vista = nv))
 
 function emitirEventosCarga(nv) {
   if (nv) {
@@ -39,7 +39,8 @@ watch(() => mapa.capasCargando, emitirEventosCarga)
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
-  mapa.ajustarVista()
+  mapa.vista = props.vista
+  // mapa.ajustarVista()
 })
 
 defineExpose(mapa)
@@ -50,16 +51,6 @@ defineExpose(mapa)
     :sisdai-mapa="props.id"
     class="sisdai-mapa contenedor-vis borde-redondeado-8"
   >
-    <!-- <p
-      :id="`mapa-${props.id}-descripcion`"
-      class="a11y-solo-lectura a11y-simplificada-ocultar"
-    >
-      {{ descripcion }}
-    </p>
-    <p class="a11y-simplificada-mostrar-inline m-3">
-      {{ descripcion }}
-    </p> -->
-
     <div
       class="contenedor-vis-paneles"
       :class="panelesEnUso(useSlots())"
