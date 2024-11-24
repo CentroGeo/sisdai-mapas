@@ -152,10 +152,26 @@ const mapa = ref()
 </button>
 ```
 
-## Eventos
+<!-- ## Eventos
 
 A continuación se describen los eventos que desencadena el mapa relacionados con
 los cambios de la vista.
+
+#### `@alMoverVista`
+
+Ejecutado cuando se detecta que la vista del mapa ha cambiado.
+
+**Parámetros:**
+
+- `Object`: Nuevo valor de la vista de OpenLayers.
+
+**Uso:**
+
+```html
+<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
+  ...
+</SisdaiMapa>
+``` -->
 
 <!-- #### `@alAjustarVista`
 
@@ -207,19 +223,3 @@ cambiado.
   ...
 </SisdaiMapa>
 ``` -->
-
-#### `@alMoverVista`
-
-Ejecutado cuando se detecta que la vista del mapa ha cambiado.
-
-**Parámetros:**
-
-- `Object`: Nuevo valor de la vista de OpenLayers.
-
-**Uso:**
-
-```html
-<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
-```

@@ -68,6 +68,10 @@ export default class Mapa extends olMap {
     this.pixel.value = pixel
   }
 
+  /**
+   * Acerca la vista el número de unidades que se asignen como parámetro. Si las unidades son negativas, se da un alejamiento.
+   * @param {number} unidades
+   */
   acercar(unidades = 1) {
     this.getView().animate({
       zoom: this.getView().getZoom() + unidades,
@@ -76,51 +80,22 @@ export default class Mapa extends olMap {
   }
 
   /**
-   * Objeto vista: { acercamiento, centro, extencsion }
-   * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
-   * { acercamiento, centro } o { extension }
+   * Agrega atributos Aria al elemento canvas que genera openlayers para el mapa.
    */
-  ajustarVista_(vista) {
-    const acercamiento =
-      vista?.acercamiento ||
-      this.getView().get('acercamiento') ||
-      vistaPorDefecto.acercamiento
-    const centro =
-      vista?.centro || this.getView().get('centro') || vistaPorDefecto.centro
-    const extension =
-      vista?.extension ||
-      this.getView().get('extension') ||
-      vistaPorDefecto.extension
-    const extensionMargen =
-      vista?.extensionMargen ||
-      this.getView().get('extensionMargen') ||
-      vistaPorDefecto.extensionMargen
+  async agregarAtributosAriaCanvas() {
+    const canvas = await this.busquedaPromesa(mapa =>
+      mapa.getViewport().querySelector('canvas')
+    )
 
-    // console.log(
-    //   'ajustar vista a',
-    //   acercamiento,
-    //   centro,
-    //   extension,
-    //   extensionMargen
-    // )
-
-    if (validaciones.extension(extension)) {
-      // console.log(this.getView().get('extensionMargen'))
-      this.getView().fit(valorarArregloNumerico(extension), {
-        padding: valorarExtensionMargen(extensionMargen),
-      })
-    } else {
-      this.getView().setCenter(
-        validaciones.centro(centro)
-          ? valorarArregloNumerico(centro)
-          : vistaPorDefecto.centro
-      )
-      this.getView().setZoom(Number(acercamiento))
-    }
-
-    // this.eventos(eventos.alAjustarVista, vista)
+    canvas.setAttribute('aria-label', 'Mapa interactivo')
+    canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
   }
 
+  /**
+   * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
+   *
+   * @param {vista} vista
+   */
   ajustarVista(vista) {
     function validar(valor) {
       return esObjeto(valor)
@@ -130,153 +105,37 @@ export default class Mapa extends olMap {
         : false
     }
 
-    const view = this.getView()
-    const vistag = this.vista
-    function ajustar({ acercamiento, centro, extension, extensionMargen }) {
-      if (
-        (extension && validaciones.extension(extension)) ||
-        (extensionMargen && validaciones.extensionMargen(extensionMargen))
-      ) {
-        console.log(
-          `revisar, si extención (${extension}) no es difenida pero margen (${extensionMargen}) si, utilisar extención guardada, si no existe, salir`
-        )
+    var { acercamiento, centro, extension, extensionMargen } = validar(vista)
+      ? vista
+      : this.vista
 
-        if (extension && validaciones.extension(extension)) {
-          console.log(
-            'ajustar por extension',
-            extension,
-            extensionMargen || vistag.extensionMargen
-          )
-          view.fit(valorarArregloNumerico(extension), {
-            duration,
-            padding: valorarExtensionMargen(
-              extensionMargen || vistag.extensionMargen
-            ),
-          })
-        } else {
-          console.log('utilizar extención guardada', vistag.extension)
-          view.fit(valorarArregloNumerico(vistag.extension), {
-            duration,
-            padding: valorarExtensionMargen(extensionMargen),
-          })
-        }
-
-        // if (!(extension && validaciones.extension(extension))) {
-        //   console.log('ajustar por extensionMargen', extensionMargen)
-        // }
+    if (
+      (extension && validaciones.extension(extension)) ||
+      (extensionMargen && validaciones.extensionMargen(extensionMargen))
+    ) {
+      if (extension && validaciones.extension(extension)) {
+        extensionMargen = extensionMargen || this.vista.extensionMargen
       } else {
-        view.animate({
-          center:
-            centro && validaciones.centro(centro)
-              ? valorarArregloNumerico(centro)
-              : view.getZoom(),
-          duration,
-          zoom:
-            acercamiento && validaciones.acercamiento(acercamiento)
-              ? Number(acercamiento)
-              : view.getCenter(),
-        })
+        extension = extension || this.vista.extension
       }
-    }
 
-    if (validar(vista)) {
-      // console.log('utilizar parámetros')
-      ajustar(vista)
+      this.getView().fit(valorarArregloNumerico(extension), {
+        duration,
+        padding: valorarExtensionMargen(extensionMargen),
+      })
     } else {
-      // console.log('buscar valores guardados')
-      ajustar(this.vista)
+      this.getView().animate({
+        center:
+          centro && validaciones.centro(centro)
+            ? valorarArregloNumerico(centro)
+            : this.getView().getZoom(),
+        duration,
+        zoom:
+          acercamiento && validaciones.acercamiento(acercamiento)
+            ? Number(acercamiento)
+            : this.getView().getCenter(),
+      })
     }
-  }
-
-  /**
-   * Asigna el valor del acercamiento en el mapa.
-   * @param {Number} acercamiento
-   */
-  // asignarAcercamiento(acercamiento) {
-  //   this.getView().set('acercamiento', acercamiento)
-  // }
-
-  /**
-   * Asigna el valor del centro en el mapa.
-   * @param {Array<Number>|String} centro
-   */
-  // asignarCentro(centro) {
-  //   this.getView().set('centro', centro)
-  // }
-
-  /**
-   * Asigna el valor de la extención del mapa en el mapa.
-   * @param {Array<Number>|String} extension
-   * @param {Array<Number>|String} extensionMargen
-   */
-  // asignarExtension(extension, extensionMargen) {
-  //   this.getView().set('extension', extension)
-  //   this.getView().set('extensionMargen', extensionMargen)
-  // }
-
-  get vista() {
-    return {
-      acercamiento: this.getView().get('acercamiento'),
-      centro: this.getView().get('centro'),
-      extension: this.getView().get('extension'),
-      extensionMargen: this.getView().get('extensionMargen'),
-    }
-  }
-
-  set vista({ acercamiento, centro, extension, extensionMargen }) {
-    this.getView().set(
-      'acercamiento',
-      acercamiento || vistaPorDefecto.acercamiento
-    )
-    this.getView().set('centro', centro || vistaPorDefecto.centro)
-    this.getView().set('extension', extension || vistaPorDefecto.extension)
-    this.getView().set(
-      'extensionMargen',
-      extensionMargen || vistaPorDefecto.extensionMargen
-    )
-
-    this.ajustarVista()
-  }
-
-  /**
-   * Asigna los valores de de la vista del mapa.
-   * @param {Object} propiedades
-   */
-  // asignarVista({ extension, extensionMargen, centro, acercamiento }) {
-  //   this.asignarCentro(centro)
-  //   this.asignarAcercamiento(acercamiento)
-  //   this.asignarExtension(extension, extensionMargen)
-  //   // this.ajustarVista()
-  // }
-
-  /**
-   *
-   */
-  get capasCargando() {
-    return Object.values(this.capas).some(
-      capa => capa === TipoEstadoCarga.inicio
-    )
-  }
-
-  /**
-   *
-   */
-  get todasCapasConError() {
-    return Object.values(this.capas).every(
-      capa => capa === TipoEstadoCarga.error
-    )
-  }
-
-  /**
-   *
-   */
-  async agregarAtributosAriaCanvas() {
-    const canvas = await this.busquedaPromesa(mapa =>
-      mapa.getViewport().querySelector('canvas')
-    )
-
-    canvas.setAttribute('aria-label', 'Mapa interactivo')
-    canvas.setAttribute('aria-describedby', `mapa-${this.id}-descripcion`)
   }
 
   /**
@@ -302,6 +161,15 @@ export default class Mapa extends olMap {
   }
 
   /**
+   *
+   */
+  get capasCargando() {
+    return Object.values(this.capas).some(
+      capa => capa === TipoEstadoCarga.inicio
+    )
+  }
+
+  /**
    * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
@@ -316,5 +184,50 @@ export default class Mapa extends olMap {
     })
 
     this.renderSync()
+  }
+
+  /**
+   * @typedef {Object} vista
+   * @property {number} [acercamiento] Nuvel de acercamiento.
+   * @property {Array<number>|string} [centro] Coordenadas céntricas.
+   * @property {Array<number>|string} [extension] Extensión.
+   * @property {number|Array<number>} [extensionMargen] Margen de la extensión.
+   *
+   * @returns {vista} vista
+   */
+  get vista() {
+    return {
+      acercamiento: this.getView().get('acercamiento'),
+      centro: this.getView().get('centro'),
+      extension: this.getView().get('extension'),
+      extensionMargen: this.getView().get('extensionMargen'),
+    }
+  }
+
+  /**
+   * Asigna los valores de de la vista del mapa.
+   * @param {vista} vista
+   */
+  set vista({
+    acercamiento = vistaPorDefecto.acercamiento,
+    centro = vistaPorDefecto.centro,
+    extension = vistaPorDefecto.extension,
+    extensionMargen = vistaPorDefecto.extensionMargen,
+  }) {
+    this.getView().set('acercamiento', acercamiento)
+    this.getView().set('centro', centro)
+    this.getView().set('extension', extension)
+    this.getView().set('extensionMargen', extensionMargen)
+
+    this.ajustarVista()
+  }
+
+  /**
+   *
+   */
+  get todasCapasConError() {
+    return Object.values(this.capas).every(
+      capa => capa === TipoEstadoCarga.error
+    )
   }
 }

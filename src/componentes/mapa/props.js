@@ -20,7 +20,7 @@ export default {
    *
    * - Tipo: `Boolean`
    * - Valor por defecto: `true`
-   * - Reactivo: Si.
+   * - Reactivo: si
    */
   escalaGrafica: {
     type: Boolean,

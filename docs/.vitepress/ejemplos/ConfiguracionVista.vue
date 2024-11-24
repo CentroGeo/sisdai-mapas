@@ -26,8 +26,12 @@ const mapa = ref()
           Ajustar vista en Baja California
         </button>
 
+        <button class="boton-primario boton-chico" @click="mapa.ajustarVista({ extension: [-92.3263, 19.5512, -87.5331, 22.586] })">
+          Ajustar vista a Yucatán con extensión
+        </button>
+
         <button class="boton-primario boton-chico" @click="mapa.ajustarVista({ extensionMargen: 50 })">
-          Ajustar vista definida en el mapa
+          Ajustar vista definida en el mapa con margen 50
         </button>
       </div>
     </template>
