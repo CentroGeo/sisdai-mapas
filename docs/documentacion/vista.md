@@ -16,7 +16,7 @@ los cambios que puede tener.
 
 ## Atributos
 
-#### `acercamiento`
+### `acercamiento`
 
 Nivel de acercamiento utilizado para calcular la resolución inicial de la vista.
 
@@ -38,7 +38,7 @@ Nivel de acercamiento utilizado para calcular la resolución inicial de la vista
 <SisdaiMapa :vista="{ acercamiento: 4.4, ... }">...</SisdaiMapa>
 ```
 
-#### `centro`
+### `centro`
 
 Coordenadas `[x, y]` del centro inicial de la vista (La proyección de estas
 coordenadas deben coincidir con la `proyeccion` definida en el mapa).
@@ -62,7 +62,7 @@ coordenadas deben coincidir con la `proyeccion` definida en el mapa).
 <SisdaiMapa :vista="{ centro: [-102, 24], ... }">...</SisdaiMapa>
 ```
 
-#### `extension`
+### `extension`
 
 Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista (La
 proyección de estas coordenadas deben coincidir con la `proyeccion` definida en
@@ -91,7 +91,7 @@ el mapa).
 </SisdaiMapa>
 ```
 
-#### `extensionMargen`
+### `extensionMargen`
 
 Margen (en píxeles) que se agregará a la `extensión` de la vista. Los valores en
 la matriz son margen superior, derecho, inferior e izquierdo.
@@ -119,7 +119,7 @@ la matriz son margen superior, derecho, inferior e izquierdo.
 A continuación se describen las funciones que pueden modificar el estado de la
 vista en el mapa.
 
-#### `ajustarVista()`
+### `ajustarVista()`
 
 Ajusta la vista del mapa a valores que llegen como parametro con la estructura
 de la propiedead vista (`{ acercamiento, centro, extension, extensionMargen }`),
@@ -157,7 +157,7 @@ const mapa = ref()
 A continuación se describen los eventos que desencadena el mapa relacionados con
 los cambios de la vista.
 
-#### `@alMoverVista`
+### `@alMoverVista`
 
 Ejecutado cuando se detecta que la vista del mapa ha cambiado.
 
@@ -173,7 +173,7 @@ Ejecutado cuando se detecta que la vista del mapa ha cambiado.
 </SisdaiMapa>
 ``` -->
 
-<!-- #### `@alAjustarVista`
+<!-- ### `@alAjustarVista`
 
 Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores iniciales de la propiedad vista mediante el control AjustarVista.
 
@@ -189,7 +189,7 @@ Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores in
 </SisdaiMapa>
 ``` -->
 
-<!-- #### `@alCambiarCentro`
+<!-- ### `@alCambiarCentro`
 
 Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
 
@@ -205,7 +205,7 @@ Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
 </SisdaiMapa>
 ```
 
-#### `@alCambiarAcercamiento`
+### `@alCambiarAcercamiento`
 
 Ejecutado cuando se detecta que el acercamiento de la vista del mapa ha
 cambiado.

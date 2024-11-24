@@ -4,11 +4,7 @@ import PointerEventType from 'ol/pointer/EventType'
 import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
-import {
-  esObjeto,
-  valorarArregloNumerico,
-  valorarExtensionMargen,
-} from './../../utiles'
+import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
 import { ref } from 'vue'
 import { EscalaGrafica } from './controles'
 import RenderEventType from 'ol/render/EventType'
@@ -96,46 +92,36 @@ export default class Mapa extends olMap {
    *
    * @param {vista} vista
    */
-  ajustarVista(vista) {
-    function validar(valor) {
-      return esObjeto(valor)
-        ? ['acercamiento', 'centro', 'extension', 'extensionMargen'].some(p =>
-            Object.keys(valor).includes(p)
-          )
-        : false
-    }
+  ajustarVista(vista = this.vista) {
+    validaciones.vista(vista)
 
-    var { acercamiento, centro, extension, extensionMargen } = validar(vista)
-      ? vista
-      : this.vista
+    const { acercamiento, centro } = vista
+    var { extension, extensionMargen } = vista
 
-    if (
-      (extension && validaciones.extension(extension)) ||
-      (extensionMargen && validaciones.extensionMargen(extensionMargen))
-    ) {
-      if (extension && validaciones.extension(extension)) {
-        extensionMargen = extensionMargen || this.vista.extensionMargen
-      } else {
-        extension = extension || this.vista.extension
-      }
+    if (extension || (this.vista.extension && !(acercamiento || centro))) {
+      extensionMargen = !extensionMargen
+        ? this.vista.extensionMargen
+        : extensionMargen
+      extension = !extension ? this.vista.extension : extension
 
       this.getView().fit(valorarArregloNumerico(extension), {
         duration,
         padding: valorarExtensionMargen(extensionMargen),
       })
-    } else {
-      this.getView().animate({
-        center:
-          centro && validaciones.centro(centro)
-            ? valorarArregloNumerico(centro)
-            : this.getView().getZoom(),
-        duration,
-        zoom:
-          acercamiento && validaciones.acercamiento(acercamiento)
-            ? Number(acercamiento)
-            : this.getView().getCenter(),
-      })
+      return
     }
+
+    this.getView().animate({
+      center:
+        centro && validaciones.centro(centro)
+          ? valorarArregloNumerico(centro)
+          : this.getView().getCenter(),
+      duration,
+      zoom:
+        acercamiento && validaciones.acercamiento(acercamiento)
+          ? Number(acercamiento)
+          : this.getView().getZoom(),
+    })
   }
 
   /**
@@ -219,7 +205,7 @@ export default class Mapa extends olMap {
     this.getView().set('extension', extension)
     this.getView().set('extensionMargen', extensionMargen)
 
-    this.ajustarVista()
+    this.ajustarVista(this.vista)
   }
 
   /**

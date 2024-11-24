@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 const mapa = ref()
+
+const otraVista = { acercamiento: 6.3, centro: '-115.0969,30.5499', extension: '-92.3263,19.5512,-87.5331,22.586', extensionMargen: 50 }
 </script>
 
 <template>
@@ -20,18 +22,12 @@ const mapa = ref()
     <template #panel-pie-vis>
       <div class="flex flex-contenido-equidistante">
         <button
+          v-for="(val, name) in otraVista"
+          :key="`boton-${name}`"
           class="boton-primario boton-chico"
-          @click="mapa.ajustarVista({ centro: '-115.0969,30.5499', acercamiento: 6.3 })"
+          @click="mapa.ajustarVista({ [name]: val })"
         >
-          Ajustar vista en Baja California
-        </button>
-
-        <button class="boton-primario boton-chico" @click="mapa.ajustarVista({ extension: [-92.3263, 19.5512, -87.5331, 22.586] })">
-          Ajustar vista a Yucatán con extensión
-        </button>
-
-        <button class="boton-primario boton-chico" @click="mapa.ajustarVista({ extensionMargen: 50 })">
-          Ajustar vista definida en el mapa con margen 50
+          {{ name }}: {{ val }}
         </button>
       </div>
     </template>

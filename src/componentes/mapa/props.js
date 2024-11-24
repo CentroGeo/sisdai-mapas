@@ -58,7 +58,7 @@ export default {
    *
    * - Tipo: `String`
    * - Valor por defecto: `'EPSG:4326'`
-   * - Reactivo: No
+   * - Reactivo: no
    *
    * >  **Información:** El valor predeterminado es Universal Transversal de Mercator.
    *

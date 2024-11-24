@@ -23,7 +23,7 @@ de el se pueden agregar componentes de capas, leyendas y slots de paneles.
 
 ## Propiedades
 
-#### `descripcion`
+### `descripcion`
 
 Descripción corta del mapa, la cual es visible en el modo solo texto y audible
 con herramientas de lectura por voz.
@@ -45,7 +45,7 @@ con herramientas de lectura por voz.
 <SisdaiMapa descripcion="Descripción corta del mapa.">...</SisdaiMapa>
 ```
 
-#### `escalaGrafica`
+### `escalaGrafica`
 
 Define si se agrega la escala grafica en el mapa.
 
@@ -59,7 +59,7 @@ Define si se agrega la escala grafica en el mapa.
 <SisdaiMapa :escalaGrafica="true">...</SisdaiMapa>
 ```
 
-#### `id`
+### `id`
 
 Identificador único del mapa. Si no es definido se asignará un valor aleatorio.
 
@@ -73,7 +73,7 @@ Identificador único del mapa. Si no es definido se asignará un valor aleatorio
 <SisdaiMapa id="identificador">...</SisdaiMapa>
 ```
 
-#### `proyeccion`
+### `proyeccion`
 
 Código de identificación SRS que define la proyección de la vista.
 
@@ -94,7 +94,7 @@ Código de identificación SRS que define la proyección de la vista.
 <SisdaiMapa proyeccion="EPSG:3857">...</SisdaiMapa>
 ```
 
-#### `vista`
+### `vista`
 
 Objeto que define la vista del mapa. Revisa los detalles de la vista en la
 [sección vista](/documentacion/vista.html) de esta documentación.
@@ -108,7 +108,7 @@ Objeto que define la vista del mapa. Revisa los detalles de la vista en la
 A continuación se describen las funciones que pueden modificar el estado del
 mapa.
 
-#### `exportarImagen`
+### `exportarImagen`
 
 Permite descargar la vista actual del mapa, con las capas visibles y
 acercamiento mostrado en pantalla, sin controles. El formato de descargá es PNG.
