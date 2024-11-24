@@ -1,5 +1,5 @@
 <script setup>
-import { computed, inject, toRefs, watch } from 'vue'
+import { computed, inject, toRefs } from 'vue'
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
 
 const mapa = inject(MAPA_INYECTADO)
@@ -9,13 +9,13 @@ const x = computed(() => {
   return mapa.pixel.map(p => `${p}px`)
 })
 
-watch(
-  // () => mapa.pixel,
-  x,
-  nv => {
-    // console.log(nv)
-  }
-)
+// watch(
+//   // () => mapa.pixel,
+//   x,
+//   nv => {
+//     console.log(nv)
+//   }
+// )
 
 const props = defineProps({
   contenido: {
@@ -33,7 +33,8 @@ const { contenido, visible } = toRefs(props)
 
 <template>
   <div
-    class="globo-informacion"
+    class="globo-informacion globo-informacion-capa"
+    :class="{ oculto: !visible }"
     role="tooltip"
     aria-live="assertive"
     :style="`left: ${x[0]}; top: ${x[1]};`"
@@ -42,9 +43,8 @@ const { contenido, visible } = toRefs(props)
   </div>
 </template>
 
-<style lang="scss">
-.sisdai-mapa.contenedor-vis .contenido-vis .globo-informacion {
+<style lang="scss" scoped>
+.sisdai-mapa.contenedor-vis .contenido-vis .globo-informacion-capa {
   position: absolute;
-  display: none;
 }
 </style>
