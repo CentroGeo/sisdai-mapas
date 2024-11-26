@@ -4,8 +4,8 @@ import CapaVectorial from "./../.vitepress/ejemplos/CapaVectorial.vue";
 
 # Capa Vectorial
 
-Las capas vectoriales nos permiten manipular su información de forma local, esto
-nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de
+Las capas vectoriales permiten manipular su información de forma local, esto da
+la posibilidad de pintar sus elementos de forma interactiva, incluso de
 clasificarlos.
 
 **Uso:**
@@ -16,9 +16,16 @@ clasificarlos.
 </SisdaiMapa>
 ```
 
+## Ejemplo
+
+<CapaVectorial />
+
+<<< @/.vitepress/ejemplos/CapaVectorial.vue
+
 ## Propiedades
 
-Hereda las propiedades definidas en la sección Capas más las siguientes:
+Hereda las propiedades definidas en la
+[sección capas](/documentacion/capas.html) más las siguientes:
 
 #### `formato`
 
@@ -27,7 +34,7 @@ Define el formato de los datos fuente, los valores admitidos son: 'geojson' y
 
 - Tipo: `String`.
 - Valor por defecto: `'geojson'`.
-- Reactivo: No.
+- Reactivo: no
 
 #### `fuente`
 
@@ -37,7 +44,7 @@ atributos.
 
 - Tipo: `String` o `Object`.
 - Valor obligatorio.
-- Reactivo: Si.
+- Reactivo: no
 
 #### `globoInformativo`
 
@@ -47,7 +54,7 @@ elemento al que se sobrepone.
 
 - Tipo: `String` o `Function`.
 - Valor por defecto: `undefined`.
-- Reactivo: Si.
+- Reactivo: si
 
 <!-- #### `cuadroInformativo`
 
@@ -56,9 +63,3 @@ Contenido del cuadro de información que aparecerá al pasar el cursor sobre la 
 - Tipo: `String` o `Function`
 - Valor por defecto: `undefined`.
 - Reactivo: Si. -->
-
-## Ejemplo
-
-<CapaVectorial />
-
-<<< @/.vitepress/ejemplos/CapaVectorial.vue

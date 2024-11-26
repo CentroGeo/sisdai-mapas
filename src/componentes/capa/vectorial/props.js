@@ -13,12 +13,24 @@ export default {
   },
 
   /**
+   * Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 'topojson'.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'geojson'`.
+   * - Reactivo: no
+   */
+  formato: {
+    type: String,
+    default: 'geojson',
+  },
+
+  /**
    * Origen de la capa. Puede ser una url externa o relativa a las carpetas del proyecto, e
    * incluso un objeto en formato geojson o topojson con coordenadas y atributos.
    *
    * - Tipo: `String` o `Object`.
    * - Valor obligatorio.
-   * - Reactivo: Si.
+   * - Reactivo: no
    */
   fuente: {
     type: [String, Object],
@@ -31,7 +43,7 @@ export default {
    *
    * - Tipo: `String` o `Function`.
    * - Valor por defecto: `undefined`.
-   * - Reactivo: Si.
+   * - Reactivo: si
    */
   globoInformativo: {
     type: [String, Function, Object],

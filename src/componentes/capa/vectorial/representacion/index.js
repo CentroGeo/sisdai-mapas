@@ -12,7 +12,7 @@ export default function (representacion, source) {
     ? Object.keys(representacion)[0]
     : representacion
   const parametros = esObjeto(representacion) ? representacion[nombre] : {}
-  console.log(parametros)
+  // console.log(parametros)
 
   if (nombre === representaciones.puntosAgrupados) {
     return new Cluster({ source: source })

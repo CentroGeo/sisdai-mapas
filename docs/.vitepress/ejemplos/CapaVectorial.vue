@@ -1,3 +1,7 @@
+<script setup>
+const punto = geojson()
+</script>
+
 <template>
   <SisdaiMapa
     descripcion="Mapa básico con una capa vectorial."
@@ -10,15 +14,37 @@
     <SisdaiCapaXyz />
 
     <SisdaiCapaVectorial
-      fuente="https://gema.conahcyt.mx/geoserver/humanidades_ciencias/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=humanidades_ciencias%3Ahcti_jardines_etnobiologicos_210923_xy_p&outputFormat=application%2Fjson"
+      formato="topojson"
+      fuente="/assets/estados-topojson.json"
+    />
+
+    <SisdaiCapaVectorial
       :estilo="{
         'circle-radius': 5,
         'circle-fill-color': '#58ADA8',
         'circle-stroke-color': '#232323',
         'circle-stroke-width': 0.5
       }"
+      :fuente="punto"
+      globoInformativo="hola"
+      id="punto"
+      :ver="true"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
     />
+
+    <!-- <SisdaiCapaVectorial
+      fuente="https://gema.conahcyt.mx/geoserver/humanidades_ciencias/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=humanidades_ciencias%3Ahcti_jardines_etnobiologicos_210923_xy_p&outputFormat=application%2Fjson"
+    /> -->
   </SisdaiMapa>
 </template>
+
+<script>
+const geojson = () => ({
+  type: 'FeatureCollection',
+  features: [{
+    type: 'Feature',
+    geometry: { type: 'Point', coordinates: [-102,24] },
+  }],
+})
+</script>
