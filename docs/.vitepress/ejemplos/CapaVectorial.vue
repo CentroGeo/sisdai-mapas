@@ -14,16 +14,19 @@ const punto = geojson()
     <SisdaiCapaXyz />
 
     <SisdaiCapaVectorial
+      :estilo="{
+        'stroke-color': 'gray',
+      }"
       formato="topojson"
       fuente="/assets/estados-topojson.json"
     />
 
     <SisdaiCapaVectorial
       :estilo="{
-        'circle-radius': 5,
+        'circle-radius': 10,
         'circle-fill-color': '#58ADA8',
-        'circle-stroke-color': '#232323',
-        'circle-stroke-width': 0.5
+        'circle-stroke-color': 'red',
+        'circle-stroke-width': 1
       }"
       :fuente="punto"
       globoInformativo="hola"

@@ -74,6 +74,7 @@ defineExpose(mapa)
           {{ descripcion }}
         </p>
         <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
+
         <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"
@@ -83,10 +84,7 @@ defineExpose(mapa)
 
         <ControlesMapa />
 
-        <GloboInformativo
-          contenido="Soy un globo de información"
-          :pixel="[10, 10]"
-        />
+        <GloboInformativo />
       </div>
 
       <div class="panel-derecha-vis">
