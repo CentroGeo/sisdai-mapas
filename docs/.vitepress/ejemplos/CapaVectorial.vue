@@ -16,9 +16,11 @@ const punto = geojson()
     <SisdaiCapaVectorial
       :estilo="{
         'stroke-color': 'gray',
+        'fill-color': 'transparent'
       }"
       formato="topojson"
       fuente="/assets/estados-topojson.json"
+      :globoInformativo="(d) => `<p><b>TopoJSON</b><br />Entidad: ${d['nom_ent']}</p>`"
     />
 
     <SisdaiCapaVectorial
@@ -29,7 +31,7 @@ const punto = geojson()
         'circle-stroke-width': 1
       }"
       :fuente="punto"
-      globoInformativo="hola"
+      globoInformativo="<p><b>GeoJSON</b></p>"
       id="punto"
       :ver="true"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
