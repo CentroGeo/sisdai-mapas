@@ -4,6 +4,8 @@ import 'vitepress/dist/client/theme-default/styles/vars.css'
 
 import './estilos/codigo.css'
 
+import '@centrogeomx/sisdai-css'
+
 // https://vitepress.dev/guide/custom-theme
 import DisposicionPrincipal from './DisposicionPrincipal.vue'
 
@@ -17,7 +19,7 @@ export default {
       // const store = await import('sisdai-componentes/src/stores')
       // app.mixin({ store })
 
-      const SisdaiComponentes = await import('sisdai-componentes')
+      const SisdaiComponentes = await import('@centrogeomx/sisdai-componentes')
       app.use(SisdaiComponentes.default)
     }
   }
