@@ -1,4 +1,5 @@
 import VueMatomo from 'vue-matomo'
+import { defineConfig, loadEnv } from 'vite'
 
 export default {
   enhanceApp({app, router}){

@@ -128,7 +128,7 @@ const mapa = ref()
 ```vue
 <SisdaiMapa ref="mapa">...</SisdaiMapa>
 
-<button @click="mapa.exportarImagen('mapa-sisdai')">
-  Exportar mapa como imagen
-</button>
+<button
+  @click="mapa.exportarImagen('mapa-sisdai')"
+>Exportar mapa como imagen</button>
 ```

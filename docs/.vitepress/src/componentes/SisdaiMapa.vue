@@ -38,6 +38,8 @@ import * as valoresPorDefecto from './../valores/mapa'
 import CuadroInformativo from './info/InfoCuadro.vue'
 import GloboInformativo from './info/InfoGlobo.vue'
 import ContenedorVisAtribuciones from './internos/ContenedorVisAtribuciones.vue'
+import './../estilos/Accesibilidad.scss'
+import './../estilos/Controles.scss'
 
 const props = defineProps({
   descripcion: {
@@ -433,10 +435,8 @@ function panelesEnUso() {
 </template>
 
 <style lang="scss">
-// @import './../estilos/Accesibilidad.scss';
-// @import './../estilos/Controles.scss';
 // @import './../estilos/GloboInfo.scss';
-// // @import './../estilos/SisdaiMapa.scss';
+// @import './../estilos/SisdaiMapa.scss';
 
 .sisdai-mapa-control {
   &-escala-grafica {

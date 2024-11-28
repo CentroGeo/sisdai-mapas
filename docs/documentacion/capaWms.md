@@ -18,6 +18,8 @@ Componenete para desplegar capas desde servicios wms publicos o privados.
 
 Hereda las propiedades definidas en la sección Capas más las siguientes:
 
+Hereda las propiedades definidas en la sección Capas más las siguientes:
+
 #### `capa`
 
 Nombre de la capa en el servidor de mapas.
@@ -28,7 +30,8 @@ Nombre de la capa en el servidor de mapas.
 
 #### `estilo`
 
-Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el estilo de la capa por defecto que tenga en el servidor.
+Nombre del estilo disponible para la capa. Al dejar el valor como indefinido,
+mostrará el estilo de la capa por defecto que tenga en el servidor.
 
 - Tipo: `String`.
 - Valor por defecto: `undefined`.
@@ -36,7 +39,8 @@ Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mo
 
 #### `filtro`
 
-Filtro en sintaxis CQL, compatible con la [Api de Geoserver](https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html).
+Filtro en sintaxis CQL, compatible con la
+[Api de Geoserver](https://docs.geoserver.org/stable/en/user/tutorials/cql/cql_tutorial.html).
 
 - Tipo: `String`.
 - Valor por defecto: `undefined`.
@@ -44,7 +48,8 @@ Filtro en sintaxis CQL, compatible con la [Api de Geoserver](https://docs.geoser
 
 #### `tipoServidor`
 
-Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
+Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o
+qgis.
 
 - Tipo: `String`.
 - Valor por defecto: `geoserver`.

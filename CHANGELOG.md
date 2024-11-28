@@ -25,6 +25,23 @@ compatible y tiene instalada.
 
 - Preliminar de animación al cargar
 
+## [1.13.3] - 2024-11-21
+
+### Cambiado (Changed)
+
+- El nombre del proyecto en el `package.json` pasa a ser @centrogeomx/sisdai-mapas para su publicación en el repositorio de npm
+- Se ajusta documentación de acuerdo a lo anterior
+
+## [1.13.2] - 2024-11-19
+
+### Arreglado (Fixed)
+
+- Ya se muestra la información de despliegue en el ambiente de desarrollo y no en el ambiente de producción
+
+### Eliminado (Removed)
+
+- Contribución a proyectos que mencionaba SALSA
+
 ## [1.13.0] - 2024-11-06
 
 ### Agregado (Added)
@@ -113,6 +130,7 @@ sisdai-css v0.31.2
 - Ejemplo de Gema con contenedor
 
 [unreleased]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/tree/feature/test-unit/
+[1.13.3]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
 [1.13.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
 [1.12.1]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
 [1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9

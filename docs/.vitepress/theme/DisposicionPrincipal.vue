@@ -6,11 +6,21 @@ import Pagina404 from './Pagina404.vue'
 // import PaginaInicio from './PaginaInicio.vue'
 import { useData } from 'vitepress'
 import { useSidebar } from 'vitepress/theme'
-import 'sisdai-css'
+import { computed } from 'vue'
+import pkg from './../../../package.json'
 
 const { hasSidebar } = useSidebar()
-const { page /*, frontmatter*/ } = useData()
-
+const { page/*, frontmatter*/ } = useData()
+const ambienteProyecto = import.meta.env
+const versionProyecto = computed(() => {
+  return pkg.version
+})
+const actualizacionProyecto = computed(() => {
+  let now = new Date()
+  return now.toLocaleString('es-MX', {
+    timeZone: 'America/Mexico_City',
+  })
+})
 </script>
 
 <template>
@@ -40,6 +50,9 @@ const { page /*, frontmatter*/ } = useData()
 
     <SisdaiPiePaginaConahcyt />
     <SisdaiPiePaginaGobMx />
-    <SisdaiInfoDeDespliegue entornoProyecto="-" versionProyecto="-" actualizacionProyecto="-" />
+    <SisdaiInfoDeDespliegue
+      :entornoProyecto="ambienteProyecto.MODE"
+      :versionProyecto="versionProyecto || 0"
+      :actualizacionProyecto="actualizacionProyecto" />
   </div>
 </template>

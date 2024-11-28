@@ -57,7 +57,3 @@ npm run docs
 ```
 
 <!-- Se habilitara en [localhost:5173](http://localhost:5173) (por defecto). -->
-
-## Contribución
-
-Si quieres contribuir al código de esta boblioteca revisa los [lineamientos de contribución establecidos por SALSA](https://salsa.crip.conacyt.mx/guidelines/contribute/)

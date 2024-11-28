@@ -5,16 +5,16 @@ import { calcularPosicionInfo } from './../../utiles/globoInfo'
 const props = defineProps({
   contenido: {
     type: String,
-    default: undefined,
+    default: undefined
   },
   pixel: {
     type: Array,
-    default: () => [0, 0],
+    default: () => [0, 0]
   },
   visible: {
     type: Boolean,
-    default: false,
-  },
+    default: false
+  }
 })
 
 const { contenido, pixel, visible } = toRefs(props)
@@ -30,15 +30,18 @@ watch(pixel, calcular)
 <template>
   <div
     ref="sisdaiGloboInfo"
-    class="ol-unselectable contenedor-globo-info"
-    :class="{ esconder: !visible }"
+    class="ol-unselectable globo-informacion"
+    :class="{ oculto: !visible }"
     :style="`left: ${posicion.x}px; top: ${posicion.y}px;`"
     aria-live="assertive"
     @mouseover="calcular"
   >
-    <div
-      class="cuerpo-globo-info"
-      v-html="contenido"
-    />
+    <div class="globo-informacion-cuerpo" v-html="contenido" />
   </div>
 </template>
+
+<style lang="scss">
+.ol-unselectable.globo-informacion {
+  position: absolute;
+}
+</style>
