@@ -1,4 +1,5 @@
 import props from './../props'
+import { ESTILO_VECTOR } from "./../../../utiles/eslitosCapa";
 
 export default {
   ...props,
@@ -9,7 +10,7 @@ export default {
    */
   estilo: {
     type: Object,
-    // default: () => DEFAULT_ESTILO_VECTOR,
+    default: () => ESTILO_VECTOR,
   },
 
   /**

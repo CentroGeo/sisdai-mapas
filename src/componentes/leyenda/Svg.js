@@ -1,5 +1,5 @@
 import { toRaw } from 'vue'
-import { DEFAULT_ESTILO_VECTOR_SVG } from './../../utiles/eslitosCapa'
+import { ESTILO_VECTOR_SVG } from './../../utiles/eslitosCapa'
 import { objEnSintaxisCss } from './../../utiles'
 
 /**
@@ -9,7 +9,7 @@ export default class name {
   tamanioPorDefecto = 18
 
   constructor(opciones = {}) {
-    this.estilo = opciones.estilo || DEFAULT_ESTILO_VECTOR_SVG
+    this.estilo = opciones.estilo || ESTILO_VECTOR_SVG
     this.forma = opciones.forma
     this.icono = opciones.icono
     // this.margen = opciones.margen;

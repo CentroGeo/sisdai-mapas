@@ -9,14 +9,23 @@ const punto = geojson()
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>
+
+      <SisdaiLeyendaControl
+        :simbolo="{
+          'circulo-radio': 10,
+          'circulo-relleno-color': '#58ADA8',
+          'circulo-contorno-color': 'red',
+          'circulo-contorno-width': 1
+        }"
+      />
     </template>
 
     <SisdaiCapaXyz />
 
     <SisdaiCapaVectorial
       :estilo="{
-        'stroke-color': 'gray',
-        'fill-color': 'transparent'
+        'contorno-color': 'gray',
+        'relleno-color': 'transparent'
       }"
       formato="topojson"
       fuente="/assets/estados-topojson.json"
@@ -25,10 +34,10 @@ const punto = geojson()
 
     <SisdaiCapaVectorial
       :estilo="{
-        'circle-radius': 10,
-        'circle-fill-color': '#58ADA8',
-        'circle-stroke-color': 'red',
-        'circle-stroke-width': 1
+        'circulo-radio': 10,
+        'circulo-relleno-color': '#58ADA8',
+        'circulo-contorno-color': 'red',
+        'circulo-contorno-width': 1
       }"
       :fuente="punto"
       globoInformativo="<p><b>GeoJSON</b></p>"

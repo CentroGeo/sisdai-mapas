@@ -106,5 +106,3 @@ const capaEncendida = computed({
     </div>
   </div>
 </template>
-
-<script></script>

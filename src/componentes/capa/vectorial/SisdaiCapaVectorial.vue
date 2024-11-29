@@ -11,10 +11,11 @@ import eventos from './../eventos'
 import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 import obtenerRepresentacion from './representacion'
 import { esObjeto } from '../../../utiles'
+import { traducirEstilo } from '../../../utiles/eslitosCapa'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
-const props = defineProps(_props)
+const props = defineProps({ ..._props, ver: { default: false } })
 mapa.capas[props.id] = TipoEstadoCarga.no
 const { estilo, fuente, globoInformativo, representacion } = toRefs(props)
 
@@ -55,14 +56,13 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 const layer = new VectorLayer({
   source: obtenerRepresentacion(representacion.value, source),
   id: props.id,
-  style: estilo.value,
+  style: traducirEstilo(props.estilo),
   globoInfo: globoInformativo.value,
 })
 mapa.addLayer(layer)
 
-watch(estilo, nv => layer.setStyle(nv))
+watch(estilo, nv => layer.setStyle(traducirEstilo(nv)))
 // watch(fuente, nv => layer.setSource(nv))
-// watch(visualizacion, (nv) => layer.setSource())
 watch([representacion, fuente], ([vis, fue]) =>
   layer.setSource(obtenerRepresentacion(vis, fue))
 )
