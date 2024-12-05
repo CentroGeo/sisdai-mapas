@@ -70,8 +70,8 @@ Uso avanzado:
 
 ## Ejemplo
 
-<Leyenda />
+<LeyendaWms />
 
 <!-- <ResaAtoyac /> -->
 
-<!-- <<< @/.vitepress/components/usos/atoyac.vue -->
+<<< @/.vitepress/ejemplos/LeyendaWms.vue

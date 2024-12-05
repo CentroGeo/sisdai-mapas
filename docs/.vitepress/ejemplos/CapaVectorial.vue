@@ -10,13 +10,9 @@ const punto = geojson()
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>
 
-      <SisdaiLeyendaControl
-        :simbolo="{
-          'circulo-radio': 10,
-          'circulo-relleno-color': '#58ADA8',
-          'circulo-contorno-color': 'red',
-          'circulo-contorno-width': 1
-        }"
+      <SisdaiLeyendaVectorial
+        titulo="Capa de vectores"
+        informacion="Leyenda vectorial en prueba"
       />
     </template>
 

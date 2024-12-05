@@ -1,5 +1,5 @@
 import props from './../props'
-import { ESTILO_VECTOR } from "./../../../utiles/eslitosCapa";
+import { ESTILO_VECTOR } from './../../../utiles/eslitosCapa'
 
 export default {
   ...props,
