@@ -30,12 +30,12 @@
   "dependencies": {
     "axios": "^1.7.9",
     "geoserver-api-reader": "^0.1.0",
-    "ol": "^10.3.1",
+    "ol": "^10.2.0",
     "ol-displaced-points": "^0.4.0"
   },
   "devDependencies": {
-    "@centrogeomx/sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.6.0",
-    "@centrogeomx/sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.4.2",
+    "@centrogeomx/sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.8.0",
+    "@centrogeomx/sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.6.0",
     "@eslint/js": "^9.16.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/coverage-v8": "^2.1.8",
