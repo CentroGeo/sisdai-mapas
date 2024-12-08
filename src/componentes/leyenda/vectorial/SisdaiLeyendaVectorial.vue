@@ -10,7 +10,7 @@ const { informacion, titulo } = toRefs(props)
 const simbolo = ref(new Simbolo())
 
 // console.log(estiloParaSvg(props.estilo))
-console.log(props.estilo);
+// console.log(props.estilo)
 </script>
 
 <template>
@@ -33,7 +33,7 @@ console.log(props.estilo);
 class Simbolo {
   tamanio = 18
   atributos = { height: 17, rx: 1, ry: 1, width: 17, x: 0.5, y: 0.5 }
-  tipoGrafico = "rect"
+  tipoGrafico = 'rect'
 
   constructor() {}
 }

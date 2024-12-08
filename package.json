@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@centrogeomx/sisdai-componentes": "git+https://codigo.conahcyt.mx/sisdai/sisdai-componentes#v4.8.0",
-    "@centrogeomx/sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.6.0",
+    "@centrogeomx/sisdai-css": "git+https://codigo.conahcyt.mx/sisdai/sisdai-css#v1.6.1",
     "@eslint/js": "^9.16.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/coverage-v8": "^2.1.8",

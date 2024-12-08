@@ -1,4 +1,4 @@
-import { Cluster } from 'ol/source'
+import Cluster from 'ol/source/Cluster'
 import { esObjeto } from '../../../../utiles'
 import puntosDesplazados from './puntosDesplazados'
 

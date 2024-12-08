@@ -3,7 +3,6 @@ import { computed, ref, toRefs, watch } from 'vue'
 import SisdaiLeyendaControl from './../control'
 import _props from './props'
 import axios from 'axios'
-import { GeoserverCapa2, acomodarReglasWms } from './utils'
 import eventos from './eventos'
 
 const emits = defineEmits(eventos)
@@ -19,21 +18,18 @@ const {
   visible,
 } = toRefs(props)
 
-const clases = ref([])
+const clases = ref()
 watch(
-  () => clases.value.map(({ visible }) => visible),
+  () => clases.value?.lista.map(({ visible }) => visible),
   nv => emits(eventos.alCambiarVisibilidad, nv)
 )
-function actualizarClasesDesdeWms([capa, fuente]) {
-  const leyenda = new GeoserverCapa2({ capa, fuente })
 
-  axios(leyenda.url)
+function actualizarClasesDesdeWms([capa, fuente]) {
+  axios(new GeoserverLeyenda({ capa, fuente }).url)
     .then(({ data, status }) => {
       if (status !== 200) return
 
-      // const reglas = acomodarReglasWms(data)
-      // console.log(reglas[0].simbolo)
-      clases.value = acomodarReglasWms(data)
+      clases.value = new Clases(data)
       asignarVisibilidad(visible.value)
     })
     .catch(() => {})
@@ -42,8 +38,7 @@ actualizarClasesDesdeWms([nombre.value, fuente.value])
 watch([nombre, fuente], actualizarClasesDesdeWms)
 
 function asignarVisibilidad(nv) {
-  clases.value.forEach(clase => (clase.visible = nv))
-  // console.log(clases.value.map(({ visible }) => visible))
+  clases.value?.lista.forEach(clase => (clase.visible = nv))
 }
 asignarVisibilidad(visible.value)
 watch(visible, asignarVisibilidad)
@@ -53,8 +48,8 @@ watch(visible, asignarVisibilidad)
  */
 const encendidoIndeterminado = computed(
   () =>
-    clases.value.some(({ visible }) => visible) &&
-    !clases.value.every(({ visible }) => visible)
+    clases.value?.lista.some(({ visible }) => visible) &&
+    !clases.value?.lista.every(({ visible }) => visible)
 )
 
 /**
@@ -62,7 +57,7 @@ const encendidoIndeterminado = computed(
  */
 const capaEncendida = computed({
   // get: () => visible.value,
-  get: () => clases.value.some(({ visible }) => visible),
+  get: () => clases.value?.lista.some(({ visible }) => visible),
   set: valor => asignarVisibilidad(valor),
 })
 </script>
@@ -77,18 +72,20 @@ const capaEncendida = computed({
         :encendidoIndeterminado="encendidoIndeterminado"
         :etiqueta="titulo"
         :informacion="informacion"
-        :simbolo="clases.length === 1 ? clases[0].simbolo : undefined"
+        :simbolo="
+          clases?.lista.length === 1 ? clases?.lista[0].simbolo : undefined
+        "
         :sinControl="sinControl"
       />
     </div>
 
     <div
-      v-if="clases.length > 1"
+      v-if="clases?.lista.length > 1"
       class="leyenda-clases casillas-subseleccion"
     >
       <ul class="casillas-anidadas">
         <li
-          v-for="(clase, idx) in clases"
+          v-for="(clase, idx) in clases.lista"
           :key="`${nombre}-clase-control-${idx}`"
         >
           <!-- {{ clase }} -->
@@ -97,7 +94,7 @@ const capaEncendida = computed({
             :deshabilitado="deshabilitado"
             :encendido="clase.visible"
             :etiqueta="clase.titulo"
-            :simbolo="clase.simbolo"
+            :simbolo="clase.svg"
             :sinControl="sinControlClases"
             @alCambiar="valor => (clase.visible = valor)"
           />
@@ -106,3 +103,55 @@ const capaEncendida = computed({
     </div>
   </div>
 </template>
+
+<script>
+import { GetLegendGraphic, utils } from 'geoserver-api-reader'
+import { Svg } from '../../../utiles/vectores'
+
+class Clases {
+  constructor({ Legend }) {
+    this.lista = Legend[0].rules.map(regla => new Clase(regla))
+
+    this.lista.forEach(({ svg }) => {
+      svg.espacio = this.tamanioSimboloMayor
+    })
+  }
+
+  get tamanioSimboloMayor() {
+    return Math.max(...this.lista.map(({ svg }) => svg.tamanio))
+  }
+}
+
+class Clase {
+  visible = false
+
+  constructor({ /*filter,*/ name, symbolizers, title }) {
+    this.titulo = title || name
+
+    const geometria = Object.keys(symbolizers[0])[0]
+    const simbolo = symbolizers[0][geometria]
+
+    this.svg = new Svg({
+      estilo: simbolo.graphics ? simbolo.graphics[0] : simbolo,
+      geometria,
+      tamanio: Number(simbolo.size) || undefined,
+    })
+  }
+}
+
+export class GeoserverLeyenda extends GetLegendGraphic {
+  constructor(parameters) {
+    super(parameters)
+
+    this._formato = 'application/json'
+    this._legendOptions = undefined
+    this._fuente = parameters.fuente
+  }
+
+  get url() {
+    return `${utils.urlService(this._fuente, this._servicio)}${
+      this.parametrosEnFormatoURL
+    }`
+  }
+}
+</script>

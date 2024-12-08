@@ -58,9 +58,17 @@ const idCheck = `${props.id}-${idAleatorio()}`
         type="checkbox"
       />
       <label :for="idCheck">
-        <SisdaiLeyendaSimbolo
+        <svg
           v-if="simbolo"
-          :simbolo="simbolo"
+          aria-hidden="true"
+          class="figura-variable"
+          :height="simbolo.tamanio"
+          :style="{
+            '--controlador-vis-figura-alto': `${simbolo.tamanio}px`,
+            'min-width': `${simbolo.espacio}px`,
+          }"
+          v-html="simbolo.xml"
+          :width="simbolo.espacio"
         />
         <span
           class="nombre-variable"

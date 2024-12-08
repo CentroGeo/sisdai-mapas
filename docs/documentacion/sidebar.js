@@ -29,6 +29,7 @@ export const sidebar = [
       { text: 'XYZ', link: `${ruta}capaXyz` },
       // { text: 'Globos de información', link: `${ruta}globos` },
       { text: 'Leyenda', link: `${ruta}leyenda` },
+      { text: 'Leyenda WMS', link: `${ruta}leyenda-wms` },
       { text: 'Puntos Desplazados', link: `${ruta}puntos-desplazados` }
     ]
   },

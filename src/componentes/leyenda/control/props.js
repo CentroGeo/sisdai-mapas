@@ -1,5 +1,5 @@
+import { Svg } from '../../../utiles/vectores'
 import { idAleatorio } from './../../../utiles'
-import Svg from './../Svg'
 
 export default {
   /**
