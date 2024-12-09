@@ -11,7 +11,9 @@ const { ruta } = toRefs(props)
     <template #contenido-menu-lateral>
       <ul>
         <li
-          v-for="side in sidebar[Object.keys(sidebar).find(path => isActive(ruta, path, !!path))]"
+          v-for="side in sidebar[
+            Object.keys(sidebar).find(path => isActive(ruta, path, !!path))
+          ]"
           :key="`colapsable-${side.text}`"
         >
           <SisdaiColapsableNavegacion :colapsado="!side.collapsed">

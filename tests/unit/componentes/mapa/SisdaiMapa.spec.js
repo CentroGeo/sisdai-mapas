@@ -10,8 +10,8 @@ describe('SisdaiMapa', () => {
       'panel-encabezado-vis': 'Contenido en el encabezado',
       'panel-izquierda-vis': 'Contenido a la izquierda',
       'panel-derecha-vis': 'Contenido a la derecha',
-      'panel-pie-vis': 'Contenido en el pie'
-    }
+      'panel-pie-vis': 'Contenido en el pie',
+    },
   })
 
   it('debería renderiza el contenedor del mapa', () => {

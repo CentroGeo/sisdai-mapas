@@ -43,10 +43,10 @@
     "linter.md": ".eslint*, eslint*, .prettier*, prettier*, .editorconfig",
     "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, lint-staged.config.js",
     "README.md": "LICENSE, CHANGELOG.*",
-    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, TEST.md",
+    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, TEST.md"
   },
 
   "prettier.configPath": ".prettierrc.cjs",
   "prettier.ignorePath": ".prettierignore",
-  "prettier.requireConfig": true,
+  "prettier.requireConfig": true
 }

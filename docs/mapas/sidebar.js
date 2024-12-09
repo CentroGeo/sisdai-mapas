@@ -4,7 +4,7 @@ export const ruta = '/mapas/'
 export const nav = {
   text: 'Mapas',
   link: ruta,
-  activeMatch: ruta
+  activeMatch: ruta,
 }
 
 export const sidebar = [
@@ -13,8 +13,8 @@ export const sidebar = [
     collapsed: false,
     items: [
       { text: 'Personalización', link: ruta },
-      { text: 'Vista', link: `${ruta}vista` }
-    ]
+      { text: 'Vista', link: `${ruta}vista` },
+    ],
   },
 
   {
@@ -27,7 +27,7 @@ export const sidebar = [
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
       { text: 'XYZ', link: `${ruta}capa-xyz` },
       // { text: 'Globos de información', link: `${ruta}globos` },
-    ]
+    ],
   },
 
   {
@@ -38,7 +38,7 @@ export const sidebar = [
       { text: 'Vectorial', link: `${ruta}leyenda-vectorial` },
       { text: 'WMS', link: `${ruta}leyenda-wms` },
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
-    ]
+    ],
   },
 
   {
@@ -48,10 +48,10 @@ export const sidebar = [
       { text: 'Puntos Desplazados', link: `${ruta}puntos-desplazados` },
       // { text: 'Líneas', link: `${ruta}estiloLineas` },
       // { text: 'Polígonos', link: `${ruta}estiloPoligono` },
-    ]
-  }
+    ],
+  },
 ]
 
 export default {
-  [ruta]: sidebar
+  [ruta]: sidebar,
 }

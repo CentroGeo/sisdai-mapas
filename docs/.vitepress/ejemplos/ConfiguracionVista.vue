@@ -2,7 +2,12 @@
 import { ref } from 'vue'
 const mapa = ref()
 
-const otraVista = { acercamiento: 6.3, centro: '-115.0969,30.5499', extension: '-92.3263,19.5512,-87.5331,22.586', extensionMargen: 50 }
+const otraVista = {
+  acercamiento: 6.3,
+  centro: '-115.0969,30.5499',
+  extension: '-92.3263,19.5512,-87.5331,22.586',
+  extensionMargen: 50,
+}
 </script>
 
 <template>

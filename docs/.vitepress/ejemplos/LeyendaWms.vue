@@ -5,10 +5,14 @@
     :estilo="estilo"
     titulo="Capa wms"
     @alCambiarVisibilidad="v => console.log('Leyenda: alCambiarVisibilidad', v)"
-    @alIniciarCargaSimbologia="() => console.log('Leyenda: alIniciarCargaSimbologia')"
-    @@alFinalizarCargaSimbologia="v => console.log('Leyenda: alFinalizarCargaSimbologia', v)"
+    @alIniciarCargaSimbologia="
+      () => console.log('Leyenda: alIniciarCargaSimbologia')
+    "
+    @@alFinalizarCargaSimbologia="
+      v => console.log('Leyenda: alFinalizarCargaSimbologia', v)
+    "
   />
-  <hr>
+  <hr />
   <select v-model="estilo">
     <option :value="undefined">Estilo por defecto</option>
     <option value="hcti_snii_sexo_22_est_a_investigadoras">

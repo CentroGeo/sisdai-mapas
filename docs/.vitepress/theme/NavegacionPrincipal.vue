@@ -19,7 +19,10 @@ const { ruta } = toRefs(props)
       </a>
     </template>
     <ul class="nav-menu">
-      <li v-for="item in nav" :key="item.text">
+      <li
+        v-for="item in nav"
+        :key="item.text"
+      >
         <a
           class="nav-hipervinculo"
           :class="{
@@ -27,7 +30,7 @@ const { ruta } = toRefs(props)
               ruta,
               item.activeMatch || item.link,
               !!item.activeMatch
-            )
+            ),
           }"
           :href="item.link"
           :target="item.target"

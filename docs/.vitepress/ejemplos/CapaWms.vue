@@ -11,7 +11,7 @@
       capa="hcti_snii_sexo_22_est_a"
       :estilo="estilo"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
-      @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
+      @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />
 
     <template #panel-pie-vis>

@@ -1,3 +1,4 @@
+/*global module*/
 module.exports = {
   /**
    * @property {string} [arrowParens='always'] Incluya paréntesis alrededor de un único

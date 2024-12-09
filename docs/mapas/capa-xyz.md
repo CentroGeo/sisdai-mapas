@@ -4,7 +4,9 @@ import CapaXyz from "./../.vitepress/ejemplos/CapaXyz.vue";
 
 # Capa XYZ
 
-La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel de acercamiento y la coordenada x/y de una imagen (mosaico), regularmente se usa para desplegar mapas base como los de OSM, Carto, etc.
+La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel
+de acercamiento y la coordenada x/y de una imagen (mosaico), regularmente se usa
+para desplegar mapas base como los de OSM, Carto, etc.
 
 **Uso:**
 
@@ -46,15 +48,18 @@ Url remota de la capa.
 
 #### `@alIniciarCargaTesela`
 
-Ejecutado cuando se detecta que ha iniciado la carga de cada uno de los mosaicos que conponen la capa visible en el mapa.
+Ejecutado cuando se detecta que ha iniciado la carga de cada uno de los mosaicos
+que conponen la capa visible en el mapa.
 
 #### `@alFinalizarCargaTesela`
 
-Ejecutado cuando se detecta que ha finalizado la carga de cada uno de los mosaicos que conponen la capa visible en el mapa.
+Ejecutado cuando se detecta que ha finalizado la carga de cada uno de los
+mosaicos que conponen la capa visible en el mapa.
 
 **Parametros:**
 
-- `Boolean`: Indica con `false` si al finalizar la carga del mosaico ha presentado error.
+- `Boolean`: Indica con `false` si al finalizar la carga del mosaico ha
+  presentado error.
 
 ## Ejemplo
 

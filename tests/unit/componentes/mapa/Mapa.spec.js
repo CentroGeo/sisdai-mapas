@@ -21,10 +21,10 @@ describe('Mapa', () => {
   it('debería agregar atributos aria al canvas', async () => {
     // Mock para simular que el canvas existe
     const mockCanvas = {
-      setAttribute: vi.fn()
+      setAttribute: vi.fn(),
     }
     const mockViewport = {
-      querySelector: vi.fn().mockReturnValue(mockCanvas)
+      querySelector: vi.fn().mockReturnValue(mockCanvas),
     }
     mapa.getViewport = vi.fn().mockReturnValue(mockViewport)
 
@@ -32,7 +32,10 @@ describe('Mapa', () => {
     await mapa.agregarAtributosAriaCanvas()
 
     // Verificar que se hayan agregado los atributos correctos al canvas
-    expect(mockCanvas.setAttribute).toHaveBeenCalledWith('aria-label', 'Mapa interactivo')
+    expect(mockCanvas.setAttribute).toHaveBeenCalledWith(
+      'aria-label',
+      'Mapa interactivo'
+    )
     expect(mockCanvas.setAttribute).toHaveBeenCalledWith(
       'aria-describedby',
       `mapa-${id}-descripcion`

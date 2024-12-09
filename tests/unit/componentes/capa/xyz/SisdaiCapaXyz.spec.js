@@ -13,7 +13,7 @@ describe('SisdaiCapaXyz', () => {
 
   const wrapper = shallowMount(SisdaiCapaXyz, {
     props: { id },
-    global: { provide: { mapa } }
+    global: { provide: { mapa } },
   })
   // mapa.value = new Mapa('idMapa', document.createElement('div'))
   // mapa.setTarget(document.createElement('div'))

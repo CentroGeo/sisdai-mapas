@@ -6,11 +6,13 @@ import {
   centro,
   extension,
   extensionMargen,
-  vista
+  vista,
 } from '@/componentes/mapa/validaciones'
 
 describe('Validaciones del mapa', () => {
-  const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {})
+  const consoleErrorMock = vi
+    .spyOn(console, 'error')
+    .mockImplementation(() => {})
 
   describe('arregloSinVacios', () => {
     it('debería devolver true si el arreglo es válido', () => {
@@ -62,7 +64,9 @@ describe('Validaciones del mapa', () => {
     })
 
     it('debería devolver false si el acercamiento es fuera del rango', () => {
-      const consoleErrorMock = vi.spyOn(console, 'error').mockImplementation(() => {})
+      const consoleErrorMock = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {})
       const resultado = acercamiento(25)
       expect(resultado).toBe(false)
       expect(consoleErrorMock).toHaveBeenCalledWith(
@@ -89,7 +93,11 @@ describe('Validaciones del mapa', () => {
   describe('vista', () => {
     it('debería devolver true si la vista es válida', () => {
       vi.spyOn(utiles, 'valorarArregloNumerico').mockReturnValue([1, 2, 3, 4])
-      const resultado = vista({ extension: [1, 2, 3, 4], acercamiento: 10, centro: [1, 2] })
+      const resultado = vista({
+        extension: [1, 2, 3, 4],
+        acercamiento: 10,
+        centro: [1, 2],
+      })
       expect(resultado).toBe(true)
     })
 

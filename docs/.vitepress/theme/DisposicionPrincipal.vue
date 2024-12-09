@@ -11,24 +11,44 @@ const { MODE } = import.meta.env
 </script>
 
 <template>
-  <a href="#principal" class="ir-contenido-principal">Ir a contenido principal</a>
+  <a
+    href="#principal"
+    class="ir-contenido-principal"
+  >
+    Ir a contenido principal
+  </a>
 
   <SisdaiNavegacionGobMx />
-  <NavegacionPrincipal :nav="theme.nav" :ruta="page.relativePath" />
+  <NavegacionPrincipal
+    :nav="theme.nav"
+    :ruta="page.relativePath"
+  />
   <SisdaiMenuAccesibilidad perfilColor="sisdai" />
 
   <PaginaError404 v-if="page.isNotFound" />
 
-  <main v-else-if="frontmatter.home" id="principal">
+  <main
+    v-else-if="frontmatter.home"
+    id="principal"
+  >
     <Content class="contenedor m-y-10" />
   </main>
 
-  <div class="flex" v-else>
+  <div
+    class="flex"
+    v-else
+  >
     <div class="columna-4 columna-1-mov menu-lateral-fondo">
-      <MenuLateral :sidebar="theme.sidebar" :ruta="page.relativePath" />
+      <MenuLateral
+        :sidebar="theme.sidebar"
+        :ruta="page.relativePath"
+      />
     </div>
 
-    <main class="columna-12 columna-7-mov" id="principal">
+    <main
+      class="columna-12 columna-7-mov"
+      id="principal"
+    >
       <Content class="contenedor ancho-lectura m-y-maximo-esc" />
     </main>
   </div>
@@ -38,5 +58,6 @@ const { MODE } = import.meta.env
   <SisdaiInfoDeDespliegue
     :entornoProyecto="MODE"
     :versionProyecto="version || 0"
-    actualizacionProyecto="actualizacionProyecto" />
+    actualizacionProyecto="actualizacionProyecto"
+  />
 </template>

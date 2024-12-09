@@ -12,3 +12,5 @@ coverage
 # No ejecutar prettier en carpeta deprecada
 deprecated
 confDep
+docs/.vitepress/src
+

@@ -13,7 +13,7 @@ describe('Props Capa', () => {
     const mockIdAleatorio = vi.fn(() => idAleatorio)
     vi.spyOn(props.id, 'default').mockImplementation(mockIdAleatorio)
     const wrapper = shallowMount(SisdaiCapaXyz, {
-      global: { provide: { mapa: new Mapa() } }
+      global: { provide: { mapa: new Mapa() } },
     })
 
     expect(wrapper.props().id).toEqual(idAleatorio)

@@ -11,7 +11,7 @@
       @alIniciarCargaTesela="() => console.log('C: alIniciarCargaTesela')"
       @alFinalizarCargaTesela="() => console.log('C: alFinalizarCargaTesela')"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
-      @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
+      @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />
   </SisdaiMapa>
 </template>

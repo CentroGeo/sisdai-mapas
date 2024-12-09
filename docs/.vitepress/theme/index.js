@@ -18,5 +18,5 @@ export default {
 
       app.use((await import('@centrogeomx/sisdai-componentes')).default)
     }
-  }
+  },
 }

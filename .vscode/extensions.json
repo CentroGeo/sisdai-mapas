@@ -2,6 +2,6 @@
   "recommendations": [
     "Vue.volar",
     "vitest.explorer",
-    "EditorConfig.EditorConfig",
+    "EditorConfig.EditorConfig"
   ]
 }

@@ -21,11 +21,13 @@ const punto = geojson()
     <SisdaiCapaVectorial
       :estilo="{
         'contorno-color': 'gray',
-        'relleno-color': 'transparent'
+        'relleno-color': 'transparent',
       }"
       formato="topojson"
       fuente="/assets/estados-topojson.json"
-      :globoInformativo="(d) => `<p><b>TopoJSON</b><br />Entidad: ${d['nom_ent']}</p>`"
+      :globoInformativo="
+        d => `<p><b>TopoJSON</b><br />Entidad: ${d['nom_ent']}</p>`
+      "
     />
 
     <SisdaiCapaVectorial
@@ -33,14 +35,14 @@ const punto = geojson()
         'circulo-radio': 10,
         'circulo-relleno-color': '#58ADA8',
         'circulo-contorno-color': 'red',
-        'circulo-contorno-width': 1
+        'circulo-contorno-width': 1,
       }"
       :fuente="punto"
       globoInformativo="<p><b>GeoJSON</b></p>"
       id="punto"
       :ver="true"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
-      @alFinalizarCarga="(v) => console.log('C: alFinalizarCarga', v)"
+      @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />
 
     <!-- <SisdaiCapaVectorial
@@ -52,9 +54,11 @@ const punto = geojson()
 <script>
 const geojson = () => ({
   type: 'FeatureCollection',
-  features: [{
-    type: 'Feature',
-    geometry: { type: 'Point', coordinates: [-102,24] },
-  }],
+  features: [
+    {
+      type: 'Feature',
+      geometry: { type: 'Point', coordinates: [-102, 24] },
+    },
+  ],
 })
 </script>
