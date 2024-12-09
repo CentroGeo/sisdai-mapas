@@ -15,6 +15,7 @@ export default [
     ignores: [
       '**/dist/**',
       '**/dist-ssr/**',
+      '**/docs/.vitepress/components/**',
       '**/docs/.vitepress/cache/**',
       '**/docs/.vitepress/src/**',
       '**/coverage/**',

@@ -1,11 +1,14 @@
 import { urlGeoserverGema } from '../../../utiles/constantes'
 import propsControl from './../control/props'
+import propsCapaWms from './../../capa/wms/props'
 
 export default {
   /**
    *
    */
   deshabilitado: propsControl.deshabilitado,
+
+  estilo: propsCapaWms.estilo,
 
   /**
    *

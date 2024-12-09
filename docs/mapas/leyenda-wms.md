@@ -4,17 +4,17 @@ import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
 
 # Leyendas Wms
 
-{texto}
+<!-- {texto} -->
 
 Uso:
 
 ```vue
-<SisdaiLeyenda para="<String(id de la capa)>"></SisdaiLeyenda>
+<SisdaiLeyendaWms></SisdaiLeyendaWms>
 ```
 
-## Propiedades
+<!-- ## Propiedades
 
-### ``
+### `` -->
 
 ## Eventos
 

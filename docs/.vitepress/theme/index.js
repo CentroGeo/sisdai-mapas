@@ -1,3 +1,8 @@
+import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
+import 'vitepress/dist/client/theme-default/styles/icons.css'
+import 'vitepress/dist/client/theme-default/styles/vars.css'
+import './estilos/codigo.css'
+
 import '@centrogeomx/sisdai-css'
 import Layout from './DisposicionPrincipal.vue'
 

@@ -9,6 +9,7 @@ const emits = defineEmits(eventos)
 const props = defineProps(_props)
 const {
   deshabilitado,
+  estilo,
   fuente,
   informacion,
   nombre,
@@ -24,8 +25,8 @@ watch(
   nv => emits(eventos.alCambiarVisibilidad, nv)
 )
 
-function actualizarClasesDesdeWms([capa, fuente]) {
-  axios(new GeoserverLeyenda({ capa, fuente }).url)
+function actualizarClasesDesdeWms([capa, estilo, fuente]) {
+  axios(new GeoserverLeyenda({ capa, estilo, fuente }).url)
     .then(({ data, status }) => {
       if (status !== 200) return
 
@@ -34,8 +35,8 @@ function actualizarClasesDesdeWms([capa, fuente]) {
     })
     .catch(() => {})
 }
-actualizarClasesDesdeWms([nombre.value, fuente.value])
-watch([nombre, fuente], actualizarClasesDesdeWms)
+actualizarClasesDesdeWms([nombre.value, estilo.value, fuente.value])
+watch([nombre, estilo, fuente], actualizarClasesDesdeWms)
 
 function asignarVisibilidad(nv) {
   clases.value?.lista.forEach(clase => (clase.visible = nv))
@@ -146,6 +147,7 @@ export class GeoserverLeyenda extends GetLegendGraphic {
     this._formato = 'application/json'
     this._legendOptions = undefined
     this._fuente = parameters.fuente
+    this._estilo = parameters.estilo
   }
 
   get url() {

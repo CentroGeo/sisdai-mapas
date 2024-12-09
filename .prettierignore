@@ -13,4 +13,4 @@ coverage
 deprecated
 confDep
 docs/.vitepress/src
-
+docs/.vitepress/components
