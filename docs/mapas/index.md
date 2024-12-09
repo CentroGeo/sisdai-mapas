@@ -2,7 +2,7 @@
 import EjemploConfiguracion from "/.vitepress/ejemplos/ConfiguracionBasica.vue";
 </script>
 
-# Configuración
+# Personalización
 
 El componente `SisdaiMapa` es el componente principal de esta librería. Dentro
 de el se pueden agregar componentes de capas, leyendas y slots de paneles.

@@ -1,58 +1,42 @@
 <script setup>
-import ContenidoPrincipal from './ContenidoPrincipal.vue'
 import MenuLateral from './MenuLateral.vue'
 import NavegacionPrincipal from './NavegacionPrincipal.vue'
-import Pagina404 from './Pagina404.vue'
-// import PaginaInicio from './PaginaInicio.vue'
+import PaginaError404 from './PaginaError404.vue'
 import { useData } from 'vitepress'
-import { useSidebar } from 'vitepress/theme'
-import { computed } from 'vue'
-import pkg from './../../../package.json'
+import { version } from './../../../package.json'
 
-const { hasSidebar } = useSidebar()
-const { page/*, frontmatter*/ } = useData()
-const ambienteProyecto = import.meta.env
-const versionProyecto = computed(() => {
-  return pkg.version
-})
-const actualizacionProyecto = computed(() => {
-  let now = new Date()
-  return now.toLocaleString('es-MX', {
-    timeZone: 'America/Mexico_City',
-  })
-})
+// https://vitepress.dev/reference/runtime-api#usedata
+const { frontmatter, page, theme } = useData()
+const { MODE } = import.meta.env
 </script>
 
 <template>
-  <div>
-    <a href="#principal" class="ir-contenido-principal">Ir a contenido principal</a>
+  <a href="#principal" class="ir-contenido-principal">Ir a contenido principal</a>
 
-    <SisdaiNavegacionGobMx />
-    <NavegacionPrincipal />
-    <SisdaiMenuAccesibilidad perfilColor="sisdai" />
+  <SisdaiNavegacionGobMx />
+  <NavegacionPrincipal :nav="theme.nav" :ruta="page.relativePath" />
+  <SisdaiMenuAccesibilidad perfilColor="sisdai" />
 
-    <Pagina404 v-if="page.isNotFound" />
+  <PaginaError404 v-if="page.isNotFound" />
 
-    <!-- <PaginaInicio v-else-if="frontmatter.layout === 'inicio'" /> -->
+  <main v-else-if="frontmatter.home" id="principal">
+    <Content class="contenedor m-y-10" />
+  </main>
 
-    <div v-else>
-      <div class="flex" v-if="hasSidebar">
-        <div class="columna-4 columna-1-mov menu-lateral-fondo">
-          <MenuLateral />
-        </div>
-        <div class="columna-12 columna-7-mov">
-          <ContenidoPrincipal />
-        </div>
-      </div>
-
-      <ContenidoPrincipal v-else />
+  <div class="flex" v-else>
+    <div class="columna-4 columna-1-mov menu-lateral-fondo">
+      <MenuLateral :sidebar="theme.sidebar" :ruta="page.relativePath" />
     </div>
 
-    <SisdaiPiePaginaConahcyt />
-    <SisdaiPiePaginaGobMx />
-    <SisdaiInfoDeDespliegue
-      :entornoProyecto="ambienteProyecto.MODE"
-      :versionProyecto="versionProyecto || 0"
-      :actualizacionProyecto="actualizacionProyecto" />
+    <main class="columna-12 columna-7-mov" id="principal">
+      <Content class="contenedor ancho-lectura m-y-maximo-esc" />
+    </main>
   </div>
+
+  <SisdaiPiePaginaConahcyt />
+  <SisdaiPiePaginaGobMx />
+  <SisdaiInfoDeDespliegue
+    :entornoProyecto="MODE"
+    :versionProyecto="version || 0"
+    actualizacionProyecto="actualizacionProyecto" />
 </template>

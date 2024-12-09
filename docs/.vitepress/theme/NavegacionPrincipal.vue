@@ -1,9 +1,9 @@
 <script setup>
-import { useData } from 'vitepress'
 import { isActive } from 'vitepress/dist/client/shared'
+import { toRefs } from 'vue'
 
-// https://vitepress.dev/reference/runtime-api#usedata
-const { theme, page } = useData()
+const props = defineProps(['nav', 'ruta'])
+const { ruta } = toRefs(props)
 </script>
 
 <template>
@@ -15,26 +15,25 @@ const { theme, page } = useData()
         target="_blank"
         rel="noopener noreferrer"
       >
-        <b>IR A SISDAI</b>
+        <b>Ir a SISDAI</b>
       </a>
     </template>
     <ul class="nav-menu">
-      <li v-for="nav in theme.nav" :key="nav.text">
+      <li v-for="item in nav" :key="item.text">
         <a
           class="nav-hipervinculo"
           :class="{
             'router-link-exact-active router-link-active': isActive(
-              page.relativePath,
-              nav.activeMatch || nav.link,
-              !!nav.activeMatch
+              ruta,
+              item.activeMatch || item.link,
+              !!item.activeMatch
             )
           }"
-          :href="nav.link"
-          :target="nav.target"
-          :rel="nav.rel"
+          :href="item.link"
+          :target="item.target"
+          :rel="item.rel"
         >
-          <img v-if="nav.img" class="nav-logo" :src="nav.img" alt="" />
-          {{ nav.text }}
+          {{ item.text }}
         </a>
       </li>
     </ul>

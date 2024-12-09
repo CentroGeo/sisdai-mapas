@@ -9,40 +9,14 @@ export const nav = {
 
 export const sidebar = [
   {
-    text: 'Mapa',
+    text: 'Documentación',
     collapsed: false,
     items: [
-      { text: 'Primeros pasos', link: ruta },
-      { text: 'Configuración', link: `${ruta}configuracion` },
-      { text: 'Vista', link: `${ruta}vista` }
+      { text: 'Comienza', link: ruta },
+      { text: 'Instalación', link: `${ruta}instalacion` },
+      { text: 'Accesibilidad', link: `${ruta}accesibilidad` }
     ]
   },
-
-  {
-    text: 'Capas',
-    // collapsed: false,
-    items: [
-      { text: 'Capas', link: `${ruta}capas` },
-      { text: 'Vectorial', link: `${ruta}capaVectorial` },
-      { text: 'WMS', link: `${ruta}capaWms` },
-      // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
-      { text: 'XYZ', link: `${ruta}capaXyz` },
-      // { text: 'Globos de información', link: `${ruta}globos` },
-      { text: 'Leyenda', link: `${ruta}leyenda` },
-      { text: 'Leyenda WMS', link: `${ruta}leyenda-wms` },
-      { text: 'Puntos Desplazados', link: `${ruta}puntos-desplazados` }
-    ]
-  },
-
-  {
-    text: 'Estilos',
-    // collapsed: false,
-    items: [
-      { text: 'Vectores', link: `${ruta}estiloPuntos` }
-      // { text: 'Líneas', link: `${ruta}estiloLineas` },
-      // { text: 'Polígonos', link: `${ruta}estiloPoligono` },
-    ]
-  }
 ]
 
 export default {

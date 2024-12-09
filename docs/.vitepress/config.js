@@ -1,19 +1,13 @@
-import pkg from './../../package.json'
-import sidebarDocumentacion, {
-  nav as navDocumentacion,
-  sidebar as sidebarInicio
-} from '../documentacion/sidebar'
-import sidebarAccesibilidad, { nav as navAccesibilidad } from './../accesibilidad/sidebar'
+import { defineConfig } from 'vitepress'
+import { description } from './../../package.json'
+import sidebarDocumentacion, { nav as navDocumentacion } from './../documentacion/sidebar'
+import sidebarMapas, { nav as navMapas } from "./../mapas/sidebar";
 
-// .vitepress/config.js
-export default {
-  // site-level options
+// https://vitepress.dev/reference/site-config
+export default defineConfig({
   lang: 'es-mx',
-  title: pkg.name,
-  description: pkg.description,
-  version: pkg.version,
-  lastUpdated: true,
-  // appearance: false,
+  title: "sisdai-mapas",
+  description,
 
   head: [
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
@@ -27,28 +21,19 @@ export default {
     ]
   ],
 
-  // https://vitepress.dev/exs/reference/default-theme-config
   themeConfig: {
-    // https://vitepress.dev/reference/default-theme-config#nav
     nav: [
-      { ...navDocumentacion },
-      { ...navAccesibilidad },
       {
-        text: `v${pkg.version}`,
-        link: pkg.repository.url,
-        rel: 'noopener noreferrer',
-        target: '_blank',
-        img: 'https://cdn.conahcyt.mx/sisdai-archivos/gitlab-logo-500.png'
-      }
+        text: 'Inicio',
+        link: '/',
+      },
+      { ...navDocumentacion },
+      { ...navMapas },
     ],
 
-    // https://vitepress.dev/es/reference/default-theme-config#sidebar
-    // https://vitepress.dev/es/reference/default-theme-sidebar
     sidebar: {
-      // '/comienza/': sidebarDocumentacion
-      '/': sidebarInicio,
       ...sidebarDocumentacion,
-      ...sidebarAccesibilidad
-    }
+      ...sidebarMapas,
+    },
   },
-}
+})
