@@ -26,26 +26,12 @@ const mapa = inject(MAPA_INYECTADO)
   </div>
 </template>
 
-<style lang="scss" scoped>
-.sisdai-mapa-control {
-  --margen: 16px;
-  --alto-boton: 40px;
-  --ancho-boton: 40px;
-  --espacio-entre-botones: 4px;
-
-  position: absolute;
-  z-index: 1;
-
-  > button {
-    height: var(--alto-boton);
-    width: var(--ancho-boton);
-  }
-  &.contenedor-controles-vista {
-    display: flex;
-    flex-direction: column;
-    gap: var(--espacio-entre-botones);
-    top: var(--margen);
-    right: var(--margen);
-  }
+<style lang="scss">
+.sisdai-mapa-control.contenedor-controles-vista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-entre-botones);
+  top: var(--margen);
+  right: var(--margen);
 }
 </style>

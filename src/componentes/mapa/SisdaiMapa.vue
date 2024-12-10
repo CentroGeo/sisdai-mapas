@@ -11,8 +11,12 @@ import {
 import Mapa from './Mapa'
 import { panelesEnUso } from './utiles'
 import propsMapa from './props'
-import { AnimacionCarga, ContenedorVisAtribuciones } from './elementos'
-import { GloboInformativo } from './elementos/info'
+import {
+  AnimacionCarga,
+  VisAtribuciones,
+  InstruccionTeclado,
+  GloboInformativo,
+} from './elementos'
 import eventos from './../capa/eventos'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
 import { ControlesMapa } from './controles'
@@ -82,8 +86,8 @@ defineExpose(mapa)
           tabindex="0"
         />
 
+        <InstruccionTeclado />
         <ControlesMapa />
-
         <GloboInformativo />
       </div>
 
@@ -101,7 +105,7 @@ defineExpose(mapa)
       />
     </div>
 
-    <ContenedorVisAtribuciones />
+    <VisAtribuciones />
   </div>
 </template>
 
@@ -130,34 +134,53 @@ defineExpose(mapa)
 </style>
 
 <style lang="scss">
-.sisdai-mapa .sin-escala-grafica .sisdai-mapa-control-escala-grafica {
-  display: none;
-}
+.sisdai-mapa {
+  .sisdai-mapa-control {
+    --margen: 16px;
+    --alto-boton: 40px;
+    --ancho-boton: 40px;
+    --espacio-entre-botones: 4px;
 
-.sisdai-mapa-control-escala-grafica {
-  .ol-scale-bar-inner {
-    .ol-scale-text {
-      bottom: unset;
-      color: transparent;
-      text-shadow: none;
-      &:before {
-        content: 'Escala ';
+    position: absolute;
+    z-index: 1;
+    > button {
+      height: var(--alto-boton);
+      width: var(--ancho-boton);
+      > span {
+        margin: auto;
       }
     }
-    .ol-scale-step-marker {
-      height: 10px;
-      top: 0px !important;
-    }
-    .ol-scale-singlebar {
-      height: 3px;
-      top: 8px;
-    }
-    .ol-scale-step-text {
-      bottom: 10px;
-      font-size: 11px;
-    }
-    div > .ol-scale-step-marker {
-      top: -2px !important;
+  }
+
+  .sin-escala-grafica .sisdai-mapa-control-escala-grafica {
+    display: none;
+  }
+
+  .sisdai-mapa-control-escala-grafica {
+    .ol-scale-bar-inner {
+      .ol-scale-text {
+        bottom: unset;
+        color: transparent;
+        text-shadow: none;
+        &:before {
+          content: 'Escala ';
+        }
+      }
+      .ol-scale-step-marker {
+        height: 10px;
+        top: 0px !important;
+      }
+      .ol-scale-singlebar {
+        height: 3px;
+        top: 8px;
+      }
+      .ol-scale-step-text {
+        bottom: 10px;
+        font-size: 11px;
+      }
+      div > .ol-scale-step-marker {
+        top: -2px !important;
+      }
     }
   }
 }
