@@ -4,7 +4,7 @@ import EstiloPuntos from "./../.vitepress/components/estilos/puntos.vue";
 
 # Estilos para capas vectoriales de puntos
 
-### Defult
+## Defult
 
 ```json
 {

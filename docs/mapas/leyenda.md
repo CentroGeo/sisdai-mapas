@@ -6,7 +6,7 @@ import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
 
 # Leyendas
 
-Uso:
+**Uso:**
 
 ```vue
 <SisdaiLeyenda para="<String(id de la capa)>"></SisdaiLeyenda>
@@ -14,7 +14,7 @@ Uso:
 
 ## Propiedades
 
-#### `para`
+### `para`
 
 Recibe el identificador de la capa con la que se quiere vincular la leyenda.
 
@@ -22,7 +22,7 @@ Recibe el identificador de la capa con la que se quiere vincular la leyenda.
 - Valor por defecto: `undefined`
 - Reactivo: Si.
 
-#### `sinControl`
+### `sinControl`
 
 Define si se agrega el control (input) en el titulo de la leyenda. El control se
 vincula con la visibilidad de la capa.
@@ -35,7 +35,7 @@ vincula con la visibilidad de la capa.
 
 A continuación se describen los eventos que desencadenan las leyendas.
 
-#### `@alIniciarCargaSimbologia`
+### `@alIniciarCargaSimbologia`
 
 Ejecutado cuando se detecta que ha iniciado la carga de la simbología de la
 información de la capa. En el caso de capas vectoriales (GeoJSON o TopoJSON)
@@ -44,7 +44,7 @@ cuando inicia la consulta de las reglas de estilo vía `GetLegendGraphic` en
 formato JSON; En el caso de las capas por conjunto de teselas (XYZ) no se
 ejecuta.
 
-#### `@alFinalizarCargaSimbologia`
+### `@alFinalizarCargaSimbologia`
 
 Ejecutado cuando se detecta que ha finalizado la carga de la simbología de la
 información de la capa. En el caso de capas vectoriales (GeoJSON o TopoJSON)
