@@ -25,7 +25,7 @@ Actualmente la versión más estable es: v{{ version }}.
 En el archivo que se desee utilizar el componente:
 
 ```js
-import SisdaiMapas from 'sisdai-mapas'
+import SisdaiMapas from '@centrogeomx/sisdai-mapas'
 import App from './App.vue'
 
 const app = createApp(App)
