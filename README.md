@@ -58,9 +58,11 @@ En el archivo `main.js` de tu proyecto Vue, importa la biblioteca con:
 
 ```javascript
 // src/main.js
-import SisdaiMapas from 'sisdai-mapas'
+import SisdaiMapas from '@centrogeomx/sisdai-mapas'
+import App from './App.vue'
 
-Vue.use(SisdaiMapas)
+const app = createApp(App)
+app.use(SisdaiMapas)
 ```
 
 ### Uso
