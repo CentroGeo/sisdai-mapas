@@ -1,22 +1,39 @@
 <script setup>
 import { isActive } from 'vitepress/dist/client/shared'
 import { toRefs } from 'vue'
+import pkg from '../../../package.json'
 
 const props = defineProps(['nav', 'ruta'])
 const { ruta } = toRefs(props)
+
+const cdn = import.meta.env.VITE_CDN_ARCHIVOS
 </script>
 
 <template>
   <SisdaiNavegacionPrincipal>
     <template #complementario>
-      <a
-        class="nav-hipervinculo"
-        href="https://sisdai.conahcyt.mx"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <b>Ir a SISDAI</b>
-      </a>
+     <div class="nav-menu-contenedor">
+        <a
+          class="nav-hipervinculo"
+          href="https://sisdai.conahcyt.mx"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <b>IR A SISDAI</b>
+        </a>
+        <a
+          class="nav-hipervinculo"
+          :href="pkg.repository.url"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <img
+            class="nav-logo"
+            :src="`${cdn}gitlab-logo-500.png`"
+            alt="Repositorio de código sisdai-mapas"
+          />{{ `v${pkg.version}` }}
+        </a>
+      </div>
     </template>
     <ul class="nav-menu">
       <li
