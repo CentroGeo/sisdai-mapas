@@ -11,7 +11,6 @@ import eventos from './../eventos'
 import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 import obtenerRepresentacion from './representacion'
 import { esObjeto } from '../../../utiles'
-// import { traducirEstilo } from '../../../utiles/eslitosCapa'
 import tratarEstilo from './Estilo'
 
 const mapa = inject(MAPA_INYECTADO)
@@ -57,13 +56,11 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 const layer = new VectorLayer({
   source: obtenerRepresentacion(representacion.value, source),
   id: props.id,
-  // style: traducirEstilo(props.estilo),
   style: tratarEstilo(props.estilo),
   globoInfo: globoInformativo.value,
 })
 mapa.addLayer(layer)
 
-// watch(estilo, nv => layer.setStyle(traducirEstilo(nv)))
 watch(estilo, nv => layer.setStyle(tratarEstilo(nv)))
 // watch(fuente, nv => layer.setSource(nv))
 watch([representacion, fuente], ([vis, fue]) =>

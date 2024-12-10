@@ -9,33 +9,30 @@
       </p>
     </template>
 
-    <!-- <SisdaiCapaXyz /> -->
+    <SisdaiCapaXyz />
 
     <SisdaiCapaVectorial
       fuente="/assets/estados-poligonos.geojson"
       :estilo="{
         contorno: 'gris',
         categorias: {
-          // clasificacion:'categorias',
           atributo: 'grado_marg',
           estilo: {
-            'Muy bajo': {
-              relleno: 'rojo',
+            'Muy alto': {
+              relleno: 'rgb(198, 51, 42)',
             },
-          },
-        },
-      }"
-      :representacion="{
-        categorias: {
-          // clasificacion:'categorias',
-          atributo: 'grado_marg',
-          estilo: {
-            'Muy bajo': {
-              relleno: 'rojo',
+            Alto: {
+              relleno: 'rgb(241, 176, 110)',
             },
-          },
-          estilo2: {
-            relleno: 'Reds',
+            Medio: {
+              relleno: 'rgb(255, 240, 60)',
+            },
+            Bajo: {
+              relleno: 'rgb(177, 215, 120)',
+            },
+            'Muy bajo': {
+              relleno: 'rgb(72, 146, 75)',
+            },
           },
           orden: [],
         },

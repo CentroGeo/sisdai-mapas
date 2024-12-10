@@ -5,34 +5,35 @@ const tipo = {
   graduacion: 'graduacion',
 }
 
-function categorias(_estilo) {
-  const estilo = _estilo
+export default function (_estilo) {
+  const estilo = { ..._estilo }
 
   const cat = estilo[tipo.categorias]
-  if (cat === undefined) return estilo
+  if (cat !== undefined) {
+    // console.log('tiene', tipo.categorias)
 
-  delete estilo[tipo.categorias]
-  console.log(cat)
+    delete estilo[tipo.categorias]
+    // console.log(estilo)
 
-  const s = Object.keys(cat.estilo).map(id => {
-    return {
+    const general = new Estilo(estilo).traducidoOl
+    const clases = Object.keys(cat.estilo).map(id => ({
       filter: ['==', ['get', cat.atributo], id],
-      // style: estilos[id],
-      style: new Estilo(cat.estilo[id]).traducidoOl,
-    }
-  })
+      style: { ...general, ...new Estilo(cat.estilo[id]).traducidoOl },
+    }))
 
-  console.log(s)
+    clases.push({
+      else: true,
+      style: general,
+    })
 
-  return estilo
-  // return s
-}
+    return clases
+  }
 
-export default function (_estilo) {
-  const estilo = categorias(_estilo)
+  const gra = estilo[tipo.graduacion]
+  if (gra !== undefined) {
+    console.log('tiene', tipo.graduacion)
+  }
 
-  const traducido = new Estilo(estilo).traducidoOl
-  console.log(traducido)
-
-  return traducido
+  // return categorias(_estilo)
+  console.log('solo estilo');
 }
