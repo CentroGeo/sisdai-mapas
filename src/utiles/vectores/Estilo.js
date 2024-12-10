@@ -37,4 +37,10 @@ export default class Estilo {
       return { ...a, ...new ReglaCss(c, this[c]).traducida.objeto }
     }, {})
   }
+
+  get traducidoOl() {
+    return Object.keys(this).reduce((a, c) => {
+      return { ...a, ...new ReglaCss(c, this[c]).traducida.objetoOl }
+    }, {})
+  }
 }
