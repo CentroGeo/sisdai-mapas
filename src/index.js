@@ -32,3 +32,13 @@ export default {
     Vue.component('SisdaiMapa', SisdaiMapa)
   },
 }
+
+export {
+  SisdaiCapaVectorial,
+  SisdaiCapaWms,
+  SisdaiCapaXyz,
+  SisdaiLeyendaControl,
+  SisdaiLeyendaVectorial,
+  SisdaiLeyendaWms,
+  SisdaiMapa,
+}
