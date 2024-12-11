@@ -14,6 +14,7 @@ export const sidebar = [
     items: [
       { text: 'Personalización', link: ruta },
       { text: 'Vista', link: `${ruta}vista` },
+      { text: 'Accesibilidad', link: `${ruta}accesibilidad` },
     ],
   },
 
