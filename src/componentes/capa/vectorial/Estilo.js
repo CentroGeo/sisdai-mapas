@@ -5,6 +5,15 @@ const tipo = {
   graduacion: 'graduacion',
 }
 
+/**
+ * @see https://openlayers.org/en/latest/apidoc/module-ol_expr_expression.html#~EncodedExpression
+ * @see https://openlayers.org/en/latest/apidoc/module-ol_style_flat.html#~FlatStyle
+ * @see https://openlayers.org/en/latest/examples/style-expressions.html
+ * @see https://openlayers.org/en/latest/examples/regularshape.html
+ *
+ * @param {*} _estilo
+ * @returns
+ */
 export default function (_estilo) {
   const estilo = { ..._estilo }
 

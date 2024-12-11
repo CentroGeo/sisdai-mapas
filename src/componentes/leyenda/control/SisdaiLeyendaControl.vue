@@ -3,7 +3,7 @@ import { toRefs } from 'vue'
 import _props from './props'
 import { idAleatorio } from '../../../utiles'
 import eventos from './eventos'
-import SisdaiLeyendaSimbolo from './../simbolo'
+// import SisdaiLeyendaSimbolo from './../simbolo'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
@@ -31,10 +31,22 @@ const idCheck = `${props.id}-${idAleatorio()}`
   >
     <template v-if="sinControl">
       <p class="lectura">
-        <SisdaiLeyendaSimbolo
+        <!-- <SisdaiLeyendaSimbolo
           v-if="simbolo"
           :simbolo="simbolo"
-        />
+        /> -->
+        <svg
+          v-if="simbolo"
+          aria-hidden="true"
+          class="figura-variable"
+          :height="simbolo.tamanio"
+          :style="{
+            '--controlador-vis-figura-alto': `${simbolo.tamanio}px`,
+            'min-width': `${simbolo.espacio}px`,
+          }"
+          v-html="simbolo.xml"
+          :width="simbolo.espacio"
+        ></svg>
         <span
           class="nombre-variable"
           v-html="etiqueta"
@@ -69,7 +81,7 @@ const idCheck = `${props.id}-${idAleatorio()}`
           }"
           v-html="simbolo.xml"
           :width="simbolo.espacio"
-        />
+        ></svg>
         <span
           class="nombre-variable"
           v-html="etiqueta"

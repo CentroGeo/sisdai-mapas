@@ -28,7 +28,7 @@ export default class Svg {
   espacio = this.espacioMinimo
 
   constructor({ estilo, geometria, tamanio, espacio }) {
-    this.estilo = estilo ? new Estilo(estilo) : undefined
+    this.estilo = estilo ? new Estilo(estilo).traducido : undefined
 
     this.grafico = dicGeom[geometria] || dicGeom.Polygon
 
