@@ -10,10 +10,7 @@ export default function (_estilo) {
 
   const cat = estilo[tipo.categorias]
   if (cat !== undefined) {
-    // console.log('tiene', tipo.categorias)
-
     delete estilo[tipo.categorias]
-    // console.log(estilo)
 
     const general = new Estilo(estilo).traducidoOl
     const clases = Object.keys(cat.estilo).map(id => ({
@@ -34,6 +31,6 @@ export default function (_estilo) {
     console.log('tiene', tipo.graduacion)
   }
 
-  // return categorias(_estilo)
-  console.log('solo estilo');
+  // console.log('solo estilo') // revisar, se duplica la ejecución (posiblemente por la carga)?*****
+  return new Estilo(estilo).traducidoOl
 }

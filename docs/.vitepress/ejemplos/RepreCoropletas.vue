@@ -9,8 +9,6 @@
       </p>
     </template>
 
-    <SisdaiCapaXyz />
-
     <SisdaiCapaVectorial
       fuente="/assets/estados-poligonos.geojson"
       :estilo="{
@@ -34,29 +32,11 @@
               relleno: 'rgb(72, 146, 75)',
             },
           },
-          orden: [],
+          // orden: [],
         },
       }"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />
-    <!--
-      :estilo="{
-        'circle-radius': 5,
-        'circle-fill-color': '#58ADA8',
-        'circle-stroke-color': '#232323',
-        'circle-stroke-width': 0.5,
-      }"
-
-      :representacion="{
-        'puntos-desplazados': {
-          distancia: 80,
-          distanciaMinima: 40,
-          metodo: 'anillos-concentricos',
-          radioPuntoCentro: 4,
-          radioPuntosDesplazados: 4,
-        },
-      }"
-    -->
   </SisdaiMapa>
 </template>
