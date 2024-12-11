@@ -21,7 +21,7 @@ export const sidebar = [
     text: 'Capas',
     collapsed: false,
     items: [
-      { text: 'Generalidades', link: `${ruta}capas` },
+      { text: 'General', link: `${ruta}capas` },
       { text: 'Vectorial', link: `${ruta}capa-vectorial` },
       { text: 'WMS', link: `${ruta}capa-wms` },
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
@@ -34,7 +34,7 @@ export const sidebar = [
     text: 'Leyendas',
     collapsed: false,
     items: [
-      { text: 'Generalidades', link: `${ruta}leyenda` },
+      { text: 'General', link: `${ruta}leyenda` },
       { text: 'Vectorial', link: `${ruta}leyenda-vectorial` },
       { text: 'WMS', link: `${ruta}leyenda-wms` },
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
@@ -46,6 +46,7 @@ export const sidebar = [
     collapsed: false,
     items: [
       { text: 'Puntos Desplazados', link: `${ruta}puntos-desplazados` },
+      { text: 'Coropletas', link: `${ruta}coropletas` },
       // { text: 'Líneas', link: `${ruta}estiloLineas` },
       // { text: 'Polígonos', link: `${ruta}estiloPoligono` },
     ],
