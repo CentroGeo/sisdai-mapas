@@ -5,17 +5,17 @@ import EjemploConfiguracion from "/.vitepress/ejemplos/ConfiguracionBasica.vue";
 # Personalización
 
 El componente `SisdaiMapa` es el componente principal de esta librería. Dentro
-de el se pueden agregar componentes de capas, leyendas y slots de paneles.
+de el se pueden agregar componentes de capas, leyendas y paneles.
 
 **Uso:**
 
 ```html
 <SisdaiMapa>
-  <!-- Aquí van las capas, leyendas y slots de paneles que quedarán dentro del mapa -->
+  <!-- Aquí van las capas, leyendas y paneles que quedarán dentro del mapa -->
 </SisdaiMapa>
 ```
 
-## Ejemplo
+## Vista general
 
 <EjemploConfiguracion />
 
@@ -35,7 +35,7 @@ con herramientas de lectura por voz.
 <div class="nota-contenedor">
   <p class="nota-titulo">Información:</p>
   <p class="nota">
-    Esta propiedad hace uso del atributo `aria-describedby` para establecer una relación entre el mapa y el texto que lo describe.
+    Esta propiedad hace uso del atributo <code>aria-describedby</code> para establecer una relación entre el mapa y el texto que lo describe.
   </p>
 </div>
 
@@ -84,7 +84,7 @@ Código de identificación SRS que define la proyección de la vista.
 <div class="nota-contenedor">
   <p class="nota-titulo">Importante:</p>
   <p class="nota">
-    Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
+    Las coordenadas y capas que integre en el componente deben coincidir con la <code>proyeccion</code> definida en el mapa.
   </p>
 </div>
 
@@ -97,7 +97,7 @@ Código de identificación SRS que define la proyección de la vista.
 ### `vista`
 
 Objeto que define la vista del mapa. Revisa los detalles de la vista en la
-[sección vista](/documentacion/vista.html) de esta documentación.
+[sección vista](/mapas/vista.html) de esta documentación.
 
 - Tipo: `Object`
 - Valor por defecto: `{ centro: [0, 0], acercamiento: 1.5 }`

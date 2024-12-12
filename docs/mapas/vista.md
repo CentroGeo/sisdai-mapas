@@ -8,7 +8,7 @@ Los atributos de la vista del mapa manipulan el espacio interactivo visible del
 mismo. Con estas propiedades se puede definir la posicion inicial de la vista o
 los cambios que puede tener.
 
-## Ejemplo
+## Vista general
 
 <EjemploVista />
 
@@ -27,7 +27,7 @@ Nivel de acercamiento utilizado para calcular la resolución inicial de la vista
 <div class="nota-contenedor">
   <p class="nota-titulo">Importante:</p>
   <p class="nota">
-    Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+    Debe tener en cuenta que si la propiedad <code>extension</code> se define, esta propiedad será ignorada.
   </p>
 </div>
 
@@ -40,18 +40,24 @@ Nivel de acercamiento utilizado para calcular la resolución inicial de la vista
 
 ### `centro`
 
-Coordenadas `[x, y]` del centro inicial de la vista (La proyección de estas
-coordenadas deben coincidir con la `proyeccion` definida en el mapa).
+Coordenadas `[x, y]` del centro inicial de la vista.
 
 - Tipo: `Array<Number>|String`
 - Valor por defecto: `[0, 0]`
 - Admite: `[N, N]`, `['N', 'N']` o `'N,N'`
 - Reactivo: si
 
+<div class="nota-contenedor m-b-2">
+  <p class="nota-titulo">Información:</p>
+  <p class="nota">
+    La proyección de estas coordenadas deben coincidir con la <code>proyeccion</code> definida en el mapa.
+  </p>
+</div>
+
 <div class="nota-contenedor">
   <p class="nota-titulo">Importante:</p>
   <p class="nota">
-    Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.
+    Debe tener en cuenta que si la propiedad <code>extension</code> se define, esta propiedad será ignorada.
   </p>
 </div>
 
@@ -64,19 +70,24 @@ coordenadas deben coincidir con la `proyeccion` definida en el mapa).
 
 ### `extension`
 
-Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista (La
-proyección de estas coordenadas deben coincidir con la `proyeccion` definida en
-el mapa).
+Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 
 - Tipo: `Array<Number>`
 - Valor por defecto: `undefined`
 - Admite: `[N,N,N,N]`, `['N','N','N','N']` o `'N,N,N,N'`
 - Reactivo: si
 
+<div class="nota-contenedor m-b-2">
+  <p class="nota-titulo">Información:</p>
+  <p class="nota">
+    La proyección de estas coordenadas deben coincidir con la <code>proyeccion</code> definida en el mapa.
+  </p>
+</div>
+
 <div class="nota-contenedor">
   <p class="nota-titulo">Importante:</p>
   <p class="nota">
-    Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades `centro` y `acercamiento` serán ignoradas.
+    Debe tener en cuenta que si esta propiedad es definida o diferente al valor por defecto, las propiedades <code>centro</code> y <code>acercamiento</code> serán ignoradas.
   </p>
 </div>
 

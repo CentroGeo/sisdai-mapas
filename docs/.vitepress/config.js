@@ -1,8 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { description } from './../../package.json'
-import sidebarDocumentacion, {
-  nav as navDocumentacion,
-} from './../documentacion/sidebar'
+import sidebarComienza, { nav as navComienza } from './../comienza/sidebar'
 import sidebarMapas, { nav as navMapas } from './../mapas/sidebar'
 
 // https://vitepress.dev/reference/site-config
@@ -32,12 +30,12 @@ export default defineConfig({
         text: 'Inicio',
         link: '/',
       },
-      { ...navDocumentacion },
+      { ...navComienza },
       { ...navMapas },
     ],
 
     sidebar: {
-      ...sidebarDocumentacion,
+      ...sidebarComienza,
       ...sidebarMapas,
     },
   },

@@ -33,8 +33,8 @@ const sisdaiModal = ref()
     </template>
     <template #cuerpo>
       <p>
-        Usa la siguientes teclas para navegar, ajustar o rotar la vista del
-        mapa:
+        Al tener el enfoque en el mapa, usa la siguientes teclas para navegar,
+        ajustar o rotar la vista del mapa:
       </p>
 
       <ul>
