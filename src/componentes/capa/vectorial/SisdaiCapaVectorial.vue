@@ -59,6 +59,7 @@ const layer = new VectorLayer({
   id: props.id,
   source: obtenerRepresentacion(representacion.value, source),
   style: tratarEstilo(props.estilo),
+  tipo: 'vectorial',
   titulo: nombre.value,
 })
 mapa.addLayer(layer)

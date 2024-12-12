@@ -1,22 +1,23 @@
 <script setup>
-import { inject, onMounted, reactive } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import { MAPA_INYECTADO } from '../../utiles/identificadores'
 import _props from './props'
 import LeyendaControl from './control'
 
 const props = defineProps(_props)
 const mapa = inject(MAPA_INYECTADO)
-// console.log(toRaw(mapa), props.para)
-
-const capa = reactive({})
+const capa = ref()
 
 onMounted(() => {
-  const _capa = mapa.getAllLayers().find(l => l.get('id') === props.para)
-
-  capa.titulo = _capa.get('titulo')
+  capa.value = mapa.getAllLayers().find(l => l.get('id') === props.para)
+  // console.log(capa.value.get('tipo'))
 })
 </script>
 
 <template>
-  <LeyendaControl :etiqueta="capa.titulo" />
+  <LeyendaControl
+    :encendido="capa?.getVisible()"
+    :etiqueta="capa?.get('titulo')"
+    @alCambiar="v => capa?.setVisible(v)"
+  />
 </template>

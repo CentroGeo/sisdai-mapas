@@ -28,6 +28,7 @@ mapa.addLayer(
   new ImageLayer({
     id: props.id,
     source,
+    tipo: 'wms',
     titulo: nombre.value,
   })
 )
