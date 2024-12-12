@@ -4,7 +4,7 @@ import RepreCoropletas from "./../.vitepress/ejemplos/RepreCoropletas.vue";
 
 # Coropletas
 
-## Ejemplo
+## Vista general
 
 <RepreCoropletas />
 

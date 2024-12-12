@@ -19,7 +19,7 @@ siguiendo diferentes métodos de ubicación:
   </p>
 </div>
 
-## Ejemplo
+## Vista general
 
 <PuntosDesplazados />
 

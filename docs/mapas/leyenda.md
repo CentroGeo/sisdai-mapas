@@ -2,19 +2,24 @@
 import LeyendaGeneral from "./../.vitepress/ejemplos/LeyendaGeneral.vue";
 </script>
 
-## Ejemplo
-
-<LeyendaGeneral />
-
-<<< @/.vitepress/ejemplos/LeyendaGeneral.vue
-
 # Leyendas
+
+Utiliza el componente de leyenda para vincular un control de visibilidad de las
+capas que se encuentran definidas en el mapa. Este componente también permite
+visualizar la simbología de las capas [vectoriales](/mapas/capa-vectorial.html)
+y [wms](/mapas/capa-wms.html).
 
 **Uso:**
 
 ```vue
-<SisdaiLeyenda para="<String(id de la capa)>"></SisdaiLeyenda>
+<SisdaiLeyenda para="<String(id de la capa)>" />
 ```
+
+## Vista general
+
+<LeyendaGeneral />
+
+<<< @/.vitepress/ejemplos/LeyendaGeneral.vue
 
 ## Propiedades
 

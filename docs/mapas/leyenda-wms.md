@@ -4,17 +4,31 @@ import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
 
 # Leyendas Wms
 
-<!-- {texto} -->
+Leyenda para visualizar la simbología y controlar
+[capas wms](/mapas/capa-wms.html).
 
 **Uso:**
 
 ```vue
-<SisdaiLeyendaWms></SisdaiLeyendaWms>
+<SisdaiLeyendaWms />
 ```
 
-<!-- ## Propiedades
+<div class="nota-contenedor">
+  <p class="nota-titulo">Importante:</p>
+  <p class="nota">
+    Para vincular la leyenda con las capas del mapa se debe utiliuzar el componente <a href="/mapas/leyenda.html">SisdaiLeyenda</a>.
+  </p>
+</div>
 
-### `` -->
+## Vista general
+
+<LeyendaWms />
+
+<<< @/.vitepress/ejemplos/LeyendaWms.vue
+
+## Propiedades
+
+<!-- ### `` -->
 
 ## Eventos
 
@@ -41,9 +55,3 @@ ejecuta.
 **Parámetros:**
 
 - `Boolean`: Indica si la carga no ha presentado error.
-
-## Ejemplo
-
-<LeyendaWms />
-
-<<< @/.vitepress/ejemplos/LeyendaWms.vue
