@@ -1,10 +1,16 @@
 <script setup>
-// import ResaAtoyac from "./../.vitepress/components/usos/atoyac.vue";
-// import Leyenda from "./../.vitepress/components/capas/leyenda.vue";
-import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
+import LeyendaGeneral from "./../.vitepress/ejemplos/LeyendaGeneral.vue";
 </script>
 
+## Ejemplo
+
+<LeyendaGeneral />
+
+<<< @/.vitepress/ejemplos/LeyendaGeneral.vue
+
 # Leyendas
+
+{texto}
 
 Uso:
 
@@ -67,11 +73,3 @@ Uso avanzado:
   grupo="grupoParaRadios"
 ></SisdaiLeyenda>
 ```
-
-## Ejemplo
-
-<LeyendaWms />
-
-<!-- <ResaAtoyac /> -->
-
-<<< @/.vitepress/ejemplos/LeyendaWms.vue
