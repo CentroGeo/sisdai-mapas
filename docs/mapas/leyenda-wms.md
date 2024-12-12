@@ -6,7 +6,7 @@ import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
 
 <!-- {texto} -->
 
-Uso:
+**Uso:**
 
 ```vue
 <SisdaiLeyendaWms></SisdaiLeyendaWms>

@@ -1,20 +1,19 @@
 // export const ruta = '/'
-export const ruta = '/documentacion/'
+export const ruta = '/comienza/'
 
 export const nav = {
-  text: 'Documentación',
+  text: 'Comienza',
   link: ruta,
   activeMatch: ruta,
 }
 
 export const sidebar = [
   {
-    text: 'Documentación',
+    text: 'Comienza',
     collapsed: false,
     items: [
       { text: 'Comienza', link: ruta },
       { text: 'Instalación', link: `${ruta}instalacion` },
-      { text: 'Accesibilidad', link: `${ruta}accesibilidad` },
     ],
   },
 ]

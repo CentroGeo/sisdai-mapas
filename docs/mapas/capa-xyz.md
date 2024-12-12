@@ -16,6 +16,12 @@ para desplegar mapas base como los de OSM, Carto, etc.
 </SisdaiMapa>
 ```
 
+## Vista general
+
+<CapaXyz />
+
+<<< @/.vitepress/ejemplos/CapaXyz.vue{9-15}
+
 ## Propiedades
 
 Hereda las propiedades definidas en la sección Capas más las siguientes:
@@ -26,7 +32,7 @@ Nivel de acercamiento máximo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Reactivo: No
+- Reactivo: no
 
 #### `acercamientoMinimo`
 
@@ -34,9 +40,9 @@ Nivel de acercamiento mínimo.
 
 - Tipo: `Number`
 - Valor por defecto: `undefined`
-- Reactivo: No -->
+- Reactivo: no -->
 
-#### `url`
+### `url`
 
 Url remota de la capa.
 
@@ -46,12 +52,12 @@ Url remota de la capa.
 
 ## Funciones
 
-#### `@alIniciarCargaTesela`
+### `@alIniciarCargaTesela`
 
 Ejecutado cuando se detecta que ha iniciado la carga de cada uno de los mosaicos
 que conponen la capa visible en el mapa.
 
-#### `@alFinalizarCargaTesela`
+### `@alFinalizarCargaTesela`
 
 Ejecutado cuando se detecta que ha finalizado la carga de cada uno de los
 mosaicos que conponen la capa visible en el mapa.
@@ -60,9 +66,3 @@ mosaicos que conponen la capa visible en el mapa.
 
 - `Boolean`: Indica con `false` si al finalizar la carga del mosaico ha
   presentado error.
-
-## Ejemplo
-
-<CapaXyz />
-
-<<< @/.vitepress/ejemplos/CapaXyz.vue{9-15}
