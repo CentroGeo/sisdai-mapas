@@ -8,35 +8,32 @@ const comunidades = ref([])
 const comunidadesFiltradas = ref([])
 
 function consultarDatosComunidades() {
-  consultar(
-    `${urls.cdn}/mapas/diccionaraioComunidades-17122021.json`,
-    ({ status, data }) => {
-      if (status !== 200) return
+  consultar(`${urls.cdn}/mapas/diccionaraioComunidades-17122021.json`, ({ status, data }) => {
+    if (status !== 200) return
 
-      comunidades.value = data
-        .map(({ auto_com, nom_com, cve_pueblo1, nom_pueblo1 }) => {
-          return { auto_com, nom_com, cve_pueblo1, nom_pueblo1 }
-        })
-        .filter(
-          //este filtro evita que se desplegen comunidades repetidas en el listado
-          (a, i, self) => self.findIndex(b => a.nom_com === b.nom_com) === i
-        )
-        .sort((a, b) => {
-          return a.nom_com < b.nom_com ? -1 : a.nom_com > b.nom_com ? 1 : 0
-        })
+    comunidades.value = data
+      .map(({ auto_com, nom_com, cve_pueblo1, nom_pueblo1 }) => {
+        return { auto_com, nom_com, cve_pueblo1, nom_pueblo1 }
+      })
+      .filter(
+        //este filtro evita que se desplegen comunidades repetidas en el listado
+        (a, i, self) => self.findIndex((b) => a.nom_com === b.nom_com) === i
+      )
+      .sort((a, b) => {
+        return a.nom_com < b.nom_com ? -1 : a.nom_com > b.nom_com ? 1 : 0
+      })
 
-      comunidadesFiltradas.value = comunidades.value
+    comunidadesFiltradas.value = comunidades.value
 
-      // console.log(comunidades.value)
-    }
-  )
+    // console.log(comunidades.value)
+  })
 }
 consultarDatosComunidades()
 
 const abierto = ref(false)
 
 const busqueda = ref('')
-watch(busqueda, nv => {
+watch(busqueda, (nv) => {
   if (nv.trim().length >= 1) {
     comunidadesFiltradas.value = comunidades.value.filter(({ nom_com }) =>
       nom_com.toLowerCase().includes(nv.trim().toLowerCase())
@@ -79,14 +76,8 @@ defineExpose({ busqueda })
         <span class="icono-cerrar icono-3" />
         <span class="a11y-solo-lectura">Limpiar búsqueda.</span>
       </button> -->
-      <ul
-        class="borde-color-3 borde-redondeado-4"
-        :class="{ 'abierto borde': abierto }"
-      >
-        <li
-          @click="limpiarBusqueda"
-          v-if="busqueda.trim().length >= 1"
-        >
+      <ul class="borde-color-3 borde-redondeado-4" :class="{ 'abierto borde': abierto }">
+        <li @click="limpiarBusqueda" v-if="busqueda.trim().length >= 1">
           <i>Todas las comunidades</i>
         </li>
         <li
@@ -104,7 +95,7 @@ defineExpose({ busqueda })
 
 <style lang="scss" scoped>
 @import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
+// @import 'sisdai-css/src/_mixins';
 
 .contenedor-vis-paneles {
   .contenedor-selectores select {

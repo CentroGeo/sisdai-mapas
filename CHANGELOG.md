@@ -1,18 +1,23 @@
 # Changelog
 
-Todos los cambios más importantes de este proyecto se documentan en este archivo.
+Todos los cambios más importantes de este proyecto se documentan en este
+archivo.
 
-El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.1.0)
-y este proyecto se adhiere al [Versionamiento semántico](https://semver.org/spec/v2.0.0.html).
+El formato está basado en
+[Keep a Changelog](https://keepachangelog.com/en/1.1.0) y este proyecto se
+adhiere al [Versionamiento semántico](https://semver.org/spec/v2.0.0.html).
 
-\*Nota: Este Changelog se comenzó el 2024-10-28. Se documentaron hacia atrás los cambios más relevantes
-de la biblioteca. Por lo tanto no se listan aquí todos los tags existentes.
+\*Nota: Este Changelog se comenzó el 2024-10-28. Se documentaron hacia atrás los
+cambios más relevantes de la biblioteca. Por lo tanto no se listan aquí todos
+los tags existentes.
 
-Al principio de cada entrada se lista la versión de la biblioteca de sisdai-css y
-sisdai-componentes con la que la versión indicada de sisdai-mapas es
+Al principio de cada entrada se lista la versión de la biblioteca de sisdai-css
+y sisdai-componentes con la que la versión indicada de sisdai-mapas es
 compatible y tiene instalada.
 
-## [Unreleased]
+<!-- ## [Unreleased] -->
+
+## [1.14.0] - 2024-11-28
 
 ### Cambiado (Changed)
 
@@ -20,23 +25,35 @@ compatible y tiene instalada.
 - Actualización del componente de capa vectorial
 - Actualización del componente WMS
 - Optimización de controles
+- Adecuanciones en documentación con identidad del Gobierno de México para el
+  periodo 2024-2030
+- Actualización de dependencia
+  [ol-displaced-points](https://www.npmjs.com/package/ol-displaced-points) para
+  la representación de puntos desplazados
+- Uso de estilos dentro de componentes que evita errores con la importación de
+  sass
 
 ### Agregado (Added)
 
-- Preliminar de animación al cargar
+- Animación al cargar
+- Dependencia
+  [geoserver-api-reader](https://www.npmjs.com/package/geoserver-api-reader)
+  para el manejo de leyendas wms
 
 ## [1.13.3] - 2024-11-21
 
 ### Cambiado (Changed)
 
-- El nombre del proyecto en el `package.json` pasa a ser @centrogeomx/sisdai-mapas para su publicación en el repositorio de npm
+- El nombre del proyecto en el `package.json` pasa a ser
+  @centrogeomx/sisdai-mapas para su publicación en el repositorio de npm
 - Se ajusta documentación de acuerdo a lo anterior
 
 ## [1.13.2] - 2024-11-19
 
 ### Arreglado (Fixed)
 
-- Ya se muestra la información de despliegue en el ambiente de desarrollo y no en el ambiente de producción
+- Ya se muestra la información de despliegue en el ambiente de desarrollo y no
+  en el ambiente de producción
 
 ### Eliminado (Removed)
 
@@ -52,12 +69,14 @@ compatible y tiene instalada.
 
 ### Cambiado (Changed)
 
-- Se oculta vista de inicio para homologar con sisdai-componentes y sisdai-graficas
+- Se oculta vista de inicio para homologar con sisdai-componentes y
+  sisdai-graficas
 - Posición y estilo del enlace externo _IR A SISDAI_
 
 ### Eliminado (Removed)
 
-- Se quita aviso de documentación en construcción ya que no es relevante para las personas desarrolladoras usuarias de esta biblioteca
+- Se quita aviso de documentación en construcción ya que no es relevante para
+  las personas desarrolladoras usuarias de esta biblioteca
 
 ## [1.12.0] - 2024-11-04
 
@@ -129,10 +148,16 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
-[unreleased]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/tree/feature/test-unit/
-[1.13.3]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
-[1.13.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
-[1.12.1]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
-[1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
-[1.11.9]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
+[1.14.0]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.14.0...v1.13.0
+[1.13.3]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
+[1.13.0]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
+[1.12.1]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
+[1.12.0]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
+[1.11.9]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
 [1.0.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/releases/v1.0.0

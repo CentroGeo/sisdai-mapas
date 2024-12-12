@@ -21,33 +21,23 @@ function cuadrojardines(f) {
   <SisdaiMapa
     class="mapa-jardines"
     :vista="{
-      extension: '-118.3651,14.5321,-86.7104,32.7187',
+      extension: '-118.3651,14.5321,-86.7104,32.7187'
     }"
     elementosDescriptivos="titulo-mapa"
   >
     <template #panel-izquierda-vis>
-      <p
-        class="vis-titulo-visualizacion"
-        id="titulo-mapa"
-      >
+      <p class="vis-titulo-visualizacion" id="titulo-mapa">
         Red de Jardines Etnobiológicos Conahcyt
       </p>
       <p class="vis-leyenda">
-        Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de
-        México apoyados por Consejo Nacional de Humanidades, Ciencias y
-        Tecnologías (Conahcyt).
+        Ubicación de los jardines etnobiológicos, etnobotánicos y botánicos de México apoyados por
+        Consejo Nacional de Humanidades, Ciencias y Tecnologías (Conahcyt).
       </p>
 
       <SisdaiMapaInstruccionalNavegacionTeclado />
 
-      <SisdaiLeyenda
-        para="entidades"
-        sinControl
-      />
-      <SisdaiLeyenda
-        para="jardines"
-        sinControl
-      />
+      <SisdaiLeyenda para="entidades" sinControl />
+      <SisdaiLeyenda para="jardines" sinControl />
     </template>
 
     <SisdaiCapaXyz :posicion="1" />
@@ -61,9 +51,9 @@ function cuadrojardines(f) {
       fuente="/assets/estados-poligonos.geojson"
       :estilo="{
         'contorno-color': 'gris',
-        'relleno-color': 'transparente',
+        'relleno-color': 'transparente'
       }"
-      :globoInformativo="f => `Entidad: <b>${f.nom_edo}</b>`"
+      :globoInformativo="(f) => `Entidad: <b>${f.nom_edo}</b>`"
     />
 
     <SisdaiCapaVectorial
@@ -74,7 +64,7 @@ function cuadrojardines(f) {
       geometria="punto"
       :estilo="{
         'circulo-contorno-color': '#232323',
-        'circulo-relleno-color': '#58ADA8',
+        'circulo-relleno-color': '#58ADA8'
       }"
       :cuadroInformativo="cuadrojardines"
     />
@@ -86,22 +76,17 @@ function cuadrojardines(f) {
       :renderizarComoImagen="true"
       fuente="/assets/belgium.json"
       formato="topojson"
-      :globoInformativo="f => f.name_nl"
+      :globoInformativo="(f) => f.name_nl"
     />
 
     <template #panel-pie-vis>
       <p class="vis-fuente m-0">
-        Fuente: Datos de origen del Consejo Nacional de Humanidades, Ciencias y
-        Tecnologías (Conahcyt), con corte al 21 de septiembre de 2023.
+        Fuente: Datos de origen del Consejo Nacional de Humanidades, Ciencias y Tecnologías
+        (Conahcyt), con corte al 21 de septiembre de 2023.
       </p>
-      <a
-        href="#"
-        class="boton boton-primario boton-chico m-t-2-mov"
-      >
+      <a href="#" class="boton boton-primario boton-chico m-t-2-mov">
         Descargar datos <span class="icono-archivo-descargar" />
-        <span class="a11y-solo-lectura">
-          Archivo descargable en formato: zip, peso: 30 kB
-        </span>
+        <span class="a11y-solo-lectura"> Archivo descargable en formato: zip, peso: 30 kB </span>
       </a>
     </template>
   </SisdaiMapa>
@@ -109,7 +94,7 @@ function cuadrojardines(f) {
 
 <style lang="scss">
 @import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
+// @import 'sisdai-css/src/_mixins';
 
 .sisdai-mapa.mapa-jardines {
   .cuerpo-globo-info a {

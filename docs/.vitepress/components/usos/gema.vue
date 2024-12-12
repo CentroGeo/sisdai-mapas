@@ -17,11 +17,11 @@ const vistaMapa = reactive({
   extension: '-118.3651,14.5321,-86.7104,32.7187',
   extensionMargen: 30,
   centro: [undefined, undefined],
-  acercamiento: undefined,
+  acercamiento: undefined
 })
 
 function procesarParametrosHash({ hash }) {
-  const obtenerParametroHash = n =>
+  const obtenerParametroHash = (n) =>
     hash !== '' ? parseFloat(hash.split('=')[1].split('/')[n]) : undefined
 
   vistaMapa.acercamiento = obtenerParametroHash(0)
@@ -34,9 +34,7 @@ function alMoverVista(vista) {
   let acercamiento = vista.getZoom()
   let centro = vista.getCenter()
 
-  let hash = `#map=${acercamiento.toFixed(0)}/${centro[1].toFixed(
-    4
-  )}/${centro[0].toFixed(4)}`
+  let hash = `#map=${acercamiento.toFixed(0)}/${centro[1].toFixed(4)}/${centro[0].toFixed(4)}`
 
   if (hash !== window.location.hash) {
     // window.location.hash = hash
@@ -50,7 +48,7 @@ function print(mgs) {
 const capasMapa = ref([])
 
 const verPanelDerecho = ref(false)
-watch(verPanelDerecho, nv => {
+watch(verPanelDerecho, (nv) => {
   if (nv) {
     vistaMapa.extensionMargen = [20, 320, 20, 20]
     // console.log('vistaMapa.extensionMargen', toRaw(vistaMapa.extensionMargen))
@@ -64,12 +62,7 @@ watch(verPanelDerecho, nv => {
 <template>
   <div class="contenedor-gema">
     <div class="contenedor-gema-izquierdo">
-      <button
-        class="boton-chico"
-        @click="mapa.exportarImagen('mapa-gema')"
-      >
-        Exportar imagen
-      </button>
+      <button class="boton-chico" @click="mapa.exportarImagen('mapa-gema')">Exportar imagen</button>
 
       <p
         v-for="(capa, idx) in [
@@ -77,16 +70,11 @@ watch(verPanelDerecho, nv => {
           'hcti_lab_nacionales_conahcyt_190523_xy_p',
           'gref_corredores_red_nac_caminos_21_nal_l',
           'hcti_snii_sexo_22_est_a',
-          'glifo_rendimiento_ha_4_cultivos_20_est_p',
+          'glifo_rendimiento_ha_4_cultivos_20_est_p'
         ]"
         :key="`check-${idx}`"
       >
-        <input
-          type="checkbox"
-          :id="`check-${idx}`"
-          :value="capa"
-          v-model="capasMapa"
-        />
+        <input type="checkbox" :id="`check-${idx}`" :value="capa" v-model="capasMapa" />
         <label :for="`check-${idx}`">{{ capa }}</label>
       </p>
 
@@ -104,9 +92,7 @@ watch(verPanelDerecho, nv => {
     >
       <SisdaiCapaXyz
         @alIniciarCarga="() => print(`GEMA: xyz cargando...`)"
-        @alFinalizarCarga="
-          estado => print(`GEMA: xyz ${estado ? 'cargada' : 'error'}`)
-        "
+        @alFinalizarCarga="(estado) => print(`GEMA: xyz ${estado ? 'cargada' : 'error'}`)"
       />
 
       <!-- 
@@ -118,21 +104,15 @@ watch(verPanelDerecho, nv => {
         :id="capa"
         :nombre="capa"
         :parametros="{
-          LAYERS: capa,
+          LAYERS: capa
         }"
         @alIniciarCarga="() => print(`${capa} cargando...`)"
-        @alFinalizarCarga="
-          estado => print(`${capa} ${estado ? 'cargada' : 'error'}`)
-        "
+        @alFinalizarCarga="(estado) => print(`${capa} ${estado ? 'cargada' : 'error'}`)"
       />
 
       <template #panel-derecha-vis>
         <div class="panel-seleccion-capas">
-          <SisdaiLeyenda
-            v-for="capa in capasMapa"
-            :key="`leyenda-${capa}`"
-            :para="capa"
-          />
+          <SisdaiLeyenda v-for="capa in capasMapa" :key="`leyenda-${capa}`" :para="capa" />
         </div>
       </template>
     </SisdaiMapa>
@@ -161,7 +141,7 @@ watch(verPanelDerecho, nv => {
 
 <style lang="scss" scoped>
 @import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
+// @import 'sisdai-css/src/_mixins';
 
 div.contenedor-gema {
   height: 85vh;

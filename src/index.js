@@ -13,31 +13,25 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
-import 'ol/ol.css'
-import SisdaiCapaVectorial from './componentes/SisdaiCapaVectorial.vue'
-import SisdaiCapaWms from './componentes/SisdaiCapaWms.vue'
-import SisdaiCapaXyz from './componentes/SisdaiCapaXyz.vue'
-import SisdaiLeyenda from './componentes/SisdaiLeyenda.vue'
-import SisdaiLeyendaWmsExterna from './componentes/SisdaiLeyendaWmsExterna.vue'
-import SisdaiMapa from './componentes/SisdaiMapa.vue'
-import SisdaiMapaInstruccionalNavegacionTeclado from './componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
-import SisdaiUtfGrid from './componentes/SisdaiUtfGrid.vue'
-import SisdaiLeyendaControl from './componentes/leyenda/LeyendaControl.vue'
+import SisdaiCapaVectorial from './componentes/capa/vectorial'
+import SisdaiCapaWms from './componentes/capa/wms'
+import SisdaiCapaXyz from './componentes/capa/xyz'
+import SisdaiLeyenda from './componentes/leyenda'
+import SisdaiLeyendaControl from './componentes/leyenda/control'
+import SisdaiLeyendaVectorial from './componentes/leyenda/vectorial'
+import SisdaiLeyendaWms from './componentes/leyenda/wms'
+import SisdaiMapa from './componentes/mapa'
 
 export default {
   install: Vue => {
-    Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
-    Vue.component('SisdaiUtfGrid', SisdaiUtfGrid)
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     Vue.component('SisdaiLeyenda', SisdaiLeyenda)
-    Vue.component('SisdaiLeyendaWmsExterna', SisdaiLeyendaWmsExterna)
+    Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
+    Vue.component('SisdaiLeyendaVectorial', SisdaiLeyendaVectorial)
+    Vue.component('SisdaiLeyendaWms', SisdaiLeyendaWms)
     Vue.component('SisdaiMapa', SisdaiMapa)
-    Vue.component(
-      'SisdaiMapaInstruccionalNavegacionTeclado',
-      SisdaiMapaInstruccionalNavegacionTeclado
-    )
   },
 }
 
@@ -47,8 +41,7 @@ export {
   SisdaiCapaXyz,
   SisdaiLeyenda,
   SisdaiLeyendaControl,
-  SisdaiLeyendaWmsExterna,
+  SisdaiLeyendaVectorial,
+  SisdaiLeyendaWms,
   SisdaiMapa,
-  SisdaiMapaInstruccionalNavegacionTeclado,
-  SisdaiUtfGrid,
 }
