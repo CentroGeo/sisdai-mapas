@@ -10,18 +10,16 @@ const punto = geojson()
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>
 
-      <SisdaiLeyendaVectorial
+      <!-- <SisdaiLeyendaVectorial
         titulo="Capa de vectores"
         informacion="Leyenda vectorial en prueba"
-      />
+      /> -->
     </template>
-
-    <SisdaiCapaXyz />
 
     <SisdaiCapaVectorial
       :estilo="{
-        'contorno-color': 'gray',
-        'relleno-color': 'transparent',
+        contorno: 'gray',
+        relleno: 'transparente',
       }"
       formato="topojson"
       fuente="/assets/estados-topojson.json"

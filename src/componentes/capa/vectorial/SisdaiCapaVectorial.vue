@@ -11,13 +11,14 @@ import eventos from './../eventos'
 import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 import obtenerRepresentacion from './representacion'
 import { esObjeto } from '../../../utiles'
-import { traducirEstilo } from '../../../utiles/eslitosCapa'
+import tratarEstilo from './Estilo'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps({ ..._props, ver: { default: false } })
 mapa.capas[props.id] = TipoEstadoCarga.no
-const { estilo, fuente, globoInformativo, representacion } = toRefs(props)
+const { estilo, fuente, globoInformativo, nombre, representacion } =
+  toRefs(props)
 
 const dicFormato = {
   geojson: new GeoJSON(),
@@ -54,14 +55,15 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 })
 
 const layer = new VectorLayer({
-  source: obtenerRepresentacion(representacion.value, source),
-  id: props.id,
-  style: traducirEstilo(props.estilo),
   globoInfo: globoInformativo.value,
+  id: props.id,
+  source: obtenerRepresentacion(representacion.value, source),
+  style: tratarEstilo(props.estilo),
+  titulo: nombre.value,
 })
 mapa.addLayer(layer)
 
-watch(estilo, nv => layer.setStyle(traducirEstilo(nv)))
+watch(estilo, nv => layer.setStyle(tratarEstilo(nv)))
 // watch(fuente, nv => layer.setSource(nv))
 watch([representacion, fuente], ([vis, fue]) =>
   layer.setSource(obtenerRepresentacion(vis, fue))

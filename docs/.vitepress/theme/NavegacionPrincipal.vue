@@ -12,7 +12,7 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
 <template>
   <SisdaiNavegacionPrincipal>
     <template #complementario>
-     <div class="nav-menu-contenedor">
+      <div class="nav-menu-contenedor">
         <a
           class="nav-hipervinculo"
           href="https://sisdai.conahcyt.mx"
@@ -31,7 +31,8 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
             class="nav-logo"
             :src="`${cdn}gitlab-logo-500.png`"
             alt="Repositorio de código sisdai-mapas"
-          /><b> {{ `v${pkg.version}` }} </b>
+          />
+          <b>{{ `v${pkg.version}` }}</b>
         </a>
       </div>
     </template>

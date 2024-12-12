@@ -1,16 +1,18 @@
 <script setup>
-import { ref, toRefs } from 'vue'
-// import { estiloParaSvg } from '../../../utiles/eslitosCapa'
+import { computed, toRefs } from 'vue'
 import SisdaiLeyendaControl from './../control'
 import _props from './props'
+import { Svg } from './../../../utiles/vectores'
 
 const props = defineProps(_props)
-const { informacion, titulo } = toRefs(props)
+const { estilo, informacion, titulo } = toRefs(props)
 
-const simbolo = ref(new Simbolo())
-
-// console.log(estiloParaSvg(props.estilo))
-// console.log(props.estilo)
+const svg = computed(() => {
+  return new Svg({
+    estilo: estilo.value,
+    // geometria:
+  })
+})
 </script>
 
 <template>
@@ -19,28 +21,10 @@ const simbolo = ref(new Simbolo())
       <SisdaiLeyendaControl
         :informacion="informacion"
         :etiqueta="titulo"
-        :simbolo="simbolo"
+        :simbolo="svg"
       />
     </div>
   </div>
 </template>
 
-<script>
-// function acomodarClases(params) {
-//   return new Clase()
-// }
-
-class Simbolo {
-  tamanio = 18
-  atributos = { height: 17, rx: 1, ry: 1, width: 17, x: 0.5, y: 0.5 }
-  tipoGrafico = 'rect'
-
-  constructor() {}
-}
-
-// class Clase {
-//   visible = false
-//   titulo = 'clase'
-//   simbolo = undefined
-// }
-</script>
+<script></script>

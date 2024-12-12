@@ -8,7 +8,7 @@
     @alIniciarCargaSimbologia="
       () => console.log('Leyenda: alIniciarCargaSimbologia')
     "
-    @@alFinalizarCargaSimbologia="
+    @alFinalizarCargaSimbologia="
       v => console.log('Leyenda: alFinalizarCargaSimbologia', v)
     "
   />

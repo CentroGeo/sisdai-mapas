@@ -39,6 +39,10 @@ export default class ReglaCss {
     return { [this.propiedad]: this.valor }
   }
 
+  get objetoOl() {
+    return { [`${this.propiedad}${this.esColor ? '-color' : ''}`]: this.valor }
+  }
+
   /**
    * Devuelve un nuevo objeto ReglaCss pero con la propiedad y el valor traducido
    */

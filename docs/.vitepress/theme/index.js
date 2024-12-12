@@ -5,7 +5,6 @@ import './estilos/codigo.css'
 
 import '@centrogeomx/sisdai-css'
 import Layout from './DisposicionPrincipal.vue'
-import SisdaiMapaInstruccionalNavegacionTeclado from '../src/componentes/SisdaiMapaInstruccionalNavegacionTeclado.vue'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -23,8 +22,6 @@ export default {
       // app.mixin({ store })
 
       app.use((await import('@centrogeomx/sisdai-componentes')).default)
-
-      app.component('SisdaiMapaInstruccionalNavegacionTeclado', SisdaiMapaInstruccionalNavegacionTeclado);
     }
   },
 }

@@ -16,6 +16,7 @@
 import SisdaiCapaVectorial from './componentes/capa/vectorial'
 import SisdaiCapaWms from './componentes/capa/wms'
 import SisdaiCapaXyz from './componentes/capa/xyz'
+import SisdaiLeyenda from './componentes/leyenda'
 import SisdaiLeyendaControl from './componentes/leyenda/control'
 import SisdaiLeyendaVectorial from './componentes/leyenda/vectorial'
 import SisdaiLeyendaWms from './componentes/leyenda/wms'
@@ -26,9 +27,21 @@ export default {
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
+    Vue.component('SisdaiLeyenda', SisdaiLeyenda)
     Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
     Vue.component('SisdaiLeyendaVectorial', SisdaiLeyendaVectorial)
     Vue.component('SisdaiLeyendaWms', SisdaiLeyendaWms)
     Vue.component('SisdaiMapa', SisdaiMapa)
   },
+}
+
+export {
+  SisdaiCapaVectorial,
+  SisdaiCapaWms,
+  SisdaiCapaXyz,
+  SisdaiLeyenda,
+  SisdaiLeyendaControl,
+  SisdaiLeyendaVectorial,
+  SisdaiLeyendaWms,
+  SisdaiMapa,
 }

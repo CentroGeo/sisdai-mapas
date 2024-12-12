@@ -6,17 +6,18 @@ import { useRoute } from 'vitepress'
 const props = defineProps(['sidebar', 'ruta'])
 const { ruta } = toRefs(props)
 const route = useRoute()
-
 </script>
 
 <template>
   <SisdaiMenuLateral>
     <template #contenido-menu-lateral>
       <div v-if="!route.path.includes('mapas')">
-        <ul v-for="side in sidebar[
+        <ul
+          v-for="side in sidebar[
             Object.keys(sidebar).find(path => isActive(ruta, path, !!path))
           ]"
-          :key="`colapsable-${side.text}`">
+          :key="`colapsable-${side.text}`"
+        >
           <li
             v-for="item in side.items"
             :key="`ruta-${item.text}`"
@@ -24,7 +25,10 @@ const route = useRoute()
             <a
               :href="item.link"
               :class="{
-                'router-link-exact-active router-link-active': isActive(ruta, item.link),
+                'router-link-exact-active router-link-active': isActive(
+                  ruta,
+                  item.link
+                ),
               }"
             >
               {{ item.text }}
@@ -32,6 +36,7 @@ const route = useRoute()
           </li>
         </ul>
       </div>
+
       <div v-else>
         <ul>
           <li
@@ -51,11 +56,11 @@ const route = useRoute()
                     <a
                       :href="item.link"
                       :class="{
-                      'router-link-exact-active router-link-active': isActive(
-                        ruta,
-                        item.link
-                      ),
-                    }"
+                        'router-link-exact-active router-link-active': isActive(
+                          ruta,
+                          item.link
+                        ),
+                      }"
                     >
                       {{ item.text }}
                     </a>
@@ -69,4 +74,3 @@ const route = useRoute()
     </template>
   </SisdaiMenuLateral>
 </template>
-
