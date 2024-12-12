@@ -31,7 +31,7 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
             class="nav-logo"
             :src="`${cdn}gitlab-logo-500.png`"
             alt="Repositorio de código sisdai-mapas"
-          />{{ `v${pkg.version}` }}
+          /><b> {{ `v${pkg.version}` }} </b>
         </a>
       </div>
     </template>
