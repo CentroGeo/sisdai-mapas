@@ -5,7 +5,13 @@ import { version } from './../../package.json'
 
 # Instalación
 
-Instalación y descarga de la biblioteca:
+Instalación desde npm:
+
+```sh
+npm i @centrogeomx/sisdai-mapas
+```
+
+Instalación desde su repositorio:
 
 ```sh
 npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
