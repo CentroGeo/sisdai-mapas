@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import SisdaiModal from "@centrogeomx/sisdai-componentes/src/componentes/modal/SisdaiModal.vue";
+import SisdaiModal from '@centrogeomx/sisdai-componentes/src/componentes/modal/SisdaiModal.vue'
 
 const sisdaiModal = ref()
 </script>

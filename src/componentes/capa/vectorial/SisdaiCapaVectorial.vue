@@ -17,7 +17,8 @@ const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps({ ..._props, ver: { default: false } })
 mapa.capas[props.id] = TipoEstadoCarga.no
-const { estilo, fuente, globoInformativo, representacion } = toRefs(props)
+const { estilo, fuente, globoInformativo, nombre, representacion } =
+  toRefs(props)
 
 const dicFormato = {
   geojson: new GeoJSON(),
@@ -54,10 +55,11 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 })
 
 const layer = new VectorLayer({
-  source: obtenerRepresentacion(representacion.value, source),
-  id: props.id,
-  style: tratarEstilo(props.estilo),
   globoInfo: globoInformativo.value,
+  id: props.id,
+  source: obtenerRepresentacion(representacion.value, source),
+  style: tratarEstilo(props.estilo),
+  titulo: nombre.value,
 })
 mapa.addLayer(layer)
 
