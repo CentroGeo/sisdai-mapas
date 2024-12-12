@@ -8,7 +8,7 @@ import { version } from './../../package.json'
 Instalación y descarga de la biblioteca:
 
 ```sh
-npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#version-a-instalar
+npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
 ```
 
 Actualmente la versión más estable es: v{{ version }}.
