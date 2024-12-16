@@ -17,10 +17,14 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
-## [1.14.0] - 2024-11-28
+## [2.0.0] - 2024-12-12
 
 ### Cambiado (Changed)
 
+- Separación de la propieda `parametros="{ LAYERS, STYLES, CQL_FILTER }"` en
+  capas wms por propiedades `capa`, `estilo` y `filtro` respectivamente
+- Propiedad de `nombre` en capas pasa a llamarse `titulo`
+- SisdaiLeyendaWmsExterna por Leyenda Wms separada (SisdaiLeyendaWms)
 - Posición del globo de información desde inject
 - Actualización del componente de capa vectorial
 - Actualización del componente WMS
@@ -35,6 +39,9 @@ compatible y tiene instalada.
 
 ### Agregado (Added)
 
+- Estilo con posibiliad de categorización en capas vectoriales
+- Representación de puntos desplazados
+- Leyenda Vectorial separada (SisdaiLeyendaVectorial)
 - Animación al cargar
 - Dependencia
   [geoserver-api-reader](https://www.npmjs.com/package/geoserver-api-reader)

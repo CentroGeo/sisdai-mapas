@@ -29,18 +29,6 @@ export default {
   },
 
   /**
-   * Nombre de la capa que aparecerá en el control de la leyenda.
-   *
-   * - Tipo: `String`
-   * - Valor por defecto: `'Nombre no asignado'`.
-   * - Reactivo: si
-   */
-  nombre: {
-    type: String,
-    default: 'Nombre no asignado',
-  },
-
-  /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *
    * - Tipo: `Number` o `String`
@@ -62,6 +50,18 @@ export default {
   posicion: {
     type: [Number, String],
     default: undefined,
+  },
+
+  /**
+   * Titulo de la capa que aparecerá en el control de la leyenda.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `'Nombre no asignado'`.
+   * - Reactivo: si
+   */
+  titulo: {
+    type: String,
+    default: 'Titulo no asignado',
   },
 
   /**

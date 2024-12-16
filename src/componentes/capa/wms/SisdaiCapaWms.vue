@@ -11,7 +11,7 @@ import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { estilo, filtro, nombre } = toRefs(props)
+const { estilo, filtro, titulo } = toRefs(props)
 
 const source = new ImageWMS({
   params: {
@@ -29,7 +29,7 @@ mapa.addLayer(
     id: props.id,
     source,
     tipo: 'wms',
-    titulo: nombre.value,
+    titulo: titulo.value,
   })
 )
 mapa.capas[props.id] = TipoEstadoCarga.no

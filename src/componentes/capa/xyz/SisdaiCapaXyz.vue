@@ -13,14 +13,14 @@ import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { nombre, url } = toRefs(props)
+const { titulo, url } = toRefs(props)
 
 const source = new ImageTile({
   url: url.value,
   crossOrigin: 'anonymous',
 })
 
-const layer = new TileLayer({ id: props.id, source, titulo: nombre.value })
+const layer = new TileLayer({ id: props.id, source, titulo: titulo.value })
 mapa.addLayer(layer)
 // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 mapa.capas[props.id] = TipoEstadoCarga.no

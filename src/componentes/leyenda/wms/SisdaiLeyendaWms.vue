@@ -73,9 +73,7 @@ const capaEncendida = computed({
         :encendidoIndeterminado="encendidoIndeterminado"
         :etiqueta="titulo"
         :informacion="informacion"
-        :simbolo="
-          clases?.lista.length === 1 ? clases?.lista[0].simbolo : undefined
-        "
+        :simbolo="clases?.lista.length === 1 ? clases?.lista[0].svg : undefined"
         :sinControl="sinControl"
       />
     </div>

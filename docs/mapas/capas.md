@@ -20,14 +20,6 @@ obligatoria.
 - Valor por defecto: Aleatorio
 - Reactivo: no
 
-### `nombre`
-
-Nombre de la capa que aparecerá en el control de la leyenda.
-
-- Tipo: `String`
-- Valor por defecto: `'Nombre no asignado'`.
-- Reactivo: si
-
 ### `opacidad`
 
 Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente
@@ -44,6 +36,14 @@ parámetro se mostrarán enfrente.
 
 - Tipo: `Number` o `String`
 - Valor por defecto: `undefined`
+- Reactivo: si
+
+### `titulo`
+
+Titulo de la capa que aparecerá en el control de la leyenda.
+
+- Tipo: `String`
+- Valor por defecto: `'Titulo no asignado'`.
 - Reactivo: si
 
 ### `visible`

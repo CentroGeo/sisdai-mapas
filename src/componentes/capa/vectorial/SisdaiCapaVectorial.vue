@@ -17,7 +17,7 @@ const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps({ ..._props, ver: { default: false } })
 mapa.capas[props.id] = TipoEstadoCarga.no
-const { estilo, fuente, globoInformativo, nombre, representacion } =
+const { estilo, fuente, globoInformativo, titulo, representacion } =
   toRefs(props)
 
 const dicFormato = {
@@ -60,7 +60,7 @@ const layer = new VectorLayer({
   source: obtenerRepresentacion(representacion.value, source),
   style: tratarEstilo(props.estilo),
   tipo: 'vectorial',
-  titulo: nombre.value,
+  titulo: titulo.value,
 })
 mapa.addLayer(layer)
 
