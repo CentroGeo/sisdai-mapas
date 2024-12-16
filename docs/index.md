@@ -10,7 +10,7 @@ const { site } = useData()
 const cdn = import.meta.env.VITE_CDN_ARCHIVOS
 </script>
 
-<section id="introduccion" class="m-y-10">
+<section id="introduccion" class="contenedor m-y-10">
   <div class="ancho-lectura">
     <h1 class="texto-centrado">{{ site.title }}</h1>
     <p>
@@ -18,11 +18,12 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
       Sistema de Diseño y Accesibilidad para la Investigación (<a
         href="https://sisdai.conahcyt.mx/"
         target="_blank"
-        >Sisdai</a
-      >).
+      >
+        Sisdai
+      </a>).
     </p>
   </div>
-  <div class="flex">
+  <div class="ancho-fijo flex">
     <div class="columna-8">
       <a class="tarjeta tarjeta-hipervinculo-interno" href="/comienza/">
         <picture>

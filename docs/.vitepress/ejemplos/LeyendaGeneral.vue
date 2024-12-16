@@ -22,21 +22,21 @@
 
     <SisdaiCapaXyz
       id="xyz"
-      nombre="Capa Base"
+      titulo="Capa Base"
       posicion="0"
     />
 
     <SisdaiCapaWms
       capa="hcti_snii_sexo_22_est_a"
       id="wms"
-      nombre="Sistema Nacional de Investigadoras e Investigadores por sexo y entidad 2022"
+      titulo="Sistema Nacional de Investigadoras e Investigadores por sexo y entidad 2022"
       posicion="1"
     />
 
     <SisdaiCapaVectorial
       id="vectorial"
       fuente="/assets/estados-centroides.geojson"
-      nombre="Centroides de Estados"
+      titulo="Centroides de Estados"
       posicion="2"
     />
   </SisdaiMapa>
