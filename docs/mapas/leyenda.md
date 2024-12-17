@@ -27,7 +27,7 @@ Recibe el identificador de la capa con la que se quiere vincular la leyenda.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
-- Reactivo: Si.
+- Reactivo: si
 
 ### `sinControl`
 
@@ -36,7 +36,7 @@ vincula con la visibilidad de la capa.
 
 - Tipo: `Boolean`
 - Valor por defecto: `false`
-- Reactivo: Si.
+- Reactivo: si
 
 ## Eventos
 

@@ -37,7 +37,7 @@ minDistance (predeterminado a 0).
 
 - Tipo: `Number`
 - Valor por defecto: `20`
-- Reactivo: No.
+- Reactivo: no
 
 ### `distanciaMinima`
 
@@ -49,7 +49,7 @@ todas sus entidades.
 
 - Tipo: `Number`
 - Valor por defecto: `0`
-- Reactivo: No.
+- Reactivo: no
 
 ### `metodo`
 
@@ -66,7 +66,7 @@ Método de desplazamiento a utilizar, puede ser:
 
 - Tipo: `String`
 - Valor por defecto: `anillo`
-- Reactivo: No.
+- Reactivo: no
 
 ### `radioPuntoCentro`
 
@@ -74,7 +74,7 @@ Radio en píxeles para el punto céntrico de cada grupo
 
 - Tipo: `Number`
 - Valor por defecto: `5`
-- Reactivo: No.
+- Reactivo: no
 
 ### `radioPuntosDesplazados`
 
@@ -82,4 +82,4 @@ Radio en píxeles para para los puntos dezplazados o alrrededor de cada grupo
 
 - Tipo: `Number`
 - Valor por defecto: `5`
-- Reactivo: No.
+- Reactivo: no
