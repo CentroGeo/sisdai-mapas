@@ -47,6 +47,13 @@ compatible y tiene instalada.
   [geoserver-api-reader](https://www.npmjs.com/package/geoserver-api-reader)
   para el manejo de leyendas wms
 
+## [1.13.6] - 2024-12-16
+
+### Cambiado (Changed)
+
+- Se homologa ancho de contenedor de sección _Otras bibliotecas Sisdai_ en el Inicio
+- Se actualizan versiones de css y componentes
+
 ## [1.13.3] - 2024-11-21
 
 ### Cambiado (Changed)
@@ -155,16 +162,10 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
-[1.14.0]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.14.0...v1.13.0
-[1.13.3]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
-[1.13.0]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
-[1.12.1]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
-[1.12.0]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
-[1.11.9]:
-  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
+[1.13.6]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
+[1.13.3]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
+[1.13.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
+[1.12.1]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
+[1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
+[1.11.9]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
 [1.0.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/releases/v1.0.0
