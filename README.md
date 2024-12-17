@@ -92,7 +92,7 @@ nuevamente usando una de estas dos opciones
 [sisdai-mapas en npm](https://www.npmjs.com/package/@centrogeomx/sisdai-mapas).
 
 ```bash
-npm i @centrogeomx/sisdai-mapas@vN.N.N
+npm i @centrogeomx/sisdai-mapas
 ```
 
 **Opción B.** Para cualquier versión desde el repositorio de
@@ -102,7 +102,7 @@ npm i @centrogeomx/sisdai-mapas@vN.N.N
 npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
 ```
 
-donde N.N.N indica el número de versión, por ejemplo v1.0.0
+donde N.N.N indica el número de versión, por ejemplo v2.0.0
 
 Consulta el archivo `CHANGELOG.md` del repositorio de
 [sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas)
@@ -115,12 +115,14 @@ El componente `SisdaiMapa` es un contenedor especial único que alberga todos lo
 elementos opcionales y requeridos para un mapa interactivo con datos
 georeferenciados
 
-| Elemento          | Descripción                                                                                                                                                                              |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| SisdaiCapaGeojson | Las capas vectoriales en geojson nos permiten manipular su información de forma local, esto nos da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos |
-| SisdaiCapaXyz     | La capa de mosaicos xyz, consume servicios que dentro de la url incluyen el nivel de zoom y la coordenada x/y de una imagen (mosaico)                                                    |
-| SisdaiCapaWms     | Componente para desplegar capas desde servicios Web Map Service (WMS) públicos o privados.                                                                                               |
-| SisdaiMapaLeyenda | Componente de leyenda interactiva vinculada con una capa del mapa                                                                                                                        |
+| Elemento               | Descripción                                                                                                                                                                                                            |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| SisdaiCapaVectorial    | Las capas vectoriales permiten manipular su información de forma local, esto da la posibilidad de pintar sus elementos de forma interactiva, incluso de clasificarlos.                                                 |
+| SisdaiCapaWms          | Componente para desplegar capas desde servicios WMS (Web Map Service).                                                                                                                                                 |
+| SisdaiCapaXyz          | La capa de mosaicos xyz, consume servicios que dentro de su url incluyen el nivel de zoom y la coordenada x-y de una imagen (mosaico), regularmente se usa para agregar mapas base.                                    |
+| SisdaiLeyenda          | Utiliza el componente de leyenda para vincular un control de visibilidad de las capas que se encuentran definidas en el mapa. Este componente también permite visualizar la simbología de las capas vectoriales y wms. |
+| SisdaiLeyendaVectorial | Leyenda para visualizar la simbología y controlar capas vectoriales.                                                                                                                                                   |
+| SisdaiLeyendaWms       | Leyenda para visualizar la simbología y controlar capas wms.                                                                                                                                                           |
 
 ## Uso local del proyecto
 
