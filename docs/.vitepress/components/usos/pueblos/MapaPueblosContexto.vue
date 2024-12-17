@@ -1,14 +1,7 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
 import BuscadorComunidades from './BuscadorComunidades.vue'
-import {
-  consultar,
-  extensionInicial,
-  info,
-  ordenarBbox,
-  urlFeatures,
-  urls,
-} from './utiles'
+import { consultar, extensionInicial, info, ordenarBbox, urlFeatures, urls } from './utiles'
 
 const mapaPueblosContexto = ref(null)
 const buscadorComunidades = ref(null)
@@ -24,7 +17,7 @@ function consultarDatosPueblos() {
     if (status !== 200) return
 
     pueblos.value = Object.entries(data)
-      .map(i => ({ clave: i[0], nom_com: i[1] }))
+      .map((i) => ({ clave: i[0], nom_com: i[1] }))
       .sort((a, b) => {
         return a.nom_com < b.nom_com ? -1 : a.nom_com > b.nom_com ? 1 : 0
       })
@@ -36,7 +29,7 @@ function consultarEstados() {
   consultar(
     urlFeatures({
       typeName: 'gref_division_estatal_20_est_a',
-      propertyName: 'cve_ent,nom_ent',
+      propertyName: 'cve_ent,nom_ent'
     }),
     ({ data, status }) => {
       if (status !== 200) return
@@ -44,7 +37,7 @@ function consultarEstados() {
       estados.value = data.features.map(({ bbox, properties }) => ({
         clave: properties.cve_ent,
         nombre: properties.nom_ent,
-        bbox: bbox,
+        bbox: bbox
       }))
     }
   )
@@ -56,7 +49,7 @@ function consultarMunicipios(cve_ent) {
     urlFeatures({
       typeName: 'gref_division_municipal_20_mun_a',
       propertyName: 'cve_mun,nom_mun',
-      cql_filter: `cve_ent='${cve_ent.clave}'`,
+      cql_filter: `cve_ent='${cve_ent.clave}'`
     }),
     ({ data, status }) => {
       if (status !== 200) return
@@ -64,7 +57,7 @@ function consultarMunicipios(cve_ent) {
       municipios.value = data.features.map(({ bbox, properties }) => ({
         clave: properties.cve_mun,
         nombre: properties.nom_mun,
-        bbox: bbox,
+        bbox: bbox
       }))
     }
   )
@@ -72,11 +65,11 @@ function consultarMunicipios(cve_ent) {
 
 function ajustarVista(bbox) {
   mapaPueblosContexto.value.ajustarVista({
-    extension: ordenarBbox(bbox),
+    extension: ordenarBbox(bbox)
   })
 }
 
-watch(estadoSeleccionado, nv => {
+watch(estadoSeleccionado, (nv) => {
   municipios.value = []
   municipioSeleccionado.value = undefined
 
@@ -89,10 +82,9 @@ watch(estadoSeleccionado, nv => {
   }
 })
 
-watch(municipioSeleccionado, nv => {
+watch(municipioSeleccionado, (nv) => {
   if (nv === undefined) {
-    if (estadoSeleccionado.value !== undefined)
-      ajustarVista(estadoSeleccionado.value.bbox)
+    if (estadoSeleccionado.value !== undefined) ajustarVista(estadoSeleccionado.value.bbox)
   } else {
     ajustarVista(nv.bbox)
   }
@@ -106,9 +98,7 @@ function reiniciarTodo() {
 }
 
 const filtroEdo = computed(() =>
-  estadoSeleccionado.value !== undefined
-    ? `cve_ent='${estadoSeleccionado.value.clave}'`
-    : undefined
+  estadoSeleccionado.value !== undefined ? `cve_ent='${estadoSeleccionado.value.clave}'` : undefined
 )
 const filtroEdoMun = computed(() =>
   municipioSeleccionado.value !== undefined
@@ -139,11 +129,9 @@ const filtroEdoMun2 = computed(() =>
 const visibilidadHospitales = reactive({
   n1: false,
   n2: false,
-  n3: false,
+  n3: false
 })
-const grupoHospitalesVisible = computed(() =>
-  Object.values(visibilidadHospitales).some(v => v)
-)
+const grupoHospitalesVisible = computed(() => Object.values(visibilidadHospitales).some((v) => v))
 const visibilidadNucleos = ref(false)
 </script>
 
@@ -156,10 +144,7 @@ const visibilidadNucleos = ref(false)
     @clickAjustarVista="reiniciarTodo"
   >
     <template #panel-encabezado-vis>
-      <p
-        id="titulo-mapa-pueblos-contexto"
-        class="vis-titulo-visualizacion"
-      >
+      <p id="titulo-mapa-pueblos-contexto" class="vis-titulo-visualizacion">
         Pueblos indígenas y su contexto
       </p>
 
@@ -167,7 +152,7 @@ const visibilidadNucleos = ref(false)
         <div class="columna-7-esc">
           <BuscadorComunidades
             ref="buscadorComunidades"
-            @alSeleccionarComunidad="valor => (puebloSeleccionado = valor)"
+            @alSeleccionarComunidad="(valor) => (puebloSeleccionado = valor)"
           />
         </div>
 
@@ -178,11 +163,7 @@ const visibilidadNucleos = ref(false)
           @change="buscadorComunidades.busqueda = ''"
         >
           <option value="">Explora por pueblo</option>
-          <option
-            v-for="(pueblo, idx) in pueblos"
-            :key="idx"
-            :value="pueblo.clave"
-          >
+          <option v-for="(pueblo, idx) in pueblos" :key="idx" :value="pueblo.clave">
             {{ pueblo.nom_com }}
           </option>
         </select>
@@ -193,11 +174,7 @@ const visibilidadNucleos = ref(false)
           :disabled="estados.length === 0"
         >
           <option :value="undefined">Explora por estado</option>
-          <option
-            v-for="estado in estados"
-            :key="estado.clave"
-            :value="estado"
-          >
+          <option v-for="estado in estados" :key="estado.clave" :value="estado">
             {{ estado.nombre }}
           </option>
         </select>
@@ -208,11 +185,7 @@ const visibilidadNucleos = ref(false)
           :disabled="municipios.length === 0"
         >
           <option :value="undefined">Explora por municipio</option>
-          <option
-            v-for="municipio in municipios"
-            :key="municipio.clave"
-            :value="municipio"
-          >
+          <option v-for="municipio in municipios" :key="municipio.clave" :value="municipio">
             {{ municipio.nombre }}
           </option>
         </select>
@@ -286,7 +259,7 @@ const visibilidadNucleos = ref(false)
       capa="pciaf_pob_indigena_residentes_20_loc_p"
       id="pciaf_pob_indigena_residentes_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => info.pueblo(p, 'residente')"
+      :globoInformativo="(p) => info.pueblo(p, 'residente')"
       nombre="Población indígena residente"
       posicion="5"
       :url="urls.wms"
@@ -296,7 +269,7 @@ const visibilidadNucleos = ref(false)
       capa="pciaf_pob_indigena_asent_hist_20_loc_p"
       id="pciaf_pob_indigena_asent_hist_20_loc_p"
       :filtro="filtroPueblosEdoMun"
-      :globoInformativo="p => info.pueblo(p, 'en asentamientos históricos')"
+      :globoInformativo="(p) => info.pueblo(p, 'en asentamientos históricos')"
       nombre="Población indígena en asentamientos históricos"
       posicion="6"
       :url="urls.wms"
@@ -327,7 +300,7 @@ const visibilidadNucleos = ref(false)
       posicion="8"
       :url="urls.wms"
       :visible="visibilidadNucleos"
-      @alCambiarVisibilidad="valor => (visibilidadNucleos = valor)"
+      @alCambiarVisibilidad="(valor) => (visibilidadNucleos = valor)"
     />
 
     <SisdaiCapaWms
@@ -360,7 +333,7 @@ const visibilidadNucleos = ref(false)
       posicion="11"
       :url="urls.wms"
       :visible="visibilidadHospitales.n1"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales.n1 = valor)"
+      @alCambiarVisibilidad="(valor) => (visibilidadHospitales.n1 = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_2n_clues_21_xy_p"
@@ -371,7 +344,7 @@ const visibilidadNucleos = ref(false)
       posicion="12"
       :url="urls.wms"
       :visible="visibilidadHospitales.n2"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales.n2 = valor)"
+      @alCambiarVisibilidad="(valor) => (visibilidadHospitales.n2 = valor)"
     />
     <SisdaiCapaWms
       capa="salu_unidades_medicas_3n_clues_21_xy_p"
@@ -382,7 +355,7 @@ const visibilidadNucleos = ref(false)
       posicion="13"
       :url="urls.wms"
       :visible="visibilidadHospitales.n3"
-      @alCambiarVisibilidad="valor => (visibilidadHospitales.n3 = valor)"
+      @alCambiarVisibilidad="(valor) => (visibilidadHospitales.n3 = valor)"
     />
     <!-- - Hospitalas -->
 
@@ -437,20 +410,17 @@ const visibilidadNucleos = ref(false)
       <SisdaiLeyenda
         para="pciaf_casas_comedores_ninez_ind_21_xy_p"
         globoInformativo=""
-        v-globo-informacion-extendido:izquierda="
-          'Programa de Apoyo a la Educación Indígena'
-        "
+        v-globo-informacion-extendido:izquierda="'Programa de Apoyo a la Educación Indígena'"
       />
 
       <SisdaiLeyendaControl
         etiqueta="Hospitales"
         :encendido="grupoHospitalesVisible"
         :encendidoIndeterminado="
-          grupoHospitalesVisible &&
-          !Object.values(visibilidadHospitales).every(v => v)
+          grupoHospitalesVisible && !Object.values(visibilidadHospitales).every((v) => v)
         "
         @alCambiar="
-          valor => {
+          (valor) => {
             visibilidadHospitales.n1 = valor
             visibilidadHospitales.n2 = valor
             visibilidadHospitales.n3 = valor
@@ -520,7 +490,7 @@ const visibilidadNucleos = ref(false)
 
 <style lang="scss">
 @import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
+// @import 'sisdai-css/src/_mixins';
 
 .sisdai-mapa.mapa-pueblos-contexto {
   .contenedor-selectores select {

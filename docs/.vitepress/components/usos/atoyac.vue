@@ -5,18 +5,18 @@ const opciones = [
   {
     estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc',
     nombre: 'Tasa de mortalidad en personas de todos los rangos de edad',
-    media: 7.1,
+    media: 7.1
   },
   {
     estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc1549',
     nombre: 'Tasa de mortalidad en personas de 15 a 49 años',
-    media: 2.831,
+    media: 2.831
   },
   {
     estilo: 'caaresa_mortalidad_erc_10_19_reg_a_t_erc1549h',
     nombre: 'Tasa de mortalidad en hombres de 15 a 49 años',
-    media: 3.466,
-  },
+    media: 3.466
+  }
 ]
 
 const seleccion = ref(opciones[0].estilo)
@@ -28,7 +28,7 @@ const seleccion = ref(opciones[0].estilo)
     :vista="{
       // centro: [-98.3404, 19.2824],
       // acercamiento: 8.9,
-      extension: '-98.6634,18.8368,-97.9408,19.7288',
+      extension: '-98.6634,18.8368,-97.9408,19.7288'
     }"
   >
     <template #panel-encabezado-vis>
@@ -42,28 +42,13 @@ const seleccion = ref(opciones[0].estilo)
     </template>
 
     <template #panel-izquierda-vis>
-      <div
-        class="radio-estilo-capa"
-        v-for="opcion in opciones"
-        :key="opcion.estilo"
-      >
-        <input
-          :id="opcion.estilo"
-          type="radio"
-          :value="opcion.estilo"
-          v-model="seleccion"
-        />
+      <div class="radio-estilo-capa" v-for="opcion in opciones" :key="opcion.estilo">
+        <input :id="opcion.estilo" type="radio" :value="opcion.estilo" v-model="seleccion" />
         <label :for="opcion.estilo">
           {{ opcion.nombre }}
         </label>
-        <SisdaiLeyenda
-          v-show="seleccion === opcion.estilo"
-          para="mortalidad"
-          :sinControl="true"
-        />
-        <span v-show="seleccion === opcion.estilo">
-          Media nacional: {{ opcion.media }}
-        </span>
+        <SisdaiLeyenda v-show="seleccion === opcion.estilo" para="mortalidad" :sinControl="true" />
+        <span v-show="seleccion === opcion.estilo"> Media nacional: {{ opcion.media }} </span>
       </div>
 
       <SisdaiLeyenda para="contaminacion" />
@@ -78,7 +63,7 @@ const seleccion = ref(opciones[0].estilo)
       id="mortalidad"
       :parametros="{
         LAYERS: 'caaresa_mortalidad_erc_10_19_reg_a',
-        STYLES: seleccion,
+        STYLES: seleccion
       }"
       posicion="1"
     />
@@ -88,7 +73,7 @@ const seleccion = ref(opciones[0].estilo)
       nombre="Nivel de contaminación por posibles nefrotóxicos"
       :parametros="{
         LAYERS: 'caaresa_nivel_contaminacion_04_21_reg_a',
-        STYLES: 'caaresa_nivel_contaminacion_04_21_reg_a_estilo_c',
+        STYLES: 'caaresa_nivel_contaminacion_04_21_reg_a_estilo_c'
       }"
       posicion="2"
     />
@@ -98,7 +83,7 @@ const seleccion = ref(opciones[0].estilo)
       nombre="Categoría de clúster de acuerdo con la correlación entre la tasa de mortalidad por ERC en personas de 15 a 49 años (2010-2019) y el indicador de contaminación por posibles nefrotóxicos (2004-2021)"
       :parametros="{
         LAYERS: 'caaresa_corr_cont_mortalidad_00_21_reg_a',
-        STYLES: 'caaresa_corr_cont_mortalidad_00_21_reg_a_estilo_d',
+        STYLES: 'caaresa_corr_cont_mortalidad_00_21_reg_a_estilo_d'
       }"
       posicion="3"
     />
@@ -133,7 +118,7 @@ const seleccion = ref(opciones[0].estilo)
 
 <style lang="scss">
 @import 'sisdai-css/src/_variables';
-@import 'sisdai-css/src/_mixins';
+// @import 'sisdai-css/src/_mixins';
 
 .mapa-mortaliada-enfermedad {
   .radio-estilo-capa .control-capa {

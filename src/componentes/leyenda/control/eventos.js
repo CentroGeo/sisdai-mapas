@@ -1,0 +1,6 @@
+export default {
+  /**
+   *
+   */
+  alCambiar: 'alCambiar',
+}
