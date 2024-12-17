@@ -3,9 +3,9 @@ import MapaBasico from "./../.vitepress/ejemplos/MapaBasico.vue";
 import { dependencies, peerDependencies } from './../../package.json'
 </script>
 
-# sisdai-mapas
+# Comienza
 
-**sisdai-mapas** es una biblioteca de componentes de
+El proyecto **sisdai-mapas** es una biblioteca de componentes de
 [Vue.js](https://vuejs.org/) para generar mapas interactivos con datos
 georeferenciados y forma parte del Sistema de Diseño y Accesibilidad para la
 Investigación ([Sisdai](https://sisdai.conahcyt.mx/)). Está creada con

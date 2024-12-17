@@ -4,7 +4,9 @@
       <p class="vis-titulo-visualizacion">Ejemplo capas xyz</p>
     </template>
 
-    <SisdaiCapaXyz fuente="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+    <SisdaiCapaXyz
+      fuente="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
+    />
 
     <SisdaiCapaXyz
       fuente="https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}"

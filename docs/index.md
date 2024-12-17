@@ -1,5 +1,6 @@
 ---
 home: true
+title: Inicio
 ---
 
 <script setup>
