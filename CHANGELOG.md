@@ -17,7 +17,16 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
-## [2.0.0] - 2024-12-12
+## [2.0.1] - 2024-12-17
+
+### Cambiado (Changed)
+
+- Detalles en titulos de la documentación
+- Redacción en representación de puntos agrupados
+- Redacción en representación de puntos desplazados
+- Redacción en estilos de símbolos graduados
+
+## [2.0.0] - 2024-12-16
 
 ### Cambiado (Changed)
 
