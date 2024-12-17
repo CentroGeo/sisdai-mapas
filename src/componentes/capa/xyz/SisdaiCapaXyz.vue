@@ -13,10 +13,10 @@ import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { titulo, url } = toRefs(props)
+const { titulo, fuente } = toRefs(props)
 
 const source = new ImageTile({
-  url: url.value,
+  url: fuente.value,
   crossOrigin: 'anonymous',
 })
 

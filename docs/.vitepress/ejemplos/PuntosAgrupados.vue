@@ -1,11 +1,11 @@
 <template>
   <SisdaiMapa
-    descripcion="Mapa básico con una capa vectorial con representación de puntos desplazados."
+    descripcion="Mapa básico con una capa vectorial con representación de puntos agrupados."
     :vista="{ extension: '-118.3651,14.5321,-86.7104,32.7187' }"
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">
-        Ejemplo una capa vectorial con representación de puntos desplazados
+        Ejemplo una capa vectorial con representación de puntos agrupados
       </p>
     </template>
 
@@ -20,12 +20,9 @@
         'circle-stroke-width': 0.5,
       }"
       :representacion="{
-        'puntos-desplazados': {
-          distancia: 80,
+        'puntos-agrupados': {
+          distancia: 40,
           distanciaMinima: 40,
-          metodo: 'anillos-concentricos',
-          radioPuntoCentro: 4,
-          radioPuntosDesplazados: 4,
         },
       }"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"

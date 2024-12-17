@@ -1,7 +1,3 @@
-<script setup>
-import LeyendaWms from "./../.vitepress/ejemplos/LeyendaWms.vue";
-</script>
-
 # Leyendas Wms
 
 Leyenda para visualizar la simbología y controlar
@@ -22,9 +18,7 @@ Leyenda para visualizar la simbología y controlar
 
 ## Vista general
 
-<LeyendaWms />
-
-<<< @/.vitepress/ejemplos/LeyendaWms.vue
+<VisorCodigo archivo="LeyendaWms.vue" />
 
 ## Propiedades
 

@@ -19,6 +19,7 @@ const dicMetodos = {
 
 export default function (
   {
+    campoDelimitador,
     distancia,
     distanciaMinima,
     metodo,
@@ -28,11 +29,12 @@ export default function (
   source
 ) {
   return new DisplacedPoints({
-    source,
     distance: distancia,
+    delimiterField: campoDelimitador,
     minDistance: distanciaMinima,
     placementMethod: dicMetodos[metodo],
     radiusCenterPoint: radioPuntoCentro,
     radiusDisplacedPoints: radioPuntosDesplazados,
+    source,
   })
 }

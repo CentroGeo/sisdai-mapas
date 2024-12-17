@@ -1,8 +1,4 @@
-<script setup>
-import LeyendaGeneral from "./../.vitepress/ejemplos/LeyendaGeneral.vue";
-</script>
-
-# Leyendas
+# Leyenda vinculada
 
 Utiliza el componente de leyenda para vincular un control de visibilidad de las
 capas que se encuentran definidas en el mapa. Este componente también permite
@@ -12,14 +8,16 @@ y [wms](/mapas/capa-wms.html).
 **Uso:**
 
 ```vue
-<SisdaiLeyenda para="<String(id de la capa)>" />
+<SisdaiMapa>
+  <template #panel-?-vis>
+    <SisdaiLeyenda para="<String(id de la capa)>" />
+  </template>
+</SisdaiMapa>
 ```
 
 ## Vista general
 
-<LeyendaGeneral />
-
-<<< @/.vitepress/ejemplos/LeyendaGeneral.vue
+<VisorCodigo archivo="LeyendaVinculada.vue" />
 
 ## Propiedades
 
@@ -29,7 +27,7 @@ Recibe el identificador de la capa con la que se quiere vincular la leyenda.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
-- Reactivo: Si.
+- Reactivo: si
 
 ### `sinControl`
 
@@ -38,7 +36,7 @@ vincula con la visibilidad de la capa.
 
 - Tipo: `Boolean`
 - Valor por defecto: `false`
-- Reactivo: Si.
+- Reactivo: si
 
 ## Eventos
 
@@ -65,14 +63,3 @@ ejecuta.
 **Parámetros:**
 
 - `Boolean`: Indica si la carga no ha presentado error.
-
-Uso avanzado:
-
-```vue
-<SisdaiLeyenda
-  v-for="capa in capas"
-  :para="capa.nombre"
-  :tipo="capa.tipo"
-  grupo="grupoParaRadios"
-></SisdaiLeyenda>
-```

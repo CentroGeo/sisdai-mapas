@@ -1,7 +1,3 @@
-<script setup>
-import CapaVectorial from "./../.vitepress/ejemplos/CapaVectorial.vue";
-</script>
-
 # Capa Vectorial
 
 Las capas vectoriales permiten manipular su información de forma local, esto da
@@ -18,14 +14,12 @@ clasificarlos.
 
 ## Vista general
 
-<CapaVectorial />
-
-<<< @/.vitepress/ejemplos/CapaVectorial.vue
+<VisorCodigo archivo="CapaVectorial.vue" />
 
 ## Propiedades
 
-Hereda las propiedades definidas en la [sección capas](/mapas/capas.html) más
-las siguientes:
+Hereda las propiedades definidas en la
+[sección general de capas](/mapas/capa.html) más las siguientes:
 
 ### `formato`
 

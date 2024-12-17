@@ -1,7 +1,3 @@
-<script setup>
-import EjemploVista from "/.vitepress/ejemplos/ConfiguracionVista.vue";
-</script>
-
 # Propiedad `vista`
 
 Los atributos de la vista del mapa manipulan el espacio interactivo visible del
@@ -10,9 +6,7 @@ los cambios que puede tener.
 
 ## Vista general
 
-<EjemploVista />
-
-<<< @/.vitepress/ejemplos/ConfiguracionVista.vue
+<VisorCodigo archivo="ConfiguracionVista.vue" />
 
 ## Atributos
 

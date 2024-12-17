@@ -21,7 +21,7 @@ const source = new ImageWMS({
   },
   ratio: 1,
   serverType: props.tipoServidor,
-  url: props.url,
+  url: props.fuente,
 })
 
 mapa.addLayer(

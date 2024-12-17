@@ -1,12 +1,8 @@
-<script setup>
-import CapaXyz from "./../.vitepress/ejemplos/CapaXyz.vue";
-</script>
-
 # Capa XYZ
 
-La capa de mosaicos xyz, consume servicios que dentro del ulr incluyen el nivel
-de acercamiento y la coordenada x/y de una imagen (mosaico), regularmente se usa
-para desplegar mapas base como los de OSM, Carto, etc.
+La capa de mosaicos xyz, consume servicios que dentro de su url incluyen el
+nivel de zoom y la coordenada x-y de una imagen (mosaico), regularmente se usa
+para agregar mapas base.
 
 **Uso:**
 
@@ -18,15 +14,14 @@ para desplegar mapas base como los de OSM, Carto, etc.
 
 ## Vista general
 
-<CapaXyz />
-
-<<< @/.vitepress/ejemplos/CapaXyz.vue{9-15}
+<VisorCodigo archivo="CapaXyz.vue" />
 
 ## Propiedades
 
-Hereda las propiedades definidas en la sección Capas más las siguientes:
+Hereda las propiedades definidas en la
+[sección general de capas](/mapas/capa.html) más las siguientes:
 
-<!-- #### `acercamientoMaximo`
+<!-- ### `acercamientoMaximo`
 
 Nivel de acercamiento máximo.
 
@@ -34,7 +29,7 @@ Nivel de acercamiento máximo.
 - Valor por defecto: `undefined`
 - Reactivo: no
 
-#### `acercamientoMinimo`
+### `acercamientoMinimo`
 
 Nivel de acercamiento mínimo.
 
@@ -42,13 +37,14 @@ Nivel de acercamiento mínimo.
 - Valor por defecto: `undefined`
 - Reactivo: no -->
 
-### `url`
+### `fuente`
 
-Url remota de la capa.
+Url fuente de la capa.
 
 - Tipo: `String`
-- Valor por defecto: `undefined`
-- Reactivo: No
+- Valor por defecto:
+  `https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png`
+- Reactivo: no
 
 ## Funciones
 

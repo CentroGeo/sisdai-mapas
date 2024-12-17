@@ -1,14 +1,10 @@
-<script setup>
-import PuntosDesplazados from "./../.vitepress/ejemplos/PuntosDesplazados.vue";
-</script>
-
 # Puntos desplazados
 
 La metodología de puntos desplazados permite visualizar todas las
 características de una capa de puntos, incluso si tienen la misma ubicación.
 Para ello, el mapa toma los puntos que se encuentran dentro de una tolerancia de
 distancia determinada entre sí (grupo) y los ubica alrededor de su baricentro
-siguiendo diferentes métodos de ubicación:
+siguiendo diferentes métodos de ubicación.
 
 <div class="nota-contenedor">
   <p class="nota-titulo">
@@ -21,11 +17,18 @@ siguiendo diferentes métodos de ubicación:
 
 ## Vista general
 
-<PuntosDesplazados />
-
-<<< @/.vitepress/ejemplos/PuntosDesplazados.vue
+<VisorCodigo archivo="PuntosDesplazados.vue" />
 
 ## Propiedades
+
+### `campoDelimitador`
+
+Campo que evita que los puntos se agrupen dependiendo se el valor de su
+atributo.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Reactivo: no
 
 ### `distancia`
 
@@ -34,7 +37,7 @@ minDistance (predeterminado a 0).
 
 - Tipo: `Number`
 - Valor por defecto: `20`
-- Reactivo: No.
+- Reactivo: no
 
 ### `distanciaMinima`
 
@@ -46,7 +49,7 @@ todas sus entidades.
 
 - Tipo: `Number`
 - Valor por defecto: `0`
-- Reactivo: No.
+- Reactivo: no
 
 ### `metodo`
 
@@ -63,7 +66,7 @@ Método de desplazamiento a utilizar, puede ser:
 
 - Tipo: `String`
 - Valor por defecto: `anillo`
-- Reactivo: No.
+- Reactivo: no
 
 ### `radioPuntoCentro`
 
@@ -71,7 +74,7 @@ Radio en píxeles para el punto céntrico de cada grupo
 
 - Tipo: `Number`
 - Valor por defecto: `5`
-- Reactivo: No.
+- Reactivo: no
 
 ### `radioPuntosDesplazados`
 
@@ -79,4 +82,4 @@ Radio en píxeles para para los puntos dezplazados o alrrededor de cada grupo
 
 - Tipo: `Number`
 - Valor por defecto: `5`
-- Reactivo: No.
+- Reactivo: no

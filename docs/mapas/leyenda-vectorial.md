@@ -1,7 +1,3 @@
-<script setup>
-import LeyendaVectorial from "./../.vitepress/ejemplos/LeyendaVectorial.vue";
-</script>
-
 # Leyenda vectorial
 
 Leyenda para visualizar la simbología y controlar
@@ -22,9 +18,7 @@ Leyenda para visualizar la simbología y controlar
 
 ## Vista general
 
-<LeyendaVectorial />
-
-<<< @/.vitepress/ejemplos/LeyendaVectorial.vue
+<VisorCodigo archivo="LeyendaVectorial.vue" />
 
 ## Propiedades
 
