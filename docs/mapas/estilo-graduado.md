@@ -1,4 +1,4 @@
-# Estilo con símbolod graduados
+# Estilo con símbolos graduados
 
 ## Vista general
 
