@@ -28,14 +28,17 @@
     "reinstall": "npm run clean && npm i"
   },
   "dependencies": {
-    "axios": "^1.7.9",
     "geoserver-api-reader": "^0.1.0",
     "ol": "^10.3.1",
     "ol-displaced-points": "^0.4.0"
   },
-  "devDependencies": {
+  "peerDependencies": {
+    "vue": "^3.5.13",
     "@centrogeomx/sisdai-componentes": "^4.12.2",
     "@centrogeomx/sisdai-css": "^1.7.3",
+    "axios": "^1.7.9"
+  },
+  "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitest/coverage-v8": "^2.1.8",
@@ -55,7 +58,6 @@
     "vite": "^6.0.3",
     "vitepress": "^1.5.0",
     "vitest": "^2.1.8",
-    "vue": "^3.5.13",
     "vue-matomo": "^4.2.0"
   },
   "gitHooks": {
