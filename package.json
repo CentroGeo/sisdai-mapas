@@ -1,6 +1,6 @@
 {
   "name": "@centrogeomx/sisdai-mapas",
-  "version": "1.13.6",
+  "version": "1.13.7",
   "publishConfig": {
     "access": "public"
   },
