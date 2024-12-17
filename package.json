@@ -1,6 +1,6 @@
 {
   "name": "@centrogeomx/sisdai-mapas",
-  "version": "1.13.7",
+  "version": "1.13.8",
   "publishConfig": {
     "access": "public"
   },
@@ -34,7 +34,7 @@
     "ol-displaced-points": "^0.4.0"
   },
   "devDependencies": {
-    "@centrogeomx/sisdai-componentes": "^4.12.1",
+    "@centrogeomx/sisdai-componentes": "^4.12.2",
     "@centrogeomx/sisdai-css": "^1.7.3",
     "@eslint/js": "^9.17.0",
     "@vitejs/plugin-vue": "^5.2.1",
