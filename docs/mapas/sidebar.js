@@ -37,7 +37,6 @@ export const sidebar = [
       { text: 'Vinculada', link: `${ruta}leyenda` },
       { text: 'Vectorial', link: `${ruta}leyenda-vectorial` },
       { text: 'WMS', link: `${ruta}leyenda-wms` },
-      // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
     ],
   },
 
@@ -46,7 +45,7 @@ export const sidebar = [
     collapsed: false,
     items: [
       // { text: 'Mallas', link: `${ruta}puntos-desplazados` },
-      // { text: 'Puntos agrupados', link: `${ruta}puntos-desplazados` },
+      { text: 'Puntos agrupados', link: `${ruta}puntos-agrupados` },
       { text: 'Puntos desplazados', link: `${ruta}puntos-desplazados` },
     ],
   },

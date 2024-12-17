@@ -4,7 +4,7 @@ La metodología de puntos desplazados permite visualizar todas las
 características de una capa de puntos, incluso si tienen la misma ubicación.
 Para ello, el mapa toma los puntos que se encuentran dentro de una tolerancia de
 distancia determinada entre sí (grupo) y los ubica alrededor de su baricentro
-siguiendo diferentes métodos de ubicación:
+siguiendo diferentes métodos de ubicación.
 
 <div class="nota-contenedor">
   <p class="nota-titulo">
@@ -20,6 +20,15 @@ siguiendo diferentes métodos de ubicación:
 <VisorCodigo archivo="PuntosDesplazados.vue" />
 
 ## Propiedades
+
+### `campoDelimitador`
+
+Campo que evita que los puntos se agrupen dependiendo se el valor de su
+atributo.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Reactivo: no
 
 ### `distancia`
 
