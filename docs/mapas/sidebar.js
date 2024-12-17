@@ -55,8 +55,8 @@ export const sidebar = [
     text: 'Estilos avanzados',
     collapsed: false,
     items: [
-      { text: 'Coropletas', link: `${ruta}coropletas` },
-      // { text: 'Símbolos graduados', link: `${ruta}puntos-desplazados` },
+      { text: 'Coropletas', link: `${ruta}estilo-coropleta` },
+      { text: 'Graduados', link: `${ruta}estilo-graduado` },
     ],
   },
 ]

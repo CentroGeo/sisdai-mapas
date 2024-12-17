@@ -4,6 +4,8 @@ import ReglaCss from './ReglaCss'
  * Clase que maneja el estilo de los simbolos de las leyendas, incluso de las capas vectoriales.
  */
 export default class Estilo {
+  fill = 'transparent'
+
   constructor(opciones = {}) {
     Object.keys(opciones).forEach(id => {
       this.agregar(id, opciones[id])

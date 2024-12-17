@@ -5,12 +5,11 @@ de el se pueden agregar componentes de capas, leyendas y paneles.
 
 **Uso:**
 
-<VisorCodigo lenguaje="vue" :codigo="` <SisdaiMapa>
-
+```html
+<SisdaiMapa>
   <!-- Aquí van las capas, leyendas y paneles que quedarán dentro del mapa -->
 </SisdaiMapa>
-`">
-</VisorCodigo>
+```
 
 ## Vista general
 
