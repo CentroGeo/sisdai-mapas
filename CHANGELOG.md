@@ -21,6 +21,9 @@ compatible y tiene instalada.
 
 ### Cambiado (Changed)
 
+- Uso de bibliotecas `vue`, `@centrogeomx/sisdai-componentes`,
+  `@centrogeomx/sisdai-css` y `axios` como `peerDependencies` para evitar
+  instalación duplicada.
 - Cambio de nombre en parametro `url` de capa Wms por `fuente`.
 - Cambio de nombre en parametro `url` de capa Xyz por `fuente`.
 - Separación de la propieda `parametros="{ LAYERS, STYLES, CQL_FILTER }"` en
