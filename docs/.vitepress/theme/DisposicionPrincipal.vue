@@ -1,13 +1,16 @@
 <script setup>
+import { useAccesibilidadStore } from '@centrogeomx/sisdai-componentes/src/stores/accesibilidad'
+import { useData } from 'vitepress'
 import MenuLateral from './MenuLateral.vue'
 import NavegacionPrincipal from './NavegacionPrincipal.vue'
 import PaginaError404 from './PaginaError404.vue'
-import { useData } from 'vitepress'
 import { version } from './../../../package.json'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { frontmatter, page, theme } = useData()
 const { MODE } = import.meta.env
+
+const store = useAccesibilidadStore()
 </script>
 
 <template>
@@ -23,7 +26,10 @@ const { MODE } = import.meta.env
     :nav="theme.nav"
     :ruta="page.relativePath"
   />
-  <SisdaiMenuAccesibilidad perfilColor="sisdai" />
+  <SisdaiMenuAccesibilidad
+    :objetoStore="store"
+    perfilColor="sisdai"
+  />
 
   <PaginaError404 v-if="page.isNotFound" />
 

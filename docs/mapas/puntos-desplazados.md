@@ -1,7 +1,3 @@
-<script setup>
-import PuntosDesplazados from "./../.vitepress/ejemplos/PuntosDesplazados.vue";
-</script>
-
 # Puntos desplazados
 
 La metodología de puntos desplazados permite visualizar todas las
@@ -21,9 +17,7 @@ siguiendo diferentes métodos de ubicación:
 
 ## Vista general
 
-<PuntosDesplazados />
-
-<<< @/.vitepress/ejemplos/PuntosDesplazados.vue
+<VisorCodigo archivo="PuntosDesplazados.vue" />
 
 ## Propiedades
 

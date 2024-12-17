@@ -1,16 +1,6 @@
-<script setup>
-import CapaWms from "./../.vitepress/ejemplos/CapaWms.vue";
-</script>
-
 # Capa WMS
 
 Componenete para desplegar capas desde servicios wms publicos o privados.
-
-## Vista general
-
-<CapaWms />
-
-<<< @/.vitepress/ejemplos/CapaWms.vue{10-17}
 
 **Uso:**
 
@@ -20,10 +10,14 @@ Componenete para desplegar capas desde servicios wms publicos o privados.
 </SisdaiMapa>
 ```
 
+## Vista general
+
+<VisorCodigo archivo="CapaWms.vue" />
+
 ## Propiedades
 
-Hereda las propiedades definidas en la [sección capas](/mapas/capas.html) más
-las siguientes:
+Hereda las propiedades definidas en la
+[sección general de capas](/mapas/capa.html) más las siguientes:
 
 ### `capa`
 
@@ -51,6 +45,14 @@ Filtro en sintaxis CQL, compatible con la
 - Valor por defecto: `undefined`
 - Reactivo: si
 
+### `fuente`
+
+Url fuente del servicio WMS.
+
+- Tipo: `String`
+- Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`
+- Reactivo: no
+
 ### `tipoServidor`
 
 Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o
@@ -58,14 +60,6 @@ qgis.
 
 - Tipo: `String`
 - Valor por defecto: `geoserver`
-- Reactivo: no
-
-### `url`
-
-URL del servicio WMS.
-
-- Tipo: `String`
-- Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`
 - Reactivo: no
 
 <!-- ### `tituloClases`

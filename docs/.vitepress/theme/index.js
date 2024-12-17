@@ -4,7 +4,10 @@ import 'vitepress/dist/client/theme-default/styles/vars.css'
 import './estilos/codigo.css'
 
 import '@centrogeomx/sisdai-css'
+import { createPinia } from 'pinia'
 import Layout from './DisposicionPrincipal.vue'
+
+import VisorCodigoLimitado from './VisorCodigoLimitado.vue'
 
 /** @type {import('vitepress').Theme} */
 export default {
@@ -18,10 +21,11 @@ export default {
       const SisdaiMapas = await import('./../../../src')
       app.use(SisdaiMapas.default)
 
-      // const store = await import('sisdai-componentes/src/stores')
-      // app.mixin({ store })
-
       app.use((await import('@centrogeomx/sisdai-componentes')).default)
+      // app.mixin({ store: (await import('@centrogeomx/sisdai-componentes/src/stores')).default })
+      app.use(createPinia())
+
+      app.component('VisorCodigo', VisorCodigoLimitado)
     }
   },
 }

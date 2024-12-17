@@ -4,10 +4,10 @@
       <p class="vis-titulo-visualizacion">Ejemplo capas xyz</p>
     </template>
 
-    <SisdaiCapaXyz url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+    <SisdaiCapaXyz fuente="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
 
     <SisdaiCapaXyz
-      url="https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}"
+      fuente="https://mt1.google.com/vt/lyrs=h&x={x}&y={y}&z={z}"
       @alIniciarCargaTesela="() => console.log('C: alIniciarCargaTesela')"
       @alFinalizarCargaTesela="() => console.log('C: alFinalizarCargaTesela')"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"

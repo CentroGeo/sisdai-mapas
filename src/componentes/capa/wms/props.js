@@ -43,6 +43,18 @@ export default {
   },
 
   /**
+   * Url fuente del servicio WMS.
+   *
+   * - Tipo: `String`.
+   * - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
+   * - Reactivo: No.
+   */
+  fuente: {
+    type: String,
+    default: 'https://gema.conahcyt.mx/geoserver/wms',
+  },
+
+  /**
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
    *
    * - Tipo: `String`.
@@ -54,17 +66,5 @@ export default {
   tipoServidor: {
     type: String,
     default: 'geoserver',
-  },
-
-  /**
-   * URL del servicio WMS.
-   *
-   * - Tipo: `String`.
-   * - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
-   * - Reactivo: No.
-   */
-  url: {
-    type: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms',
   },
 }

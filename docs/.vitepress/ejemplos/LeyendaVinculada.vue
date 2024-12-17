@@ -10,13 +10,8 @@
     </template>
 
     <template #panel-izquierda-vis>
-      <!-- xyz -->
       <SisdaiLeyenda para="xyz" />
-
-      <!-- vectorial -->
       <SisdaiLeyenda para="wms" />
-
-      <!-- wms -->
       <SisdaiLeyenda para="vectorial" />
     </template>
 

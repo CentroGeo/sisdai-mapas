@@ -1,5 +1,8 @@
 # Capas
 
+Las siguientes propiedades, eventos y funciones son heredadas a todas las capas
+disponibles en esta biblioteca.
+
 ## Propiedades
 
 ### `atribuciones`
@@ -13,8 +16,11 @@ Establece las atribuciones de la fuente.
 ### `id`
 
 Identificador único de la capa. Si no es detectado, se asignará una cadena de
-texto aleatorea. Para hacer uso de la leyenda esta propiedad pasa a ser
-obligatoria.
+texto aleatorea. Para hacer uso de la [leyenda vinculada](/mapas/leyenda.html)
+esta propiedad pasa a ser obligatoria en capas
+[vectoriales](/mapas/capa-vectorial.html) y [xyz](/mapas/capa-xyz.html), para el
+caso de capas [wms](/mapas/capa-wms.html) si no es definida se usará el valor
+`capa`.
 
 - Tipo: `String`
 - Valor por defecto: Aleatorio
@@ -53,3 +59,7 @@ Visibilidad de la capa.
 - Tipo: `Boolean`
 - Valor por defecto: `true`
 - Reactivo: si
+
+## Eventos
+
+<!-- ## Funciones -->

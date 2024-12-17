@@ -19,7 +19,6 @@
         'circle-stroke-color': '#232323',
         'circle-stroke-width': 0.5,
       }"
-      visualizacion="puntos-desplazados"
       :representacion="{
         'puntos-desplazados': {
           distancia: 80,

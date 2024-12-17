@@ -4,13 +4,13 @@ export default {
   ...props,
 
   /**
-   * Url remota de la capa.
+   * Url fuente de la capa.
    *
    * - Tipo: `String`
-   * - Valor por defecto: `undefined`
-   * - Reactivo: No
+   * - Valor por defecto: `https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png`
+   * - Reactivo: no
    */
-  url: {
+  fuente: {
     type: String,
     default:
       'https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png',

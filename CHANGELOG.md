@@ -21,6 +21,8 @@ compatible y tiene instalada.
 
 ### Cambiado (Changed)
 
+- Cambio de nombre en parametro `url` de capa Wms por `fuente`.
+- Cambio de nombre en parametro `url` de capa Xyz por `fuente`.
 - Separación de la propieda `parametros="{ LAYERS, STYLES, CQL_FILTER }"` en
   capas wms por propiedades `capa`, `estilo` y `filtro` respectivamente
 - Propiedad de `nombre` en capas pasa a llamarse `titulo`
@@ -51,7 +53,8 @@ compatible y tiene instalada.
 
 ### Cambiado (Changed)
 
-- Se homologa ancho de contenedor de sección _Otras bibliotecas Sisdai_ en el Inicio
+- Se homologa ancho de contenedor de sección _Otras bibliotecas Sisdai_ en el
+  Inicio
 - Se actualizan versiones de css y componentes
 
 ## [1.13.3] - 2024-11-21
@@ -162,10 +165,16 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
-[1.13.6]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
-[1.13.3]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
-[1.13.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
-[1.12.1]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
-[1.12.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
-[1.11.9]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
+[1.13.6]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
+[1.13.3]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.3...v1.13.0
+[1.13.0]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.0...v1.12.1
+[1.12.1]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.1...v1.12.0
+[1.12.0]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.12.0...v1.11.9
+[1.11.9]:
+  https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.11.9...v1.0.0
 [1.0.0]: https://codigo.conahcyt.mx/sisdai/sisdai-mapas/-/releases/v1.0.0
