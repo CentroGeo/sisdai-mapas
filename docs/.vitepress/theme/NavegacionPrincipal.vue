@@ -21,7 +21,7 @@ const { ruta } = toRefs(props)
         </a>
         <a
           class="nav-hipervinculo"
-          :href="pkg.repository.url"
+          href="https://github.com/CentroGeo/sisdai-mapas"
           target="_blank"
           rel="noopener noreferrer"
           :aria-label="`Repositorio de código sisdai-mapas versión ${pkg.version}`"
