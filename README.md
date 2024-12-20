@@ -44,12 +44,12 @@ npm i @centrogeomx/sisdai-mapas
 ```
 
 **Opción B.** Desde el repositorio de
-[sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas).
+[sisdai-mapas en github](https://github.com/CentroGeo/sisdai-mapas).
 
 En la línea de comando escribe
 
 ```bash
-npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas
+npm install git+https://github.com/CentroGeo/sisdai-mapas
 ```
 
 ### Importa la biblioteca
@@ -96,18 +96,18 @@ npm i @centrogeomx/sisdai-mapas
 ```
 
 **Opción B.** Para cualquier versión desde el repositorio de
-[sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas).
+[sisdai-mapas en github](https://github.com/CentroGeo/sisdai-mapas).
 
 ```bash
-npm install git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
+npm install git+https://github.com/CentroGeo/sisdai-mapas#vN.N.N
 ```
 
 donde N.N.N indica el número de versión, por ejemplo v2.0.0
 
 Consulta el archivo `CHANGELOG.md` del repositorio de
-[sisdai-mapas en código.conahcyt.mx](https://codigo.conahcyt.mx/sisdai/sisdai-mapas)
-para conocer las nuevas características y cambios que sufre la biblioteca en
-cada una de sus versiones.
+[sisdai-mapas](https://github.com/CentroGeo/sisdai-mapas) para conocer las
+nuevas características y cambios que sufre la biblioteca en cada una de sus
+versiones.
 
 ## Listado de elementos del mapa
 
@@ -146,7 +146,7 @@ Se puede clonar e instalar este proyecto en tu equipo utilizando **sólo el
 protocolo HTTPS**, es decir:
 
 ```bash
-git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git
+git clone https://github.com/CentroGeo/sisdai-mapas.git
 ```
 
 Establece la versión adecuada de npm y nvm (previamente instaladas).
