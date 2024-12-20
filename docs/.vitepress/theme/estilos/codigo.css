@@ -43,16 +43,15 @@ samp {
 /* inline code */
 :not(pre, h1, h2, h3, h4, h5, h6) > code {
   font-size: var(--vp-code-font-size);
-  color: var(--vp-code-color);
+  /* color: var(--vp-code-color); */
 }
 
 :not(pre) > code {
   border-radius: 4px;
   padding: 3px 6px;
-  background-color: var(--vp-code-bg);
-  transition:
-    color 0.25s,
-    background-color 0.5s;
+  background-color: rgba(55, 0, 255, 0.1);
+  /* background-color: var(--vp-code-bg); */
+  /* transition: color 0.25s, background-color 0.5s; */
 }
 
 a > code {
