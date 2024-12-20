@@ -9,6 +9,8 @@
       </p>
     </template>
 
+    <SisdaiCapaXyz />
+
     <SisdaiCapaVectorial
       fuente="/assets/estados-centroides.geojson"
       :estilo="{
