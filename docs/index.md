@@ -86,7 +86,7 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
                 aria-label="Ir a documentación de sisdai-css"/>
               <SisdaiEnlaceExterno
                 class="boton boton-secundario boton-chico"
-                enlace="https://codigo.conahcyt.mx/sisdai/sisdai-css"
+                enlace="https://github.com/CentroGeo/sisdai-css"
                 texto="Ir a repositorio"
                 aria-label="Ir a repositorio de sisdai-css"/>
           </div>
@@ -117,7 +117,7 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
                 aria-label="Ir a documentación de sisdai-componentes"/>
               <SisdaiEnlaceExterno
                 class="boton boton-secundario boton-chico"
-                enlace="https://codigo.conahcyt.mx/sisdai/sisdai-componentes"
+                enlace="https://github.com/CentroGeo/sisdai-componentes"
                 texto="Ir a repositorio"
                 aria-label="Ir a repositorio de sisdai-componentes"/>
           </div>
@@ -148,7 +148,7 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
                 aria-label="Ir a documentación de sisdai-graficas"/>
               <SisdaiEnlaceExterno
                 class="boton boton-secundario boton-chico"
-                enlace="https://codigo.conahcyt.mx/sisdai/sisdai-graficas"
+                enlace="https://github.com/CentroGeo/sisdai-graficas"
                 texto="Ir a repositorio"
                 aria-label="Ir a repositorio de sisdai-graficas"/>
           </div>
