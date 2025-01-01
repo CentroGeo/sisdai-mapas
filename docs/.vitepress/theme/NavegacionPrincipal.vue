@@ -5,8 +5,6 @@ import pkg from '../../../package.json'
 
 const props = defineProps(['nav', 'ruta'])
 const { ruta } = toRefs(props)
-
-const cdn = import.meta.env.VITE_CDN_ARCHIVOS
 </script>
 
 <template>
@@ -23,16 +21,13 @@ const cdn = import.meta.env.VITE_CDN_ARCHIVOS
         </a>
         <a
           class="nav-hipervinculo"
-          :href="pkg.repository.url"
+          href="https://github.com/CentroGeo/sisdai-mapas"
           target="_blank"
           rel="noopener noreferrer"
+          :aria-label="`Repositorio de código sisdai-mapas versión ${pkg.version}`"
         >
-          <img
-            class="nav-logo"
-            :src="`${cdn}gitlab-logo-500.png`"
-            alt="Repositorio de código sisdai-mapas"
-          />
-          <b>{{ `v${pkg.version}` }}</b>
+          <span class="pictograma-social-github m-r-1" aria-hidden="true" />
+          <b aria-hidden="true">{{ `v${pkg.version}` }}</b>
         </a>
       </div>
     </template>

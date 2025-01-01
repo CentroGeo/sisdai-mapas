@@ -14,7 +14,7 @@ npm i @centrogeomx/sisdai-mapas
 Instalación desde su repositorio:
 
 ```sh
-npm i git+https://codigo.conahcyt.mx/sisdai/sisdai-mapas#vN.N.N
+npm i git+https://github.com/CentroGeo/sisdai-componentes.git#vN.N.N
 ```
 
 Actualmente la versión más estable es: v{{ version }}.
@@ -50,7 +50,7 @@ Para revisar la documentación en local primero clona este repositorio y accede 
 la carpeta del proyecto con:
 
 ```bash
-git clone https://codigo.conahcyt.mx/sisdai/sisdai-mapas.git
+git clone https://github.com/CentroGeo/sisdai-mapas.git
 cd sisdai-mapas
 ```
 
@@ -59,6 +59,7 @@ Seguido de la instalación de las dependencias y ejecución de vuepress:
 ```bash
 npm install
 npm run docs
-``` -->
+```
+-->
 
 <!-- Se habilitara en [localhost:5173](http://localhost:5173) (por defecto). -->
