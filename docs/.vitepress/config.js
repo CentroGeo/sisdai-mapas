@@ -4,7 +4,13 @@ import sidebarComienza, { nav as navComienza } from './../comienza/sidebar'
 import sidebarMapas, { nav as navMapas } from './../mapas/sidebar'
 import * as dotenv from 'dotenv'
 
-const { VITE_CDN_ARCHIVOS, VITE_DOMINIO, VITE_URL_BASE } = dotenv.config({
+const {
+  VITE_CDN_ARCHIVOS,
+  VITE_DOMINIO,
+  VITE_URL_BASE,
+  VITE_DESCRIPCION,
+  VITE_GOOGLE_ANALYTICS_ID,
+} = dotenv.config({
   path: 'docs/.env',
 }).parsed
 
@@ -29,7 +35,7 @@ export default defineConfig({
       },
     ],
     ['meta', { property: 'og:title', content: 'sisdai-mapas' }],
-    ['meta', { property: 'og:description', content: description }],
+    ['meta', { property: 'og:description', content: `${VITE_DESCRIPCION}` }],
     [
       'meta',
       {
@@ -43,13 +49,28 @@ export default defineConfig({
     ],
 
     ['meta', { name: 'twitter:title', content: 'sisdai-mapas' }],
-    ['meta', { name: 'twitter:description', content: description }],
+    ['meta', { name: 'twitter:description', content: `${VITE_DESCRIPCION}` }],
     [
       'meta',
       {
         name: 'twitter:image',
         content: `${VITE_CDN_ARCHIVOS}redes/miniatura-sisdaimapas.png`,
       },
+    ],
+    [
+      'script',
+      {
+        async: '',
+        src: `https://www.googletagmanager.com/gtag/js?id=${VITE_GOOGLE_ANALYTICS_ID}`,
+      },
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '${VITE_GOOGLE_ANALYTICS_ID}');`,
     ],
   ],
 

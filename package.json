@@ -25,7 +25,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "clean": "rm -rf node_modules && rm -f package-lock.json && npm cache clean -f && npm cache verify",
-    "reinstall": "npm run clean && npm i"
+    "reinstall": "npm run clean && npm i",
+    "prepare": "husky install"
   },
   "dependencies": {
     "geoserver-api-reader": "^0.1.0",
@@ -33,32 +34,33 @@
     "ol-displaced-points": "^0.4.0"
   },
   "peerDependencies": {
-    "vue": "^3.5.13",
     "@centrogeomx/sisdai-componentes": "^4.12.5",
     "@centrogeomx/sisdai-css": "^1.7.4",
-    "axios": "^1.7.9"
+    "axios": "^1.8.4",
+    "pinia": "^3.0.1",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@eslint/js": "^9.17.0",
+    "@eslint/js": "^9.21.0",
+    "@rushstack/eslint-patch": "^1.11.0",
     "@vitejs/plugin-vue": "^5.2.1",
-    "@vitest/coverage-v8": "^2.1.8",
-    "@vitest/eslint-plugin": "^1.1.17",
-    "@vue/eslint-config-prettier": "^10.1.0",
+    "@vitest/coverage-v8": "^3.0.9",
+    "@vitest/eslint-plugin": "^1.1.36",
+    "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/test-utils": "^2.4.6",
     "cypress": "^13.16.1",
     "dotenv": "^16.4.7",
-    "eslint": "^9.17.0",
-    "eslint-plugin-cypress": "^4.1.0",
-    "eslint-plugin-vue": "^9.32.0",
-    "jsdom": "^25.0.1",
-    "lint-staged": "^15.2.10",
-    "pinia": "^2.3.0",
-    "prettier": "^3.4.2",
+    "eslint": "^9.21.0",
+    "eslint-plugin-cypress": "^4.2.0",
+    "eslint-plugin-vue": "~10.0.0",
+    "husky": "^9.1.7",
+    "jsdom": "^26.0.0",
+    "lint-staged": "^15.5.0",
+    "prettier": "3.5.3",
     "start-server-and-test": "^2.0.9",
-    "vite": "^6.0.3",
-    "vitepress": "^1.5.0",
-    "vitest": "^2.1.8",
-    "vue-matomo": "^4.2.0"
+    "vite": "^6.2.2",
+    "vitepress": "^1.6.3",
+    "vitest": "^3.0.9"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
@@ -88,5 +90,9 @@
     "Miguel Ángel Martínez <migueldnt.dev@gmail.com> (https://github.com/migueldnt)",
     "Paulina Pradel <pradel.paulina@gmail.com> (https://github.com/paupradel)"
   ],
-  "homepage": "https://sisdai-mapas.conahcyt.mx"
+  "homepage": "https://sisdai-mapas.conahcyt.mx",
+  "lint-staged": {
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
+  }
 }

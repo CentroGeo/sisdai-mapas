@@ -8,9 +8,9 @@
 :root {
   /* --vp-font-family-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
     Consolas, 'Liberation Mono', 'Courier New', monospace; */
-  --vp-font-family-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular,
-    'SF Mono', Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-    monospace;
+  --vp-font-family-mono:
+    'IBM Plex Mono', ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Monaco,
+    Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /**

@@ -26,7 +26,10 @@ const { ruta } = toRefs(props)
           rel="noopener noreferrer"
           :aria-label="`Repositorio de código sisdai-mapas versión ${pkg.version}`"
         >
-          <span class="pictograma-social-github m-r-1" aria-hidden="true" />
+          <span
+            class="pictograma-social-github m-r-1"
+            aria-hidden="true"
+          />
           <b aria-hidden="true">{{ `v${pkg.version}` }}</b>
         </a>
       </div>
