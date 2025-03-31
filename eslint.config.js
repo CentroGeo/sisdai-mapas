@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import globals from 'globals'
 import pluginVue from 'eslint-plugin-vue'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginCypress from 'eslint-plugin-cypress/flat'
@@ -21,6 +22,31 @@ export default [
       '**/coverage/**',
       '**/confDep/**',
     ],
+  },
+
+  {
+    // @see https://eslint.org/docs/latest/use/configure/language-options
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+
+    // @see https://eslint.org/docs/latest/rules/
+    // @see https://eslint.org/docs/latest/use/configure/rules
+    // @see https://eslint.vuejs.org/rules/multi-word-component-names.html
+    rules: {
+      'no-new': 0,
+      eqeqeq: 'error',
+      'no-console': 'off',
+      'no-debugger': 'off',
+      'vue/multi-word-component-names': [
+        'error',
+        {
+          ignores: ['Layout', 'basico', 'default'],
+        },
+      ],
+    },
   },
 
   js.configs.recommended,
