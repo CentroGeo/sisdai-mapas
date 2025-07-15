@@ -21,11 +21,11 @@ import eventos from './../capa/eventos'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
 import { ControlesMapa } from './controles'
 import 'ol/ol.css'
+import PruebaMovimiento from './PruebaMovimiento.vue'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(propsMapa)
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
-// mapa.vista = props.vista
 provide(MAPA_INYECTADO, mapa)
 
 const { descripcion, escalaGrafica, vista } = toRefs(props)
@@ -79,16 +79,17 @@ defineExpose(mapa)
         </p>
         <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
 
-        <div
+        <PruebaMovimiento />
+        <!-- <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"
           ref="refMapa"
           tabindex="0"
-        />
+        /> -->
 
-        <InstruccionTeclado />
-        <ControlesMapa />
-        <GloboInformativo />
+        <!-- <InstruccionTeclado /> -->
+        <!-- <ControlesMapa /> -->
+        <!-- <GloboInformativo /> -->
       </div>
 
       <div class="panel-derecha-vis">
@@ -99,10 +100,10 @@ defineExpose(mapa)
         <slot name="panel-pie-vis" />
       </div>
 
-      <AnimacionCarga
+      <!-- <AnimacionCarga
         class="borde-t-redondeado-8"
         v-show="mapa.capasCargando"
-      />
+      /> -->
     </div>
 
     <VisAtribuciones />
