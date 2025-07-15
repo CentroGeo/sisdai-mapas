@@ -21,7 +21,8 @@ compatible y tiene instalada.
 
 ### Cambiado (Changed)
 
-- Se actualizaron las versiones y archivos de configuración de las bibliotecas requeridas tanto para el proyecto como para la documentación y pruebas. 
+- Se actualizaron las versiones y archivos de configuración de las bibliotecas
+  requeridas tanto para el proyecto como para la documentación y pruebas.
 
 ## [2.0.1] - 2024-12-17
 
