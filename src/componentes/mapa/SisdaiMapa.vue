@@ -8,18 +8,21 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import Mapa from './Mapa'
-import { panelesEnUso } from './utiles'
+
+import eventos from './../capa/eventos'
 import propsMapa from './props'
+import { panelesEnUso } from './utiles'
+import Mapa from './Mapa'
+import { MAPA_INYECTADO } from './../../utiles/identificadores'
+
 import {
   AnimacionCarga,
   VisAtribuciones,
   InstruccionTeclado,
   GloboInformativo,
 } from './elementos'
-import eventos from './../capa/eventos'
-import { MAPA_INYECTADO } from './../../utiles/identificadores'
 import { ControlesMapa } from './controles'
+
 import 'ol/ol.css'
 import PruebaMovimiento from './PruebaMovimiento.vue'
 
@@ -31,14 +34,14 @@ provide(MAPA_INYECTADO, mapa)
 const { descripcion, escalaGrafica, vista } = toRefs(props)
 watch(vista, nv => (mapa.vista = nv))
 
-function emitirEventosCarga(nv) {
-  if (nv) {
-    emits(eventos.alIniciarCarga)
-  } else {
-    emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
-  }
-}
-watch(() => mapa.capasCargando, emitirEventosCarga)
+// function emitirEventosCarga(nv) {
+//   if (nv) {
+//     emits(eventos.alIniciarCarga)
+//   } else {
+//     emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
+//   }
+// }
+// watch(() => mapa.capasCargando, emitirEventosCarga)
 
 const refMapa = shallowRef(null)
 onMounted(() => {
@@ -79,16 +82,16 @@ defineExpose(mapa)
         </p>
         <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
 
-        <PruebaMovimiento />
-        <!-- <div
+        <!-- <PruebaMovimiento /> -->
+        <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"
           ref="refMapa"
           tabindex="0"
-        /> -->
+        />
 
         <!-- <InstruccionTeclado /> -->
-        <!-- <ControlesMapa /> -->
+        <ControlesMapa />
         <!-- <GloboInformativo /> -->
       </div>
 
