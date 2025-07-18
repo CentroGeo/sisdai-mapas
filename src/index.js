@@ -14,7 +14,7 @@
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
 // import SisdaiCapaVectorial from './componentes/capa/vectorial'
-// import SisdaiCapaWms from './componentes/capa/wms'
+import SisdaiCapaWms from './componentes/capa/wms'
 import SisdaiCapaXyz from './componentes/capa/xyz'
 // import SisdaiLeyenda from './componentes/leyenda'
 // import SisdaiLeyendaControl from './componentes/leyenda/control'
@@ -25,7 +25,7 @@ import SisdaiMapa from './componentes/mapa'
 export default {
   install: Vue => {
     // Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
-    // Vue.component('SisdaiCapaWms', SisdaiCapaWms)
+    Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
     // Vue.component('SisdaiLeyenda', SisdaiLeyenda)
     // Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
@@ -37,7 +37,7 @@ export default {
 
 export {
   // SisdaiCapaVectorial,
-  // SisdaiCapaWms,
+  SisdaiCapaWms,
   SisdaiCapaXyz,
   // SisdaiLeyenda,
   // SisdaiLeyendaControl,
