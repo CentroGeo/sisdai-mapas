@@ -1,12 +1,14 @@
 <script setup>
-import { inject, toRefs, watch } from 'vue'
+import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
+
 import ImageWMS from 'ol/source/ImageWMS.js'
 import { Image as ImageLayer } from 'ol/layer.js'
-import { ImageSourceEventType } from 'ol/source/Image'
-import _props from './props'
-import eventos from './../eventos'
-import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
+// import { ImageSourceEventType } from 'ol/source/Image'
+
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
+import eventos from './../eventos'
+import _props from './props'
+// import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
@@ -22,39 +24,48 @@ const source = new ImageWMS({
   ratio: 1,
   serverType: props.tipoServidor,
   url: props.fuente,
+});
+
+const capa = new ImageLayer({
+  id: props.id,
+  source,
+  tipo: "wms",
+  titulo: titulo.value,
 })
 
-mapa.addLayer(
-  new ImageLayer({
-    id: props.id,
-    source,
-    tipo: 'wms',
-    titulo: titulo.value,
-  })
-)
-mapa.capas[props.id] = TipoEstadoCarga.no
+// mapa.capas[props.id] = TipoEstadoCarga.no
 
-source.on(ImageSourceEventType.IMAGELOADSTART, () => {
-  emits(eventos.alIniciarCarga)
-  mapa.capas[props.id] = TipoEstadoCarga.inicio
-})
-source.on(ImageSourceEventType.IMAGELOADEND, () => {
-  emits(eventos.alFinalizarCarga, true)
-  mapa.capas[props.id] = TipoEstadoCarga.fin
-})
-source.on(ImageSourceEventType.IMAGELOADERROR, () => {
-  emits(eventos.alFinalizarCarga, false)
-  mapa.capas[props.id] = TipoEstadoCarga.error
+// source.on(ImageSourceEventType.IMAGELOADSTART, () => {
+//   emits(eventos.alIniciarCarga)
+//   mapa.capas[props.id] = TipoEstadoCarga.inicio
+// })
+// source.on(ImageSourceEventType.IMAGELOADEND, () => {
+//   emits(eventos.alFinalizarCarga, true)
+//   mapa.capas[props.id] = TipoEstadoCarga.fin
+// })
+// source.on(ImageSourceEventType.IMAGELOADERROR, () => {
+//   emits(eventos.alFinalizarCarga, false)
+//   mapa.capas[props.id] = TipoEstadoCarga.error
+// })
+
+// watch(estilo, STYLES => source.updateParams({ STYLES }))
+// watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+
+onMounted(() => {
+  mapa.addLayer(capa)
 })
 
-watch(estilo, STYLES => source.updateParams({ STYLES }))
-watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+onUnmounted(() => {
+  mapa.removeLayer(
+    mapa.getAllLayers().find((layer) => layer.get("id") === props.id)
+  )
+})
 
-/**
- * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que
- * revisar si funciona bien con Utfgrid.
- * @see https://openlayers.org/en/latest/examples/wms-tiled.html
- */
+// /**
+//  * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que
+//  * revisar si funciona bien con Utfgrid.
+//  * @see https://openlayers.org/en/latest/examples/wms-tiled.html
+//  */
 </script>
 
 <template>
