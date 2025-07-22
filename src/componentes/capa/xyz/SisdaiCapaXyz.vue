@@ -1,5 +1,5 @@
 <script setup>
-import { inject, toRefs, watch, reactive } from 'vue'
+import { inject, toRefs, watch, reactive, onMounted, onUnmounted } from 'vue'
 
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'

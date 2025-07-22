@@ -3,12 +3,12 @@ import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
 
 import ImageWMS from 'ol/source/ImageWMS.js'
 import { Image as ImageLayer } from 'ol/layer.js'
-// import { ImageSourceEventType } from 'ol/source/Image'
+import { ImageSourceEventType } from 'ol/source/Image'
 
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 import eventos from './../eventos'
 import _props from './props'
-// import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
+import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
