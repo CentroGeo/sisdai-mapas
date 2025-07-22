@@ -22,8 +22,8 @@ const source = new ImageTile({
   crossOrigin: 'anonymous',
 })
 
-const layer = new TileLayer({ id: props.id, source, titulo: titulo.value })
-mapa.addLayer(layer)
+const capa = new TileLayer({ id: props.id, source, titulo: titulo.value })
+
 // // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 // mapa.capas[props.id] = TipoEstadoCarga.no
 
@@ -51,6 +51,9 @@ mapa.addLayer(layer)
 //   emits(eventos.alFinalizarCargaTesela, false)
 //   monitoreoCargaTeselas.error++
 // })
+
+onMounted(() => mapa.addLayer(capa))
+onUnmounted(() => mapa.quitarCapa(props.id))
 </script>
 
 <template>

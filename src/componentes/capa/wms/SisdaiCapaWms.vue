@@ -24,6 +24,7 @@ const source = new ImageWMS({
   ratio: 1,
   serverType: props.tipoServidor,
   url: props.fuente,
+  crossOrigin: 'anonymous',
 });
 
 const capa = new ImageLayer({
@@ -51,15 +52,8 @@ const capa = new ImageLayer({
 // watch(estilo, STYLES => source.updateParams({ STYLES }))
 // watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
 
-onMounted(() => {
-  mapa.addLayer(capa)
-})
-
-onUnmounted(() => {
-  mapa.removeLayer(
-    mapa.getAllLayers().find((layer) => layer.get("id") === props.id)
-  )
-})
+onMounted(() => mapa.addLayer(capa))
+onUnmounted(() => mapa.quitarCapa(props.id))
 
 // /**
 //  * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que

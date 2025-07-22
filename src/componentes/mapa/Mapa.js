@@ -150,6 +150,16 @@ export default class Mapa extends olMap {
   }
 
   /**
+   *
+   * @param {*} id
+   */
+  quitarCapa(id) {
+    this.removeLayer(
+      this.getAllLayers().find(capa => capa.get('id') === id)
+    )
+  }
+
+  /**
    * @typedef {Object} vista
    * @property {number} [acercamiento] Nuvel de acercamiento.
    * @property {Array<number>|string} [centro] Coordenadas céntricas.
