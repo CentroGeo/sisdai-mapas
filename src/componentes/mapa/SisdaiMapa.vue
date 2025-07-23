@@ -19,6 +19,7 @@ import {
   AnimacionCarga,
   VisAtribuciones,
   InstruccionTeclado,
+  CuadroInformativo,
   GloboInformativo,
 } from './elementos'
 import { ControlesMapa } from './controles'
@@ -92,6 +93,7 @@ defineExpose(mapa)
 
         <!-- <InstruccionTeclado /> -->
         <ControlesMapa />
+        <CuadroInformativo />
         <!-- <GloboInformativo /> -->
       </div>
 
