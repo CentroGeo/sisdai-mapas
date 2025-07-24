@@ -1,8 +1,8 @@
 <script setup>
 import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
 
-import ImageWMS from 'ol/source/ImageWMS.js'
-import { Image as ImageLayer } from 'ol/layer.js'
+import ImageWMS from 'ol/source/ImageWMS'
+import { Image as ImageLayer } from 'ol/layer'
 import { ImageSourceEventType } from 'ol/source/Image'
 
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'

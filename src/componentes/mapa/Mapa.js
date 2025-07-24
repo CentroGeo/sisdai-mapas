@@ -1,11 +1,14 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
+import RenderEventType from 'ol/render/EventType'
+import TileWMS from 'ol/source/TileWMS'
+import ImageWMS from 'ol/source/ImageWMS'
+
 import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { vista as vistaPorDefecto } from './valores'
 import * as validaciones from './validaciones'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
 import { EscalaGrafica } from './controles'
-import RenderEventType from 'ol/render/EventType'
 import { crearImagenMapa } from './utiles'
 
 const duration = 250
@@ -130,6 +133,17 @@ export default class Mapa extends olMap {
     return Object.values(this.capas).some(
       capa => capa === TipoEstadoCarga.inicio
     )
+  }
+
+  /**
+   *
+   */
+  get capasWMS() {
+    return this.getAllLayers().filter(layer => {
+      const source = layer.getSource()
+
+      return source instanceof TileWMS || source instanceof ImageWMS
+    })
   }
 
   /**

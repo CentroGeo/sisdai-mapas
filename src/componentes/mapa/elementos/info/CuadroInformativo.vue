@@ -12,6 +12,11 @@ const mapa = inject(MAPA_INYECTADO)
 const visible = ref(false)
 const posicion = reactive(new PosicionCss())
 const coordenadas = ref()
+
+/**
+ *
+ * @param param
+ */
 function alClick({ dragging, originalEvent /*, map */ }) {
   if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) {
     return
@@ -21,9 +26,14 @@ function alClick({ dragging, originalEvent /*, map */ }) {
   posicion.xy = pixel
   visible.value = true
   coordenadas.value = mapa.getCoordinateFromPixel(pixel)
+
+  // console.log(mapa.capasWMS)
 }
 mapa.on(MapBrowserEventType.SINGLECLICK, alClick)
 
+/**
+ *
+ */
 function actualizarPixel() {
   if (coordenadas.value === undefined) return
 
@@ -32,6 +42,9 @@ function actualizarPixel() {
 mapa.on(MapBrowserEventType.POINTERDRAG, actualizarPixel) // funciona solo con el mause
 mapa.getView().on(EventType.CHANGE, actualizarPixel) // funciona con delay
 
+/**
+ *
+ */
 function cerrarCuadro() {
   coordenadas.value = undefined
   visible.value = false
