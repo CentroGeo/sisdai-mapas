@@ -28,6 +28,7 @@ const source = new ImageWMS({
 });
 
 const capa = new ImageLayer({
+  cuadroInfo: props.cuadroInformativo,
   id: props.id,
   source,
   tipo: "wms",

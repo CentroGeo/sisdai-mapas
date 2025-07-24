@@ -16,6 +16,19 @@ export default {
   },
 
   /**
+   * Contenido del cuadro de información que aparecerá al dar clicl sobre la capa.
+   * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
+   *
+   * - Tipo: `String` o `Function`.
+   * - Valor por defecto: `undefined`.
+   * - Reactivo: si
+   */
+  cuadroInformativo: {
+    type: [String, Function, Object],
+    default: undefined,
+  },
+
+  /**
    * Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el
    * estilo de la capa por defecto que tenga en el servidor.
    *
