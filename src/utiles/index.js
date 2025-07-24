@@ -12,6 +12,15 @@ export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
 }
 
 /**
+ *
+ * @param {*} valor
+ * @returns
+ */
+export function esFuncion(valor) {
+  return typeof valor === typeof Function
+}
+
+/**
  * Valida si un valor es de tipo número.
  * @param {any} valor a evaluar
  * @returns {Boolean} `ture` en caso de ser número.
@@ -29,6 +38,15 @@ export function esObjeto(valor) {
   return (
     typeof valor === typeof Object() && valor !== null && !Array.isArray(valor)
   )
+}
+
+/**
+ *
+ * @param {*} valor
+ * @returns
+ */
+export function esPromesa(valor) {
+  return (esObjeto(valor) && esFuncion(valor))
 }
 
 /**

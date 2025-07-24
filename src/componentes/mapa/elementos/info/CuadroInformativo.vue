@@ -5,29 +5,43 @@ import MapBrowserEventType from 'ol/MapBrowserEventType'
 import EventType from 'ol/events/EventType'
 
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
+import { esPromesa } from '../../../../utiles'
 
 // const sisdaiCuadroInfo = ref()
 
 const mapa = inject(MAPA_INYECTADO)
-const visible = ref(false)
 const posicion = reactive(new PosicionCss())
 const coordenadas = ref()
+const contenido = ref('')
+const visible = ref(false)
 
 /**
  *
  * @param param
  */
-function alClick({ dragging, originalEvent /*, map */ }) {
-  if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) {
-    return
-  }
+function alClick({ coordinate, dragging, originalEvent, map }) {
+  if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) return
+
+  const wmsConCuadro = mapa.capasWMS.filter(capa => capa.get('cuadroInfo')).slice(-1)[0]
+  if (wmsConCuadro === undefined) return
 
   const pixel = mapa.getEventPixel(originalEvent)
   posicion.xy = pixel
+  coordenadas.value = coordinate
   visible.value = true
-  coordenadas.value = mapa.getCoordinateFromPixel(pixel)
 
-  // console.log(mapa.capasWMS)
+  const cuadroInfo = wmsConCuadro.get('cuadroInfo')
+  if (typeof cuadroInfo === typeof Function) {
+    const r = cuadroInfo(wmsConCuadro.getSource(), coordinate, map.getView())
+
+    if (esPromesa(r)) {
+      // console.log(r)
+    }
+
+    contenido.value = '<span class="pictograma-reloj pictograma-grande p-0" />'
+  } else {
+    contenido.value = cuadroInfo
+  }
 }
 mapa.on(MapBrowserEventType.SINGLECLICK, alClick)
 
@@ -50,7 +64,7 @@ function cerrarCuadro() {
   visible.value = false
 }
 
-const cargando = '<span class="pictograma-reloj pictograma-grande p-0" />'
+// const cargando = '<span class="pictograma-reloj pictograma-grande p-0" />'
 </script>
 
 <template>
@@ -65,7 +79,7 @@ const cargando = '<span class="pictograma-reloj pictograma-grande p-0" />'
   >
     <div
       class="globo-informacion-cuerpo"
-      v-html="cargando"
+      v-html="contenido"
     />
     <button
       aria-label="Cerrar"
