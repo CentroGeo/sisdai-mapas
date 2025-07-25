@@ -13,7 +13,7 @@ import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { estilo, filtro, titulo } = toRefs(props)
+const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
 
 const source = new ImageWMS({
   params: {
@@ -28,12 +28,13 @@ const source = new ImageWMS({
 });
 
 const capa = new ImageLayer({
-  cuadroInfo: props.cuadroInformativo,
+  cuadroInfo: cuadroInformativo.value,
   id: props.id,
   source,
   tipo: "wms",
   titulo: titulo.value,
 })
+watch(cuadroInformativo, (nv) => capa.set('cuadroInfo', nv))
 
 // mapa.capas[props.id] = TipoEstadoCarga.no
 
