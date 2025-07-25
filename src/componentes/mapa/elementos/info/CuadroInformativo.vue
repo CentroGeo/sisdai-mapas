@@ -46,15 +46,17 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
   // console.log(url);
 
   if (url) {
-    fetch(url).then((response) => response.json()).then(({ features }) => {
-      // console.log(features[0]?.properties);
-      const { properties } = features[0]
-      if (properties) {
-        contenidoCuadro.value = contenido(properties)
-      } else {
-        contenidoCuadro.value = 'No hay información disponible para esta ubicación'
-      }
-    });
+    fetch(url)
+      .then((response) => response.json())
+      .then(({ features }) => {
+        // console.log(features[0]?.properties);
+        // const { properties } = features[0]
+        if (features[0]?.properties) {
+          contenidoCuadro.value = contenido(features[0]?.properties)
+        } else {
+          contenidoCuadro.value = 'No hay información disponible para esta ubicación'
+        }
+      });
   }
 }
 mapa.on(MapBrowserEventType.SINGLECLICK, alClick)

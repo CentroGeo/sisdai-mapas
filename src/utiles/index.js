@@ -1,3 +1,4 @@
+import html2canvas from 'html2canvas'
 import { vista } from '../componentes/mapa/valores'
 
 /**
@@ -56,6 +57,20 @@ export function esPromesa(valor) {
  */
 export function esTexto(valor) {
   return typeof valor === typeof String()
+}
+
+/**
+ *
+ * @param {*} html
+ * @param {*} anchor
+ */
+export function exportarMapa(html, anchor) {
+  html2canvas(html, {
+    useCORS: true,
+  }).then((canvas) => {
+    anchor.href = canvas.toDataURL();
+    anchor.click();
+  });
 }
 
 /**
