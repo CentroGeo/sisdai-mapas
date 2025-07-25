@@ -9,7 +9,7 @@ import {
   watch,
 } from 'vue'
 
-import eventos from './../capa/eventos'
+import eventos from './eventos'
 import propsMapa from './props'
 import { panelesEnUso } from './utiles'
 import Mapa from './Mapa'
@@ -92,7 +92,7 @@ defineExpose(mapa)
         />
 
         <!-- <InstruccionTeclado /> -->
-        <ControlesMapa />
+        <ControlesMapa :eventos="emits" />
         <CuadroInformativo />
         <!-- <GloboInformativo /> -->
       </div>

@@ -56,6 +56,12 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
         } else {
           contenidoCuadro.value = 'No hay información disponible para esta ubicación'
         }
+      })
+      .catch((err) => {
+        console.error(err);
+      })
+      .finally(() => {
+        //console.log("fin");
       });
   }
 }

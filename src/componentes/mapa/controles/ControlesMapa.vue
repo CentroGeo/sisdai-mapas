@@ -1,9 +1,20 @@
 <script setup>
 import { inject } from 'vue'
+
 import { MAPA_INYECTADO } from '../../../utiles/identificadores'
+import eventos from "./../eventos";
 import BotonAcercamiento from './BotonAcercamiento.vue'
 
+const props = defineProps(['eventos'])
 const mapa = inject(MAPA_INYECTADO)
+
+/**
+ *
+ */
+function acercamiento() {
+  mapa.ajustarVista()
+  props.eventos(eventos.clickCentrar)
+}
 </script>
 
 <template>
@@ -21,7 +32,7 @@ const mapa = inject(MAPA_INYECTADO)
     <BotonAcercamiento
       nombre="Centrar"
       pictograma="mapa-centro"
-      @click="mapa.ajustarVista()"
+      @click="acercamiento"
     />
   </div>
 </template>
