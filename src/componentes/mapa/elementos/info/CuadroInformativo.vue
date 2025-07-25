@@ -5,14 +5,13 @@ import MapBrowserEventType from 'ol/MapBrowserEventType'
 import EventType from 'ol/events/EventType'
 
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
-import { esPromesa } from '../../../../utiles'
 
 // const sisdaiCuadroInfo = ref()
 
 const mapa = inject(MAPA_INYECTADO)
 const posicion = reactive(new PosicionCss())
 const coordenadas = ref()
-const contenido = ref('')
+const contenidoCuadro = ref('')
 const visible = ref(false)
 
 /**
@@ -25,22 +24,37 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
   const wmsConCuadro = mapa.capasWMS.filter(capa => capa.get('cuadroInfo')).slice(-1)[0]
   if (wmsConCuadro === undefined) return
 
+  contenidoCuadro.value = '<span class="pictograma-reloj pictograma-grande p-0" />'
+
   const pixel = mapa.getEventPixel(originalEvent)
   posicion.xy = pixel
   coordenadas.value = coordinate
   visible.value = true
 
-  const cuadroInfo = wmsConCuadro.get('cuadroInfo')
-  if (typeof cuadroInfo === typeof Function) {
-    const r = cuadroInfo(wmsConCuadro.getSource(), coordinate, map.getView())
-
-    if (esPromesa(r)) {
-      // console.log(r)
+  const { params, contenido } = wmsConCuadro.get('cuadroInfo')
+  const url = wmsConCuadro.getSource().getFeatureInfoUrl(
+    coordinate,
+    map.getView().getResolution(),
+    map.getView().getProjection().getCode(),
+    {
+      FEATURE_COUNT: 1,
+      INFO_FORMAT: "application/json",
+      ...params
     }
+  );
 
-    contenido.value = '<span class="pictograma-reloj pictograma-grande p-0" />'
-  } else {
-    contenido.value = cuadroInfo
+  // console.log(url);
+
+  if (url) {
+    fetch(url).then((response) => response.json()).then(({ features }) => {
+      // console.log(features[0]?.properties);
+      const { properties } = features[0]
+      if (properties) {
+        contenidoCuadro.value = contenido(properties)
+      } else {
+        contenidoCuadro.value = 'No hay información disponible para esta ubicación'
+      }
+    });
   }
 }
 mapa.on(MapBrowserEventType.SINGLECLICK, alClick)
@@ -63,8 +77,6 @@ function cerrarCuadro() {
   coordenadas.value = undefined
   visible.value = false
 }
-
-// const cargando = '<span class="pictograma-reloj pictograma-grande p-0" />'
 </script>
 
 <template>
@@ -79,7 +91,7 @@ function cerrarCuadro() {
   >
     <div
       class="globo-informacion-cuerpo"
-      v-html="contenido"
+      v-html="contenidoCuadro"
     />
     <button
       aria-label="Cerrar"

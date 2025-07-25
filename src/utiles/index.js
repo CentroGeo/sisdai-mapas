@@ -46,7 +46,7 @@ export function esObjeto(valor) {
  * @returns
  */
 export function esPromesa(valor) {
-  return (esObjeto(valor) && esFuncion(valor))
+  return (esObjeto(valor) && esFuncion(valor.then))
 }
 
 /**
