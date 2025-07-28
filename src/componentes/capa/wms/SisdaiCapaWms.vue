@@ -38,21 +38,21 @@ watch(cuadroInformativo, (nv) => capa.set('cuadroInfo', nv))
 
 // mapa.capas[props.id] = TipoEstadoCarga.no
 
-// source.on(ImageSourceEventType.IMAGELOADSTART, () => {
-//   emits(eventos.alIniciarCarga)
-//   mapa.capas[props.id] = TipoEstadoCarga.inicio
-// })
-// source.on(ImageSourceEventType.IMAGELOADEND, () => {
-//   emits(eventos.alFinalizarCarga, true)
-//   mapa.capas[props.id] = TipoEstadoCarga.fin
-// })
-// source.on(ImageSourceEventType.IMAGELOADERROR, () => {
-//   emits(eventos.alFinalizarCarga, false)
-//   mapa.capas[props.id] = TipoEstadoCarga.error
-// })
+source.on(ImageSourceEventType.IMAGELOADSTART, () => {
+  emits(eventos.alIniciarCarga)
+  // mapa.capas[props.id] = TipoEstadoCarga.inicio
+})
+source.on(ImageSourceEventType.IMAGELOADEND, () => {
+  emits(eventos.alFinalizarCarga, true)
+  // mapa.capas[props.id] = TipoEstadoCarga.fin
+})
+source.on(ImageSourceEventType.IMAGELOADERROR, () => {
+  emits(eventos.alFinalizarCarga, false)
+  // mapa.capas[props.id] = TipoEstadoCarga.error
+})
 
-// watch(estilo, STYLES => source.updateParams({ STYLES }))
-// watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+watch(estilo, STYLES => source.updateParams({ STYLES }))
+watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
 
 onMounted(() => mapa.addLayer(capa))
 onUnmounted(() => mapa.quitarCapa(props.id))
