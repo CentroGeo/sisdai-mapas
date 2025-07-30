@@ -1,6 +1,7 @@
 <script setup>
 import {
   onMounted,
+  onUnmounted,
   provide,
   reactive,
   shallowRef,
@@ -8,6 +9,8 @@ import {
   useSlots,
   watch,
 } from 'vue'
+
+import MapEventType from 'ol/MapEventType'
 
 import eventos from './eventos'
 import propsMapa from './props'
@@ -44,11 +47,24 @@ watch(vista, nv => (mapa.vista = nv))
 // }
 // watch(() => mapa.capasCargando, emitirEventosCarga)
 
+function alMoverVista({ map }) {
+  emits(eventos.alMoverVista, {
+    acercamiento: vista.getZoom(),
+    centro: vista.getCenter(),
+    vista: map.getView(),
+  })
+}
+
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.vista = props.vista
   // mapa.ajustarVista()
+  mapa.on(MapEventType.MOVEEND, alMoverVista)
+})
+
+onUnmounted(() => {
+  mapa.un(MapEventType.MOVEEND, alMoverVista)
 })
 
 defineExpose(mapa)

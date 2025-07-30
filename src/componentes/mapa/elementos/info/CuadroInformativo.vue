@@ -1,5 +1,5 @@
 <script setup>
-import { inject, reactive, ref } from 'vue'
+import { inject, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import EventType from 'ol/events/EventType'
@@ -65,7 +65,6 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
       });
   }
 }
-mapa.on(MapBrowserEventType.SINGLECLICK, alClick)
 
 /**
  *
@@ -75,8 +74,17 @@ function actualizarPixel() {
 
   posicion.xy = mapa.getPixelFromCoordinate(coordenadas.value)
 }
-mapa.on(MapBrowserEventType.POINTERDRAG, actualizarPixel) // funciona solo con el mause
-mapa.getView().on(EventType.CHANGE, actualizarPixel) // funciona con delay
+
+onMounted(() => {
+  mapa.on(MapBrowserEventType.SINGLECLICK, alClick)
+  mapa.on(MapBrowserEventType.POINTERDRAG, actualizarPixel) // funciona solo con el mause
+  mapa.getView().on(EventType.CHANGE, actualizarPixel) // funciona con delay
+})
+onUnmounted(() => {
+  mapa.un(MapBrowserEventType.SINGLECLICK, alClick)
+  mapa.un(MapBrowserEventType.POINTERDRAG, actualizarPixel) // funciona solo con el mause
+  mapa.getView().un(EventType.CHANGE, actualizarPixel) // funciona con delay
+})
 
 /**
  *
