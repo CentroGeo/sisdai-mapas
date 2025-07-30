@@ -48,10 +48,11 @@ watch(vista, nv => (mapa.vista = nv))
 // watch(() => mapa.capasCargando, emitirEventosCarga)
 
 function alMoverVista({ map }) {
+  const vista = map.getView()
   emits(eventos.alMoverVista, {
     acercamiento: vista.getZoom(),
     centro: vista.getCenter(),
-    vista: map.getView(),
+    vista,
   })
 }
 
