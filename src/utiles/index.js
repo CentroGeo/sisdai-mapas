@@ -1,11 +1,10 @@
-import html2canvas from 'html2canvas'
 import { vista } from '../componentes/mapa/valores'
 
 /**
  * Ejecuta los metodos de un array en un objeto.
  * @param {Object} obj
  * @param {Function} funcion
- * @param {String} metodo map | filter | find | some | every | etc
+ * @param {String} metodo map | filter | find | some | every | etc.
  * @returns {Object}
  */
 export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
@@ -13,9 +12,9 @@ export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
 }
 
 /**
- *
- * @param {*} valor
- * @returns
+ * Valida si un valor es de tipo función.
+ * @param {any} valor a evaluar.
+ * @returns `ture` en caso de ser función.
  */
 export function esFuncion(valor) {
   return typeof valor === typeof Function
@@ -23,7 +22,7 @@ export function esFuncion(valor) {
 
 /**
  * Valida si un valor es de tipo número.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser número.
  */
 export function esNuemro(valor) {
@@ -32,7 +31,7 @@ export function esNuemro(valor) {
 
 /**
  * Valida si un valor es de tipo Objeto.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser objeto.
  */
 export function esObjeto(valor) {
@@ -42,9 +41,9 @@ export function esObjeto(valor) {
 }
 
 /**
- *
- * @param {*} valor
- * @returns
+ * Valida si un valor es de tipo Promesa.
+ * @param {any} valor a evaluar.
+ * @returns {Boolean} `ture` en caso de ser Promesa.
  */
 export function esPromesa(valor) {
   return (esObjeto(valor) && esFuncion(valor.then))
@@ -52,25 +51,11 @@ export function esPromesa(valor) {
 
 /**
  * Valida si un valor es de tipo texto.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser texto.
  */
 export function esTexto(valor) {
   return typeof valor === typeof String()
-}
-
-/**
- *
- * @param {*} html
- * @param {*} anchor
- */
-export function exportarMapa(html, anchor) {
-  html2canvas(html, {
-    useCORS: true,
-  }).then((canvas) => {
-    anchor.href = canvas.toDataURL();
-    anchor.click();
-  });
 }
 
 /**
