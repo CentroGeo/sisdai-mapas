@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@centrogeomx/sisdai-componentes": "^4.14.0",
-    "@centrogeomx/sisdai-css": "https://github.com/CentroGeo/sisdai-css#v1.9.1",
+    "@centrogeomx/sisdai-css": "^1.9.0",
     "@eslint/js": "^9.32.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitest/coverage-v8": "^3.2.4",
