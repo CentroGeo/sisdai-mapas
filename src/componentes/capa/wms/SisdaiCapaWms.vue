@@ -1,9 +1,9 @@
 <script setup>
 import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
 
-import ImageWMS from 'ol/source/ImageWMS'
 import { Image as ImageLayer } from 'ol/layer'
 import { ImageSourceEventType } from 'ol/source/Image'
+import ImageWMS from 'ol/source/ImageWMS'
 
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 import eventos from './../eventos'
@@ -13,7 +13,7 @@ import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { cuadroInformativo, estilo, filtro, titulo, opacidad, visible } = toRefs(props)
+const { cuadroInformativo, estilo, filtro, opacidad, posicion, titulo, visible } = toRefs(props)
 
 const source = new ImageWMS({
   params: {
@@ -35,11 +35,11 @@ const capa = new ImageLayer({
   titulo: titulo.value,
   opacity: opacidad.value,
   visible: visible.value,
+  zIndex: posicion.value
 })
 watch(cuadroInformativo, (nv) => capa.set('cuadroInfo', nv))
 
 // mapa.capas[props.id] = TipoEstadoCarga.no
-
 source.on(ImageSourceEventType.IMAGELOADSTART, () => {
   emits(eventos.alIniciarCarga)
   // mapa.capas[props.id] = TipoEstadoCarga.inicio
@@ -56,6 +56,7 @@ source.on(ImageSourceEventType.IMAGELOADERROR, () => {
 watch(estilo, STYLES => source.updateParams({ STYLES }))
 watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
 watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
+watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
 watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 
 onMounted(() => mapa.addLayer(capa))
