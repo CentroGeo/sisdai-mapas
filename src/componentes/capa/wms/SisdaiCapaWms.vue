@@ -16,28 +16,34 @@ const props = defineProps(_props)
 const { cuadroInformativo, estilo, filtro, opacidad, posicion, titulo, visible } = toRefs(props)
 
 const source = new ImageWMS({
+  crossOrigin: 'anonymous',
   params: {
+    CQL_FILTER: filtro.value,
     LAYERS: props.capa,
     STYLES: estilo.value,
-    CQL_FILTER: filtro.value,
   },
   ratio: 1,
   serverType: props.tipoServidor,
   url: props.fuente,
-  crossOrigin: 'anonymous',
 });
 
 const capa = new ImageLayer({
   cuadroInfo: cuadroInformativo.value,
   id: props.id,
+  opacity: opacidad.value,
   source,
   tipo: "wms",
   titulo: titulo.value,
-  opacity: opacidad.value,
   visible: visible.value,
   zIndex: posicion.value
 })
+
 watch(cuadroInformativo, (nv) => capa.set('cuadroInfo', nv))
+watch(estilo, STYLES => source.updateParams({ STYLES }))
+watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
+watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
+watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 
 // mapa.capas[props.id] = TipoEstadoCarga.no
 source.on(ImageSourceEventType.IMAGELOADSTART, () => {
@@ -53,11 +59,6 @@ source.on(ImageSourceEventType.IMAGELOADERROR, () => {
   // mapa.capas[props.id] = TipoEstadoCarga.error
 })
 
-watch(estilo, STYLES => source.updateParams({ STYLES }))
-watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
-watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
-watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
-watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 
 onMounted(() => mapa.addLayer(capa))
 onUnmounted(() => mapa.quitarCapa(props.id))

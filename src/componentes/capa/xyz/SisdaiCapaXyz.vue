@@ -15,14 +15,25 @@ import MonitoreoCargaElementos, {
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { titulo, fuente } = toRefs(props)
+const { fuente, opacidad, posicion, titulo, visible } = toRefs(props)
 
 const source = new ImageTile({
   url: fuente.value,
   crossOrigin: 'anonymous',
 })
 
-const capa = new TileLayer({ id: props.id, source, titulo: titulo.value })
+const capa = new TileLayer({
+  id: props.id,
+  opacity: opacidad.value,
+  source,
+  titulo: titulo.value,
+  visible: visible.value,
+  zIndex: posicion.value
+})
+
+watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
+watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
+watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 
 // // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 // mapa.capas[props.id] = TipoEstadoCarga.no
