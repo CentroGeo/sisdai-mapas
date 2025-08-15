@@ -1,16 +1,17 @@
 <script setup>
-import { inject, toRefs, watch, onMounted, onUnmounted, reactive } from 'vue'
+import { inject, onMounted, onUnmounted, reactive, toRefs, watch } from 'vue'
 
-import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
+import ImageTile from 'ol/source/ImageTile'
 import TileEventType from 'ol/source/TileEventType'
 
+import { getRenderPixel } from 'ol/render'
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
-import eventos from './eventos'
-import _props from './props'
 import MonitoreoCargaElementos, {
   TipoEstadoCarga,
 } from './../../../utiles/MonitoreoCargaElementos'
+import eventos from './eventos'
+import _props from './props'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
@@ -62,6 +63,32 @@ source.on(TileEventType.TILELOADERROR, () => {
 
 onMounted(() => mapa.addLayer(capa))
 onUnmounted(() => mapa.quitarCapa(props.id))
+
+// { type, target, inversePixelTransform, frameState, context }
+capa.on('prerender', event => {
+  const tamanioMapa = mapa.getSize()
+  const nuevoAnchoCapa = tamanioMapa[0] * (Number(mapa.deslizamiento) / 100)
+  const tl = getRenderPixel(event, [nuevoAnchoCapa, 0])
+  const tr = getRenderPixel(event, [tamanioMapa[0], 0])
+  const bl = getRenderPixel(event, [nuevoAnchoCapa, tamanioMapa[1]])
+  const br = getRenderPixel(event, tamanioMapa)
+  // console.log(event.type, tamanioMapa, tl, tr, bl, br)
+  const { context } = event
+
+  context.save()
+  context.beginPath()
+  context.moveTo(tl[0], tl[1])
+  context.lineTo(bl[0], bl[1])
+  context.lineTo(br[0], br[1])
+  context.lineTo(tr[0], tr[1])
+  context.closePath()
+  context.clip()
+})
+capa.on('postrender', ({ context }) => {
+  // console.log(type)
+
+  context.restore()
+})
 </script>
 
 <template>

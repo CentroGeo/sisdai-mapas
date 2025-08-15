@@ -25,7 +25,7 @@ import {
   CuadroInformativo,
   // GloboInformativo,
 } from './elementos'
-import { ControlesMapa } from './controles'
+import { ControlesAcercamiento, ControlDeslizar } from './controles'
 
 import 'ol/ol.css'
 // import PruebaMovimiento from './PruebaMovimiento.vue'
@@ -110,7 +110,8 @@ defineExpose(mapa)
         />
 
         <!-- <InstruccionTeclado /> -->
-        <ControlesMapa :eventos="emits" />
+        <ControlesAcercamiento :eventos="emits" />
+        <ControlDeslizar />
         <CuadroInformativo />
         <!-- <GloboInformativo /> -->
       </div>

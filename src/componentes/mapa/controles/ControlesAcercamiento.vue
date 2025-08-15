@@ -2,7 +2,7 @@
 import { inject } from 'vue'
 
 import { MAPA_INYECTADO } from '../../../utiles/identificadores'
-import _eventos from './../eventos'
+import _eventos from '../eventos'
 import BotonAcercamiento from './BotonAcercamiento.vue'
 
 const props = defineProps(['eventos'])

@@ -1,15 +1,15 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
 import RenderEventType from 'ol/render/EventType'
-import TileWMS from 'ol/source/TileWMS'
 import ImageWMS from 'ol/source/ImageWMS'
+import TileWMS from 'ol/source/TileWMS'
 
-import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
-import { vista as vistaPorDefecto } from './valores'
-import * as validaciones from './validaciones'
 import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
+import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
 import { EscalaGrafica } from './controles'
 import { crearImagenMapa } from './utiles'
+import * as validaciones from './validaciones'
+import { vista as vistaPorDefecto } from './valores'
 
 const duration = 250
 
@@ -33,11 +33,12 @@ export default class Mapa extends olMap {
       view: new View({ center: [0, 0], projection: proyeccion, zoom: 2 }),
     })
 
-    this.capas = {}
-
     this.id = id
 
     this.agregarAtributosAriaCanvas()
+
+    this.capas = {}
+    this.deslizamiento = 50
   }
 
   /**
