@@ -13,10 +13,7 @@ export default {
   /**
    *
    */
-  fuente: {
-    type: String,
-    default: urlGeoserverGema,
-  },
+  fuente: { type: String, default: urlGeoserverGema },
 
   /**
    *
@@ -26,10 +23,7 @@ export default {
   /**
    *
    */
-  nombre: {
-    type: String,
-    default: undefined,
-  },
+  nombre: { type: String, default: undefined },
 
   /**
    *
@@ -45,16 +39,10 @@ export default {
   /**
    *
    */
-  titulo: {
-    type: String,
-    default: undefined,
-  },
+  titulo: { type: String, default: undefined },
 
   /**
    *
    */
-  visible: {
-    type: Boolean,
-    default: true,
-  },
+  visible: { type: Boolean, default: true },
 }

@@ -20,12 +20,8 @@ describe('Mapa', () => {
 
   it('debería agregar atributos aria al canvas', async () => {
     // Mock para simular que el canvas existe
-    const mockCanvas = {
-      setAttribute: vi.fn(),
-    }
-    const mockViewport = {
-      querySelector: vi.fn().mockReturnValue(mockCanvas),
-    }
+    const mockCanvas = { setAttribute: vi.fn() }
+    const mockViewport = { querySelector: vi.fn().mockReturnValue(mockCanvas) }
     mapa.getViewport = vi.fn().mockReturnValue(mockViewport)
 
     // Ejecutar la función async

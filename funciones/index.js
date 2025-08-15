@@ -6,10 +6,8 @@ import html2canvas from 'html2canvas'
  * @param {HTMLElement} linkAncla elemento tipo '<a />' al que se vilculará la imagen como descarga.
  */
 export function exportarHTMLComoPNG(html, linkAncla) {
-  html2canvas(html, {
-    useCORS: true,
-  }).then((canvas) => {
-    linkAncla.href = canvas.toDataURL();
-    linkAncla.click();
-  });
+  html2canvas(html, { useCORS: true }).then(canvas => {
+    linkAncla.href = canvas.toDataURL()
+    linkAncla.click()
+  })
 }

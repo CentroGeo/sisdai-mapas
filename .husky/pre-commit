@@ -1,0 +1,4 @@
+# .husky/commit-msg
+#!/bin/sh
+
+npx lint-staged

@@ -149,9 +149,7 @@ export class GeoserverLeyenda extends GetLegendGraphic {
   }
 
   get url() {
-    return `${utils.urlService(this._fuente, this._servicio)}${
-      this.parametrosEnFormatoURL
-    }`
+    return `${utils.urlService(this._fuente, this._servicio)}${this.parametrosEnFormatoURL}`
   }
 }
 </script>

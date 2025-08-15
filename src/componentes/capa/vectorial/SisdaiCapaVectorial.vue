@@ -20,14 +20,9 @@ mapa.capas[props.id] = TipoEstadoCarga.no
 const { estilo, fuente, globoInformativo, titulo, representacion } =
   toRefs(props)
 
-const dicFormato = {
-  geojson: new GeoJSON(),
-  topojson: new TopoJSON(),
-}
+const dicFormato = { geojson: new GeoJSON(), topojson: new TopoJSON() }
 
-const source = new VectorSource({
-  format: dicFormato[props.formato],
-})
+const source = new VectorSource({ format: dicFormato[props.formato] })
 
 if (typeof fuente.value === typeof String()) {
   source.setUrl(fuente.value)

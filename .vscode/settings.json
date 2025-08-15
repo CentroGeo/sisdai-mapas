@@ -1,52 +1,20 @@
 {
-  "[markdown]": {
-    "diffEditor.ignoreTrimWhitespace": false,
-    "editor.quickSuggestions": {
-      "comments": "off",
-      "strings": "off",
-      "other": "off"
-    },
-    "editor.unicodeHighlight.ambiguousCharacters": false,
-    "editor.unicodeHighlight.invisibleCharacters": false,
-    "editor.wordWrap": "on"
-  },
-
-  "editor.autoClosingBrackets": "always",
-  "editor.autoClosingQuotes": "always",
-  "editor.autoIndent": "advanced",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "always",
-    "source.fixAll.eslint": "always",
-    "source.fixAll.stylelint": "always"
-    // "source.organizeImports": "always",
-    // "source.removeUnusedImports": "always",
-    // "source.sortImports": "always",
-  },
-  "editor.comments.insertSpace": true,
+  "editor.codeActionsOnSave": { "source.fixAll": "explicit" },
+  // "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "editor.indentSize": "tabSize",
-  // "editor.rulers": [],
-  "editor.tabSize": 2,
-  "editor.trimAutoWhitespace": true,
-  "editor.wordBreak": "normal",
-  "editor.wordWrap": "bounded",
-  "editor.wordWrapColumn": 80,
 
-  // "eslint.codeActionsOnSave.rules": null,
   "eslint.run": "onSave",
-  // "eslint.options": {},
-  // "eslint.useFlatConfig": true,
-  "eslint.validate": ["css", "javascript", "javascriptreact", "sass", "vue"],
 
   "explorer.fileNesting.enabled": true,
   "explorer.fileNesting.patterns": {
-    "linter.md": ".eslint*, eslint*, .prettier*, prettier*, .editorconfig",
-    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, lint-staged.config.js",
+    ".gitignore": ".gitattributes",
+    "linter.md": ".eslint*, eslint*, .oxlint*, oxlint*, .prettier*, prettier*, .editorconfig",
+    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*",
     "README.md": "LICENSE, CHANGELOG.*",
     "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*, TEST.md"
   },
 
-  "prettier.configPath": ".prettierrc.cjs",
+  "prettier.configPath": ".prettierrc.json",
   "prettier.ignorePath": ".prettierignore",
   "prettier.requireConfig": true
 }

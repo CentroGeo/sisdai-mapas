@@ -25,9 +25,7 @@ const idCheck = `${props.id}-${idAleatorio()}`
 <template>
   <div
     class="controlador-vis"
-    :style="{
-      '--controlador-vis-figura-alto': `${simbolo?.tamanio}px`,
-    }"
+    :style="{ '--controlador-vis-figura-alto': `${simbolo?.tamanio}px` }"
   >
     <template v-if="sinControl">
       <p class="lectura">

@@ -46,7 +46,7 @@ export function esObjeto(valor) {
  * @returns {Boolean} `ture` en caso de ser Promesa.
  */
 export function esPromesa(valor) {
-  return (esObjeto(valor) && esFuncion(valor.then))
+  return esObjeto(valor) && esFuncion(valor.then)
 }
 
 /**

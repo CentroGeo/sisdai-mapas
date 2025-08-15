@@ -1,8 +1,5 @@
 <script setup>
-defineProps({
-  nombre: {},
-  pictograma: {},
-})
+defineProps({ nombre: {}, pictograma: {} })
 </script>
 
 <template>

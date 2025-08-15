@@ -16717,19 +16717,13 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.1",
-          "properties": {
-            "cve_ent": "01",
-            "nom_ent": "Aguascalientes"
-          },
+          "properties": { "cve_ent": "01", "nom_ent": "Aguascalientes" },
           "arcs": [[0]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.2",
-          "properties": {
-            "cve_ent": "02",
-            "nom_ent": "Baja California"
-          },
+          "properties": { "cve_ent": "02", "nom_ent": "Baja California" },
           "arcs": [
             [[1]],
             [[2]],
@@ -16800,10 +16794,7 @@
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.3",
-          "properties": {
-            "cve_ent": "03",
-            "nom_ent": "Baja California Sur"
-          },
+          "properties": { "cve_ent": "03", "nom_ent": "Baja California Sur" },
           "arcs": [
             [[65]],
             [[66]],
@@ -16869,10 +16860,7 @@
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.4",
-          "properties": {
-            "cve_ent": "04",
-            "nom_ent": "Campeche"
-          },
+          "properties": { "cve_ent": "04", "nom_ent": "Campeche" },
           "arcs": [
             [[124]],
             [[125]],
@@ -16887,91 +16875,61 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.5",
-          "properties": {
-            "cve_ent": "05",
-            "nom_ent": "Coahuila de Zaragoza"
-          },
+          "properties": { "cve_ent": "05", "nom_ent": "Coahuila de Zaragoza" },
           "arcs": [[132]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.6",
-          "properties": {
-            "cve_ent": "06",
-            "nom_ent": "Colima"
-          },
+          "properties": { "cve_ent": "06", "nom_ent": "Colima" },
           "arcs": [[[133]], [[134]], [[135]], [[136]], [[137]], [[138]]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.7",
-          "properties": {
-            "cve_ent": "07",
-            "nom_ent": "Chiapas"
-          },
+          "properties": { "cve_ent": "07", "nom_ent": "Chiapas" },
           "arcs": [[139]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.8",
-          "properties": {
-            "cve_ent": "08",
-            "nom_ent": "Chihuahua"
-          },
+          "properties": { "cve_ent": "08", "nom_ent": "Chihuahua" },
           "arcs": [[140]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.9",
-          "properties": {
-            "cve_ent": "09",
-            "nom_ent": "Ciudad de México"
-          },
+          "properties": { "cve_ent": "09", "nom_ent": "Ciudad de México" },
           "arcs": [[141]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.10",
-          "properties": {
-            "cve_ent": "10",
-            "nom_ent": "Durango"
-          },
+          "properties": { "cve_ent": "10", "nom_ent": "Durango" },
           "arcs": [[142]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.11",
-          "properties": {
-            "cve_ent": "11",
-            "nom_ent": "Guanajuato"
-          },
+          "properties": { "cve_ent": "11", "nom_ent": "Guanajuato" },
           "arcs": [[143]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.12",
-          "properties": {
-            "cve_ent": "12",
-            "nom_ent": "Guerrero"
-          },
+          "properties": { "cve_ent": "12", "nom_ent": "Guerrero" },
           "arcs": [[[144]], [[145]], [[146]]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.13",
-          "properties": {
-            "cve_ent": "13",
-            "nom_ent": "Hidalgo"
-          },
+          "properties": { "cve_ent": "13", "nom_ent": "Hidalgo" },
           "arcs": [[147]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.14",
-          "properties": {
-            "cve_ent": "14",
-            "nom_ent": "Jalisco"
-          },
+          "properties": { "cve_ent": "14", "nom_ent": "Jalisco" },
           "arcs": [
             [[148]],
             [[149]],
@@ -17007,37 +16965,25 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.15",
-          "properties": {
-            "cve_ent": "15",
-            "nom_ent": "México"
-          },
+          "properties": { "cve_ent": "15", "nom_ent": "México" },
           "arcs": [[177]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.16",
-          "properties": {
-            "cve_ent": "16",
-            "nom_ent": "Michoacán de Ocampo"
-          },
+          "properties": { "cve_ent": "16", "nom_ent": "Michoacán de Ocampo" },
           "arcs": [[178]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.17",
-          "properties": {
-            "cve_ent": "17",
-            "nom_ent": "Morelos"
-          },
+          "properties": { "cve_ent": "17", "nom_ent": "Morelos" },
           "arcs": [[179]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.18",
-          "properties": {
-            "cve_ent": "18",
-            "nom_ent": "Nayarit"
-          },
+          "properties": { "cve_ent": "18", "nom_ent": "Nayarit" },
           "arcs": [
             [[180]],
             [[181]],
@@ -17051,19 +16997,13 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.19",
-          "properties": {
-            "cve_ent": "19",
-            "nom_ent": "Nuevo León"
-          },
+          "properties": { "cve_ent": "19", "nom_ent": "Nuevo León" },
           "arcs": [[187]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.20",
-          "properties": {
-            "cve_ent": "20",
-            "nom_ent": "Oaxaca"
-          },
+          "properties": { "cve_ent": "20", "nom_ent": "Oaxaca" },
           "arcs": [
             [[188]],
             [[189]],
@@ -17082,28 +17022,19 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.21",
-          "properties": {
-            "cve_ent": "21",
-            "nom_ent": "Puebla"
-          },
+          "properties": { "cve_ent": "21", "nom_ent": "Puebla" },
           "arcs": [[200]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.22",
-          "properties": {
-            "cve_ent": "22",
-            "nom_ent": "Querétaro"
-          },
+          "properties": { "cve_ent": "22", "nom_ent": "Querétaro" },
           "arcs": [[201]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.23",
-          "properties": {
-            "cve_ent": "23",
-            "nom_ent": "Quintana Roo"
-          },
+          "properties": { "cve_ent": "23", "nom_ent": "Quintana Roo" },
           "arcs": [
             [[202]],
             [[203]],
@@ -17191,19 +17122,13 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.24",
-          "properties": {
-            "cve_ent": "24",
-            "nom_ent": "San Luis Potosí"
-          },
+          "properties": { "cve_ent": "24", "nom_ent": "San Luis Potosí" },
           "arcs": [[283]]
         },
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.25",
-          "properties": {
-            "cve_ent": "25",
-            "nom_ent": "Sinaloa"
-          },
+          "properties": { "cve_ent": "25", "nom_ent": "Sinaloa" },
           "arcs": [
             [[284]],
             [[285]],
@@ -17221,10 +17146,7 @@
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.26",
-          "properties": {
-            "cve_ent": "26",
-            "nom_ent": "Sonora"
-          },
+          "properties": { "cve_ent": "26", "nom_ent": "Sonora" },
           "arcs": [
             [[295], [296], [297]],
             [[298]],
@@ -17255,28 +17177,19 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.27",
-          "properties": {
-            "cve_ent": "27",
-            "nom_ent": "Tabasco"
-          },
+          "properties": { "cve_ent": "27", "nom_ent": "Tabasco" },
           "arcs": [[321]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.28",
-          "properties": {
-            "cve_ent": "28",
-            "nom_ent": "Tamaulipas"
-          },
+          "properties": { "cve_ent": "28", "nom_ent": "Tamaulipas" },
           "arcs": [[322]]
         },
         {
           "type": "Polygon",
           "id": "estados-poligonos.29",
-          "properties": {
-            "cve_ent": "29",
-            "nom_ent": "Tlaxcala"
-          },
+          "properties": { "cve_ent": "29", "nom_ent": "Tlaxcala" },
           "arcs": [[323]]
         },
         {
@@ -17291,10 +17204,7 @@
         {
           "type": "MultiPolygon",
           "id": "estados-poligonos.31",
-          "properties": {
-            "cve_ent": "31",
-            "nom_ent": "Yucatán"
-          },
+          "properties": { "cve_ent": "31", "nom_ent": "Yucatán" },
           "arcs": [
             [[327]],
             [[328]],
@@ -17356,10 +17266,7 @@
         {
           "type": "Polygon",
           "id": "estados-poligonos.32",
-          "properties": {
-            "cve_ent": "32",
-            "nom_ent": "Zacatecas"
-          },
+          "properties": { "cve_ent": "32", "nom_ent": "Zacatecas" },
           "arcs": [[382]]
         }
       ]

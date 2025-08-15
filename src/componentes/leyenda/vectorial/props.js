@@ -18,8 +18,5 @@ export default {
   /**
    *
    */
-  titulo: {
-    type: String,
-    default: undefined,
-  },
+  titulo: { type: String, default: undefined },
 }

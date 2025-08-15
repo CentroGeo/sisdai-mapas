@@ -13,25 +13,25 @@ import {
 import MapEventType from 'ol/MapEventType'
 
 import eventos from './eventos'
-import propsMapa from './props'
+import _props from './props'
 import { panelesEnUso } from './utiles'
 import Mapa from './Mapa'
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
 
 import {
-  AnimacionCarga,
+  // AnimacionCarga,
   VisAtribuciones,
-  InstruccionTeclado,
+  // InstruccionTeclado,
   CuadroInformativo,
-  GloboInformativo,
+  // GloboInformativo,
 } from './elementos'
 import { ControlesMapa } from './controles'
 
 import 'ol/ol.css'
-import PruebaMovimiento from './PruebaMovimiento.vue'
+// import PruebaMovimiento from './PruebaMovimiento.vue'
 
 const emits = defineEmits(Object.values(eventos))
-const props = defineProps(propsMapa)
+const props = defineProps(_props)
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
 provide(MAPA_INYECTADO, mapa)
 
@@ -49,6 +49,7 @@ watch(vista, nv => (mapa.vista = nv))
 
 function alMoverVista({ map }) {
   const vista = map.getView()
+
   emits(eventos.alMoverVista, {
     acercamiento: vista.getZoom(),
     centro: vista.getCenter(),

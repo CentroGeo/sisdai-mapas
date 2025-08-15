@@ -4,7 +4,7 @@ Componenete para desplegar capas desde servicios wms publicos o privados.
 
 **Uso:**
 
-```html{2}
+```vue{2}
 <SisdaiMapa>
   <SisdaiCapaWms />
 </SisdaiMapa>
@@ -27,6 +27,13 @@ Nombre de la capa en el servidor de mapas.
 - Valor obligatorio: si
 - Reactivo: no
 
+**Uso:**
+
+```vue
+<!-- Capa: Sistema Nacional de Investigadoras e Investigadores por sexo y entidad 2022 -->
+<SisdaiCapaWms capa="hcti_snii_sexo_22_est_a" />
+```
+
 ### `estilo`
 
 Nombre del estilo disponible para la capa. Al dejar el valor como indefinido,
@@ -35,6 +42,13 @@ mostrará el estilo de la capa por defecto que tenga en el servidor.
 - Tipo: `String`
 - Valor por defecto: `undefined`
 - Reactivo: si
+
+**Uso:**
+
+```vue
+<!-- Estilo: Número de mujeres con membresía vigente -->
+<SisdaiCapaWms estilo="hcti_snii_sexo_22_est_a_investigadoras" />
+```
 
 ### `filtro`
 
@@ -45,6 +59,13 @@ Filtro en sintaxis CQL, compatible con la
 - Valor por defecto: `undefined`
 - Reactivo: si
 
+**Uso:**
+
+```vue
+<!-- Filtro:  -->
+<SisdaiCapaWms filtro="filtro-CQL" />
+```
+
 ### `fuente`
 
 Url fuente del servicio WMS.
@@ -52,6 +73,13 @@ Url fuente del servicio WMS.
 - Tipo: `String`
 - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`
 - Reactivo: no
+
+**Uso:**
+
+```vue
+<!-- Fuente: Capas wms de gema -->
+<SisdaiCapaWms fuente="https://gema.conahcyt.mx/geoserver/wms" />
+```
 
 ### `tipoServidor`
 
@@ -61,6 +89,13 @@ qgis.
 - Tipo: `String`
 - Valor por defecto: `geoserver`
 - Reactivo: no
+
+**Uso:**
+
+```vue
+<!-- Tipo de servidor: Geoserver -->
+<SisdaiCapaWms tipoServidor="geoserver" />
+```
 
 <!-- ### `tituloClases`
 

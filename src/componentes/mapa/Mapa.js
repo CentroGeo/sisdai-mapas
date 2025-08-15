@@ -30,11 +30,7 @@ export default class Mapa extends olMap {
     super({
       controls: [new EscalaGrafica()],
       // target,
-      view: new View({
-        center: [0, 0],
-        projection: proyeccion,
-        zoom: 2,
-      }),
+      view: new View({ center: [0, 0], projection: proyeccion, zoom: 2 }),
     })
 
     this.capas = {}
@@ -69,7 +65,6 @@ export default class Mapa extends olMap {
 
   /**
    * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
-   *
    * @param {vista} vista
    */
   ajustarVista(vista = this.vista) {
@@ -168,9 +163,7 @@ export default class Mapa extends olMap {
    * @param {*} id
    */
   quitarCapa(id) {
-    this.removeLayer(
-      this.getAllLayers().find(capa => capa.get('id') === id)
-    )
+    this.removeLayer(this.getAllLayers().find(capa => capa.get('id') === id))
   }
 
   /**

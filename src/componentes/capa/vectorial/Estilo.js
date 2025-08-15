@@ -1,9 +1,6 @@
 import Estilo from '../../../utiles/vectores/Estilo'
 
-const tipo = {
-  categorias: 'categorias',
-  graduacion: 'graduacion',
-}
+const tipo = { categorias: 'categorias', graduacion: 'graduacion' }
 
 /**
  * @see https://openlayers.org/en/latest/apidoc/module-ol_expr_expression.html#~EncodedExpression
@@ -27,10 +24,7 @@ export default function (_estilo) {
       style: { ...general, ...new Estilo(cat.estilo[id]).traducidoOl },
     }))
 
-    clases.push({
-      else: true,
-      style: general,
-    })
+    clases.push({ else: true, style: general })
 
     return clases
   }

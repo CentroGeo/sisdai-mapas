@@ -1,13 +1,9 @@
-/**
- *
- */
-
 export const vista = {
   /**
    * Nivel de acercamiento utilizado para calcular la resolución inicial de la vista.
    *
    * - Tipo: `Number`
-   * - Valor por defecto: `1`
+   * - Valor por defecto: `1.5`
    * - Reactivo: Si.
    *
    * >  **Importante:** Debe tener en cuenta que si la propiedad `extension` se define, esta propiedad será ignorada.

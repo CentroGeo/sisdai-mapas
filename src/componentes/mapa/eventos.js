@@ -9,7 +9,7 @@ export default {
   alMoverVista: 'alMoverVista',
 
   /**
-   * Evento ejecutado cuando se da click en el botón de centrar
+   * Evento ejecutado cuando se da click en el botón de centrar.
    */
   clickCentrar: 'clickCentrar',
 }

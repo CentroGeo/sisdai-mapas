@@ -21,10 +21,13 @@ const visible = ref(false)
 function alClick({ coordinate, dragging, originalEvent, map }) {
   if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) return
 
-  const wmsConCuadro = mapa.capasWMS.filter(capa => capa.get('cuadroInfo')).slice(-1)[0]
+  const wmsConCuadro = mapa.capasWMS
+    .filter(capa => capa.get('cuadroInfo'))
+    .slice(-1)[0]
   if (wmsConCuadro === undefined) return
 
-  contenidoCuadro.value = '<span class="pictograma-reloj pictograma-grande p-0" />'
+  contenidoCuadro.value =
+    '<span class="pictograma-reloj pictograma-grande p-0" />'
 
   const pixel = mapa.getEventPixel(originalEvent)
   posicion.xy = pixel
@@ -32,37 +35,36 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
   visible.value = true
 
   const { params, contenido } = wmsConCuadro.get('cuadroInfo')
-  const url = wmsConCuadro.getSource().getFeatureInfoUrl(
-    coordinate,
-    map.getView().getResolution(),
-    map.getView().getProjection().getCode(),
-    {
-      FEATURE_COUNT: 1,
-      INFO_FORMAT: "application/json",
-      ...params
-    }
-  );
+  const url = wmsConCuadro
+    .getSource()
+    .getFeatureInfoUrl(
+      coordinate,
+      map.getView().getResolution(),
+      map.getView().getProjection().getCode(),
+      { FEATURE_COUNT: 1, INFO_FORMAT: 'application/json', ...params }
+    )
 
   // console.log(url);
 
   if (url) {
     fetch(url)
-      .then((response) => response.json())
+      .then(response => response.json())
       .then(({ features }) => {
         // console.log(features[0]?.properties);
         // const { properties } = features[0]
         if (features[0]?.properties) {
           contenidoCuadro.value = contenido(features[0]?.properties)
         } else {
-          contenidoCuadro.value = 'No hay información disponible para esta ubicación'
+          contenidoCuadro.value =
+            'No hay información disponible para esta ubicación'
         }
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(err => {
+        console.error(err)
       })
       .finally(() => {
         //console.log("fin");
-      });
+      })
   }
 }
 
@@ -115,7 +117,10 @@ function cerrarCuadro() {
       type="button"
       @click="cerrarCuadro"
     >
-      <span class="pictograma-cerrar" aria-hidden="true" />
+      <span
+        class="pictograma-cerrar"
+        aria-hidden="true"
+      />
     </button>
   </div>
 </template>

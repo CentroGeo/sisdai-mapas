@@ -27,7 +27,7 @@ Nivel de acercamiento utilizado para calcular la resolución inicial de la vista
 
 **Uso:**
 
-```html
+```vue
 <!-- acercamiento de la República Mexicana -->
 <SisdaiMapa :vista="{ acercamiento: 4.4, ... }">...</SisdaiMapa>
 ```
@@ -57,7 +57,7 @@ Coordenadas `[x, y]` del centro inicial de la vista.
 
 **Uso:**
 
-```html
+```vue
 <!-- centro de la República Mexicana -->
 <SisdaiMapa :vista="{ centro: [-102, 24], ... }">...</SisdaiMapa>
 ```
@@ -87,13 +87,11 @@ Coordenadas extremas `[x1, y1, x2, y2]` de la caja envolvente de la vista.
 
 **Uso:**
 
-```html
+```vue
 <!-- extensión de la República Mexicana -->
 <SisdaiMapa
   :vista="{ extension: [-118.3651, 14.5321, -86.7104, 32.7187], ... }"
->
-  ...
-</SisdaiMapa>
+> ... </SisdaiMapa>
 ```
 
 ### `extensionMargen`
@@ -115,7 +113,7 @@ la matriz son margen superior, derecho, inferior e izquierdo.
 
 **Uso:**
 
-```html
+```vue
 <SisdaiMapa :vista="{ extensionMargen: [15, 15, 15, 15], ... }">...</SisdaiMapa>
 ```
 
@@ -162,23 +160,7 @@ const mapa = ref()
 A continuación se describen los eventos que desencadena el mapa relacionados con
 los cambios de la vista.
 
-### `@alMoverVista`
-
-Ejecutado cuando se detecta que la vista del mapa ha cambiado.
-
-**Parámetros:**
-
-- `Object`: Nuevo valor de la vista de OpenLayers.
-
-**Uso:**
-
-```html
-<SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
-``` -->
-
-<!-- ### `@alAjustarVista`
+### `@alAjustarVista`
 
 Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores iniciales de la propiedad vista mediante el control AjustarVista.
 
@@ -190,41 +172,6 @@ Ejecutado cuado se detecta que se ha ajustado la vista del mapa a los valores in
 
 ```html
 <SisdaiMapa @alMoverVista="(objetoOlVista) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
-``` -->
-
-<!-- ### `@alCambiarCentro`
-
-Ejecutado cuando se detecta que el centro de la vista del mapa ha cambiado.
-
-**Parámetros:**
-
-- `Array`: Nuevo valor del centro.
-
-**Uso:**
-
-```html
-<SisdaiMapa @alCambiarCentro="(nuevoCentro) => `ejecutar una funcion`">
-  ...
-</SisdaiMapa>
-```
-
-### `@alCambiarAcercamiento`
-
-Ejecutado cuando se detecta que el acercamiento de la vista del mapa ha
-cambiado.
-
-**Parámetros:**
-
-- `Number`: Nuevo valor del acercamiento.
-
-**Uso:**
-
-```html
-<SisdaiMapa
-  @alCambiarAcercamiento="(nuevoAcercamiento) => `ejecutar una funcion`"
->
   ...
 </SisdaiMapa>
 ``` -->

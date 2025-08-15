@@ -1,5 +1,5 @@
 <script setup>
-import { inject, toRefs, watch, reactive, onMounted, onUnmounted } from 'vue'
+import { inject, toRefs, watch, onMounted, onUnmounted, reactive } from 'vue'
 
 import ImageTile from 'ol/source/ImageTile'
 import TileLayer from 'ol/layer/Tile'
@@ -17,10 +17,7 @@ const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
 const { fuente, opacidad, posicion, titulo, visible } = toRefs(props)
 
-const source = new ImageTile({
-  url: fuente.value,
-  crossOrigin: 'anonymous',
-})
+const source = new ImageTile({ url: fuente.value, crossOrigin: 'anonymous' })
 
 const capa = new TileLayer({
   id: props.id,
@@ -28,7 +25,7 @@ const capa = new TileLayer({
   source,
   titulo: titulo.value,
   visible: visible.value,
-  zIndex: posicion.value
+  zIndex: posicion.value,
 })
 
 watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
@@ -38,30 +35,30 @@ watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 // // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
 // mapa.capas[props.id] = TipoEstadoCarga.no
 
-// const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())
-// function emitirEventosCargaTotal(estado) {
-//   if (estado === TipoEstadoCarga.inicio) {
-//     emits(eventos.alIniciarCarga)
-//     mapa.capas[props.id] = TipoEstadoCarga.inicio
-//   } else {
-//     emits(eventos.alFinalizarCarga, Boolean(estado === TipoEstadoCarga.fin))
-//     mapa.capas[props.id] = TipoEstadoCarga.fin
-//   }
-// }
-// watch(() => monitoreoCargaTeselas.estdo, emitirEventosCargaTotal)
+const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())
+function emitirEventosCargaTotal(estado) {
+  if (estado === TipoEstadoCarga.inicio) {
+    emits(eventos.alIniciarCarga)
+    mapa.capas[props.id] = TipoEstadoCarga.inicio
+  } else {
+    emits(eventos.alFinalizarCarga, Boolean(estado === TipoEstadoCarga.fin))
+    mapa.capas[props.id] = TipoEstadoCarga.fin
+  }
+}
+watch(() => monitoreoCargaTeselas.estdo, emitirEventosCargaTotal)
 
-// source.on(TileEventType.TILELOADSTART, () => {
-//   emits(eventos.alIniciarCargaTesela)
-//   monitoreoCargaTeselas.inicio++
-// })
-// source.on(TileEventType.TILELOADEND, () => {
-//   emits(eventos.alFinalizarCargaTesela, true)
-//   monitoreoCargaTeselas.fin++
-// })
-// source.on(TileEventType.TILELOADERROR, () => {
-//   emits(eventos.alFinalizarCargaTesela, false)
-//   monitoreoCargaTeselas.error++
-// })
+source.on(TileEventType.TILELOADSTART, () => {
+  emits(eventos.alIniciarCargaTesela)
+  monitoreoCargaTeselas.inicio++
+})
+source.on(TileEventType.TILELOADEND, () => {
+  emits(eventos.alFinalizarCargaTesela, true)
+  monitoreoCargaTeselas.fin++
+})
+source.on(TileEventType.TILELOADERROR, () => {
+  emits(eventos.alFinalizarCargaTesela, false)
+  monitoreoCargaTeselas.error++
+})
 
 onMounted(() => mapa.addLayer(capa))
 onUnmounted(() => mapa.quitarCapa(props.id))

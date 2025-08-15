@@ -1,11 +1,6 @@
-// export const ruta = '/'
 export const ruta = '/mapas/'
 
-export const nav = {
-  text: 'Mapas',
-  link: ruta,
-  activeMatch: ruta,
-}
+export const nav = { text: 'Mapas', link: ruta, activeMatch: ruta }
 
 export const sidebar = [
   {
@@ -60,6 +55,4 @@ export const sidebar = [
   },
 ]
 
-export default {
-  [ruta]: sidebar,
-}
+export default { [ruta]: sidebar }

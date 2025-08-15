@@ -2,17 +2,14 @@ import { defineConfig } from 'vitepress'
 import { description } from './../../package.json'
 import sidebarComienza, { nav as navComienza } from './../comienza/sidebar'
 import sidebarMapas, { nav as navMapas } from './../mapas/sidebar'
-import * as dotenv from 'dotenv'
+import { configDotenv } from 'dotenv'
 
 const {
   VITE_CDN_ARCHIVOS,
   VITE_DOMINIO,
   VITE_URL_BASE,
-  VITE_DESCRIPCION,
   VITE_GOOGLE_ANALYTICS_ID,
-} = dotenv.config({
-  path: 'docs/.env',
-}).parsed
+} = configDotenv({ path: 'docs/.env' }).parsed
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -35,7 +32,7 @@ export default defineConfig({
       },
     ],
     ['meta', { property: 'og:title', content: 'sisdai-mapas' }],
-    ['meta', { property: 'og:description', content: `${VITE_DESCRIPCION}` }],
+    ['meta', { property: 'og:description', content: `${description}` }],
     [
       'meta',
       {
@@ -49,7 +46,7 @@ export default defineConfig({
     ],
 
     ['meta', { name: 'twitter:title', content: 'sisdai-mapas' }],
-    ['meta', { name: 'twitter:description', content: `${VITE_DESCRIPCION}` }],
+    ['meta', { name: 'twitter:description', content: `${description}` }],
     [
       'meta',
       {
@@ -75,18 +72,8 @@ export default defineConfig({
   ],
 
   themeConfig: {
-    nav: [
-      {
-        text: 'Inicio',
-        link: '/',
-      },
-      { ...navComienza },
-      { ...navMapas },
-    ],
+    nav: [{ text: 'Inicio', link: '/' }, { ...navComienza }, { ...navMapas }],
 
-    sidebar: {
-      ...sidebarComienza,
-      ...sidebarMapas,
-    },
+    sidebar: { ...sidebarComienza, ...sidebarMapas },
   },
 })

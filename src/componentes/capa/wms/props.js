@@ -10,10 +10,7 @@ export default {
    * - Valor **obligatorio**.
    * - Reactivo: No.
    */
-  capa: {
-    type: String,
-    required: true,
-  },
+  capa: { type: String, required: true },
 
   /**
    * Contenido del cuadro de información que aparecerá al dar clicl sobre la capa.
@@ -23,10 +20,7 @@ export default {
    * - Valor por defecto: `undefined`.
    * - Reactivo: si
    */
-  cuadroInformativo: {
-    type: [String, Function, Object],
-    default: undefined,
-  },
+  cuadroInformativo: { type: [String, Function, Object], default: undefined },
 
   /**
    * Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el
@@ -36,10 +30,7 @@ export default {
    * - Valor por defecto: `undefined`.
    * - Reactivo: Si.
    */
-  estilo: {
-    type: String,
-    default: undefined,
-  },
+  estilo: { type: String, default: undefined },
 
   /**
    * Filtro en sintaxis CQL, compatible con la api de Geoserver.
@@ -50,10 +41,7 @@ export default {
    * - Valor por defecto: `undefined`.
    * - Reactivo: Si.
    */
-  filtro: {
-    type: String,
-    default: undefined,
-  },
+  filtro: { type: String, default: undefined },
 
   /**
    * Url fuente del servicio WMS.
@@ -62,10 +50,7 @@ export default {
    * - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
    * - Reactivo: No.
    */
-  fuente: {
-    type: String,
-    default: 'https://gema.conahcyt.mx/geoserver/wms',
-  },
+  fuente: { type: String, default: 'https://gema.conahcyt.mx/geoserver/wms' },
 
   /**
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
@@ -76,8 +61,5 @@ export default {
    *
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
-  tipoServidor: {
-    type: String,
-    default: 'geoserver',
-  },
+  tipoServidor: { type: String, default: 'geoserver' },
 }

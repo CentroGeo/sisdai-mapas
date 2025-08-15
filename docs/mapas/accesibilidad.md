@@ -1,5 +1,5 @@
 <script setup>
-import MapaAccesibilidad from "./../.vitepress/ejemplos/MapaAccesibilidad.vue";
+import MapaAccesibilidad from "@ejemplos/MapaAccesibilidad.vue";
 </script>
 
 # Accesibilidad
@@ -11,11 +11,6 @@ Los botones de acercamiento y alejamiento, el mapa, la simbología y los
 elementos opcionales son accesibles a través del teclado y el lector de
 pantalla. Además, sisdai-mapas cuenta con atajos de teclado para navegar el mapa
 más fácilmente.
-
-## Navegación de los elementos en la vista
-
-Acciona el botón "Navegación por teclado" para visualizar las instrucciones de
-naveación del mapa.
 
 <MapaAccesibilidad />
 

@@ -18,8 +18,8 @@ coverage
 /cypress/videos/
 /cypress/screenshots/
 
-docs/.vitepress/dist
 docs/.vitepress/cache
+docs/.vitepress/dist
 docs/.vitepress/.temp
 
 # Editor directories and files
