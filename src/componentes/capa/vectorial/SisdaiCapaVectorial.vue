@@ -1,5 +1,5 @@
 <script setup>
-import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
+import { toRefs, watch } from 'vue'
 
 import GeoJSON from 'ol/format/GeoJSON'
 import TopoJSON from 'ol/format/TopoJSON'
@@ -8,26 +8,17 @@ import VectorSource from 'ol/source/Vector'
 import VectorEventType from 'ol/source/VectorEventType'
 
 import { esObjeto } from '../../../utiles'
-import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 import eventos from './../eventos'
+import useCapa from './../useCapa'
 import tratarEstilo from './Estilo'
 import _props from './props'
 import obtenerRepresentacion from './representacion'
 
-const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps({ ..._props, ver: { default: false } })
 // mapa.capas[props.id] = TipoEstadoCarga.no
-const {
-  estilo,
-  fuente,
-  globoInformativo,
-  opacidad,
-  posicion,
-  representacion,
-  titulo,
-  visible,
-} = toRefs(props)
+const { estilo, fuente, globoInformativo, representacion, titulo } =
+  toRefs(props)
 
 const dicFormato = { geojson: new GeoJSON(), topojson: new TopoJSON() }
 
@@ -61,27 +52,18 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 const capa = new VectorLayer({
   globoInfo: globoInformativo.value,
   id: props.id,
-  opacity: opacidad.value,
   source: obtenerRepresentacion(representacion.value, source),
   style: tratarEstilo(props.estilo),
   tipo: 'vectorial',
   titulo: titulo.value,
-  visible: visible.value,
-  zIndex: posicion.value,
 })
-// mapa.addLayer(layer)
+useCapa(capa, props)
 
 watch(estilo, nv => capa.setStyle(tratarEstilo(nv)))
 // watch(fuente, nv => layer.setSource(nv))
-watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
-watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
 watch([representacion, fuente], ([vis, fue]) =>
   capa.setSource(obtenerRepresentacion(vis, fue))
 )
-watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
-
-onMounted(() => mapa.addLayer(capa))
-onUnmounted(() => mapa.quitarCapa(props.id))
 
 // function _ver(params) {
 //   if (props.ver) {
