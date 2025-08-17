@@ -12,20 +12,19 @@ import {
 
 import MapEventType from 'ol/MapEventType'
 
+import { MAPA_INYECTADO } from './../../utiles/identificadores'
 import eventos from './eventos'
+import Mapa from './Mapa'
 import _props from './props'
 import { panelesEnUso } from './utiles'
-import Mapa from './Mapa'
-import { MAPA_INYECTADO } from './../../utiles/identificadores'
 
+import { ControlDeslizar, ControlesAcercamiento } from './controles'
 import {
-  // AnimacionCarga,
-  VisAtribuciones,
   // InstruccionTeclado,
   CuadroInformativo,
-  // GloboInformativo,
+  // AnimacionCarga,
+  VisAtribuciones,
 } from './elementos'
-import { ControlesAcercamiento, ControlDeslizar } from './controles'
 
 import 'ol/ol.css'
 // import PruebaMovimiento from './PruebaMovimiento.vue'
@@ -35,8 +34,9 @@ const props = defineProps(_props)
 const mapa = reactive(new Mapa(props.id, props.proyeccion))
 provide(MAPA_INYECTADO, mapa)
 
-const { descripcion, escalaGrafica, vista } = toRefs(props)
+const { descripcion, dividir, escalaGrafica, vista } = toRefs(props)
 watch(vista, nv => (mapa.vista = nv))
+watch(dividir, nv => (mapa.dividir = nv))
 
 // function emitirEventosCarga(nv) {
 //   if (nv) {
@@ -111,7 +111,7 @@ defineExpose(mapa)
 
         <!-- <InstruccionTeclado /> -->
         <ControlesAcercamiento :eventos="emits" />
-        <ControlDeslizar />
+        <ControlDeslizar v-if="!isNaN(dividir)" />
         <CuadroInformativo />
         <!-- <GloboInformativo /> -->
       </div>

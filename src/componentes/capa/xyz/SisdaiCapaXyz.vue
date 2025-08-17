@@ -2,10 +2,10 @@
 import { inject, onMounted, onUnmounted, reactive, toRefs, watch } from 'vue'
 
 import TileLayer from 'ol/layer/Tile'
+import { getRenderPixel } from 'ol/render'
 import ImageTile from 'ol/source/ImageTile'
 import TileEventType from 'ol/source/TileEventType'
 
-import { getRenderPixel } from 'ol/render'
 import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 import MonitoreoCargaElementos, {
   TipoEstadoCarga,
@@ -67,7 +67,7 @@ onUnmounted(() => mapa.quitarCapa(props.id))
 // { type, target, inversePixelTransform, frameState, context }
 capa.on('prerender', event => {
   const tamanioMapa = mapa.getSize()
-  const nuevoAnchoCapa = tamanioMapa[0] * (Number(mapa.deslizamiento) / 100)
+  const nuevoAnchoCapa = tamanioMapa[0] * (Number(mapa.dividir) / 100)
   const tl = getRenderPixel(event, [nuevoAnchoCapa, 0])
   const tr = getRenderPixel(event, [tamanioMapa[0], 0])
   const bl = getRenderPixel(event, [nuevoAnchoCapa, tamanioMapa[1]])

@@ -22,6 +22,8 @@ export default {
    */
   id: { type: String, default: () => idAleatorio() },
 
+  lado: { type: String, default: undefined },
+
   /**
    * Un valor que va de 0 a 1, para indicar la opacidad de la capa. 0 es totalmente invisible y 1 es la opacidad completa.
    *

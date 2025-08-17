@@ -1,6 +1,6 @@
 import { idAleatorio } from '../../utiles'
-import * as valoresPorDefecto from './valores'
 import * as validaciones from './validaciones'
+import * as valoresPorDefecto from './valores'
 
 export default {
   /**
@@ -11,6 +11,11 @@ export default {
    * - Reactivo: si
    */
   descripcion: { type: String, default: 'Mapa interactivo' },
+
+  /**
+   *
+   */
+  dividir: { type: Number, default: NaN },
 
   /**
    * Define si se agrega la escala grafica en el mapa.

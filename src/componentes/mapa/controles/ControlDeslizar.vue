@@ -4,9 +4,11 @@ import { MAPA_INYECTADO } from '../../../utiles/identificadores'
 
 const mapa = inject(MAPA_INYECTADO)
 
-const deslizamiento = ref(mapa.deslizamiento)
-watch(deslizamiento, nv => {
-  mapa.deslizamiento = nv
+const dividir = ref(mapa.dividir)
+watch(dividir, nv => {
+  console.log('dividir', nv)
+
+  mapa.dividir = nv
   mapa.render()
 })
 </script>
@@ -14,6 +16,6 @@ watch(deslizamiento, nv => {
 <template>
   <input
     type="range"
-    v-model="deslizamiento"
+    v-model="dividir"
   />
 </template>

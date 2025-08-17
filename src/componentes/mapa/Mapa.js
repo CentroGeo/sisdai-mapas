@@ -38,7 +38,7 @@ export default class Mapa extends olMap {
     this.agregarAtributosAriaCanvas()
 
     this.capas = {}
-    this.deslizamiento = 50
+    this.dividir = 50
   }
 
   /**
