@@ -2,35 +2,36 @@
 import { extensiones } from '@centrogeomx/sisdai-mapas/valores'
 import { ref } from 'vue'
 
-const deslizar = ref(undefined)
+const dividir = ref(undefined)
 // gref_unidades_climaticas_98_nal_a, gref_unidades_climaticas_08_nal_a
 </script>
 
 <template>
   <SisdaiMapa
     :vista="{ extension: extensiones.nacional }"
-    :dividir="deslizar"
+    :dividir="Number(dividir)"
   >
     <template #panel-encabezado-vis>
-      <button
-        @click="() => (deslizar = deslizar === undefined ? 50 : undefined)"
-      >
-        Deslizar
+      <button @click="() => (dividir = dividir === undefined ? 50 : undefined)">
+        Dividir
       </button>
+      <input
+        type="range"
+        v-model="dividir"
+        :disabled="dividir === undefined"
+      />
     </template>
 
-    <SisdaiCapaXyz
-      :lado="undefined"
-      :posicion="0"
-    />
+    <SisdaiCapaXyz :posicion="0" />
+    <!-- lado="izquierda" -->
     <SisdaiCapaWms
       capa="gref_unidades_climaticas_98_nal_a"
-      :lado="undefined"
       :posicion="1"
     />
     <SisdaiCapaVectorial
       :estilo="{ contorno: 'gray', relleno: 'transparente' }"
       fuente="/assets/estados-poligonos.geojson"
+      lado="derecha"
       :posicion="2"
     />
   </SisdaiMapa>

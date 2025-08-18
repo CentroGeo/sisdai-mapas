@@ -26,7 +26,7 @@ export default class Mapa extends olMap {
    * @param {string} proyeccion
    * @returns {import("./../clases/Mapa.js").default} Mapa
    */
-  constructor(id, proyeccion /*, target, emits*/) {
+  constructor({ dividir, id, proyeccion /*, target, emits*/ }) {
     super({
       controls: [new EscalaGrafica()],
       // target,
@@ -38,7 +38,8 @@ export default class Mapa extends olMap {
     this.agregarAtributosAriaCanvas()
 
     this.capas = {}
-    this.dividir = 50
+
+    this.dividir = dividir
   }
 
   /**

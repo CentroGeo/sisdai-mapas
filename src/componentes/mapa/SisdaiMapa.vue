@@ -18,7 +18,7 @@ import Mapa from './Mapa'
 import _props from './props'
 import { panelesEnUso } from './utiles'
 
-import { ControlDeslizar, ControlesAcercamiento } from './controles'
+import { ControlesAcercamiento } from './controles'
 import {
   // InstruccionTeclado,
   CuadroInformativo,
@@ -31,7 +31,7 @@ import 'ol/ol.css'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const mapa = reactive(new Mapa(props.id, props.proyeccion))
+const mapa = reactive(new Mapa(props))
 provide(MAPA_INYECTADO, mapa)
 
 const { descripcion, dividir, escalaGrafica, vista } = toRefs(props)
@@ -111,7 +111,6 @@ defineExpose(mapa)
 
         <!-- <InstruccionTeclado /> -->
         <ControlesAcercamiento :eventos="emits" />
-        <ControlDeslizar v-if="!isNaN(dividir)" />
         <CuadroInformativo />
         <!-- <GloboInformativo /> -->
       </div>
