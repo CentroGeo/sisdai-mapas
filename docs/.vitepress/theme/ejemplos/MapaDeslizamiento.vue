@@ -23,9 +23,9 @@ const dividir = ref(undefined)
     </template>
 
     <SisdaiCapaXyz :posicion="0" />
-    <!-- lado="izquierda" -->
     <SisdaiCapaWms
       capa="gref_unidades_climaticas_98_nal_a"
+      lado="izquierda"
       :posicion="1"
     />
     <SisdaiCapaVectorial
