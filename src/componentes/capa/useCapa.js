@@ -21,6 +21,8 @@ export default function useCapa(capa, props) {
   capa.setVisible(visible.value)
   watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
 
+  watch(lado, () => mapa.render())
+
   // { type, target, inversePixelTransform, frameState, context }
   capa.on(EventTypeRender.PRERENDER, event => {
     if (isNaN(mapa.dividir)) return

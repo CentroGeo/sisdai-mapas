@@ -36,7 +36,10 @@ provide(MAPA_INYECTADO, mapa)
 
 const { descripcion, dividir, escalaGrafica, vista } = toRefs(props)
 watch(vista, nv => (mapa.vista = nv))
-watch(dividir, nv => (mapa.dividir = nv))
+watch(dividir, nv => {
+  mapa.dividir = nv
+  mapa.render()
+})
 
 // function emitirEventosCarga(nv) {
 //   if (nv) {
