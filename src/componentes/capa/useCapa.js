@@ -53,7 +53,6 @@ export default function useCapa(capa, props) {
   capa.on(EventTypeRender.POSTRENDER, ({ context }) => {
     if (isNaN(mapa.dividir)) return
     if (!(props.lado === 'izquierda' || props.lado === 'derecha')) return
-    // console.log(type)
 
     context.restore()
   })

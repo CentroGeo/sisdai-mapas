@@ -18,7 +18,7 @@ import Mapa from './Mapa'
 import _props from './props'
 import { panelesEnUso } from './utiles'
 
-import { ControlesAcercamiento } from './controles'
+import { ControlDivisor, ControlesAcercamiento } from './controles'
 import {
   // InstruccionTeclado,
   CuadroInformativo,
@@ -112,6 +112,7 @@ defineExpose(mapa)
           tabindex="0"
         />
 
+        <ControlDivisor v-if="!isNaN(dividir)" />
         <!-- <InstruccionTeclado /> -->
         <ControlesAcercamiento :eventos="emits" />
         <CuadroInformativo />

@@ -15,11 +15,6 @@ const dividir = ref(undefined)
       <button @click="() => (dividir = dividir === undefined ? 50 : undefined)">
         Dividir
       </button>
-      <input
-        type="range"
-        v-model="dividir"
-        :disabled="dividir === undefined"
-      />
     </template>
 
     <SisdaiCapaXyz :posicion="0" />
