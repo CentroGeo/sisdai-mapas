@@ -1,11 +1,11 @@
 <script setup>
-import { extensiones } from '@centrogeomx/sisdai-mapas/valores'
+import { valores } from '@centrogeomx/sisdai-mapas'
 </script>
 
 <template>
   <SisdaiMapa
     descripcion="Este mapa es un ejemplo simple de como configurar el mapa para ajustarlo conforme a las necesidades de cada proyecto."
-    :vista="{ extension: extensiones.nacional }"
+    :vista="{ extension: valores.extensiones.nacional }"
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">

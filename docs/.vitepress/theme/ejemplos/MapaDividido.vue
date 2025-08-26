@@ -1,5 +1,5 @@
 <script setup>
-import { extensiones } from '@centrogeomx/sisdai-mapas/valores'
+import { valores } from '@centrogeomx/sisdai-mapas'
 import { ref } from 'vue'
 
 const dividir = ref(undefined)
@@ -8,7 +8,7 @@ const dividir = ref(undefined)
 
 <template>
   <SisdaiMapa
-    :vista="{ extension: extensiones.nacional }"
+    :vista="{ extension: valores.extensiones.nacional }"
     :dividir="Number(dividir)"
   >
     <template #panel-encabezado-vis>
@@ -24,7 +24,7 @@ const dividir = ref(undefined)
       :posicion="1"
     />
     <SisdaiCapaVectorial
-      :estilo="{ contorno: 'gray', relleno: 'transparente' }"
+      :estilo="{ contorno: 'gris', relleno: 'transparente' }"
       fuente="/assets/estados-poligonos.geojson"
       lado="derecha"
       :posicion="2"

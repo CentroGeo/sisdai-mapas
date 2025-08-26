@@ -45,3 +45,5 @@ export {
   SisdaiLeyendaWms,
   SisdaiMapa,
 }
+
+export * as valores from './valores'

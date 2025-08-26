@@ -20,6 +20,8 @@ const dividir = computed({
     class="divisor"
     type="range"
     v-model="dividir"
+    min="2.8"
+    max="97.2"
   />
 </template>
 

@@ -38,7 +38,6 @@ export default function useCapa(capa, props) {
     const [izq2, aba1] = getRenderPixel(event, [inicio, alto])
     const [der2, aba2] = getRenderPixel(event, [fin, alto])
     const [der1, arr2] = getRenderPixel(event, [fin, 0])
-
     const { context } = event
 
     context.save()

@@ -1,9 +1,9 @@
 <script setup>
-import { extensiones } from '@centrogeomx/sisdai-mapas/valores'
+import { valores } from '@centrogeomx/sisdai-mapas'
 </script>
 
 <template>
-  <SisdaiMapa :vista="{ extension: extensiones.nacional }">
+  <SisdaiMapa :vista="{ extension: valores.extensiones.nacional }">
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">
         Navegación de los elementos en la vista
