@@ -4,7 +4,7 @@ import { MAPA_INYECTADO } from '../../../utiles/identificadores'
 
 const mapa = inject(MAPA_INYECTADO)
 
-const alturaDivisor = computed(() => (mapa.getSize() || [])[1])
+const tamanioMapa = computed(() => mapa.getSize() || [])
 const dividir = computed({
   get: () => mapa.dividir,
   set(nv) {
@@ -12,16 +12,19 @@ const dividir = computed({
     mapa.render()
   },
 })
+
+const anchoControl = 32
+const minimo = computed(() => (anchoControl / tamanioMapa.value[0] / 2) * 100)
 </script>
 
 <template>
   <input
-    :style="`--altura-divisor: ${alturaDivisor}px`"
+    :style="`--altura-divisor: ${tamanioMapa[1]}px; --ancho-control: ${anchoControl}px`"
     class="divisor"
     type="range"
     v-model="dividir"
-    min="2.8"
-    max="97.2"
+    :min="minimo"
+    :max="100 - minimo"
   />
 </template>
 
@@ -61,14 +64,14 @@ input[type='range'].divisor {
 
     --pictograma-control-divisor: url('https://visualpharm.com/assets/10/Split%20Horizontal-595b40b85ba036ed117dbb41.svg');
     --ancho-fondo-oscuro: 0.25rem; /* ancho de la franja oscura central */
+    --fondo-oscuro: rgba(0, 0, 0, 0.625); /* centro oscuro */
+    // --ancho-control: 2rem;
     // --fondo-claro: rgba(0, 0, 0, 0.08); /* orillas claras */
     --fondo-claro: rgba(0, 0, 0, 0); /* orillas claras */
-    --fondo-oscuro: rgba(0, 0, 0, 0.625); /* centro oscuro */
-    --tamanio-pictograma: 2rem;
-    width: var(--tamanio-pictograma);
+    width: var(--ancho-control);
     background:
-      var(--pictograma-control-divisor) center/var(--tamanio-pictograma)
-        var(--tamanio-pictograma) no-repeat,
+      var(--pictograma-control-divisor) center/var(--ancho-control)
+        var(--ancho-control) no-repeat,
       linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))
         center/var(--ancho-fondo-oscuro) 100% no-repeat,
       linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));
