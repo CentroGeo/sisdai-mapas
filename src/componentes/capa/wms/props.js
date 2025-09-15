@@ -62,4 +62,6 @@ export default {
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
   tipoServidor: { type: String, default: 'geoserver' },
+
+  consulta: { type: Function, default: url => fetch(url) },
 }

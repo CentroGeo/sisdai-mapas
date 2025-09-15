@@ -16,6 +16,12 @@ const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
 
 const source = new ImageWMS({
   crossOrigin: 'anonymous',
+  imageLoadFunction: (tile, url) => {
+    props
+      .consulta(url)
+      .then(response => response.blob())
+      .then(blob => (tile.getImage().src = URL.createObjectURL(blob)))
+  },
   params: {
     CQL_FILTER: filtro.value,
     LAYERS: props.capa,
