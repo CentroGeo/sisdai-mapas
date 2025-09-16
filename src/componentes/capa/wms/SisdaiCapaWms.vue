@@ -21,6 +21,8 @@ const source = new ImageWMS({
       .consulta(url)
       .then(response => response.blob())
       .then(blob => (tile.getImage().src = URL.createObjectURL(blob)))
+      .catch(() => {})
+      .finally(() => {})
   },
   params: {
     CQL_FILTER: filtro.value,

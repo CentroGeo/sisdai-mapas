@@ -1,6 +1,6 @@
 import { urlGeoserverGema } from '../../../utiles/constantes'
-import propsControl from './../control/props'
 import propsCapaWms from './../../capa/wms/props'
+import propsControl from './../control/props'
 
 export default {
   /**
@@ -45,4 +45,6 @@ export default {
    *
    */
   visible: { type: Boolean, default: true },
+
+  consulta: { type: Function, default: url => fetch(url) },
 }

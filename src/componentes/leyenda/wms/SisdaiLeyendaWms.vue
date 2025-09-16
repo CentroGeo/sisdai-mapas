@@ -1,9 +1,8 @@
 <script setup>
 import { computed, ref, toRefs, watch } from 'vue'
 import SisdaiLeyendaControl from './../control'
-import _props from './props'
-import axios from 'axios'
 import eventos from './eventos'
+import _props from './props'
 
 const emits = defineEmits(eventos)
 const props = defineProps(_props)
@@ -26,14 +25,15 @@ watch(
 )
 
 function actualizarClasesDesdeWms([capa, estilo, fuente]) {
-  axios(new GeoserverLeyenda({ capa, estilo, fuente }).url)
-    .then(({ data, status }) => {
-      if (status !== 200) return
-
+  props
+    .consulta(new GeoserverLeyenda({ capa, estilo, fuente }).url)
+    .then(response => response.json())
+    .then(data => {
       clases.value = new Clases(data)
       asignarVisibilidad(visible.value)
     })
     .catch(() => {})
+    .finally(() => {})
 }
 actualizarClasesDesdeWms([nombre.value, estilo.value, fuente.value])
 watch([nombre, estilo, fuente], actualizarClasesDesdeWms)
@@ -104,8 +104,9 @@ const capaEncendida = computed({
 </template>
 
 <script>
-import { GetLegendGraphic, utils } from 'geoserver-api-reader'
-import { Svg } from '../../../utiles/vectores'
+import { GetLegendGraphic } from 'geoserver-api-reader'
+import { ejecutarMetodoArrayEnObjeto } from './../../../utiles'
+import { Svg } from './../../../utiles/vectores'
 
 class Clases {
   constructor({ Legend }) {
@@ -149,7 +150,16 @@ export class GeoserverLeyenda extends GetLegendGraphic {
   }
 
   get url() {
-    return `${utils.urlService(this._fuente, this._servicio)}${this.parametrosEnFormatoURL}`
+    const parametros = new URLSearchParams(
+      ejecutarMetodoArrayEnObjeto(
+        this.parametros,
+        ([, valor]) => valor !== undefined && valor !== null,
+        'filter'
+      )
+    )
+
+    // return `${utils.urlService(this._fuente, this._servicio)}${this.parametrosEnFormatoURL}`
+    return `${this._fuente}?${parametros.toString()}`
   }
 }
 </script>
