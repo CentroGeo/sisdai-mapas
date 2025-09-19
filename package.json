@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "@centrogeomx/sisdai-componentes": "^4.14.0",
-    "@centrogeomx/sisdai-css": "git+https://github.com/CentroGeo/sisdai-css#v1.9.1",
+    "@centrogeomx/sisdai-css": "git+https://github.com/CentroGeo/sisdai-css.git#v1.9.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/js": "^9.34.0",
