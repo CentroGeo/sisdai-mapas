@@ -1,12 +1,12 @@
-import '@centrogeomx/sisdai-css'
+import '@centrogeomx/sisdai-css/dist/sisdai.min.css'
 import 'vitepress/dist/client/theme-default/styles/components/vp-code.css'
 import 'vitepress/dist/client/theme-default/styles/icons.css'
 import 'vitepress/dist/client/theme-default/styles/vars.css'
 // import { createPinia } from 'pinia'
 
-import './estilos/codigo.css'
 import Layout from './DisposicionPrincipal.vue'
 import VisorCodigo from './componentes/VisorCodigo.vue'
+import './estilos/codigo.css'
 
 /** @type {import('vitepress').Theme} */
 export default {
