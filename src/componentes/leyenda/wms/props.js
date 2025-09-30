@@ -1,8 +1,13 @@
-import { urlGeoserverGema } from '../../../utiles/constantes'
+import { urlGemaWms } from './../../../utiles/constantes'
 import propsCapaWms from './../../capa/wms/props'
 import propsControl from './../control/props'
 
 export default {
+  /**
+   *
+   */
+  consulta: { type: Function, default: url => fetch(url) },
+
   /**
    *
    */
@@ -11,9 +16,13 @@ export default {
   estilo: propsCapaWms.estilo,
 
   /**
+   * Url fuente del servicio WMS.
    *
+   * - Tipo: `String`.
+   * - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
+   * - Reactivo: No.
    */
-  fuente: { type: String, default: urlGeoserverGema },
+  fuente: { type: String, default: urlGemaWms },
 
   /**
    *
@@ -45,6 +54,4 @@ export default {
    *
    */
   visible: { type: Boolean, default: true },
-
-  consulta: { type: Function, default: url => fetch(url) },
 }

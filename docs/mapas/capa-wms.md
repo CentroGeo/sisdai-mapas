@@ -34,6 +34,33 @@ Nombre de la capa en el servidor de mapas.
 <SisdaiCapaWms capa="hcti_snii_sexo_22_est_a" />
 ```
 
+### `consulta`
+
+Permite editar la función de consulta (fetch) para cada petición que requiera
+para visualizar el servicio wms.
+
+- Tipo: `Function`
+- Valor por defecto: `(url) => fetch(url)`
+- Reactivo: no
+
+**Uso:**
+
+```js
+// Envío de cabeceras en el fetch
+function consultaWms(url) {
+  const token = 'mi token'
+
+  return fetch(url, {
+    headers: { Authorization: token };
+  })
+}
+```
+
+```vue
+<!-- Consulta: Modifica el fetch de consulta -->
+<SisdaiCapaWms :consulta="consultaWms" />
+```
+
 ### `estilo`
 
 Nombre del estilo disponible para la capa. Al dejar el valor como indefinido,

@@ -1,3 +1,4 @@
+import { urlGemaWms } from './../../../utiles/constantes'
 import props from './../props'
 
 export default {
@@ -13,6 +14,11 @@ export default {
   capa: { type: String, required: true },
 
   /**
+   *
+   */
+  consulta: { type: Function, default: url => fetch(url) },
+
+  /**
    * Contenido del cuadro de información que aparecerá al dar clicl sobre la capa.
    * Puede ser una funcion que accede a las propiedades del elemento al que se sobrepone o un texto estatico.
    *
@@ -23,7 +29,7 @@ export default {
   cuadroInformativo: { type: [String, Function, Object], default: undefined },
 
   /**
-   * Nombre del estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el
+   * Estilo disponible para la capa. Al dejar el valor como indefinido, mostrará el
    * estilo de la capa por defecto que tenga en el servidor.
    *
    * - Tipo: `String`.
@@ -50,7 +56,7 @@ export default {
    * - Valor por defecto: `'https://gema.conahcyt.mx/geoserver/wms'`.
    * - Reactivo: No.
    */
-  fuente: { type: String, default: 'https://gema.conahcyt.mx/geoserver/wms' },
+  fuente: { type: String, default: urlGemaWms },
 
   /**
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
@@ -62,6 +68,4 @@ export default {
    * @see https://openlayers.org/en/latest/apidoc/module-ol_source_wms.html#~ServerType
    */
   tipoServidor: { type: String, default: 'geoserver' },
-
-  consulta: { type: Function, default: url => fetch(url) },
 }
