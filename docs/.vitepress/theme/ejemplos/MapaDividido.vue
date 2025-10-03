@@ -1,5 +1,6 @@
 <script setup>
 import { valores } from '@centrogeomx/sisdai-mapas'
+import { lados } from '@centrogeomx/sisdai-mapas/src/utiles/capa.js'
 import { ref } from 'vue'
 
 const dividir = ref(undefined)
@@ -20,13 +21,13 @@ const dividir = ref(undefined)
     <SisdaiCapaXyz :posicion="0" />
     <SisdaiCapaWms
       capa="gref_unidades_climaticas_98_nal_a"
-      lado="izquierda"
+      :lado="lados.izquierdo"
       :posicion="1"
     />
     <SisdaiCapaVectorial
       :estilo="{ contorno: 'gris', relleno: 'transparente' }"
       fuente="/assets/estados-poligonos.geojson"
-      lado="derecha"
+      :lado="lados.derecho"
       :posicion="2"
     />
   </SisdaiMapa>

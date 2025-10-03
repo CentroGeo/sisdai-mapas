@@ -1,6 +1,7 @@
 import { getRenderPixel } from 'ol/render.js'
 import EventTypeRender from 'ol/render/EventType'
 import { inject, onMounted, onUnmounted, toRefs, watch } from 'vue'
+import { lados } from '../../utiles/capa.js'
 import { MAPA_INYECTADO } from '../../utiles/identificadores'
 
 /**
@@ -26,13 +27,14 @@ export default function useCapa(capa, props) {
   // { type, target, inversePixelTransform, frameState, context }
   capa.on(EventTypeRender.PRERENDER, event => {
     if (isNaN(mapa.dividir)) return
-    if (!(props.lado === 'izquierda' || props.lado === 'derecha')) return
+    if (!(props.lado === lados.izquierdo || props.lado === lados.derecho))
+      return
 
     const [ancho, alto] = mapa.getSize()
     const corteVertical = ancho * (Number(mapa.dividir) / 100)
 
-    const inicio = lado.value === 'derecha' ? corteVertical : 0
-    const fin = lado.value === 'derecha' ? ancho : corteVertical
+    const inicio = lado.value === lados.derecho ? corteVertical : 0
+    const fin = lado.value === lados.derecho ? ancho : corteVertical
 
     const [izq1, arr1] = getRenderPixel(event, [inicio, 0])
     const [izq2, aba1] = getRenderPixel(event, [inicio, alto])
@@ -51,7 +53,8 @@ export default function useCapa(capa, props) {
   })
   capa.on(EventTypeRender.POSTRENDER, ({ context }) => {
     if (isNaN(mapa.dividir)) return
-    if (!(props.lado === 'izquierda' || props.lado === 'derecha')) return
+    if (!(props.lado === lados.izquierdo || props.lado === lados.derecho))
+      return
 
     context.restore()
   })
