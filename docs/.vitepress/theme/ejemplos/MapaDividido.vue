@@ -23,6 +23,7 @@ const dividir = ref(50)
       capa="gref_unidades_climaticas_98_nal_a"
       :lado="lados.izquierdo"
       :posicion="1"
+      :mosaicos="true"
     />
     <SisdaiCapaVectorial
       :estilo="{ contorno: 'gris', relleno: 'transparente' }"

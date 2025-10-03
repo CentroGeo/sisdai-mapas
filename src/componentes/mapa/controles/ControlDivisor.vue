@@ -79,6 +79,9 @@ input[type='range'].divisor {
     //   linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));
 
     background:
+      // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><text x='50%' y='50%' font-size='32' text-anchor='middle' dominant-baseline='middle' fill='white'>&lt; &gt;</text></svg>")
+      //   // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='50' viewBox='0 0 120 50'><g fill='none' stroke='currentColor' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><line x1='50' y1='6' x2='20' y2='25'/><line x1='20' y1='25' x2='50' y2='44'/><line x1='70' y1='6' x2='100' y2='25'/><line x1='100' y1='25' x2='70' y2='44'/></g></svg>")
+      // center/60% no-repeat,
       radial-gradient(circle, var(--fondo-oscuro) 70%, transparent 71%)
         center/var(--ancho-control) var(--ancho-control) no-repeat,
       linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))

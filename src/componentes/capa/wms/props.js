@@ -58,6 +58,8 @@ export default {
    */
   fuente: { type: String, default: urlGemaWms },
 
+  mosaicos: { type: Boolean, default: false },
+
   /**
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
    *

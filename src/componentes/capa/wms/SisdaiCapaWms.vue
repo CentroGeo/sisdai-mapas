@@ -5,6 +5,8 @@ import { Image as ImageLayer } from 'ol/layer'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
 
+import TileLayer from 'ol/layer/Tile'
+import { TileWMS } from 'ol/source'
 import eventos from './../eventos'
 import useCapa from './../useCapa'
 import _props from './props'
@@ -14,7 +16,8 @@ const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
 const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
 
-const source = new ImageWMS({
+const Source = props.mosaicos ? TileWMS : ImageWMS
+const source = new Source({
   crossOrigin: 'anonymous',
   imageLoadFunction: (tile, url) => {
     props
@@ -34,7 +37,8 @@ const source = new ImageWMS({
   url: props.fuente,
 })
 
-const capa = new ImageLayer({
+const Layer = props.mosaicos ? TileLayer : ImageLayer
+const capa = new Layer({
   cuadroInfo: cuadroInformativo.value,
   id: props.id,
   source,
