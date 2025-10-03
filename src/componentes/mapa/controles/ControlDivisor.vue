@@ -13,7 +13,7 @@ const dividir = computed({
   },
 })
 
-const anchoControl = 32
+const anchoControl = 40
 const minimo = computed(() => (anchoControl / tamanioMapa.value[0] / 2) * 100)
 </script>
 
@@ -64,14 +64,23 @@ input[type='range'].divisor {
 
     --pictograma-control-divisor: url('https://visualpharm.com/assets/10/Split%20Horizontal-595b40b85ba036ed117dbb41.svg');
     --ancho-fondo-oscuro: 0.25rem; /* ancho de la franja oscura central */
-    --fondo-oscuro: rgba(0, 0, 0, 0.625); /* centro oscuro */
+    // --fondo-oscuro: rgba(0, 0, 0, 0.625); /* centro oscuro */
+    --fondo-oscuro: var(--boton-primario-fondo); /* centro oscuro */
     // --ancho-control: 2rem;
     // --fondo-claro: rgba(0, 0, 0, 0.08); /* orillas claras */
     --fondo-claro: rgba(0, 0, 0, 0); /* orillas claras */
     width: var(--ancho-control);
+
+    // background:
+    //   var(--pictograma-control-divisor) center/var(--ancho-control)
+    //     var(--ancho-control) no-repeat,
+    //   linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))
+    //     center/var(--ancho-fondo-oscuro) 100% no-repeat,
+    //   linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));
+
     background:
-      var(--pictograma-control-divisor) center/var(--ancho-control)
-        var(--ancho-control) no-repeat,
+      radial-gradient(circle, var(--fondo-oscuro) 70%, transparent 71%)
+        center/var(--ancho-control) var(--ancho-control) no-repeat,
       linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))
         center/var(--ancho-fondo-oscuro) 100% no-repeat,
       linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));

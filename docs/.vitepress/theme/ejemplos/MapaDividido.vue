@@ -3,7 +3,7 @@ import { valores } from '@centrogeomx/sisdai-mapas'
 import { lados } from '@centrogeomx/sisdai-mapas/src/utiles/capa.js'
 import { ref } from 'vue'
 
-const dividir = ref(undefined)
+const dividir = ref(50)
 // gref_unidades_climaticas_98_nal_a, gref_unidades_climaticas_08_nal_a
 </script>
 
@@ -14,7 +14,7 @@ const dividir = ref(undefined)
   >
     <template #panel-encabezado-vis>
       <button @click="() => (dividir = dividir === undefined ? 50 : undefined)">
-        Dividir
+        {{ dividir === undefined ? 'Dividir' : 'Dejar de dividir' }}
       </button>
     </template>
 
