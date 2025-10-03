@@ -1,12 +1,12 @@
 <script setup>
 import { toRefs, watch } from 'vue'
 
-import { Image as ImageLayer } from 'ol/layer'
+import ImageLayer from 'ol/layer/Image'
+import TileLayer from 'ol/layer/Tile'
 import { ImageSourceEventType } from 'ol/source/Image'
 import ImageWMS from 'ol/source/ImageWMS'
+import TileWMS from 'ol/source/TileWMS'
 
-import TileLayer from 'ol/layer/Tile'
-import { TileWMS } from 'ol/source'
 import eventos from './../eventos'
 import useCapa from './../useCapa'
 import _props from './props'
