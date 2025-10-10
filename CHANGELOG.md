@@ -17,11 +17,63 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.2.0] - 2025-10-10
+
+### Agregado (Added)
+
+- **Vista dividida / Swipe**:
+  - Control tipo `input range` sobre el mapa para dividir la vista (split view).
+  - Integración de **capa deslizada (swipe)**.
+  - Propiedad reactiva `lado` en capas para definir su posición en la división.
+  - Documentación de uso.
+- **WMS**:
+  - Importación y ciclo de vida (`onMounted` / `onUnmounted`) de capas WMS.
+  - Habilitación de **eventos** en capa WMS.
+  - **Reactividad** de la posición de capas WMS.
+  - **Opacidad** en capas WMS.
+  - `getFeatureInfo`: **validación** de `feature`.
+  - Manejo de **`crossOrigin`**.
+  - Uso correcto de `map.getView()` en `alMoverVista`.
+  - **Consulta**: Nuevo **parámetro `consulta`** para controlar el `fetch` de la
+    consulta del servicio (leyenda y/o getFeatureInfo).
+- **Capas**:
+  - **Composable** para acciones repetidas en capas.
+
+### Cambiado (Changed)
+
+- **Dependencias**:
+  - Actualización general de dependencias.
+  - Ajuste del **formato de la URL** de la dependencia `sisdai-css` (Git URL →
+    https/npm).
+  - `sisdai-css` ahora se importa **desde npm/https**.
+- **WMS**:
+  - Modificación de **importación de clases** WMS.
+  - **Cuadro de información**:
+    - Propiedad `cuadroInformativo` con reactividad.
+    - Parámetros de **URL** y **contenido** configurables desde la propiedad del
+      cuadro.
+    - **Delimitación** del cuadro informativo solo para las capas WMS que lo
+      soliciten.
+    - **Evento** al dar click en el **botón de centrar**.
+- **XYZ**:
+  - Refactor: **opacidad**, **posición** y **visible** en capa XYZ.
+  - Movimiento (cursor y botones) y ciclo de vida (`onMounted` / `onUnmounted`)
+    en capa XYZ.
+- **Vectorial**:
+  - **Parámetros reactivos** en capa vectorial.
+- **CSS**:
+  - Actualización de la importación de **sisdai-css**.
+
+### Eliminado (Removed)
+
+- Se quitó la dependencia `axios`
+
 ## [2.1.0] - 2025-03-27
 
 ### Cambiado (Changed)
 
-- Se actualizaron las versiones y archivos de configuración de las bibliotecas requeridas tanto para el proyecto como para la documentación y pruebas. 
+- Se actualizaron las versiones y archivos de configuración de las bibliotecas
+  requeridas tanto para el proyecto como para la documentación y pruebas.
 
 ## [2.0.1] - 2024-12-17
 
@@ -183,6 +235,7 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
+[2.2.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.2.0...v2.1.0
 [2.1.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.1.0...v2.0.1
 [1.13.6]:
   https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3

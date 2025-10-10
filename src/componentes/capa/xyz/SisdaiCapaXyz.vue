@@ -1,29 +1,31 @@
 <script setup>
-import { inject, toRefs, watch, reactive } from 'vue'
-import ImageTile from 'ol/source/ImageTile'
+import { inject, reactive, toRefs, watch } from 'vue'
+
 import TileLayer from 'ol/layer/Tile'
+// import { getRenderPixel } from 'ol/render'
+import ImageTile from 'ol/source/ImageTile'
 import TileEventType from 'ol/source/TileEventType'
-import _props from './props'
+
+import { MAPA_INYECTADO } from './../../../utiles/identificadores'
 import MonitoreoCargaElementos, {
   TipoEstadoCarga,
 } from './../../../utiles/MonitoreoCargaElementos'
+import useCapa from './../useCapa'
 import eventos from './eventos'
-import { MAPA_INYECTADO } from './../../../utiles/identificadores'
+import _props from './props'
 
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { titulo, fuente } = toRefs(props)
+const { fuente, titulo } = toRefs(props)
 
-const source = new ImageTile({
-  url: fuente.value,
-  crossOrigin: 'anonymous',
-})
+const source = new ImageTile({ url: fuente.value, crossOrigin: 'anonymous' })
 
-const layer = new TileLayer({ id: props.id, source, titulo: titulo.value })
-mapa.addLayer(layer)
-// mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
-mapa.capas[props.id] = TipoEstadoCarga.no
+const capa = new TileLayer({ id: props.id, source, titulo: titulo.value })
+useCapa(capa, props)
+
+// // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }
+// mapa.capas[props.id] = TipoEstadoCarga.no
 
 const monitoreoCargaTeselas = reactive(new MonitoreoCargaElementos())
 function emitirEventosCargaTotal(estado) {

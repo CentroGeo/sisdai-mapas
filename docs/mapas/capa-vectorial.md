@@ -6,7 +6,7 @@ clasificarlos.
 
 **Uso:**
 
-```html{2}
+```vue{2}
 <SisdaiMapa>
   <SisdaiCapaVectorial />
 </SisdaiMapa>

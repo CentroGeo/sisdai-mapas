@@ -1,16 +1,12 @@
 <script setup>
-import { useAccesibilidadStore } from '@centrogeomx/sisdai-componentes/src/stores/accesibilidad'
 import { useData } from 'vitepress'
-import MenuLateral from './MenuLateral.vue'
-import NavegacionPrincipal from './NavegacionPrincipal.vue'
-import PaginaError404 from './PaginaError404.vue'
-import { version } from './../../../package.json'
+import PaginaError404 from './paginas/PaginaError404.vue'
+import PaginaInicio from './paginas/PaginaInicio.vue'
+import PaginaMenu from './paginas/PaginaMenu.vue'
+import NavegacionPrincipal from './componentes/NavegacionPrincipal.vue'
 
 // https://vitepress.dev/reference/runtime-api#usedata
 const { frontmatter, page, theme } = useData()
-const { MODE } = import.meta.env
-
-const store = useAccesibilidadStore()
 </script>
 
 <template>
@@ -20,50 +16,19 @@ const store = useAccesibilidadStore()
   >
     Ir a contenido principal
   </a>
-
   <SisdaiNavegacionGobMx />
   <NavegacionPrincipal
     :nav="theme.nav"
     :ruta="page.relativePath"
   />
-  <SisdaiMenuAccesibilidad
-    :objetoStore="store"
-    perfilColor="sisdai"
-  />
+  <SisdaiMenuAccesibilidad perfilColor="sisdai" />
 
   <PaginaError404 v-if="page.isNotFound" />
 
-  <main
-    v-else-if="frontmatter.home"
-    id="principal"
-  >
-    <Content class="contenedor m-y-10" />
-  </main>
+  <PaginaInicio v-else-if="frontmatter.home" />
 
-  <div
-    class="flex"
-    v-else
-  >
-    <div class="columna-4 columna-1-mov menu-lateral-fondo">
-      <MenuLateral
-        :sidebar="theme.sidebar"
-        :ruta="page.relativePath"
-      />
-    </div>
-
-    <main
-      class="columna-12 columna-7-mov"
-      id="principal"
-    >
-      <Content class="contenedor ancho-lectura m-y-maximo-esc" />
-    </main>
-  </div>
+  <PaginaMenu v-else />
 
   <SisdaiPiePaginaConahcyt />
   <SisdaiPiePaginaGobMx />
-  <SisdaiInfoDeDespliegue
-    :entornoProyecto="MODE"
-    :versionProyecto="version || 0"
-    actualizacionProyecto="actualizacionProyecto"
-  />
 </template>

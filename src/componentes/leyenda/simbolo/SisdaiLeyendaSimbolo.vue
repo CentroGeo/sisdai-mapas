@@ -2,9 +2,7 @@
 import { toRefs } from 'vue'
 import propsControl from './../control/props'
 
-const props = defineProps({
-  simbolo: propsControl.simbolo,
-})
+const props = defineProps({ simbolo: propsControl.simbolo })
 
 const { simbolo } = toRefs(props)
 </script>

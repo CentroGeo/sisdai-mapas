@@ -1,0 +1,4 @@
+# .husky/commit-msg
+#!/bin/sh
+
+npx --no -- commitlint --edit "$1"

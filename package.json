@@ -11,59 +11,66 @@
     "src"
   ],
   "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
   "scripts": {
+    "build": "npm run docs:clean && vitepress build docs",
+    "commit": "cz",
+    "dev": "npm run docs",
     "docs": "vitepress dev docs",
-    "docs:dev": "npm run docs",
-    "docs:build": "vitepress build docs",
+    "docs:clean": "rm -rf ./docs/.vitepress/cache ./docs/.vitepress/dist",
     "docs:preview": "vitepress preview docs",
-    "test:unit": "vitest",
-    "coverage": "vitest run --coverage",
-    "test:e2e": "start-server-and-test preview http://localhost:4173 'cypress run --e2e'",
-    "test:e2e:dev": "start-server-and-test 'vite dev --port 4173' http://localhost:4173 'cypress open --e2e'",
     "format": "prettier --write .",
-    "format-lint": "npm run format && npm run lint:fix",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "clean": "rm -rf node_modules && rm -f package-lock.json && npm cache clean -f && npm cache verify",
-    "reinstall": "npm run clean && npm i",
-    "prepare": "husky install"
+    "format-lint": "npm run format && npm run lint",
+    "lint": "eslint . --fix",
+    "test:unit": "vitest",
+    "prepare": "husky",
+    "clean": "rm -rf ./node_modules ./.husky/_ && npm run docs:clean && rm -f ./package-lock.json && npm cache clean -f && npm cache verify",
+    "reinstall": "npm run clean && npm i"
   },
   "dependencies": {
     "geoserver-api-reader": "^0.1.0",
-    "ol": "^10.3.1",
+    "html2canvas": "^1.4.1",
+    "ol": "^10.6.1",
     "ol-displaced-points": "^0.4.0"
   },
-  "peerDependencies": {
-    "@centrogeomx/sisdai-componentes": "^4.12.5",
-    "@centrogeomx/sisdai-css": "^1.7.4",
-    "axios": "^1.8.4",
-    "pinia": "^3.0.1",
-    "vue": "^3.5.13"
-  },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@rushstack/eslint-patch": "^1.11.0",
-    "@vitejs/plugin-vue": "^5.2.1",
-    "@vitest/coverage-v8": "^3.0.9",
-    "@vitest/eslint-plugin": "^1.1.36",
+    "@centrogeomx/sisdai-componentes": "^4.14.1",
+    "@centrogeomx/sisdai-css": "^1.10.2",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
+    "@eslint/js": "^9.37.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/eslint-plugin": "^1.3.16",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/test-utils": "^2.4.6",
-    "cypress": "^13.16.1",
-    "dotenv": "^16.4.7",
-    "eslint": "^9.21.0",
-    "eslint-plugin-cypress": "^4.2.0",
-    "eslint-plugin-vue": "~10.0.0",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.37.0",
+    "eslint-plugin-vue": "~10.5.0",
+    "globals": "^16.4.0",
     "husky": "^9.1.7",
-    "jsdom": "^26.0.0",
-    "lint-staged": "^15.5.0",
-    "prettier": "3.5.3",
-    "start-server-and-test": "^2.0.9",
-    "vite": "^6.2.2",
-    "vitepress": "^1.6.3",
-    "vitest": "^3.0.9"
+    "jsdom": "^27.0.0",
+    "lint-staged": "^16.2.3",
+    "prettier": "3.6.2",
+    "shiki": "^3.13.0",
+    "vite": "^7.1.9",
+    "vite-plugin-vue-devtools": "^8.0.2",
+    "vitepress": "^1.6.4",
+    "vitest": "^3.2.4",
+    "vue": "^3.5.22"
   },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{css,scss,js,jsx,md,ts,vue}": [
+      "npm run format-lint"
+    ]
   },
   "repository": {
     "type": "git",
@@ -90,9 +97,5 @@
     "Miguel Ángel Martínez <migueldnt.dev@gmail.com> (https://github.com/migueldnt)",
     "Paulina Pradel <pradel.paulina@gmail.com> (https://github.com/paupradel)"
   ],
-  "homepage": "https://sisdai-mapas.conahcyt.mx",
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write"
-  }
+  "homepage": "https://sisdai-mapas.conahcyt.mx"
 }

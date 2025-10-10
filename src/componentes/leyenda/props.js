@@ -6,8 +6,5 @@ export default {
    * - Valor por defecto: `undefined`
    * - Reactivo: No.
    */
-  para: {
-    type: String,
-    require: true,
-  },
+  para: { type: String, require: true },
 }

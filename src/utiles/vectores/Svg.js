@@ -47,12 +47,7 @@ export default class Svg {
     }
 
     if (this.grafico === dicGeom.Line) {
-      return {
-        x1: 0,
-        y1: this.tamanio,
-        x2: this.tamanio,
-        y2: 0,
-      }
+      return { x1: 0, y1: this.tamanio, x2: this.tamanio, y2: 0 }
     }
 
     return {

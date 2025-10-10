@@ -1,12 +1,15 @@
 import olMap from 'ol/Map'
 import View from 'ol/View'
-import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
-import { vista as vistaPorDefecto } from './valores'
-import * as validaciones from './validaciones'
-import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
-import { EscalaGrafica } from './controles'
 import RenderEventType from 'ol/render/EventType'
+import ImageWMS from 'ol/source/ImageWMS'
+import TileWMS from 'ol/source/TileWMS'
+
+import { valorarArregloNumerico, valorarExtensionMargen } from './../../utiles'
+import { TipoEstadoCarga } from './../../utiles/MonitoreoCargaElementos'
+import { EscalaGrafica } from './controles'
 import { crearImagenMapa } from './utiles'
+import * as validaciones from './validaciones'
+import { vista as vistaPorDefecto } from './valores'
 
 const duration = 250
 
@@ -23,22 +26,20 @@ export default class Mapa extends olMap {
    * @param {string} proyeccion
    * @returns {import("./../clases/Mapa.js").default} Mapa
    */
-  constructor(id, proyeccion /*, target, emits*/) {
+  constructor({ dividir, id, proyeccion /*, target, emits*/ }) {
     super({
       controls: [new EscalaGrafica()],
       // target,
-      view: new View({
-        center: [0, 0],
-        projection: proyeccion,
-        zoom: 2,
-      }),
+      view: new View({ center: [0, 0], projection: proyeccion, zoom: 2 }),
     })
-
-    this.capas = {}
 
     this.id = id
 
     this.agregarAtributosAriaCanvas()
+
+    this.capas = {}
+
+    this.dividir = dividir
   }
 
   /**
@@ -66,7 +67,6 @@ export default class Mapa extends olMap {
 
   /**
    * Ajusta a vista del mapa de acuerdo a los parametros recividos con la estructura:
-   *
    * @param {vista} vista
    */
   ajustarVista(vista = this.vista) {
@@ -133,6 +133,17 @@ export default class Mapa extends olMap {
   }
 
   /**
+   *
+   */
+  get capasWMS() {
+    return this.getAllLayers().filter(layer => {
+      const source = layer.getSource()
+
+      return source instanceof TileWMS || source instanceof ImageWMS
+    })
+  }
+
+  /**
    * Permite descargar la vista actual del mapa, con las capas visibles y acercamiento mostrado en
    * pantalla, sin controles. El formato de descargá es PNG.
    * @param {String} nombreImagen nombre del archivo que se descargara del navegador (no debe
@@ -147,6 +158,14 @@ export default class Mapa extends olMap {
     })
 
     this.renderSync()
+  }
+
+  /**
+   *
+   * @param {*} id
+   */
+  quitarCapa(id) {
+    this.removeLayer(this.getAllLayers().find(capa => capa.get('id') === id))
   }
 
   /**

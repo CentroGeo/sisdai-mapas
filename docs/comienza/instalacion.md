@@ -1,6 +1,6 @@
 <script setup>
-import MapaBasico from "./../.vitepress/ejemplos/MapaBasico.vue";
-import { version } from './../../package.json'
+import MapaBasico from '@ejemplos/MapaBasico.vue';
+import { version } from '@centrogeomx/sisdai-mapas/package.json'
 </script>
 
 # Instalación
@@ -14,25 +14,40 @@ npm i @centrogeomx/sisdai-mapas
 Instalación desde su repositorio:
 
 ```sh
-npm i git+https://github.com/CentroGeo/sisdai-componentes.git#vN.N.N
+npm i git+https://github.com/CentroGeo/sisdai-mapas#vN.N.N
 ```
 
-Actualmente la versión más estable es: v{{ version }}.
+En dónde `#vN.N.N` es la versión que se requiera instalar. Actualmente la
+versión estable es: v{{ version }}.
 
 ## Importación y registro
 
 En el archivo que se desee utilizar el componente:
 
-```js
+```vue
+<script setup>
+import { SisdaiMapa, SisdaiCapaXyz } from '@centrogeomx/sisdai-mapas'
+</script>
+
+<template>
+  <SisdaiMapa>
+    <!-- Aquí van las capas, leyendas y paneles que quedarán dentro del mapa -->
+    <SisdaiCapaXyz />
+  </SisdaiMapa>
+</template>
+```
+
+Si se utilizan los componentes de sisdai-mapas en dos archivos o más, se
+recomienda registrar el componente en el archivo `src/main.js` del proyecto de
+la siguiente manera:
+
+```js{1,5}
 import SisdaiMapas from '@centrogeomx/sisdai-mapas'
 import App from './App.vue'
 
 const app = createApp(App)
 app.use(SisdaiMapas)
 ```
-
-Si se utiliza el componente sisdai-mapas en dos archivos o más, se recomienda
-registrar el componente en el archivo `src/main.js` del proyecto.
 
 ## Crear un mapa básico
 
@@ -42,7 +57,7 @@ directivas que necesites:
 
 <MapaBasico />
 
-<<< @/.vitepress/ejemplos/MapaBasico.vue{2-10}
+<<< @/.vitepress/theme/ejemplos/MapaBasico.vue{2-8}
 
 <!-- ## Documentación en local
 

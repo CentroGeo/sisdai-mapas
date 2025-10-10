@@ -8,10 +8,7 @@ export default {
    * REFACTORIZAR
    * El estilo simple es aquel que es constante para la capa, por ejemplo, independientemente de los datos que tenga un poligono o punto en el sigueinte mapa siempre tendra el mismo color y contorno de su simbologia.
    */
-  estilo: {
-    type: Object,
-    default: () => ESTILO_VECTOR,
-  },
+  estilo: { type: Object, default: () => ESTILO_VECTOR },
 
   /**
    * Define el formato de los datos fuente, los valores admitidos son: 'geojson' y 'topojson'.
@@ -20,10 +17,7 @@ export default {
    * - Valor por defecto: `'geojson'`.
    * - Reactivo: no
    */
-  formato: {
-    type: String,
-    default: 'geojson',
-  },
+  formato: { type: String, default: 'geojson' },
 
   /**
    * Origen de la capa. Puede ser una url externa o relativa a las carpetas del proyecto, e
@@ -33,10 +27,7 @@ export default {
    * - Valor obligatorio.
    * - Reactivo: no
    */
-  fuente: {
-    type: [String, Object],
-    required: true,
-  },
+  fuente: { type: [String, Object], required: true },
 
   /**
    * Contenido del globo de información que aparecerá al pasar el cursor sobre la capa.
@@ -46,16 +37,10 @@ export default {
    * - Valor por defecto: `undefined`.
    * - Reactivo: si
    */
-  globoInformativo: {
-    type: [String, Function, Object],
-    default: undefined,
-  },
+  globoInformativo: { type: [String, Function, Object], default: undefined },
 
   /**
    *
    */
-  representacion: {
-    type: [String, Object],
-    default: undefined,
-  },
+  representacion: { type: [String, Object], default: undefined },
 }

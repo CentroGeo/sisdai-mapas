@@ -5,50 +5,32 @@ export default {
   /**
    *
    */
-  deshabilitado: {
-    type: Boolean,
-    default: false,
-  },
+  deshabilitado: { type: Boolean, default: false },
 
   /**
    *
    */
-  etiqueta: {
-    typo: String,
-    default: 'Cargando...',
-  },
+  etiqueta: { typo: String, default: 'Cargando...' },
 
   /**
    *
    */
-  encendido: {
-    type: Boolean,
-    default: false,
-  },
+  encendido: { type: Boolean, default: false },
 
   /**
    *
    */
-  encendidoIndeterminado: {
-    type: Boolean,
-    default: false,
-  },
+  encendidoIndeterminado: { type: Boolean, default: false },
 
   /**
    *
    */
-  id: {
-    type: String,
-    default: () => idAleatorio(),
-  },
+  id: { type: String, default: () => idAleatorio() },
 
   /**
    *
    */
-  informacion: {
-    type: String,
-    default: undefined,
-  },
+  informacion: { type: String, default: undefined },
 
   /**
    *
@@ -66,8 +48,5 @@ export default {
    * - Valor por defecto: `false`
    * - Reactivo: Si.
    */
-  sinControl: {
-    typo: Boolean,
-    default: false,
-  },
+  sinControl: { typo: Boolean, default: false },
 }

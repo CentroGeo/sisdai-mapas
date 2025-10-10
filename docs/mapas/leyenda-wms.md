@@ -1,7 +1,6 @@
 # Leyendas Wms
 
-Leyenda para visualizar la simbología y controlar
-[capas wms](/mapas/capa-wms.html).
+Leyenda para visualizar la simbología de [capas wms](/mapas/capa-wms.html).
 
 **Uso:**
 
@@ -12,7 +11,7 @@ Leyenda para visualizar la simbología y controlar
 <div class="nota-contenedor">
   <p class="nota-titulo">Importante:</p>
   <p class="nota">
-    Para vincular la leyenda con las capas del mapa se debe utiliuzar el componente <a href="/mapas/leyenda.html">SisdaiLeyenda</a>.
+    Para vincular la leyenda con las capas del mapa de forma automática se debe utiliuzar el componente <a href="/mapas/leyenda.html">SisdaiLeyenda</a>.
   </p>
 </div>
 
@@ -20,9 +19,9 @@ Leyenda para visualizar la simbología y controlar
 
 <VisorCodigo archivo="LeyendaWms.vue" />
 
-## Propiedades
+<!-- ## Propiedades
 
-<!-- ### `` -->
+### `` -->
 
 ## Eventos
 
@@ -37,6 +36,20 @@ cuando inicia la consulta de las reglas de estilo vía `GetLegendGraphic` en
 formato JSON; En el caso de las capas por conjunto de teselas (XYZ) no se
 ejecuta.
 
+**Uso:**
+
+```vue
+<script setup>
+function alIniciarCargaSimbologia() {
+  console.log('alIniciarCargaSimbologia')
+}
+</script>
+
+<template>
+  <SisdaiLeyendaWms @alIniciarCargaSimbologia="alIniciarCargaSimbologia" />
+</template>
+```
+
 ### `@alFinalizarCargaSimbologia`
 
 Ejecutado cuando se detecta que ha finalizado la carga de la simbología de la
@@ -48,4 +61,24 @@ ejecuta.
 
 **Parámetros:**
 
-- `Boolean`: Indica si la carga no ha presentado error.
+- `Boolean`: Indica si al finalizar la carga de la simbología ha presentado
+  error:
+  - `true`: No presentó error al cargar,
+  - `false`: Se presentó algún error al cargar.
+
+**Uso:**
+
+```vue
+<script setup>
+function alFinalizarCargaSimbologia(cargaExitosa) {
+  console.log(
+    'alFinalizarCargaSimbologia:',
+    cargaExitosa ? 'Carga exitosa' : 'Problemas al cargar'
+  )
+}
+</script>
+
+<template>
+  <SisdaiLeyendaWms @alFinalizarCargaSimbologia="alFinalizarCargaSimbologia" />
+</template>
+```

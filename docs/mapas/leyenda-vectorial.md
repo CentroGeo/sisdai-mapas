@@ -5,7 +5,7 @@ Leyenda para visualizar la simbología y controlar
 
 **Uso:**
 
-```html{2}
+```vue{2}
 <SisdaiLeyendaVectorial />
 ```
 
@@ -20,10 +20,10 @@ Leyenda para visualizar la simbología y controlar
 
 <VisorCodigo archivo="LeyendaVectorial.vue" />
 
-## Propiedades
+<!-- ## Propiedades
 
-<!-- ### `` -->
+### ``
 
 ## Eventos
 
-<!-- ### `@` -->
+### `@` -->

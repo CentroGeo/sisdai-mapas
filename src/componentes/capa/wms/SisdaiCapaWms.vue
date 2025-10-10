@@ -1,54 +1,75 @@
 <script setup>
-import { inject, toRefs, watch } from 'vue'
-import ImageWMS from 'ol/source/ImageWMS.js'
-import { Image as ImageLayer } from 'ol/layer.js'
-import { ImageSourceEventType } from 'ol/source/Image'
-import _props from './props'
-import eventos from './../eventos'
-import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
-import { MAPA_INYECTADO } from './../../../utiles/identificadores'
+import { toRefs, watch } from 'vue'
 
-const mapa = inject(MAPA_INYECTADO)
+import ImageLayer from 'ol/layer/Image'
+import TileLayer from 'ol/layer/Tile'
+import { ImageSourceEventType } from 'ol/source/Image'
+import ImageWMS from 'ol/source/ImageWMS'
+import TileWMS from 'ol/source/TileWMS'
+
+import eventos from './../eventos'
+import useCapa from './../useCapa'
+import _props from './props'
+// import { TipoEstadoCarga } from './../../../utiles/MonitoreoCargaElementos'
+
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { estilo, filtro, titulo } = toRefs(props)
+const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
 
-const source = new ImageWMS({
+function funcionConsulta(tile, url) {
+  props
+    .consulta(url)
+    .then(response => response.blob())
+    .then(blob => (tile.getImage().src = URL.createObjectURL(blob)))
+    .catch(() => {})
+    .finally(() => {})
+}
+
+const Source = props.mosaicos ? TileWMS : ImageWMS
+const source = new Source({
+  crossOrigin: 'anonymous',
   params: {
+    CQL_FILTER: filtro.value,
     LAYERS: props.capa,
     STYLES: estilo.value,
-    CQL_FILTER: filtro.value,
   },
   ratio: 1,
   serverType: props.tipoServidor,
   url: props.fuente,
+
+  // Cuando es ImageWMS
+  imageLoadFunction: funcionConsulta,
+  // Cuando es TileWMS
+  tileLoadFunction: funcionConsulta,
 })
 
-mapa.addLayer(
-  new ImageLayer({
-    id: props.id,
-    source,
-    tipo: 'wms',
-    titulo: titulo.value,
-  })
-)
-mapa.capas[props.id] = TipoEstadoCarga.no
+const Layer = props.mosaicos ? TileLayer : ImageLayer
+const capa = new Layer({
+  cuadroInfo: cuadroInformativo.value,
+  id: props.id,
+  source,
+  tipo: 'wms',
+  titulo: titulo.value,
+})
+useCapa(capa, props)
 
+watch(cuadroInformativo, nv => capa.set('cuadroInfo', nv))
+watch(estilo, STYLES => source.updateParams({ STYLES }))
+watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+
+// mapa.capas[props.id] = TipoEstadoCarga.no
 source.on(ImageSourceEventType.IMAGELOADSTART, () => {
   emits(eventos.alIniciarCarga)
-  mapa.capas[props.id] = TipoEstadoCarga.inicio
+  // mapa.capas[props.id] = TipoEstadoCarga.inicio
 })
 source.on(ImageSourceEventType.IMAGELOADEND, () => {
   emits(eventos.alFinalizarCarga, true)
-  mapa.capas[props.id] = TipoEstadoCarga.fin
+  // mapa.capas[props.id] = TipoEstadoCarga.fin
 })
 source.on(ImageSourceEventType.IMAGELOADERROR, () => {
   emits(eventos.alFinalizarCarga, false)
-  mapa.capas[props.id] = TipoEstadoCarga.error
+  // mapa.capas[props.id] = TipoEstadoCarga.error
 })
-
-watch(estilo, STYLES => source.updateParams({ STYLES }))
-watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
 
 /**
  * Ver como reacciona su usabilidad con teselas. Puede cargar más rapido pero se tendreá que

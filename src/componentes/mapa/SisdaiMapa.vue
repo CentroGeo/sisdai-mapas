@@ -1,6 +1,7 @@
 <script setup>
 import {
   onMounted,
+  onUnmounted,
   provide,
   reactive,
   shallowRef,
@@ -8,43 +9,67 @@ import {
   useSlots,
   watch,
 } from 'vue'
-import Mapa from './Mapa'
-import { panelesEnUso } from './utiles'
-import propsMapa from './props'
-import {
-  AnimacionCarga,
-  VisAtribuciones,
-  InstruccionTeclado,
-  GloboInformativo,
-} from './elementos'
-import eventos from './../capa/eventos'
+
+import MapEventType from 'ol/MapEventType'
+
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
-import { ControlesMapa } from './controles'
+import eventos from './eventos'
+import Mapa from './Mapa'
+import _props from './props'
+import { panelesEnUso } from './utiles'
+
+import { ControlDivisor, ControlesAcercamiento } from './controles'
+import {
+  // InstruccionTeclado,
+  CuadroInformativo,
+  // AnimacionCarga,
+  VisAtribuciones,
+} from './elementos'
+
 import 'ol/ol.css'
+// import PruebaMovimiento from './PruebaMovimiento.vue'
 
 const emits = defineEmits(Object.values(eventos))
-const props = defineProps(propsMapa)
-const mapa = reactive(new Mapa(props.id, props.proyeccion))
-// mapa.vista = props.vista
+const props = defineProps(_props)
+const mapa = reactive(new Mapa(props))
 provide(MAPA_INYECTADO, mapa)
 
-const { descripcion, escalaGrafica, vista } = toRefs(props)
+const { descripcion, dividir, escalaGrafica, vista } = toRefs(props)
 watch(vista, nv => (mapa.vista = nv))
+watch(dividir, nv => {
+  mapa.dividir = nv
+  mapa.render()
+})
 
-function emitirEventosCarga(nv) {
-  if (nv) {
-    emits(eventos.alIniciarCarga)
-  } else {
-    emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
-  }
+// function emitirEventosCarga(nv) {
+//   if (nv) {
+//     emits(eventos.alIniciarCarga)
+//   } else {
+//     emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
+//   }
+// }
+// watch(() => mapa.capasCargando, emitirEventosCarga)
+
+function alMoverVista({ map }) {
+  const vista = map.getView()
+
+  emits(eventos.alMoverVista, {
+    acercamiento: vista.getZoom(),
+    centro: vista.getCenter(),
+    vista,
+  })
 }
-watch(() => mapa.capasCargando, emitirEventosCarga)
 
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.vista = props.vista
   // mapa.ajustarVista()
+  mapa.on(MapEventType.MOVEEND, alMoverVista)
+})
+
+onUnmounted(() => {
+  mapa.un(MapEventType.MOVEEND, alMoverVista)
 })
 
 defineExpose(mapa)
@@ -79,6 +104,7 @@ defineExpose(mapa)
         </p>
         <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
 
+        <!-- <PruebaMovimiento /> -->
         <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"
@@ -86,9 +112,11 @@ defineExpose(mapa)
           tabindex="0"
         />
 
-        <InstruccionTeclado />
-        <ControlesMapa />
-        <GloboInformativo />
+        <ControlDivisor v-if="!isNaN(dividir)" />
+        <!-- <InstruccionTeclado /> -->
+        <ControlesAcercamiento :eventos="emits" />
+        <CuadroInformativo />
+        <!-- <GloboInformativo /> -->
       </div>
 
       <div class="panel-derecha-vis">
@@ -99,10 +127,10 @@ defineExpose(mapa)
         <slot name="panel-pie-vis" />
       </div>
 
-      <AnimacionCarga
+      <!-- <AnimacionCarga
         class="borde-t-redondeado-8"
         v-show="mapa.capasCargando"
-      />
+      /> -->
     </div>
 
     <VisAtribuciones />

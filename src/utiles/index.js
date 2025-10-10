@@ -1,10 +1,11 @@
-import { vista } from '../componentes/mapa/valores'
+import html2canvas from 'html2canvas'
+import { vista } from './../componentes/mapa/valores'
 
 /**
  * Ejecuta los metodos de un array en un objeto.
  * @param {Object} obj
  * @param {Function} funcion
- * @param {String} metodo map | filter | find | some | every | etc
+ * @param {String} metodo map | filter | find | some | every | etc.
  * @returns {Object}
  */
 export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
@@ -12,8 +13,17 @@ export function ejecutarMetodoArrayEnObjeto(obj, funcion, metodo = 'map') {
 }
 
 /**
+ * Valida si un valor es de tipo función.
+ * @param {any} valor a evaluar.
+ * @returns `ture` en caso de ser función.
+ */
+export function esFuncion(valor) {
+  return typeof valor === typeof Function
+}
+
+/**
  * Valida si un valor es de tipo número.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser número.
  */
 export function esNuemro(valor) {
@@ -22,7 +32,7 @@ export function esNuemro(valor) {
 
 /**
  * Valida si un valor es de tipo Objeto.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser objeto.
  */
 export function esObjeto(valor) {
@@ -32,12 +42,33 @@ export function esObjeto(valor) {
 }
 
 /**
+ * Valida si un valor es de tipo Promesa.
+ * @param {any} valor a evaluar.
+ * @returns {Boolean} `ture` en caso de ser Promesa.
+ */
+export function esPromesa(valor) {
+  return esObjeto(valor) && esFuncion(valor.then)
+}
+
+/**
  * Valida si un valor es de tipo texto.
- * @param {any} valor a evaluar
+ * @param {any} valor a evaluar.
  * @returns {Boolean} `ture` en caso de ser texto.
  */
 export function esTexto(valor) {
   return typeof valor === typeof String()
+}
+
+/**
+ * Desencadena la acción de descargar una imagen en formato png cualquier elemento html como el canvas de un mapa.
+ * @param {HTMLElement} html elemento que se codificará como imagen.
+ * @param {HTMLElement} linkAncla elemento tipo '<a />' al que se vilculará la imagen como descarga.
+ */
+export function exportarHTMLComoPNG(html, linkAncla) {
+  html2canvas(html, { useCORS: true }).then(canvas => {
+    linkAncla.href = canvas.toDataURL()
+    linkAncla.click()
+  })
 }
 
 /**

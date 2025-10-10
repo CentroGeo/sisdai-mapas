@@ -1,6 +1,6 @@
 import { idAleatorio } from '../../utiles'
-import * as valoresPorDefecto from './valores'
 import * as validaciones from './validaciones'
+import * as valoresPorDefecto from './valores'
 
 export default {
   /**
@@ -10,10 +10,12 @@ export default {
    * - Valor por defecto: `'Mapa interactivo'`
    * - Reactivo: si
    */
-  descripcion: {
-    type: String,
-    default: 'Mapa interactivo',
-  },
+  descripcion: { type: String, default: 'Mapa interactivo' },
+
+  /**
+   *
+   */
+  dividir: { type: Number, default: NaN },
 
   /**
    * Define si se agrega la escala grafica en el mapa.
@@ -35,10 +37,7 @@ export default {
    * - Valor por defecto: Aleatorio
    * - Reactivo: no
    */
-  id: {
-    type: String,
-    default: () => idAleatorio(),
-  },
+  id: { type: String, default: () => idAleatorio() },
 
   /**
    * Objeto que define la vista del mapa. Revisa los detalles de la vista en la [sección vista](/comienza/vista.html) de esta documentación.
@@ -64,8 +63,5 @@ export default {
    *
    * >  **Importante:** Las coordenadas y capas que integre en el componente deben coincidir con la `proyeccion` definida en el mapa.
    */
-  proyeccion: {
-    type: String,
-    default: valoresPorDefecto.proyeccion,
-  },
+  proyeccion: { type: String, default: valoresPorDefecto.proyeccion },
 }

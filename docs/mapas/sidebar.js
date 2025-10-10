@@ -1,11 +1,6 @@
-// export const ruta = '/'
 export const ruta = '/mapas/'
 
-export const nav = {
-  text: 'Mapas',
-  link: ruta,
-  activeMatch: ruta,
-}
+export const nav = { text: 'Mapas', link: ruta, activeMatch: ruta }
 
 export const sidebar = [
   {
@@ -14,6 +9,7 @@ export const sidebar = [
     items: [
       { text: 'Personalización', link: ruta },
       { text: 'Vista', link: `${ruta}vista` },
+      { text: 'Mapa dividido', link: `${ruta}mapa-dividido` },
       { text: 'Accesibilidad', link: `${ruta}accesibilidad` },
     ],
   },
@@ -60,6 +56,4 @@ export const sidebar = [
   },
 ]
 
-export default {
-  [ruta]: sidebar,
-}
+export default { [ruta]: sidebar }

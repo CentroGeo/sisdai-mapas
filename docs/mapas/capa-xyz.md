@@ -6,7 +6,7 @@ para agregar mapas base.
 
 **Uso:**
 
-```html{2}
+```vue{2}
 <SisdaiMapa>
   <SisdaiCapaXyz />
 </SisdaiMapa>
@@ -46,12 +46,33 @@ Url fuente de la capa.
   `https://{a-c}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png`
 - Reactivo: no
 
+**Uso:**
+
+```vue
+<!-- Fuente: Capa de google -->
+<SisdaiCapaXyz fuente="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}" />
+```
+
 ## Funciones
 
 ### `@alIniciarCargaTesela`
 
 Ejecutado cuando se detecta que ha iniciado la carga de cada uno de los mosaicos
 que conponen la capa visible en el mapa.
+
+**Uso:**
+
+```vue
+<script setup>
+function alIniciarCargaTesela() {
+  console.log('alIniciarCargaTesela')
+}
+</script>
+
+<template>
+  <SisdaiCapaXyz @alIniciarCargaTesela="alIniciarCargaTesela" />
+</template>
+```
 
 ### `@alFinalizarCargaTesela`
 
@@ -60,5 +81,23 @@ mosaicos que conponen la capa visible en el mapa.
 
 **Parametros:**
 
-- `Boolean`: Indica con `false` si al finalizar la carga del mosaico ha
-  presentado error.
+- `Boolean`: Indica si al finalizar la carga del mosaico ha presentado error:
+  - `true`: No presentó error al cargar,
+  - `false`: Se presentó algún error al cargar.
+
+**Uso:**
+
+```vue
+<script setup>
+function alFinalizarCargaTesela(cargaExitosa) {
+  console.log(
+    'alFinalizarCargaTesela:',
+    cargaExitosa ? 'Carga exitosa' : 'Problemas al cargar'
+  )
+}
+</script>
+
+<template>
+  <SisdaiCapaXyz @alFinalizarCargaTesela="alFinalizarCargaTesela" />
+</template>
+```

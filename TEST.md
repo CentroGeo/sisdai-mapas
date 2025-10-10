@@ -216,11 +216,7 @@ componente, no cómo lo hace.
 const valueSelector = '[data-testid=stepper-value]'
 const buttonSelector = '[data-testid=increment]'
 
-const wrapper = mount(Stepper, {
-  props: {
-    max: 1,
-  },
-})
+const wrapper = mount(Stepper, { props: { max: 1 } })
 
 expect(wrapper.find(valueSelector).text()).toContain('0')
 
