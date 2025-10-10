@@ -17,6 +17,59 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.2.0] - 2025-10-10
+
+### Agregado (Added)
+
+- **Vista dividida / Swipe**:
+  - Control tipo `input range` sobre el mapa para dividir la vista (split view).
+  - Integración de **capa deslizada (swipe)**.
+  - Propiedad reactiva `lado` en capas para definir su posición en la división.
+  - Opción para fijar la capa dividida al **lado izquierdo**.
+- **WMS**:
+  - Importación y ciclo de vida (`onMounted` / `onUnmounted`) de capas WMS.
+  - Habilitación de **eventos** en capa WMS.
+  - **Reactividad** de la posición de capas WMS.
+  - **Opacidad** en capas WMS.
+  - `getFeatureInfo`: **validación** de `feature`.
+  - Manejo de **`crossOrigin`**.
+  - Uso correcto de `map.getView()` en `alMoverVista`.
+- **Infraestructura**:
+  - Carpeta de **funciones utilitarias**.
+  - **Composable** para acciones repetidas en capas.
+
+### Cambiado (Changed)
+
+- **Dependencias**:
+  - Actualización general de dependencias.
+  - Ajuste del **formato de la URL** de la dependencia `sisdai-css` (Git URL →
+    https/npm).
+  - `sisdai-css` ahora se importa **desde npm/https**.
+- **WMS**:
+  - Modificación de **importación de clases** WMS.
+  - **Cuadro de información**:
+    - Propiedad `cuadroInformativo` con reactividad.
+    - Parámetros de **URL** y **contenido** configurables desde la propiedad del
+      cuadro.
+    - **Delimitación** del cuadro informativo solo para las capas WMS que lo
+      soliciten.
+    - **Función para listar capas WMS**.
+    - **Evento** al dar click en el **botón de centrar**.
+  - **Consulta**: Nuevo **parámetro `consulta`** para controlar el `fetch` de la
+    consulta del servicio (leyenda y/o getFeatureInfo).
+- **XYZ**:
+  - Refactor: **opacidad**, **posición** y **visible** en capa XYZ.
+  - Movimiento (cursor y botones) y ciclo de vida (`onMounted` / `onUnmounted`)
+    en capa XYZ.
+- **Vectorial**:
+  - **Parámetros reactivos** en capa vectorial.
+- **CSS**:
+  - Actualización de la importación de **sisdai-css**.
+
+### Eliminado (Removed)
+
+- Se quitó la dependencia `axios`
+
 ## [2.1.0] - 2025-03-27
 
 ### Cambiado (Changed)
