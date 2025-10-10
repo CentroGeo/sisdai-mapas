@@ -1,6 +1,6 @@
 # Capa WMS
 
-Componenete para desplegar capas desde servicios wms publicos o privados.
+Componente para desplegar capas desde servicios wms públicos o privados.
 
 **Uso:**
 
@@ -36,11 +36,11 @@ Nombre de la capa en el servidor de mapas.
 
 ### `consulta`
 
-Permite editar la función de consulta (fetch) para cada petición que requiera
-para visualizar el servicio wms.
+Reemplaza la función de consulta. Esto permite realizar cambios a las peticiones
+antes de que sean realizadas.
 
 - Tipo: `Function`
-- Valor por defecto: `(url) => fetch(url)`
+- Valor por defecto: `url => fetch(url)`
 - Reactivo: no
 
 **Uso:**
@@ -107,6 +107,13 @@ Url fuente del servicio WMS.
 <!-- Fuente: Capas wms de gema -->
 <SisdaiCapaWms fuente="https://gema.conahcyt.mx/geoserver/wms" />
 ```
+
+### `mosaicos`
+
+Establece si la consulta de la capa será por mosaicos o teselas. Cuando el valor
+es falso la carga será de una sola imagen.
+
+Tipo: `Boolean` Valor por defecto: `false` Reactivo: no
 
 ### `tipoServidor`
 

@@ -34,6 +34,8 @@ compatible y tiene instalada.
   - `getFeatureInfo`: **validación** de `feature`.
   - Manejo de **`crossOrigin`**.
   - Uso correcto de `map.getView()` en `alMoverVista`.
+  - **Consulta**: Nuevo **parámetro `consulta`** para controlar el `fetch` de la
+    consulta del servicio (leyenda y/o getFeatureInfo).
 - **Capas**:
   - **Composable** para acciones repetidas en capas.
 
@@ -52,10 +54,7 @@ compatible y tiene instalada.
       cuadro.
     - **Delimitación** del cuadro informativo solo para las capas WMS que lo
       soliciten.
-    - **Función para listar capas WMS**.
     - **Evento** al dar click en el **botón de centrar**.
-  - **Consulta**: Nuevo **parámetro `consulta`** para controlar el `fetch` de la
-    consulta del servicio (leyenda y/o getFeatureInfo).
 - **XYZ**:
   - Refactor: **opacidad**, **posición** y **visible** en capa XYZ.
   - Movimiento (cursor y botones) y ciclo de vida (`onMounted` / `onUnmounted`)

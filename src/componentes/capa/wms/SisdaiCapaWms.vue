@@ -16,17 +16,18 @@ const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
 const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
 
+function funcionConsulta(tile, url) {
+  props
+    .consulta(url)
+    .then(response => response.blob())
+    .then(blob => (tile.getImage().src = URL.createObjectURL(blob)))
+    .catch(() => {})
+    .finally(() => {})
+}
+
 const Source = props.mosaicos ? TileWMS : ImageWMS
 const source = new Source({
   crossOrigin: 'anonymous',
-  imageLoadFunction: (tile, url) => {
-    props
-      .consulta(url)
-      .then(response => response.blob())
-      .then(blob => (tile.getImage().src = URL.createObjectURL(blob)))
-      .catch(() => {})
-      .finally(() => {})
-  },
   params: {
     CQL_FILTER: filtro.value,
     LAYERS: props.capa,
@@ -35,6 +36,11 @@ const source = new Source({
   ratio: 1,
   serverType: props.tipoServidor,
   url: props.fuente,
+
+  // Cuando es ImageWMS
+  imageLoadFunction: funcionConsulta,
+  // Cuando es TileWMS
+  tileLoadFunction: funcionConsulta,
 })
 
 const Layer = props.mosaicos ? TileLayer : ImageLayer
