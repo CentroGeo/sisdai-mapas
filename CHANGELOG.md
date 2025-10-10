@@ -25,7 +25,7 @@ compatible y tiene instalada.
   - Control tipo `input range` sobre el mapa para dividir la vista (split view).
   - Integración de **capa deslizada (swipe)**.
   - Propiedad reactiva `lado` en capas para definir su posición en la división.
-  - Opción para fijar la capa dividida al **lado izquierdo**.
+  - Documentación de uso.
 - **WMS**:
   - Importación y ciclo de vida (`onMounted` / `onUnmounted`) de capas WMS.
   - Habilitación de **eventos** en capa WMS.
@@ -34,8 +34,7 @@ compatible y tiene instalada.
   - `getFeatureInfo`: **validación** de `feature`.
   - Manejo de **`crossOrigin`**.
   - Uso correcto de `map.getView()` en `alMoverVista`.
-- **Infraestructura**:
-  - Carpeta de **funciones utilitarias**.
+- **Capas**:
   - **Composable** para acciones repetidas en capas.
 
 ### Cambiado (Changed)
@@ -237,6 +236,7 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
+[2.2.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.2.0...v2.1.0
 [2.1.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.1.0...v2.0.1
 [1.13.6]:
   https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
