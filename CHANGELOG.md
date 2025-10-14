@@ -17,7 +17,7 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
-## [2.2.0] - 2025-10-10
+## [2.3.0] - 2025-10-10
 
 ### Agregado (Added)
 
@@ -235,7 +235,7 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
-[2.2.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.2.0...v2.1.0
+[2.3.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.2.0...v2.2.0
 [2.1.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.1.0...v2.0.1
 [1.13.6]:
   https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
