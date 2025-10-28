@@ -61,6 +61,16 @@ function consultaWms(url) {
 <SisdaiCapaWms :consulta="consultaWms" />
 ```
 
+### `cuadroInformativo`
+
+Contenido del cuadro de información que aparecerá al dar clicl sobre la capa.
+Puede ser una funcion que accede a las propiedades del elemento al que se
+sobrepone o un texto estatico.
+
+- Tipo: `String` o `Function`
+- Valor por defecto: `undefined`
+- Reactivo: si
+
 ### `estilo`
 
 Nombre del estilo disponible para la capa. Al dejar el valor como indefinido,
