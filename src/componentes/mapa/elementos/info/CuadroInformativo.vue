@@ -1,7 +1,7 @@
 <script setup>
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import EventType from 'ol/events/EventType'
-import { inject, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { inject, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
 
 const mapa = inject(MAPA_INYECTADO)
@@ -18,76 +18,59 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
   if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) return
 
   // TODO: debe regresar una lista de las capas con cuadro de información
-  const cuadros = mapa.capasWMS
+  const contenidos = ref([])
+  mapa.capasWMS
     .filter(capa => capa.get('cuadroInfo') !== undefined)
-    .sort((a, b) => {
-      const zA = Number(a.get('zIndex'))
-      const zb = Number(b.get('zIndex'))
+    .forEach(capa => {
+      const cuadro = capa.get('cuadroInfo')
 
-      if (zA < zb) return -1
-      if (zA > zb) return 1
-      return 0
+      const url = capa
+        .getSource()
+        .getFeatureInfoUrl(
+          coordinate,
+          map.getView().getResolution(),
+          map.getView().getProjection().getCode(),
+          {
+            FEATURE_COUNT: 1,
+            INFO_FORMAT: 'application/json',
+            // ...params
+            // propertyName: 'nom_ent,investigadoras',
+          }
+        )
+      // console.log(url)
+
+      if (typeof cuadro === typeof Promise) {
+        // console.log('se detectó una promesa')
+
+        cuadro(url).then(r => {
+          console.log(r)
+          contenidos.value.push({ z: Number(capa.get('zIndex')), contenido: r })
+        })
+      } else {
+        contenidos.value.push({
+          z: Number(capa.get('zIndex')),
+          contenido: cuadro,
+        })
+      }
     })
-    .map(capa => ({
-      id: capa.get('id'),
-      cuadroInfo: capa.get('cuadroInfo'),
-      zIndex: Number(capa.get('zIndex')),
-    }))
 
-  console.log(cuadros)
-
-  // const wmsConCuadro = mapa.capasWMS
-  //   .filter(capa => capa.get('cuadroInfo'))
-  //   .slice(-1)[0]
-  // if (wmsConCuadro === undefined) return
-
-  // contenidoCuadro.value =
-  //   '<span class="pictograma-reloj pictograma-grande p-0" />'
-  contenidoCuadro.value = cuadros
-    .map(cuadro =>
-      typeof cuadro.cuadroInfo === typeof Function
-        ? cuadro.cuadroInfo(map)
-        : cuadro.cuadroInfo
-    )
-    .join(`<hr />`)
+  watch(
+    () =>
+      contenidos.value
+        .sort((a, b) => {
+          if (a.z < b.z) return -1
+          if (a.z > b.z) return 1
+          return 0
+        })
+        .map(({ contenido }) => contenido)
+        .join(`<hr />`),
+    nv => (contenidoCuadro.value = nv)
+  )
 
   const pixel = mapa.getEventPixel(originalEvent)
   posicion.xy = pixel
   coordenadas.value = coordinate
   visible.value = true
-
-  // const { params, contenido } = wmsConCuadro.get('cuadroInfo')
-  // const url = wmsConCuadro
-  //   .getSource()
-  //   .getFeatureInfoUrl(
-  //     coordinate,
-  //     map.getView().getResolution(),
-  //     map.getView().getProjection().getCode(),
-  //     { FEATURE_COUNT: 1, INFO_FORMAT: 'application/json', ...params }
-  //   )
-
-  // console.log(url);
-
-  // if (url) {
-  //   fetch(url)
-  //     .then(response => response.json())
-  //     .then(({ features }) => {
-  //       // console.log(features[0]?.properties);
-  //       // const { properties } = features[0]
-  //       if (features[0]?.properties) {
-  //         contenidoCuadro.value = contenido(features[0]?.properties)
-  //       } else {
-  //         contenidoCuadro.value =
-  //           'No hay información disponible para esta ubicación'
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.error(err)
-  //     })
-  //     .finally(() => {
-  //       //console.log("fin");
-  //     })
-  // }
 }
 
 /**
