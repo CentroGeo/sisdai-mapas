@@ -75,6 +75,16 @@ export default {
   mosaicos: { type: Boolean, default: false },
 
   /**
+   * Define que propiedades de la capa serán visibles cuando se realicen consultas
+   * al servidor de mapas.
+   *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: si
+   */
+  propiedades: { type: String, default: undefined },
+
+  /**
    * Tipo de servidor WMS remoto, puede ser: mapserver, geoserver, carmentaserver o qgis.
    *
    * - Tipo: `String`

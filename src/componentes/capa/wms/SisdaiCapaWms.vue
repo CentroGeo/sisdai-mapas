@@ -14,7 +14,7 @@ import _props from './props'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { cuadroInformativo, estilo, filtro, titulo } = toRefs(props)
+const { cuadroInformativo, estilo, filtro, propiedades, titulo } = toRefs(props)
 
 function funcionConsulta(tile, url) {
   props
@@ -47,6 +47,7 @@ const Layer = props.mosaicos ? TileLayer : ImageLayer
 const capa = new Layer({
   cuadroInfo: cuadroInformativo.value,
   id: props.id,
+  propiedades: propiedades.value,
   source,
   tipo: 'wms',
   titulo: titulo.value,
@@ -56,6 +57,7 @@ useCapa(capa, props)
 watch(cuadroInformativo, nv => capa.set('cuadroInfo', nv))
 watch(estilo, STYLES => source.updateParams({ STYLES }))
 watch(filtro, CQL_FILTER => source.updateParams({ CQL_FILTER }))
+watch(propiedades, nv => capa.set('propiedades', nv))
 
 // mapa.capas[props.id] = TipoEstadoCarga.no
 source.on(ImageSourceEventType.IMAGELOADSTART, () => {

@@ -10,6 +10,21 @@ const coordenadas = ref()
 const contenidoCuadro = ref('')
 const visible = ref(false)
 
+function getUrlWms(capa, coordinate, map) {
+  return capa
+    .getSource()
+    .getFeatureInfoUrl(
+      coordinate,
+      map.getView().getResolution(),
+      map.getView().getProjection().getCode(),
+      {
+        FEATURE_COUNT: 1,
+        INFO_FORMAT: 'application/json',
+        propertyName: capa.get('propiedades'),
+      }
+    )
+}
+
 /**
  * Se ejecuta cuado se hace click en el mapa
  * @param param
@@ -24,31 +39,21 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
     .forEach(capa => {
       const cuadro = capa.get('cuadroInfo')
 
-      const url = capa
-        .getSource()
-        .getFeatureInfoUrl(
-          coordinate,
-          map.getView().getResolution(),
-          map.getView().getProjection().getCode(),
-          {
-            FEATURE_COUNT: 1,
-            INFO_FORMAT: 'application/json',
-            // ...params
-            // propertyName: 'nom_ent,investigadoras',
-          }
-        )
-      // console.log(url)
-
       if (typeof cuadro === typeof Promise) {
         // console.log('se detectó una promesa')
+        const url = getUrlWms(capa, coordinate, map)
+        // console.log(url)
 
-        cuadro(url).then(r => {
-          console.log(r)
-          contenidos.value.push({ z: Number(capa.get('zIndex')), contenido: r })
+        cuadro(url).then(contenido => {
+          // console.log(contenido)
+          contenidos.value.push({
+            zIndex: Number(capa.get('zIndex')),
+            contenido,
+          })
         })
       } else {
         contenidos.value.push({
-          z: Number(capa.get('zIndex')),
+          zIndex: Number(capa.get('zIndex')),
           contenido: cuadro,
         })
       }
@@ -58,8 +63,8 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
     () =>
       contenidos.value
         .sort((a, b) => {
-          if (a.z < b.z) return -1
-          if (a.z > b.z) return 1
+          if (a.zIndex < b.zIndex) return -1
+          if (a.zIndex > b.zIndex) return 1
           return 0
         })
         .map(({ contenido }) => contenido)
