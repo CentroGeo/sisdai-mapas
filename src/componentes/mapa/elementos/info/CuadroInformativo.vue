@@ -63,8 +63,8 @@ function alClick({ coordinate, dragging, originalEvent, map }) {
     () =>
       contenidos.value
         .sort((a, b) => {
-          if (a.zIndex < b.zIndex) return -1
-          if (a.zIndex > b.zIndex) return 1
+          if (a.zIndex < b.zIndex) return 1
+          if (a.zIndex > b.zIndex) return -1
           return 0
         })
         .map(({ contenido }) => contenido)
