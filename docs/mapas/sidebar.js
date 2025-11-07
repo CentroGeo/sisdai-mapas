@@ -9,8 +9,9 @@ export const sidebar = [
     items: [
       { text: 'Personalización', link: ruta },
       { text: 'Vista', link: `${ruta}vista` },
-      { text: 'Mapa dividido', link: `${ruta}mapa-dividido` },
       { text: 'Accesibilidad', link: `${ruta}accesibilidad` },
+      { text: 'Mapa dividido', link: `${ruta}mapa-dividido` },
+      { text: 'Paneles', link: `${ruta}paneles` },
     ],
   },
 
