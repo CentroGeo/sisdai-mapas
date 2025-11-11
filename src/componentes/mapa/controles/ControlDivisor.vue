@@ -44,49 +44,75 @@ input[type='range'].divisor {
   // color: #000;
   cursor: default;
 
-  &::-webkit-slider-runnable-track,
+  /* Track para Chrome / Safari */
+  &::-webkit-slider-runnable-track {
+    height: 0.1rem; /* Chrome requiere un alto mínimo */
+    background: transparent;
+    border: none;
+  }
   &::-moz-range-track {
     height: 0rem;
   }
 
-  &::-webkit-slider-thumb,
-  &::-moz-range-thumb {
-    -webkit-appearance: none; /* Override default look */
+  // --pictograma-control-divisor: url('https://visualpharm.com/assets/10/Split%20Horizontal-595b40b85ba036ed117dbb41.svg');
+  --ancho-lina-visible: 0.25rem; /* ancho de la franja oscura central */
+  // --lina-visible: rgba(0, 0, 0, 0.625); /* centro oscuro */
+  --lina-visible: var(--boton-primario-fondo); /* centro oscuro */
+  // --fondo-no-visible: rgba(0, 0, 0, 0.08); /* orillas claras */
+  --fondo-no-visible: rgba(0, 0, 0, 0); /* orillas claras */
+
+  /* Thumb para Chrome / Safari */
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
     appearance: none;
-    // margin-top: -56px;
-    border: none; /*Removes extra border that FF applies*/
+    border: none;
     border-radius: 0%;
     cursor: col-resize;
 
-    // --altura-divisor: 10rem;
     height: var(--altura-divisor);
-    transform: translateY(calc(var(--altura-divisor) / 2));
-
-    --pictograma-control-divisor: url('https://visualpharm.com/assets/10/Split%20Horizontal-595b40b85ba036ed117dbb41.svg');
-    --ancho-fondo-oscuro: 0.25rem; /* ancho de la franja oscura central */
-    // --fondo-oscuro: rgba(0, 0, 0, 0.625); /* centro oscuro */
-    --fondo-oscuro: var(--boton-primario-fondo); /* centro oscuro */
-    // --ancho-control: 2rem;
-    // --fondo-claro: rgba(0, 0, 0, 0.08); /* orillas claras */
-    --fondo-claro: rgba(0, 0, 0, 0); /* orillas claras */
     width: var(--ancho-control);
-
-    // background:
-    //   var(--pictograma-control-divisor) center/var(--ancho-control)
-    //     var(--ancho-control) no-repeat,
-    //   linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))
-    //     center/var(--ancho-fondo-oscuro) 100% no-repeat,
-    //   linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));
+    margin-top: 0.05rem; /* centra el thumb */
 
     background:
       // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><text x='50%' y='50%' font-size='32' text-anchor='middle' dominant-baseline='middle' fill='white'>&lt; &gt;</text></svg>")
       //   // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='50' viewBox='0 0 120 50'><g fill='none' stroke='currentColor' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><line x1='50' y1='6' x2='20' y2='25'/><line x1='20' y1='25' x2='50' y2='44'/><line x1='70' y1='6' x2='100' y2='25'/><line x1='100' y1='25' x2='70' y2='44'/></g></svg>")
       // center/60% no-repeat,
-      radial-gradient(circle, var(--fondo-oscuro) 70%, transparent 71%)
+      radial-gradient(circle, var(--lina-visible) 70%, transparent 71%)
         center/var(--ancho-control) var(--ancho-control) no-repeat,
-      linear-gradient(90deg, var(--fondo-oscuro), var(--fondo-oscuro))
-        center/var(--ancho-fondo-oscuro) 100% no-repeat,
-      linear-gradient(90deg, var(--fondo-claro), var(--fondo-claro));
+      linear-gradient(90deg, var(--lina-visible), var(--lina-visible))
+        center/var(--ancho-lina-visible) 100% no-repeat,
+      linear-gradient(90deg, var(--fondo-no-visible), var(--fondo-no-visible));
+  }
+
+  &::-moz-range-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    border-radius: 0%;
+    cursor: col-resize;
+
+    width: var(--ancho-control);
+    height: var(--altura-divisor);
+    transform: translateY(
+      calc(var(--altura-divisor) / 2)
+    ); /* centra el thumb */
+
+    // background:
+    //   var(--pictograma-control-divisor) center/var(--ancho-control)
+    //     var(--ancho-control) no-repeat,
+    //   linear-gradient(90deg, var(--lina-visible), var(--lina-visible))
+    //     center/var(--ancho-lina-visible) 100% no-repeat,
+    //   linear-gradient(90deg, var(--fondo-no-visible), var(--fondo-no-visible));
+
+    background:
+      // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='50' height='50'><text x='50%' y='50%' font-size='32' text-anchor='middle' dominant-baseline='middle' fill='white'>&lt; &gt;</text></svg>")
+      //   // url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='50' viewBox='0 0 120 50'><g fill='none' stroke='currentColor' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'><line x1='50' y1='6' x2='20' y2='25'/><line x1='20' y1='25' x2='50' y2='44'/><line x1='70' y1='6' x2='100' y2='25'/><line x1='100' y1='25' x2='70' y2='44'/></g></svg>")
+      // center/60% no-repeat,
+      radial-gradient(circle, var(--lina-visible) 70%, transparent 71%)
+        center/var(--ancho-control) var(--ancho-control) no-repeat,
+      linear-gradient(90deg, var(--lina-visible), var(--lina-visible))
+        center/var(--ancho-lina-visible) 100% no-repeat,
+      linear-gradient(90deg, var(--fondo-no-visible), var(--fondo-no-visible));
   }
 }
 </style>
