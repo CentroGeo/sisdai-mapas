@@ -2,6 +2,24 @@
 import { ref } from 'vue'
 
 const estilo = ref(undefined)
+
+const diccionario = [
+  { atributo: 'investigadoras', etiqueta: 'Investigadoras' },
+  { atributo: 'nom_ent', etiqueta: 'Entidad' },
+]
+
+async function cuadroAsincrono(url) {
+  const r = await fetch(url)
+  const data = await r.json()
+  const propiedades = data.features[0].properties
+
+  const lista = diccionario.map(
+    ({ atributo, etiqueta }) =>
+      `<li class="m-0">${etiqueta}: ${propiedades[atributo]}</li>`
+  )
+
+  return `<p style="margin-bottom: 8px;">Propiedades</p> <ol style="margin-top: 8px">${lista.join('')}</ol>`
+}
 </script>
 
 <template>
@@ -15,7 +33,10 @@ const estilo = ref(undefined)
 
     <SisdaiCapaWms
       capa="hcti_snii_sexo_22_est_a"
+      :cuadroInformativo="cuadroAsincrono"
       :estilo="estilo"
+      posicion="0"
+      propiedades="investigadoras,nom_ent"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />

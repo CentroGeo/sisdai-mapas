@@ -1,6 +1,8 @@
 import html2canvas from 'html2canvas'
 import { vista } from './../componentes/mapa/valores'
 
+export * as capa from './capa'
+
 /**
  * Ejecuta los metodos de un array en un objeto.
  * @param {Object} obj
