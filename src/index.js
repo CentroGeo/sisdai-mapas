@@ -46,4 +46,5 @@ export {
   SisdaiMapa,
 }
 
+export * as utiles from './utiles'
 export * as valores from './valores'
