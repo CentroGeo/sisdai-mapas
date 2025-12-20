@@ -10,6 +10,8 @@ import {
   watch,
 } from 'vue'
 
+import MapBrowserEventType from 'ol/MapBrowserEventType'
+
 import MapEventType from 'ol/MapEventType'
 
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
@@ -60,16 +62,23 @@ function alMoverVista({ map }) {
   })
 }
 
+function alClickMarca({ coordinate }) {
+  // console.log('marca', coordinate)
+  emits(eventos.clickMarca, { coordenadas: coordinate })
+}
+
 const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.vista = props.vista
   // mapa.ajustarVista()
   mapa.on(MapEventType.MOVEEND, alMoverVista)
+  mapa.on(MapBrowserEventType.SINGLECLICK, alClickMarca)
 })
 
 onUnmounted(() => {
   mapa.un(MapEventType.MOVEEND, alMoverVista)
+  mapa.un(MapBrowserEventType.SINGLECLICK, alClickMarca)
 })
 
 defineExpose(mapa)
