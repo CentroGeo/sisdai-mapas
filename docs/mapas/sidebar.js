@@ -23,6 +23,7 @@ export const sidebar = [
       { text: 'WMS', link: `${ruta}capa-wms` },
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
       { text: 'XYZ', link: `${ruta}capa-xyz` },
+      { text: 'Arcgis', link: `${ruta}capa-arcgis` },
     ],
   },
 
