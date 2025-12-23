@@ -1,6 +1,6 @@
-# Capa Arcgis
+# Capa ArcGIS
 
-Componente para desplegar capas desde servicios de arcgis.
+Componente para desplegar capas desde servicios de ArcGIS.
 
 **Uso:**
 
@@ -19,9 +19,17 @@ Componente para desplegar capas desde servicios de arcgis.
 Hereda las propiedades definidas en la
 [sección general de capas](/mapas/capa.html) más las siguientes:
 
+### `capa`
+
+Nombre de la capa en el servidor de mapas.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Reactivo: no
+
 ### `fuente`
 
-Url fuente del servicio WMS.
+Url fuente del servicio ArcGIS.
 
 - Tipo: `String`
 - Valor por defecto: `undefined`
@@ -30,8 +38,8 @@ Url fuente del servicio WMS.
 **Uso:**
 
 ```vue
-<!-- Fuente: Capas wms de gema -->
-<SisdaiCapaArcgis fuente="https://gema.conahcyt.mx/geoserver/wms" />
+<!-- Fuente: Servicio de ArcGIS -->
+<SisdaiCapaArcgis :fuente="url" />
 ```
 
 ### `mosaicos`

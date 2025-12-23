@@ -12,7 +12,11 @@ const props = defineProps(_props)
 const Layer = props.mosaicos ? TileLayer : ImageLayer
 const Source = props.mosaicos ? TileArcGISRest : ImageArcGISRest
 const capa = new Layer({
-  source: new Source({ ratio: 1, params: {}, url: props.fuente }),
+  source: new Source({
+    ratio: 1,
+    params: { LAYERS: `show:${props.capa}` },
+    url: props.fuente,
+  }),
 })
 
 useCapa(capa, props)
