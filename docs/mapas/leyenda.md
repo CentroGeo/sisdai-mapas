@@ -41,5 +41,5 @@ vincula con la visibilidad de la capa.
 
 ## Eventos
 
-Dependienda de la capa vinculada (vectorial, wms u otra), heredará los eventos
+Dependiendo de la capa vinculada (vectorial, wms u otra), heredará los eventos
 que tenga su respectiva leyenda.

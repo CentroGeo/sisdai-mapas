@@ -1,6 +1,6 @@
 # Capa ArcGIS
 
-Componente para desplegar capas desde servicios de ArcGIS.
+Componente para visualizar capas de servicios de ArcGIS.
 
 **Uso:**
 

@@ -34,6 +34,7 @@ export const sidebar = [
       { text: 'Vinculada', link: `${ruta}leyenda` },
       { text: 'Vectorial', link: `${ruta}leyenda-vectorial` },
       { text: 'WMS', link: `${ruta}leyenda-wms` },
+      { text: 'ArcGIS', link: `${ruta}leyenda-arcgis` },
     ],
   },
 

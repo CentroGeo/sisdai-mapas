@@ -1,37 +1,42 @@
 <script setup>
-import { inject, onMounted, ref } from 'vue'
+import { inject, onMounted, ref, toRaw } from 'vue'
 import { MAPA_INYECTADO } from '../../utiles/identificadores'
-import _props from './props'
 import LeyendaControl from './control'
+import _props from './props'
 import LeyendaWms from './wms'
 
 const props = defineProps(_props)
 const mapa = inject(MAPA_INYECTADO)
-const capa = ref()
+const capaVinculada = ref()
 
 onMounted(() => {
-  capa.value = mapa.getAllLayers().find(l => l.get('id') === props.para)
-  // console.log(toRaw(capa.value))
-
-  // if (capa.value?.get('tipo') === 'wms') {
-  //   console.log(toRaw(capa.value))
-  // }
+  mapa
+    .busquedaPromesa(mapa =>
+      mapa.getAllLayers().find(capa => capa.get('id') === props.para)
+    )
+    .then(capa => {
+      capaVinculada.value = capa
+      if (capaVinculada.value.get('tipo') === 'wms') {
+        console.log(toRaw(capaVinculada.value))
+      }
+    })
 })
 </script>
 
 <template>
   <LeyendaWms
-    v-if="capa?.get('tipo') === 'wms'"
-    :nombre="capa?.getSource().getParams().LAYERS"
+    v-if="capaVinculada?.get('tipo') === 'wms'"
+    :fuente="capaVinculada?.getSource().getUrl()"
+    :nombre="capaVinculada?.getSource().getParams().LAYERS"
     :sinControlClases="true"
-    :titulo="capa?.get('titulo')"
-    @alCambiarVisibilidad="([v]) => capa?.setVisible(v)"
+    :titulo="capaVinculada?.get('titulo')"
+    @alCambiarVisibilidad="([v]) => capaVinculada?.setVisible(v)"
   />
 
   <LeyendaControl
     v-else
-    :encendido="capa?.getVisible()"
-    :etiqueta="capa?.get('titulo')"
-    @alCambiar="v => capa?.setVisible(v)"
+    :encendido="capaVinculada?.getVisible()"
+    :etiqueta="capaVinculada?.get('titulo')"
+    @alCambiar="v => capaVinculada?.setVisible(v)"
   />
 </template>
