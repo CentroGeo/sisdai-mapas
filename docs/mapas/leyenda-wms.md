@@ -1,4 +1,4 @@
-# Leyendas Wms
+# Leyenda Wms
 
 Leyenda para visualizar la simbología de [capas wms](/mapas/capa-wms.html).
 
