@@ -1,3 +1,4 @@
+import { idAleatorio } from './../../../utiles'
 import props from './../props'
 
 export default {
@@ -20,4 +21,9 @@ export default {
    * - Reactivo: no
    */
   fuente: { type: String, default: undefined },
+
+  /**
+   *
+   */
+  id: { type: String, default: () => idAleatorio() },
 }

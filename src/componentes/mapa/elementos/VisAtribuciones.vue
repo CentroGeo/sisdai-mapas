@@ -1,6 +1,6 @@
 <template>
   <div class="contenedor-vis-atribuciones borde-t borde-color-secundario">
-    <a
+    <!-- <a
       class="logo-conacyt"
       href="https://conahcyt.mx/"
       target="_blank"
@@ -11,7 +11,8 @@
         src="https://conahcyt.mx/wp-content/uploads/2021/10/logo_conacyt_con_sintagma_azul_completo.svg"
         alt="Conahcyt"
       />
-    </a>
+    </a> -->
+
     <a
       href="https://sisdai.conahcyt.mx/"
       target="_blank"

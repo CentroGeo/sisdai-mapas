@@ -1,84 +1,105 @@
 <script setup>
-import { ref, toRefs } from 'vue'
-// import LeyendaControl from './../control'
+import { computed, ref, toRefs, watch } from 'vue'
 import _props from './props'
 
 const props = defineProps(_props)
 const { capa, fuente } = toRefs(props)
 const titulo = ref(undefined)
-const img = ref(undefined)
 const clases = ref([])
+const anchoImg = computed(() => Math.max(...clases.value.map(c => c.width)))
 
-function actualizarClasesDesdeArcgis([capa, fuente]) {
-  fetch(`${fuente}/legend?f=pjson`)
+function actualizarClasesDesdeArcgis([capa]) {
+  // console.log('actualizarClasesDesdeArcgis')
+
+  fetch(`${props.fuente}/legend?f=pjson`)
     .then(response => response.json())
     .then(({ layers }) => {
       const data = layers.find(layer => layer.layerId.toString() === capa)
       titulo.value = data?.layerName
-
-      img.value = data.legend[0]?.imageData
       clases.value = data.legend
 
-      data.legend.forEach(element => {
-        console.log(element)
-      })
+      // data.legend.forEach(element => {
+      //   console.log(element)
+      // })
     })
 }
-actualizarClasesDesdeArcgis([capa.value, fuente.value])
+actualizarClasesDesdeArcgis([capa.value])
+watch([capa, fuente], actualizarClasesDesdeArcgis)
 </script>
 
 <template>
-  <div class="sisdai-mapa-leyenda">
-    <div class="leyenda-titulo">
-      <!-- <LeyendaControl :etiqueta="titulo" /> -->
-      <div class="controlador-vis">
+  <div class="sisdai-mapa-leyenda-arcgis">
+    <div class="leyenda-titulo-arcgis">
+      <div class="controlador-vis-arcgis">
         <input
-          id="idCheck"
+          :id="`leyenda-titulo-arcgis-${props.id}`"
           type="checkbox"
         />
-        <label for="idCheck">
-          <!-- <img
-            class="figura-variable"
-            :src="`data:image/png;base64,${img}`"
+        <label :for="`leyenda-titulo-arcgis-${props.id}`">
+          <img
+            v-if="clases.length === 1"
             alt=""
-          /> -->
+            class="figura-variable-arcgis borde-redondeado-0"
+            :height="clases[0]?.height"
+            :src="`data:image/png;base64,${clases[0]?.imageData}`"
+            :width="clases[0]?.width"
+          />
           <span
-            class="nombre-variable"
+            class="nombre-variable-arcgis"
             v-html="titulo"
           />
         </label>
       </div>
     </div>
 
-    <div
+    <ul
       v-if="clases?.length > 1"
-      class="leyenda-clases casillas-subseleccion"
+      class="leyenda-clases-arcgis casillas-subseleccion casillas-anidadas"
     >
-      <ul class="casillas-anidadas">
-        <li
-          v-for="(clase, idx) in clases"
-          :key="`${clase.label}-clase-control-${idx}`"
-        >
-          <!-- {{ clase.label }} -->
-          <div class="controlador-vis">
-            <input
-              :id="`${clase.label}-control-${idx}`"
-              type="checkbox"
+      <li
+        v-for="(clase, idx) in clases"
+        :key="`${clase.label}-clase-control-${idx}`"
+      >
+        <div class="controlador-vis-arcgis">
+          <p class="lectura-arcgis">
+            <img
+              alt=""
+              class="figura-variable-arcgis"
+              :height="clase.height"
+              :src="`data:image/png;base64,${clase.imageData}`"
+              :width="clase.width"
+              :style="`margin-inline: calc((${anchoImg}px - ${clase.width}px) / 2)`"
             />
-            <label :for="`${clase.label}-control-${idx}`">
-              <img
-                class="figura-variable"
-                :src="`data:image/png;base64,${clase.imageData}`"
-                alt=""
-              />
-              <span
-                class="nombre-variable"
-                v-text="clase.label"
-              />
-            </label>
-          </div>
-        </li>
-      </ul>
-    </div>
+            <span
+              class="nombre-variable-arcgis"
+              v-text="clase.label"
+            />
+          </p>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.sisdai-mapa-leyenda-arcgis {
+  .leyenda-clases-arcgis {
+    padding: 0 0 0 calc(1.25rem + 4px);
+  }
+  .controlador-vis-arcgis {
+    .lectura-arcgis {
+      padding: 0;
+      margin: 0 0 8px 0;
+      line-height: 1.25em;
+      color: var(--campo-color);
+      vertical-align: text-top;
+      display: inline-flex;
+    }
+    .nombre-variable-arcgis {
+      margin-left: 6px;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+</style>

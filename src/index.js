@@ -47,6 +47,7 @@ export {
   // SisdaiLeyenda,
   // SisdaiLeyendaControl,
   // SisdaiLeyendaVectorial,
+  SisdaiLeyendaArcgis,
   SisdaiLeyendaWms,
   SisdaiMapa,
 }
