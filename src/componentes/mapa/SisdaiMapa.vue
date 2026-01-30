@@ -72,7 +72,7 @@ onUnmounted(() => {
   mapa.un(MapEventType.MOVEEND, alMoverVista)
 })
 
-defineExpose(mapa)
+defineExpose({ mapa })
 </script>
 
 <template>
