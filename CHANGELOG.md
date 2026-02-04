@@ -17,6 +17,38 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.3.2] - 2026-01-04
+
+### Cambiado (Changed)
+
+- **Ref mapa**: Se expone la instancia del mapa dentro de un objeto para que
+  pueda ser usado con ref en las veriones recientes de Vue.
+- **Globo informativo**: Modificación en la importación del componente de globo
+  de información en capas vectoriales.
+
+### Eliminado (Removed)
+
+- **Logo atribuciones**: El logo en el apartado de atribuciones ya no está
+  disponible en remoto.
+
+## [2.3.1] - 2025-11-21
+
+### Cambiado (Changed)
+
+- **Mapa dividido**:
+  - Se corrigieron las reglas css para que tenga los mismos estilos en
+    navegadores basados en chromium.
+- **Cuadro de información**:
+  - Permite tener el contenido de más de una capa wms en un mismo cuadro de
+    información.
+  - Permite la ejecución de funciones asíncronas en el cuadro de información
+    para wms.
+  - Separa el contenido de las capas con `<hr />`
+  - El listado del contenido de las capas se define con la propiedad `posicion`
+    de la capa.
+- **Actualización de Openlayers**:
+  - De 10.6.1 a 10.7.0
+
 ## [2.3.0] - 2025-10-10
 
 ### Agregado (Added)

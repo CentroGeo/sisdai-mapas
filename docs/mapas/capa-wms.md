@@ -61,6 +61,35 @@ function consultaWms(url) {
 <SisdaiCapaWms :consulta="consultaWms" />
 ```
 
+### `cuadroInformativo`
+
+Contenido del cuadro de información que aparecerá al dar click sobre el mapa.
+Puede ser una funcion que devuelva la condulta getFeatureInfo del servidor de
+mapas o un texto estatico.
+
+- Tipo: `String` o `Function`
+- Valor por defecto: `undefined`
+- Reactivo: si
+- Parámetros:
+  - url (`String`): Url del la consulta getFeatureInfo construida. Si las
+    propiedades están definidas, se refeljarán en la url.
+
+**Uso:**
+
+```js
+async function cuadroInformativo(url) {
+  return JSON.stringify(await fetch(url))
+}
+```
+
+```vue
+<!-- cuadroInformativo: Función (Promesa) -->
+<SisdaiCapaWms :cuadroInformativo="cuadroInformativo" />
+
+<!-- cuadroInformativo: texto hardcodeado -->
+<SisdaiCapaWms cuadroInformativo="texto" />
+```
+
 ### `estilo`
 
 Nombre del estilo disponible para la capa. Al dejar el valor como indefinido,
@@ -113,7 +142,32 @@ Url fuente del servicio WMS.
 Establece si la consulta de la capa será por mosaicos o teselas. Cuando el valor
 es falso la carga será de una sola imagen.
 
-Tipo: `Boolean` Valor por defecto: `false` Reactivo: no
+- Tipo: `Boolean`
+- Valor por defecto: `false`
+- Reactivo: no
+
+**Uso:**
+
+```vue
+<!-- Mosaicos: true -->
+<SisdaiCapaWms :mosaicos="true" />
+```
+
+### `propiedades`
+
+Define que propiedades de la capa serán visibles cuando se realicen consultas al
+servidor de mapas.
+
+- Tipo: `String`
+- Valor por defecto: `undefined`
+- Reactivo: si
+
+**Uso:**
+
+```vue
+<!-- Propiedades: lista de propiedades -->
+<SisdaiCapaWms propiedades="propiedad_1,propiedad_2" />
+```
 
 ### `tipoServidor`
 

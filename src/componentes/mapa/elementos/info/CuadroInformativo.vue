@@ -1,72 +1,84 @@
 <script setup>
-import { inject, onMounted, onUnmounted, reactive, ref } from 'vue'
-
 import MapBrowserEventType from 'ol/MapBrowserEventType'
 import EventType from 'ol/events/EventType'
-
+import { inject, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
-
-// const sisdaiCuadroInfo = ref()
 
 const mapa = inject(MAPA_INYECTADO)
 const posicion = reactive(new PosicionCss())
 const coordenadas = ref()
+const contenidosCuadro = ref([])
 const contenidoCuadro = ref('')
 const visible = ref(false)
 
-/**
- *
- * @param param
- */
-function alClick({ coordinate, dragging, originalEvent, map }) {
-  if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) return
-
-  const wmsConCuadro = mapa.capasWMS
-    .filter(capa => capa.get('cuadroInfo'))
-    .slice(-1)[0]
-  if (wmsConCuadro === undefined) return
-
-  contenidoCuadro.value =
-    '<span class="pictograma-reloj pictograma-grande p-0" />'
-
-  const pixel = mapa.getEventPixel(originalEvent)
-  posicion.xy = pixel
-  coordenadas.value = coordinate
-  visible.value = true
-
-  const { params, contenido } = wmsConCuadro.get('cuadroInfo')
-  const url = wmsConCuadro
+function getUrlWms(capa, coordinate, map) {
+  return capa
     .getSource()
     .getFeatureInfoUrl(
       coordinate,
       map.getView().getResolution(),
       map.getView().getProjection().getCode(),
-      { FEATURE_COUNT: 1, INFO_FORMAT: 'application/json', ...params }
+      {
+        FEATURE_COUNT: 1,
+        INFO_FORMAT: 'application/json',
+        propertyName: capa.get('propiedades'),
+      }
     )
-
-  // console.log(url);
-
-  if (url) {
-    fetch(url)
-      .then(response => response.json())
-      .then(({ features }) => {
-        // console.log(features[0]?.properties);
-        // const { properties } = features[0]
-        if (features[0]?.properties) {
-          contenidoCuadro.value = contenido(features[0]?.properties)
-        } else {
-          contenidoCuadro.value =
-            'No hay información disponible para esta ubicación'
-        }
-      })
-      .catch(err => {
-        console.error(err)
-      })
-      .finally(() => {
-        //console.log("fin");
-      })
-  }
 }
+
+/**
+ * Se ejecuta cuado se hace click en el mapa
+ * @param param
+ */
+function alClick({ coordinate, dragging, originalEvent, map }) {
+  if (dragging || originalEvent.target.closest('.sisdai-mapa-control')) return
+
+  // TODO: debe regresar una lista de las capas con cuadro de información
+  const cuadros = mapa.capasWMS.filter(
+    capa => capa.get('cuadroInfo') !== undefined
+  )
+  // const contenidos = ref([])
+  contenidosCuadro.value = []
+  cuadros.forEach(capa => {
+    const cuadro = capa.get('cuadroInfo')
+
+    if (typeof cuadro === typeof Promise) {
+      // console.log('se detectó una promesa')
+      const url = getUrlWms(capa, coordinate, map)
+      // console.log(url)
+
+      cuadro(url).then(contenido => {
+        // console.log(contenido)
+        contenidosCuadro.value.push({
+          zIndex: Number(capa.get('zIndex')),
+          contenido,
+        })
+      })
+    } else {
+      contenidosCuadro.value.push({
+        zIndex: Number(capa.get('zIndex')),
+        contenido: cuadro,
+      })
+    }
+  })
+
+  posicion.xy = mapa.getEventPixel(originalEvent)
+  coordenadas.value = coordinate
+  visible.value = Boolean(cuadros.length > 0)
+}
+
+watch(
+  () =>
+    contenidosCuadro.value
+      .sort((a, b) => {
+        if (a.zIndex < b.zIndex) return 1
+        if (a.zIndex > b.zIndex) return -1
+        return 0
+      })
+      .map(({ contenido }) => contenido)
+      .join(`<hr />`),
+  nv => (contenidoCuadro.value = nv)
+)
 
 /**
  *
