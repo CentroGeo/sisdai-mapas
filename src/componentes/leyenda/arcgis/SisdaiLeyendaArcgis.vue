@@ -3,8 +3,8 @@ import { computed, ref, toRefs, watch } from 'vue'
 import _props from './props'
 
 const props = defineProps(_props)
-const { capa, fuente } = toRefs(props)
-const titulo = ref(undefined)
+const { capa, titulo, fuente } = toRefs(props)
+// const titulo = ref(undefined)
 const clases = ref([])
 const anchoImg = computed(() => Math.max(...clases.value.map(c => c.width)))
 
@@ -15,7 +15,7 @@ function actualizarClasesDesdeArcgis([capa]) {
     .then(response => response.json())
     .then(({ layers }) => {
       const data = layers.find(layer => layer.layerId.toString() === capa)
-      titulo.value = data?.layerName
+      // titulo.value = data?.layerName
       clases.value = data.legend
 
       // data.legend.forEach(element => {
@@ -31,24 +31,43 @@ watch([capa, fuente], actualizarClasesDesdeArcgis)
   <div class="sisdai-mapa-leyenda-arcgis">
     <div class="leyenda-titulo-arcgis">
       <div class="controlador-vis-arcgis">
-        <input
-          :id="`leyenda-titulo-arcgis-${props.id}`"
-          type="checkbox"
-        />
-        <label :for="`leyenda-titulo-arcgis-${props.id}`">
-          <img
-            v-if="clases.length === 1"
-            alt=""
-            class="figura-variable-arcgis borde-redondeado-0"
-            :height="clases[0]?.height"
-            :src="`data:image/png;base64,${clases[0]?.imageData}`"
-            :width="clases[0]?.width"
+        <template v-if="sinControl">
+          <p class="lectura-arcgis">
+            <img
+              v-if="clases.length === 1"
+              alt=""
+              class="figura-variable-arcgis borde-redondeado-0"
+              :height="clases[0]?.height"
+              :src="`data:image/png;base64,${clases[0]?.imageData}`"
+              :width="clases[0]?.width"
+            />
+            <span
+              class="nombre-variable-arcgis"
+              v-html="titulo"
+            />
+          </p>
+        </template>
+
+        <template v-else>
+          <input
+            :id="`leyenda-titulo-arcgis-${props.id}`"
+            type="checkbox"
           />
-          <span
-            class="nombre-variable-arcgis"
-            v-html="titulo"
-          />
-        </label>
+          <label :for="`leyenda-titulo-arcgis-${props.id}`">
+            <img
+              v-if="clases.length === 1"
+              alt=""
+              class="figura-variable-arcgis borde-redondeado-0"
+              :height="clases[0]?.height"
+              :src="`data:image/png;base64,${clases[0]?.imageData}`"
+              :width="clases[0]?.width"
+            />
+            <span
+              class="nombre-variable-arcgis"
+              v-html="titulo"
+            />
+          </label>
+        </template>
       </div>
     </div>
 

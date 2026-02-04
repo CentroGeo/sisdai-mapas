@@ -3,7 +3,6 @@
     :estilo="estilo"
     informacion="Capa del Capitulo Búsqueda de alternativas al glifosato"
     nombre="glifo_rendimiento_ha_4_cultivos_20_est_p"
-    :sinControlClases="true"
     titulo="Rendimiento de los cultivos de maíz de temporal y de riego, aguacate y naranja por centroide de entidad 2020"
     @alCambiarVisibilidad="v => console.log('Leyenda: alCambiarVisibilidad', v)"
     @alIniciarCargaSimbologia="

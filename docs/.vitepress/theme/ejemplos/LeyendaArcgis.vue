@@ -1,4 +1,11 @@
 <template>
+  <SisdaiLeyendaArcgis
+    :capa="getCapa()"
+    :fuente="getFuenteUrl()"
+    :sinControl="true"
+    :titulo="seleccion"
+  />
+
   <SisdaiSelector
     class="m-t-3"
     etiqueta="Leyenda de la capa ArcGIS"
@@ -12,11 +19,6 @@
       {{ servicio }}
     </option>
   </SisdaiSelector>
-
-  <SisdaiLeyendaArcgis
-    :capa="getCapa()"
-    :fuente="getFuenteUrl()"
-  />
 </template>
 
 <script setup>

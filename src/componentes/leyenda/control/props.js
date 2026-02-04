@@ -10,7 +10,7 @@ export default {
   /**
    *
    */
-  etiqueta: { typo: String, default: 'Cargando...' },
+  etiqueta: { type: String, default: 'Cargando...' },
 
   /**
    *
@@ -36,7 +36,7 @@ export default {
    *
    */
   simbolo: {
-    typo: Svg,
+    type: Svg,
     // default: new Svg(),
     default: undefined,
   },
@@ -48,5 +48,5 @@ export default {
    * - Valor por defecto: `false`
    * - Reactivo: Si.
    */
-  sinControl: { typo: Boolean, default: false },
+  sinControl: { type: Boolean, default: false },
 }
