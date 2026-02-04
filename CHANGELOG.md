@@ -17,6 +17,20 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.3.2] - 2026-01-04
+
+### Cambiado (Changed)
+
+- **Ref mapa**: Se expone la instancia del mapa dentro de un objeto para que
+  pueda ser usado con ref en las veriones recientes de Vue.
+- **Globo informativo**: Modificación en la importación del componente de globo
+  de información en capas vectoriales.
+
+### Eliminado (Removed)
+
+- **Logo atribuciones**: El logo en el apartado de atribuciones ya no está
+  disponible en remoto.
+
 ## [2.3.1] - 2025-11-21
 
 ### Cambiado (Changed)
