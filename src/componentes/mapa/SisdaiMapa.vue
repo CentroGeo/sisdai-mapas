@@ -22,6 +22,7 @@ import { ControlDivisor, ControlesAcercamiento } from './controles'
 import {
   // InstruccionTeclado,
   CuadroInformativo,
+  GloboInformativo,
   // AnimacionCarga,
   VisAtribuciones,
 } from './elementos'
@@ -116,7 +117,7 @@ defineExpose({ mapa })
         <!-- <InstruccionTeclado /> -->
         <ControlesAcercamiento :eventos="emits" />
         <CuadroInformativo />
-        <!-- <GloboInformativo /> -->
+        <GloboInformativo />
       </div>
 
       <div class="panel-derecha-vis">
