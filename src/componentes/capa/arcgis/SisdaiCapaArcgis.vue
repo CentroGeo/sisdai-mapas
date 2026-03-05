@@ -17,6 +17,7 @@ const capa = new Layer({
     params: { LAYERS: `show:${props.capa}` },
     url: props.fuente,
   }),
+  tipo: 'arcgis',
 })
 
 useCapa(capa, props)

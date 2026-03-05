@@ -17,8 +17,7 @@ import obtenerRepresentacion from './representacion'
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps({ ..._props, ver: { default: false } })
 // mapa.capas[props.id] = TipoEstadoCarga.no
-const { estilo, fuente, globoInformativo, representacion, titulo } =
-  toRefs(props)
+const { estilo, fuente, globoInformativo, representacion } = toRefs(props)
 
 const dicFormato = { geojson: new GeoJSON(), topojson: new TopoJSON() }
 
@@ -51,11 +50,9 @@ source.on(VectorEventType.FEATURESLOADERROR, () => {
 
 const capa = new VectorLayer({
   globoInfo: globoInformativo.value,
-  id: props.id,
   source: obtenerRepresentacion(representacion.value, source),
   style: tratarEstilo(props.estilo),
   tipo: 'vectorial',
-  titulo: titulo.value,
 })
 useCapa(capa, props)
 
