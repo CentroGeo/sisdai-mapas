@@ -17,6 +17,16 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.4.0] - 2026-03-10
+
+### Agregado (Added)
+
+- Se agrega evento para realizar marcas en el mapa al hacer click y que devuelva
+  las coordenas del punto donde se realizó
+- Se añade ejemplo a la documentación de capas vectoriales con una estructura de
+  geojson
+- Se añade icono de marca
+
 ## [2.3.2] - 2026-01-04
 
 ### Cambiado (Changed)
@@ -267,8 +277,12 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
-[2.3.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.2.0...v2.2.0
-[2.1.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.1.0...v2.0.1
+[2.4.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.4.0...v2.3.2
+[2.3.2]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.3.2...v2.3.1
+[2.3.1]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.3.1...v2.3.0
+[2.3.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.3.0...v2.1.0
+[2.1.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.1.0...v2.0.0
+[2.0.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.0.0...v1.13.6
 [1.13.6]:
   https://codigo.conahcyt.mx/sisdai/sisdai-mapas/compare/v1.13.6...v1.13.3
 [1.13.3]:
