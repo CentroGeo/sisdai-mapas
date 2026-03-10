@@ -1,7 +1,11 @@
 <script setup>
+import PointerEventType from 'ol/pointer/EventType'
 import { inject, reactive, ref, watch } from 'vue'
 import { MAPA_INYECTADO } from './../../../../utiles/identificadores'
-import PointerEventType from 'ol/pointer/EventType'
+
+const mapa = inject(MAPA_INYECTADO)
+
+//
 
 const sisdaiGloboInfo = ref()
 const posicion = ref({})
@@ -16,7 +20,6 @@ function alSalirCursor(target) {
   )
 }
 
-const mapa = inject(MAPA_INYECTADO)
 watch(() => mapa.getTargetElement(), alSalirCursor)
 mapa.on(PointerEventType.POINTERMOVE, alMover)
 function alMover({ dragging, originalEvent /*, map */ }) {
