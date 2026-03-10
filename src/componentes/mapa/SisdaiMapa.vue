@@ -44,15 +44,6 @@ watch(dividir, nv => {
   mapa.render()
 })
 
-// function emitirEventosCarga(nv) {
-//   if (nv) {
-//     emits(eventos.alIniciarCarga)
-//   } else {
-//     emits(eventos.alFinalizarCarga, !mapa.todasCapasConError)
-//   }
-// }
-// watch(() => mapa.capasCargando, emitirEventosCarga)
-
 function alMoverVista({ map }) {
   const vista = map.getView()
 
@@ -64,7 +55,6 @@ function alMoverVista({ map }) {
 }
 
 function alClickMarca({ coordinate }) {
-  // console.log('marca', coordinate)
   emits(eventos.clickMarca, { coordenadas: coordinate })
 }
 
@@ -72,7 +62,6 @@ const refMapa = shallowRef(null)
 onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.vista = props.vista
-  // mapa.ajustarVista()
   mapa.on(MapEventType.MOVEEND, alMoverVista)
   mapa.on(MapBrowserEventType.SINGLECLICK, alClickMarca)
 })

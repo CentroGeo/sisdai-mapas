@@ -67,21 +67,6 @@ function clickMarca({ coordenadas }) {
       @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
     />
 
-    <!-- <SisdaiCapaVectorial
-      v-for="value in puntos.features"
-      :key="value.properties.id"
-      :id="`puntos_${value.properties.id}`"
-      :estilo="{ 'circulo-radio': 5, 'circulo-relleno-color': 'red' }"
-      :fuente="puntos"
-    /> -->
-    <!-- <SisdaiCapaVectorial
-      v-for="value in puntos.features"
-      :key="value.properties.id"
-      :id="`puntos_${value.properties.id}`"
-      :estilo="iconStyle"
-      :fuente="puntos"
-    /> -->
-
     <SisdaiCapaVectorial
       v-for="value in puntos.features"
       :key="value.properties.id"

@@ -145,4 +145,28 @@ function alFinalizarCarga(cargaExitosa) {
 <!-- *: Vectorial, Wms o Xyz -->
 ```
 
+### `@clickMarca`
+
+Evento ejecutado cuando se da click en el mapa el cual devuelve las coordenadas
+del punto en donde se realizó el click.
+
+**Parámetros:**
+
+- `Array`: Indica las coordenadas latitud y longitud
+
+**Uso:**
+
+```vue
+<script setup>
+function clickMarca({ coordenadas }) {
+  console.log('coordenadas', coordenadas)
+}
+</script>
+
+<template>
+  <SisdaiCapa* @clickMarca="clickMarca" />
+</template>
+<!-- *: Vectorial -->
+```
+
 <!-- ## Funciones -->
