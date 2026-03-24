@@ -31,7 +31,7 @@ function clickCentrar() {
   console.log('clickCentrar')
 }
 
-function clickVista(coordenadas) {
+function clickVista({ coordenadas }) {
   console.log('clickVista', coordenadas)
 }
 </script>

@@ -3,7 +3,7 @@ import { ref } from 'vue'
 
 const punto = geojson()
 
-const geojsonMarcas = () => ({
+const puntos = ref({
   type: 'FeatureCollection',
   features: [
     {
@@ -16,13 +16,9 @@ const geojsonMarcas = () => ({
     },
   ],
 })
-
-const puntos = ref({})
 const contador = ref(0)
 
-puntos.value = geojsonMarcas()
-
-function clickMarca({ coordenadas }) {
+function clickVista({ coordenadas }) {
   contador.value += 1
   puntos.value.features.push({
     type: 'Feature',
@@ -37,7 +33,7 @@ function clickMarca({ coordenadas }) {
   <SisdaiMapa
     descripcion="Mapa básico con una capa vectorial."
     :vista="{ extension: '-118.3651,14.5321,-86.7104,32.7187' }"
-    @clickMarca="clickMarca"
+    @clickVista="clickVista"
   >
     <template #panel-encabezado-vis>
       <p class="vis-titulo-visualizacion">Ejemplo una capa vectorial</p>

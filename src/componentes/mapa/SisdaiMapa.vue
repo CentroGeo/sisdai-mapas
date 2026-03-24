@@ -52,7 +52,7 @@ function alMoverVista({ map }) {
 }
 
 function alClickVista({ coordinate }) {
-  emits(eventos.clickVista, coordinate)
+  emits(eventos.clickVista, { coordenadas: coordinate })
 }
 
 const refMapa = shallowRef(null)

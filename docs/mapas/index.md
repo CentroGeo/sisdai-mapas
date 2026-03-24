@@ -109,8 +109,8 @@ Ejecutado cuando se detecta que la vista del mapa ha cambiado.
 **Parámetros:**
 
 - `Object`: Valores de la vista con las popiedades:
-  - `acercamiento`: Nivel de acercamiento del mapa,
-  - `centro`: Coordenadas centricas del mapa,
+  - `acercamiento`: Nivel de acercamiento del mapa.
+  - `centro`: Coordenadas centricas del mapa.
   - `vista`: Nuevo valor de la <SisdaiEnlaceExterno
               enlace="https://openlayers.org/en/latest/apidoc/module-ol_View-View.html"
               texto="vista de OpenLayers"
@@ -154,14 +154,15 @@ Evento ejecutado cuando se da click en la vista del mapa.
 
 **Parámetros:**
 
-- `Array`: Coordenadas geográficas (longitud y latitud) del píxel dónde se dió
-  el click.
+- `Object`: Valores del click con las popiedades:
+  - `coordenadas`: `Array` Coordenadas geográficas (longitud y latitud) del
+    píxel dónde se dió el click.
 
 **Uso:**
 
 ```vue
 <script setup>
-function clickVista(coordenadas) {
+function clickVista({ coordenadas }) {
   console.log('Coordenadas', coordenadas)
 }
 </script>
