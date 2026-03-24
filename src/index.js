@@ -36,7 +36,7 @@ export default {
 }
 
 export {
-  // SisdaiCapaVectorial,
+  SisdaiCapaVectorial,
   SisdaiCapaWms,
   SisdaiCapaXyz,
   // SisdaiLeyenda,
