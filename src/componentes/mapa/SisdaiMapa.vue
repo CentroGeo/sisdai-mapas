@@ -10,10 +10,6 @@ import {
   watch,
 } from 'vue'
 
-import MapBrowserEventType from 'ol/MapBrowserEventType'
-
-import MapEventType from 'ol/MapEventType'
-
 import { MAPA_INYECTADO } from './../../utiles/identificadores'
 import eventos from './eventos'
 import Mapa from './Mapa'
@@ -29,8 +25,9 @@ import {
   VisAtribuciones,
 } from './elementos'
 
+import MapBrowserEventType from 'ol/MapBrowserEventType'
+import MapEventType from 'ol/MapEventType'
 import 'ol/ol.css'
-// import PruebaMovimiento from './PruebaMovimiento.vue'
 
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
@@ -54,8 +51,8 @@ function alMoverVista({ map }) {
   })
 }
 
-function alClickMarca({ coordinate }) {
-  emits(eventos.clickMarca, { coordenadas: coordinate })
+function alClickVista({ coordinate }) {
+  emits(eventos.clickVista, coordinate)
 }
 
 const refMapa = shallowRef(null)
@@ -63,12 +60,12 @@ onMounted(() => {
   mapa.setTarget(refMapa.value)
   mapa.vista = props.vista
   mapa.on(MapEventType.MOVEEND, alMoverVista)
-  mapa.on(MapBrowserEventType.SINGLECLICK, alClickMarca)
+  mapa.on(MapBrowserEventType.SINGLECLICK, alClickVista)
 })
 
 onUnmounted(() => {
   mapa.un(MapEventType.MOVEEND, alMoverVista)
-  mapa.un(MapBrowserEventType.SINGLECLICK, alClickMarca)
+  mapa.un(MapBrowserEventType.SINGLECLICK, alClickVista)
 })
 
 defineExpose({ mapa })
@@ -103,7 +100,6 @@ defineExpose({ mapa })
         </p>
         <p class="a11y-simplificada-mostrar-inline">{{ descripcion }}</p>
 
-        <!-- <PruebaMovimiento /> -->
         <div
           class="mapa"
           :class="{ 'sin-escala-grafica': !escalaGrafica }"

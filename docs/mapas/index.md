@@ -148,6 +148,29 @@ function clickCentrar() {
 </template>
 ```
 
+### `@clickVista`
+
+Evento ejecutado cuando se da click en la vista del mapa.
+
+**Parámetros:**
+
+- `Array`: Coordenadas geográficas (longitud y latitud) del píxel dónde se dió
+  el click.
+
+**Uso:**
+
+```vue
+<script setup>
+function clickVista(coordenadas) {
+  console.log('Coordenadas', coordenadas)
+}
+</script>
+
+<template>
+  <SisdaiMapa @clickVista="clickVista" />
+</template>
+```
+
 <!-- ## Funciones ​
 
 A continuación se describen las funciones que pueden modificar el estado del
