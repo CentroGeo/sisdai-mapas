@@ -41,7 +41,7 @@ export default {
 
 export {
   SisdaiCapaArcgis,
-  // SisdaiCapaVectorial,
+  SisdaiCapaVectorial,
   SisdaiCapaWms,
   SisdaiCapaXyz,
   // SisdaiLeyenda,
