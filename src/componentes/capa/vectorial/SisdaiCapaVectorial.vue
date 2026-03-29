@@ -23,15 +23,18 @@ const dicFormato = { geojson: new GeoJSON(), topojson: new TopoJSON() }
 
 const source = new VectorSource({ format: dicFormato[props.formato] })
 
-if (typeof fuente.value === typeof String()) {
-  source.setUrl(fuente.value)
-} else if (esObjeto(fuente.value)) {
-  emits(eventos.alIniciarCarga)
-  // mapa.capas[props.id] = TipoEstadoCarga.inicio
-  source.addFeatures(new GeoJSON().readFeatures(fuente.value))
-  emits(eventos.alFinalizarCarga, true)
-  // mapa.capas[props.id] = TipoEstadoCarga.fin
+function agregaFuente(_fuente) {
+  if (typeof _fuente === typeof String()) {
+    source.setUrl(_fuente)
+  } else if (esObjeto(_fuente)) {
+    emits(eventos.alIniciarCarga)
+    // mapa.capas[props.id] = TipoEstadoCarga.inicio
+    source.addFeatures(new GeoJSON().readFeatures(_fuente))
+    emits(eventos.alFinalizarCarga, true)
+    // mapa.capas[props.id] = TipoEstadoCarga.fin
+  }
 }
+agregaFuente(fuente.value)
 
 source.on(VectorEventType.FEATURESLOADSTART, () => {
   if (typeof fuente.value === typeof String()) {
@@ -57,10 +60,10 @@ const capa = new VectorLayer({
 useCapa(capa, props)
 
 watch(estilo, nv => capa.setStyle(tratarEstilo(nv)))
-// watch(fuente, nv => layer.setSource(nv))
-watch([representacion, fuente], ([vis, fue]) =>
-  capa.setSource(obtenerRepresentacion(vis, fue))
-)
+watch(fuente, agregaFuente, { deep: true })
+// watch([representacion, fuente], ([vis, fue]) =>
+//   capa.setSource(obtenerRepresentacion(vis, fue))
+// )
 
 // function _ver(params) {
 //   if (props.ver) {
