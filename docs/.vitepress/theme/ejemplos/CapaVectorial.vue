@@ -36,15 +36,42 @@ function clickVista({ coordenadas }) {
     <SisdaiCapaVectorial
       :fuente="capa"
       :posicion="2"
-      :estilo="{
-        // 'circulo-radio': 10,
-        // 'circulo-relleno-color': '#58ADA8',
-        // 'circulo-contorno-color': 'red',
-        // 'circulo-contorno-width': 1,
-        'icono-anchura': 32,
-        'icono-altura': 32,
-        'icono-fuente': '/assets/localizacion.svg',
-      }"
+      :estilo="[
+        // {
+        //   // 'circulo-radio': 10,
+        //   // 'circulo-relleno-color': '#58ADA8',
+        //   // 'circulo-contorno-color': 'red',
+        //   // 'circulo-contorno-width': 1,
+        //   'icono-anchura': 32,
+        //   'icono-altura': 32,
+        //   'icono-fuente': '/assets/localizacion.svg',
+        // },
+        {
+          // triangulo
+          'forma-angulo': Math.PI / 1,
+          'forma-desplazamiento': [0, 14],
+          'forma-relleno-color': 'pink',
+          'forma-puntos': 3,
+          'forma-radio': 14,
+        },
+        {
+          // circulo
+          'circulo-desplazamiento': [0, 14 * 2],
+          'circulo-relleno-color': 'pink',
+          'circulo-radio': 14,
+        },
+        {
+          // pictograma
+          'circulo-desplazamiento': [0, 14 * 2],
+          'circulo-relleno-color': 'white',
+          'circulo-radio': 14 - 14 / 4,
+          'texto-relleno-color': 'pink',
+          'texto-tipografia': `${14 + 14 / 4}px sisdai-pictogramas`,
+          'texto-desplazar_en-y': -(14 * 2) + 1,
+          'texto-desplazamiento': [0, -(14 * 2) + 1],
+          'texto-valor': '.',
+        },
+      ]"
       globoInformativo="<p><b>Capa dibujada</b></p>"
       @alIniciarCarga="() => console.log('C: alIniciarCarga')"
       @alFinalizarCarga="v => console.log('C: alFinalizarCarga', v)"
