@@ -29,6 +29,7 @@ function agregaFuente(_fuente) {
   } else if (esObjeto(_fuente)) {
     emits(eventos.alIniciarCarga)
     // mapa.capas[props.id] = TipoEstadoCarga.inicio
+    source.clear()
     source.addFeatures(new GeoJSON().readFeatures(_fuente))
     emits(eventos.alFinalizarCarga, true)
     // mapa.capas[props.id] = TipoEstadoCarga.fin
