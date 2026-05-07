@@ -25,14 +25,18 @@ watch(
 )
 
 function actualizarClasesDesdeWms([capa, estilo, fuente]) {
+  emits(eventos.alIniciarCargaSimbologia)
   props
     .consulta(new GeoserverLeyenda({ capa, estilo, fuente }).url)
     .then(response => response.json())
     .then(data => {
       clases.value = new Clases(data)
       asignarVisibilidad(visible.value)
+      emits(eventos.alFinalizarCargaSimbologia, true)
     })
-    .catch(() => {})
+    .catch(() => {
+      emits(eventos.alFinalizarCargaSimbologia, false)
+    })
     .finally(() => {})
 }
 actualizarClasesDesdeWms([nombre.value, estilo.value, fuente.value])
