@@ -12,7 +12,7 @@
     <template #panel-izquierda-vis>
       <SisdaiLeyenda para="xyz" />
       <SisdaiLeyenda para="wms" />
-      <SisdaiLeyenda para="vectorial" />
+      <!-- <SisdaiLeyenda para="vectorial" /> -->
     </template>
 
     <SisdaiCapaXyz
@@ -28,11 +28,11 @@
       posicion="1"
     />
 
-    <SisdaiCapaVectorial
+    <!-- <SisdaiCapaVectorial
       id="vectorial"
       fuente="/assets/estados-centroides.geojson"
       titulo="Centroides de Estados"
       posicion="2"
-    />
+    /> -->
   </SisdaiMapa>
 </template>

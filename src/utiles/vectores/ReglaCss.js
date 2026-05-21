@@ -69,6 +69,9 @@ export default class ReglaCss {
  * @see https://openlayers.org/en/latest/examples/regularshape.html
  */
 const dicEstilosOl = {
+  altura: 'height',
+  ancho: 'width',
+  anchura: 'width',
   angulo: 'angle',
   circulo: 'circle',
   color: 'color',
@@ -80,6 +83,7 @@ const dicEstilosOl = {
   fuente: 'src',
   grosor: 'width',
   icono: 'icon',
+  desplazar_en: 'offset',
   puntos: 'points',
   radio: 'radius',
   radio2: 'radius2',

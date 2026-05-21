@@ -11,16 +11,21 @@ import { MAPA_INYECTADO } from '../../utiles/identificadores'
  */
 export default function useCapa(capa, props) {
   const mapa = inject(MAPA_INYECTADO)
-  const { lado, opacidad, posicion, visible } = toRefs(props)
+  const { lado, opacidad, posicion, titulo, visible } = toRefs(props)
+
+  capa.set('id', props.id)
 
   capa.setOpacity(opacidad.value)
   watch(opacidad, nuevaOpacidad => capa.setOpacity(nuevaOpacidad))
 
-  capa.setZIndex(posicion.value)
-  watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
+  capa.set('titulo', titulo.value)
+  watch(titulo, nuevoTitulo => capa.set('titulo', nuevoTitulo))
 
   capa.setVisible(visible.value)
   watch(visible, nuevaVisibilidad => capa.setVisible(nuevaVisibilidad))
+
+  capa.setZIndex(posicion.value)
+  watch(posicion, nuevaPosicion => capa.setZIndex(nuevaPosicion))
 
   watch(lado, () => mapa.render())
 

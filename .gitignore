@@ -9,6 +9,8 @@ lerna-debug.log*
 
 node_modules
 package-lock.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
 .DS_Store
 dist
 dist-ssr

@@ -17,11 +17,11 @@ import _props from './props'
 const mapa = inject(MAPA_INYECTADO)
 const emits = defineEmits(Object.values(eventos))
 const props = defineProps(_props)
-const { fuente, titulo } = toRefs(props)
+const { fuente } = toRefs(props)
 
 const source = new ImageTile({ url: fuente.value, crossOrigin: 'anonymous' })
 
-const capa = new TileLayer({ id: props.id, source, titulo: titulo.value })
+const capa = new TileLayer({ source, tipo: 'xyz' })
 useCapa(capa, props)
 
 // // mapa.capas = { ...mapa.capas, [props.id]: TipoEstadoCarga.no }

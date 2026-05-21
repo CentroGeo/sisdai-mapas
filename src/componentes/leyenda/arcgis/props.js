@@ -1,26 +1,26 @@
-import { Svg } from '../../../utiles/vectores'
 import { idAleatorio } from './../../../utiles'
+import props from './../props'
 
 export default {
-  /**
-   *
-   */
-  deshabilitado: { type: Boolean, default: false },
+  ...props,
 
   /**
+   * Nombre de la capa en el servidor de mapas.
    *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: no
    */
-  etiqueta: { type: String, default: 'Cargando...' },
+  capa: { type: String, default: undefined },
 
   /**
+   * URL del servicio ArcGIS.
    *
+   * - Tipo: `String`
+   * - Valor por defecto: `undefined`
+   * - Reactivo: no
    */
-  encendido: { type: Boolean, default: false },
-
-  /**
-   *
-   */
-  encendidoIndeterminado: { type: Boolean, default: false },
+  fuente: { type: String, default: undefined },
 
   /**
    *
@@ -30,16 +30,7 @@ export default {
   /**
    *
    */
-  informacion: { type: String, default: undefined },
-
-  /**
-   *
-   */
-  simbolo: {
-    type: Svg,
-    // default: new Svg(),
-    default: undefined,
-  },
+  titulo: { type: String, default: 'Cargando...' },
 
   /**
    * Define si se agrega el control (input) en el titulo de la leyenda. El control se vincula con la visibilidad de la capa.

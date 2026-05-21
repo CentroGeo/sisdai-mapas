@@ -13,11 +13,13 @@
 //   You should have received a copy of the GNU Lesser General Public License along
 //   with sisdai-mapas. If not, see <https://www.gnu.org/licenses/>.
 
+import SisdaiCapaArcgis from './componentes/capa/arcgis'
 import SisdaiCapaVectorial from './componentes/capa/vectorial'
 import SisdaiCapaWms from './componentes/capa/wms'
 import SisdaiCapaXyz from './componentes/capa/xyz'
 import SisdaiLeyenda from './componentes/leyenda'
 // import SisdaiLeyendaControl from './componentes/leyenda/control'
+import SisdaiLeyendaArcgis from './componentes/leyenda/arcgis'
 import SisdaiLeyendaVectorial from './componentes/leyenda/vectorial'
 import SisdaiLeyendaWms from './componentes/leyenda/wms'
 import SisdaiMapa from './componentes/mapa'
@@ -27,8 +29,10 @@ export default {
     Vue.component('SisdaiCapaVectorial', SisdaiCapaVectorial)
     Vue.component('SisdaiCapaWms', SisdaiCapaWms)
     Vue.component('SisdaiCapaXyz', SisdaiCapaXyz)
+    Vue.component('SisdaiCapaArcgis', SisdaiCapaArcgis)
     Vue.component('SisdaiLeyenda', SisdaiLeyenda)
     // Vue.component('SisdaiLeyendaControl', SisdaiLeyendaControl)
+    Vue.component('SisdaiLeyendaArcgis', SisdaiLeyendaArcgis)
     Vue.component('SisdaiLeyendaVectorial', SisdaiLeyendaVectorial)
     Vue.component('SisdaiLeyendaWms', SisdaiLeyendaWms)
     Vue.component('SisdaiMapa', SisdaiMapa)
@@ -36,12 +40,14 @@ export default {
 }
 
 export {
-  // SisdaiCapaVectorial,
+  SisdaiCapaArcgis,
+  SisdaiCapaVectorial,
   SisdaiCapaWms,
   SisdaiCapaXyz,
   // SisdaiLeyenda,
   // SisdaiLeyendaControl,
   // SisdaiLeyendaVectorial,
+  SisdaiLeyendaArcgis,
   SisdaiLeyendaWms,
   SisdaiMapa,
 }
