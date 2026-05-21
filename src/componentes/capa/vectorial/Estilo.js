@@ -11,7 +11,7 @@ const tipo = { categorias: 'categorias', graduacion: 'graduacion' }
  * @param {*} _estilo
  * @returns
  */
-export default function (_estilo) {
+function _principal_(_estilo) {
   const estilo = { ..._estilo }
 
   const cat = estilo[tipo.categorias]
@@ -36,4 +36,12 @@ export default function (_estilo) {
 
   // console.log('solo estilo') // revisar, se duplica la ejecución (posiblemente por la carga)?*****
   return new Estilo(estilo).traducidoOl
+}
+
+export default function (_estilo) {
+  if (Array.isArray(_estilo)) {
+    return _estilo.map(estilo => _principal_(estilo))
+  }
+
+  return _principal_(_estilo)
 }

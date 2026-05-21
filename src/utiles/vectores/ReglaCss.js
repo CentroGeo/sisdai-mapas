@@ -70,6 +70,7 @@ export default class ReglaCss {
  */
 const dicEstilosOl = {
   altura: 'height',
+  ancho: 'width',
   anchura: 'width',
   angulo: 'angle',
   circulo: 'circle',
@@ -82,6 +83,7 @@ const dicEstilosOl = {
   fuente: 'src',
   grosor: 'width',
   icono: 'icon',
+  desplazar_en: 'offset',
   puntos: 'points',
   radio: 'radius',
   radio2: 'radius2',

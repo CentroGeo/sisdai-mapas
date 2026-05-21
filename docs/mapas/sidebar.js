@@ -23,6 +23,7 @@ export const sidebar = [
       { text: 'WMS', link: `${ruta}capa-wms` },
       // { text: 'UtfGrid', link: `${ruta}capaUtfGrid` },
       { text: 'XYZ', link: `${ruta}capa-xyz` },
+      { text: 'Arcgis', link: `${ruta}capa-arcgis` },
     ],
   },
 
@@ -33,6 +34,7 @@ export const sidebar = [
       { text: 'Vinculada', link: `${ruta}leyenda` },
       { text: 'Vectorial', link: `${ruta}leyenda-vectorial` },
       { text: 'WMS', link: `${ruta}leyenda-wms` },
+      { text: 'ArcGIS', link: `${ruta}leyenda-arcgis` },
     ],
   },
 
