@@ -17,15 +17,33 @@ compatible y tiene instalada.
 
 <!-- ## [Unreleased] -->
 
+## [2.5.0] - 2026-05-20
+
+### Agregado (Added)
+
+- **Capa ArcGIS** Componente para visualizar capas de servicios de ArcGIS.
+- **Leyenda ArcGIS** Leyenda para visualizar la simbología de capas de servicios
+  de ArcGIS.
+- Uso de pnpm para la instalación de bibliotecas.
+- Actualización de bibliotecas.
+
+### Cambiado (Changed)
+
+- **Leyenda WMS** se agregó el emit que indica cuando la leyend ha cargado.
+
+### Eliminado (Removed)
+
+- Comandos de actualización e instalación de bibliotecas con npm.
+
 ## [2.4.0] - 2026-03-10
 
 ### Agregado (Added)
 
 - Se agrega evento para realizar marcas en el mapa al hacer click y que devuelva
-  las coordenas del punto donde se realizó
+  las coordenas del punto donde se realizó.
 - Se añade ejemplo a la documentación de capas vectoriales con una estructura de
-  geojson
-- Se añade icono de marca
+  geojson.
+- Se añade icono de marca.
 
 ## [2.3.2] - 2026-01-04
 
@@ -277,6 +295,7 @@ sisdai-css v0.31.2
 - Componente de contenedores
 - Ejemplo de Gema con contenedor
 
+[2.5.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.4.0...v2.3.2
 [2.3.2]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.3.2...v2.3.1
 [2.3.1]: https://github.com/CentroGeo/sisdai-mapas/compare/v2.3.1...v2.3.0
